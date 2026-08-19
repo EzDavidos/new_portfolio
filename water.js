@@ -244,7 +244,11 @@
     // FPS опускаемся по ступеням. Красиво по умолчанию, плавно на слабом.
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var STEPS = [1.0, 0.8, 0.62, 0.48, 0.36];
-    var step = 0;
+    // На телефоне стартуем со сниженной ступени: там DPR 3, слабая GPU,
+    // и первые секунды на полном разрешении заметно тормозят. Если
+    // железо тянет, цикл сам поднимет качество обратно через ~4 секунды.
+    var lean = window.innerWidth < 820 || (navigator.hardwareConcurrency || 8) <= 4;
+    var step = lean ? 2 : 0;
     var scale = dpr * STEPS[step];
 
     function resize() {
