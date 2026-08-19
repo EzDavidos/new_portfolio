@@ -1,0 +1,134 @@
+/* ============================================================
+   David Naumenko — landing
+   Состояние шапки, мобильное меню, scroll reveal, активный пункт
+   навигации и живые значения статус-рейла.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- шапка ---------- */
+  var header = document.getElementById('header');
+  var onScroll = function () { header.classList.toggle('is-stuck', window.scrollY > 12); };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- мобильное меню ---------- */
+  var burger = document.querySelector('.burger');
+  var sheet = document.getElementById('sheet');
+
+  function setSheet(open) {
+    sheet.hidden = !open;
+    burger.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  burger.addEventListener('click', function () { setSheet(sheet.hidden); });
+  sheet.addEventListener('click', function (e) { if (e.target.closest('a')) setSheet(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !sheet.hidden) setSheet(false);
+  });
+  window.matchMedia('(min-width: 860px)').addEventListener('change', function (e) {
+    if (e.matches && !sheet.hidden) setSheet(false);
+  });
+
+  /* ============================================================
+     СТАТУС-РЕЙЛ — живые значения
+     Показываем только то, что действительно правда: местное время
+     Нячанга и число дней с запуска. Ничего не выдумываем; если JS
+     не отработал, в разметке остаются прочерки, а не ложные данные.
+     ============================================================ */
+  var rail = document.querySelector('.rail__inner');
+
+  if (rail) {
+    var clockEl = rail.querySelector('[data-clock]');
+    var daysEl = rail.querySelector('[data-days]');
+
+    // дни в проде — считаем от даты запуска в атрибуте data-since
+    var since = new Date(rail.dataset.since + 'T00:00:00+07:00');
+    if (daysEl && !isNaN(since)) {
+      var days = Math.floor((Date.now() - since.getTime()) / 86400000);
+      if (days >= 0) {
+        // 1 день / 2 дня / 5 дней — иначе счётчик читается коряво
+        var t10 = days % 10, t100 = days % 100, word;
+        if (t10 === 1 && t100 !== 11) word = 'день';
+        else if (t10 >= 2 && t10 <= 4 && (t100 < 12 || t100 > 14)) word = 'дня';
+        else word = 'дней';
+        daysEl.textContent = days + ' ' + word;
+      }
+    }
+
+    // часы Нячанга — реальное местное время, а не эмуляция
+    if (clockEl) {
+      var fmt = new Intl.DateTimeFormat('ru-RU', {
+        timeZone: 'Asia/Ho_Chi_Minh',
+        hour: '2-digit', minute: '2-digit', hour12: false
+      });
+      var tick = function () { clockEl.textContent = fmt.format(new Date()) + ' ICT'; };
+      tick();
+      // раз в 15 с: минута успевает смениться, а таймер почти ничего не стоит
+      setInterval(tick, 15000);
+    }
+  }
+
+  /* ---------- scroll reveal ---------- */
+  var reveals = document.querySelectorAll('.reveal');
+
+  if (reduced || !('IntersectionObserver' in window)) {
+    reveals.forEach(function (el) { el.classList.add('is-in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+
+    var bySection = new Map();
+    reveals.forEach(function (el) {
+      var sec = el.closest('section') || document.body;
+      var n = bySection.get(sec) || 0;
+      bySection.set(sec, n + 1);
+      el.style.transitionDelay = Math.min(n, 5) * 60 + 'ms';
+      io.observe(el);
+    });
+
+    // Первая проверка наблюдателя проходит до загрузки веб-шрифтов.
+    // Шрифты приходят, вёрстка съезжает — и элемент, уже стоящий на
+    // экране, остаётся с opacity:0 навсегда, потому что скроллить
+    // нечего. Поэтому досматриваем видимое вручную после load и шрифтов.
+    var showVisible = function () {
+      reveals.forEach(function (el) {
+        if (el.classList.contains('is-in')) return;
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          el.classList.add('is-in');
+          io.unobserve(el);
+        }
+      });
+    };
+    window.addEventListener('load', showVisible);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(showVisible);
+  }
+
+  /* ---------- активный пункт навигации ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
+  var targets = links
+    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window && targets.length) {
+    var navIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        links.forEach(function (a) {
+          a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id);
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+
+    targets.forEach(function (t) { navIO.observe(t); });
+  }
+})();

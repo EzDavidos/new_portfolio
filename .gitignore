@@ -1,0 +1,15 @@
+# Рабочие материалы — репозиторий публичный, им тут не место
+documents/
+photo_video/
+
+# Установленные скиллы Claude Code
+.claude/
+.agents/
+skills-lock.json
+
+# Артефакты WSL
+*:Zone.Identifier
+
+# Личное фото, которое сайт пока не использует
+# (пойдёт в блок «Об авторе», когда он будет собран)
+assets/img/david-desk.jpg
