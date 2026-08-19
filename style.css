@@ -128,12 +128,15 @@ ul { list-style: none; padding: 0; }
           mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%);
 }
 
-/* фолбэк без WebGL: не пустота, а мягкая мятная заливка */
+/* фолбэк без WebGL: не пустота, а мягкая мятная заливка.
+   Пятна выставлены по той же диагонали, что и волна в шейдере:
+   низкий вход слева — центр — гребень в правой верхней трети. */
 .no-webgl .water--hero {
   background:
-    radial-gradient(120% 70% at 78% 12%, rgba(88,186,160,.34), transparent 62%),
-    radial-gradient(90% 60% at 55% 45%,  rgba(140,214,192,.30), transparent 66%),
-    radial-gradient(70% 50% at 96% 60%,  rgba(60,150,128,.22), transparent 60%);
+    radial-gradient(85% 55% at 78% 26%, rgba(88,186,160,.34), transparent 62%),
+    radial-gradient(90% 55% at 52% 52%, rgba(140,214,192,.28), transparent 66%),
+    radial-gradient(70% 45% at 18% 72%, rgba(140,214,192,.16), transparent 62%),
+    radial-gradient(60% 40% at 99% 40%, rgba(60,150,128,.20), transparent 60%);
 }
 .no-webgl .water--dark { background: linear-gradient(135deg, #0B2519, #14483A 55%, #0C2C22); }
 
