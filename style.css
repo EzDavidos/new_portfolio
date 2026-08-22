@@ -434,15 +434,25 @@ ul { list-style: none; padding: 0; }
 .pill > span:not([class]) { min-width: 0; }
 .pill__ava { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; object-position: 50% 28%; flex: none; }
 .pill__dot {
-  width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--green);
-  box-shadow: 0 0 0 0 rgba(12,122,93,.5);
+  width: 8px; height: 8px; border-radius: 50%; flex: none;
+  background: var(--slot);
+  box-shadow: 0 0 0 0 var(--slot-halo);
   animation: beat 2.4s ease-out infinite;
 }
 @keyframes beat {
-  0%   { box-shadow: 0 0 0 0 rgba(12,122,93,.5); }
-  70%  { box-shadow: 0 0 0 9px rgba(12,122,93,0); }
-  100% { box-shadow: 0 0 0 0 rgba(12,122,93,0); }
+  0%   { box-shadow: 0 0 0 0 var(--slot-halo); }
+  70%  { box-shadow: 0 0 0 9px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
 }
+
+/* Свободные слоты: data-slots на .pill задаёт светофор.
+   3 — свободен, 2–1 — заполняюсь, 0 — занят. Цифра в подписи
+   красится тем же токеном, чтобы взгляд цеплялся именно за неё. */
+.pill { --slot: var(--green); --slot-halo: rgba(12,122,93,.5); }
+.pill[data-slots="2"],
+.pill[data-slots="1"] { --slot: #D9741A; --slot-halo: rgba(217,116,26,.5); }
+.pill[data-slots="0"] { --slot: #C0392B; --slot-halo: rgba(192,57,43,.5); }
+.pill b { color: var(--slot); font-weight: 600; font-variant-numeric: tabular-nums; }
 
 .hero__title {
   font-family: var(--f-display); font-size: var(--fs-display);
@@ -485,7 +495,7 @@ ul { list-style: none; padding: 0; }
   flex-wrap: nowrap; max-width: 100%;
   padding: clamp(.65rem, 1.6vw, .85rem) clamp(1rem, 2.4vw, 1.5rem);
   display: flex; align-items: center;
-  gap: .45rem clamp(.8rem, 2.2vw, 1.5rem);
+  gap: .45rem clamp(.7rem, 1.5vw, 1.05rem);
   font-family: var(--f-mono); font-size: var(--fs-mono);
   letter-spacing: .11em; text-transform: uppercase; font-weight: 500;
   color: var(--ink-soft);
@@ -501,6 +511,9 @@ ul { list-style: none; padding: 0; }
 .rail__item { display: inline-flex; align-items: center; gap: .45rem; }
 .rail__val { color: var(--ink); }
 .rail__clock { font-variant-numeric: tabular-nums; }
+/* часы прижаты к правому краю и не сжимаются: список проектов растёт,
+   а время остаётся видимым без разделителя перед ним */
+.rail__time { margin-left: auto; padding-left: clamp(.7rem, 1.5vw, 1.05rem); flex: none; }
 .rail__inner::-webkit-scrollbar { display: none; }
 
 /* ============================================================

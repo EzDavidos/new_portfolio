@@ -34,8 +34,8 @@
     </nav>
 
     <div class="header__actions">
-      <a href="#contact" class="btn btn--primary btn--sm">
-        Обсудить задачу
+      <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--sm" target="_blank" rel="noopener">
+        Написать в Telegram
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <button class="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="sheet">
@@ -53,7 +53,7 @@
     <a href="#pricing">Цены</a>
     <a href="#contact">Контакт</a>
   </nav>
-  <a href="#contact" class="btn btn--primary btn--block">Обсудить задачу</a>
+  <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--block" target="_blank" rel="noopener">Написать в Telegram</a>
 </div>
 
 <main id="main">
@@ -66,27 +66,29 @@
 
     <div class="hero__main">
       <div class="hero__status reveal">
-        <span class="pill glass">
+        <!-- Свободные слоты. Меняется одна цифра в data-slots (3/2/1/0) —
+             от неё считается и цвет точки, и тон подписи:
+             3 — зелёный, 2–1 — оранжевый, 0 — красный. -->
+        <span class="pill glass" data-slots="1">
           <img class="pill__ava" src="assets/img/david-portrait.jpg" alt="David Naumenko" width="34" height="34" loading="eager">
-          <span>Свободен с [месяц] · беру [N] проекта</span>
+          <span>Свободен <b>1</b> слот из 3</span>
           <span class="pill__dot" aria-hidden="true"></span>
         </span>
       </div>
 
       <!-- PLACEHOLDER COPY -->
       <h1 class="hero__title reveal">
-        Превращаю<br>бизнес-задачу<br>
-        <em>в работающую систему.</em>
+        Автоматизирую<br>любые <em>офлайн<br>и онлайн системы.</em>
       </h1>
 
       <p class="hero__lead measure reveal">
-        [PLACEHOLDER] Сайты, внутренние системы и CRM, боты и автоматизации.
-        Разбираюсь, где бизнес теряет время и деньги, — и собираю под это конкретный продукт.
+        Сайты, CRM-системы, боты и автоматизации. Помогаю понять, где идёт
+        утечка времени и денег, — и быстро собираю удобное решение.
       </p>
 
       <div class="hero__cta reveal">
-        <a href="#contact" class="btn btn--primary">
-          Обсудить задачу
+        <a href="https://t.me/davidnaumenko" class="btn btn--primary" target="_blank" rel="noopener">
+          Написать в Telegram
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <a href="#work" class="btn btn--ghost">
@@ -97,19 +99,26 @@
 
     </div>
 
-    <!-- статус-рейл: живые часы Нячанга и счётчик дней в проде -->
+    <!-- статус-рейл: список работающих сейчас проектов и живые часы Нячанга.
+         data-since остаётся на рейле — от него скрипт считает число дней
+         в проде для блока «100ловая», хотя в самом рейле счётчика больше нет. -->
     <div class="rail reveal">
       <div class="rail__inner glass" data-since="2026-05-01">
         <span class="rail__live">
           <span class="rail__dot" aria-hidden="true"></span>
-          Работает сейчас
+          Активные проекты
         </span>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <span class="rail__item">100ловая<span class="rail__val">Mini App</span></span>
+        <span class="rail__item rail__val">100ловая Mini App</span>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <span class="rail__item">в проде<span class="rail__val" data-days>—</span></span>
+        <span class="rail__item rail__val">flyguru.pro</span>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <span class="rail__item">Нячанг<span class="rail__val rail__clock" data-clock>—</span></span>
+        <span class="rail__item rail__val">AgentBoy — DJ Press Kit</span>
+        <span class="rail__sep" aria-hidden="true">/</span>
+        <span class="rail__item rail__val">MoodBot</span>
+        <span class="rail__sep" aria-hidden="true">/</span>
+        <span class="rail__item">и другие…</span>
+        <span class="rail__item rail__time">Нячанг<span class="rail__val rail__clock" data-clock>—</span></span>
       </div>
     </div>
 
@@ -117,10 +126,10 @@
       <div class="gains glass glass--solid">
         <h2 class="gains__h">Что получаете</h2>
         <ul class="gains__list" role="list">
-          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>[Выгода один]</li>
-          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>[Выгода два]</li>
-          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>[Выгода три]</li>
-          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>[Выгода четыре]</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Индивидуальный продукт</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Полный контроль</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Безопасность</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Качество</li>
         </ul>
       </div>
     </aside>
@@ -245,28 +254,28 @@
         <span class="sol__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="4" width="19" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 20.5h6M12 17v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
         <span class="sol__kind mono">Витрина</span>
         <h3 class="sol__h">Сайты и лендинги</h3>
-        <p>[PLACEHOLDER] Структура строится под путь клиента и заявку, а не под «красиво».</p>
+        <p>Многостраничный сайт или лендинг, собранный под путь клиента и заявку. Не витрина ради витрины, а вход в вашу систему продаж.</p>
       </article>
 
       <article class="sol__card glass glass--plate reveal">
         <span class="sol__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8l8 4.4v9.6l-8 4.4-8-4.4V7.2l8-4.4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4.3 7.4L12 11.7l7.7-4.3M12 11.7V21" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
         <span class="sol__kind mono">Внутренняя система</span>
         <h3 class="sol__h">CRM и рабочие инструменты</h3>
-        <p>[PLACEHOLDER] Когда работа живёт в таблицах и чатах — собираю один экран, где видно всё.</p>
+        <p>Когда учёт живёт в журнале, таблицах и переписке — собираю один экран, где видны заявки, клиенты, статусы и деньги.</p>
       </article>
 
       <article class="sol__card glass glass--plate reveal">
         <span class="sol__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M21.3 2.9L2.6 9.7c-.7.2-.7 1.2 0 1.4l7.3 2.4 2.4 7.3c.2.7 1.2.7 1.4 0l6.8-18.7c.2-.6-.4-1.2-1.2-1.2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M21.6 3.2l-11.7 10.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-        <span class="sol__kind mono">Автоматизация</span>
+        <span class="sol__kind mono">Telegram</span>
         <h3 class="sol__h">Боты и Mini Apps</h3>
-        <p>[PLACEHOLDER] Заказы, запись, напоминания, отчёты — процесс отдаётся системе целиком.</p>
+        <p>Магазин, запись или заявка целиком внутри Telegram — там, где клиент уже сидит. Без установки приложений и лишних переходов.</p>
       </article>
 
       <article class="sol__card glass glass--plate reveal">
         <span class="sol__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h7M17 7h3M4 17h3M13 17h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="7" r="2.6" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="17" r="2.6" stroke="currentColor" stroke-width="1.6"/></svg></span>
-        <span class="sol__kind mono">Интеграции</span>
-        <h3 class="sol__h">Связки и AI там, где он экономит</h3>
-        <p>[PLACEHOLDER] Соединяю то, что уже работает. AI — только там, где реально снимает работу.</p>
+        <span class="sol__kind mono">Автоматизация</span>
+        <h3 class="sol__h">Автоматизации и связки</h3>
+        <p>Напоминания, уведомления, отчёты, перенос данных между сервисами. Всё, что вы делаете руками по одному и тому же сценарию, начинает делаться само.</p>
       </article>
     </div>
   </div>
@@ -467,7 +476,7 @@
           <li>[PLACEHOLDER] Интеграции с тем, что уже работает</li>
           <li>[PLACEHOLDER] Обучение команды после запуска</li>
         </ul>
-        <a href="#contact" class="btn btn--primary btn--block">Обсудить задачу</a>
+        <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--block" target="_blank" rel="noopener">Написать в Telegram</a>
       </article>
 
       <article class="plan glass glass--plate reveal">
@@ -588,14 +597,14 @@
       <canvas class="water water--dark" data-tone="dark" aria-hidden="true"></canvas>
       <div>
         <h2 class="final__h">Обсудим ваш проект?</h2>
-        <p>[PLACEHOLDER] Расскажите о задаче — подберу решение и предложу план реализации.</p>
+        <p>Расскажите, что съедает больше всего времени. Разберу процесс, предложу решение и назову срок с ценой до начала работ.</p>
       </div>
       <div class="final__side">
-        <a href="#contact" class="btn btn--light">
-          Обсудить задачу
+        <a href="https://t.me/davidnaumenko" class="btn btn--light" target="_blank" rel="noopener">
+          Написать в Telegram
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <span class="final__note">[Срок ответа]</span>
+        <span class="final__note">Отвечаю в течение 40 минут · 8:00–22:00 (UTC+7, Хошимин)</span>
       </div>
     </div>
   </div>
@@ -615,8 +624,8 @@
         <span class="brand__role">digital systems</span>
       </a>
       <p class="footer__tag">
-        [PLACEHOLDER] Собираю сайты, внутренние системы и боты под конкретную
-        задачу бизнеса — от разбора процессов до запуска.
+        Собираю сайты, CRM, Telegram-боты и автоматизации под конкретные
+        процессы бизнеса — от разбора задачи до запуска и поддержки.
       </p>
     </div>
 
@@ -633,7 +642,7 @@
     <div class="footer__col">
       <p class="footer__col-h">Связаться</p>
       <ul class="footer__list" role="list">
-        <li><a href="[PLACEHOLDER: https://t.me/username]">Telegram</a></li>
+        <li><a href="https://t.me/davidnaumenko" target="_blank" rel="noopener">Telegram</a></li>
         <li><a href="mailto:[PLACEHOLDER: почта]">Почта</a></li>
         <li><a href="[PLACEHOLDER: GitHub]">GitHub</a></li>
       </ul>
