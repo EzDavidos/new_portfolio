@@ -41,35 +41,48 @@
      ============================================================ */
   var rail = document.querySelector('.rail__inner');
 
+  // дни в проде — считаем от даты запуска в атрибуте data-since на рейле.
+  // Дата живёт в одном месте: её же число показывает блок про 100ловую.
+  var days = null;
   if (rail) {
-    var clockEl = rail.querySelector('[data-clock]');
-    var daysEl = rail.querySelector('[data-days]');
-
-    // дни в проде — считаем от даты запуска в атрибуте data-since
     var since = new Date(rail.dataset.since + 'T00:00:00+07:00');
-    if (daysEl && !isNaN(since)) {
-      var days = Math.floor((Date.now() - since.getTime()) / 86400000);
-      if (days >= 0) {
-        // 1 день / 2 дня / 5 дней — иначе счётчик читается коряво
-        var t10 = days % 10, t100 = days % 100, word;
-        if (t10 === 1 && t100 !== 11) word = 'день';
-        else if (t10 >= 2 && t10 <= 4 && (t100 < 12 || t100 > 14)) word = 'дня';
-        else word = 'дней';
-        daysEl.textContent = days + ' ' + word;
-      }
+    if (!isNaN(since)) {
+      var d = Math.floor((Date.now() - since.getTime()) / 86400000);
+      if (d >= 0) days = d;
     }
+  }
 
-    // часы Нячанга — реальное местное время, а не эмуляция
-    if (clockEl) {
-      var fmt = new Intl.DateTimeFormat('ru-RU', {
-        timeZone: 'Asia/Ho_Chi_Minh',
-        hour: '2-digit', minute: '2-digit', hour12: false
-      });
-      var tick = function () { clockEl.textContent = fmt.format(new Date()) + ' ICT'; };
-      tick();
-      // раз в 15 с: минута успевает смениться, а таймер почти ничего не стоит
-      setInterval(tick, 15000);
-    }
+  if (days !== null) {
+    // 1 день / 2 дня / 5 дней — иначе счётчик читается коряво
+    var t10 = days % 10, t100 = days % 100, word;
+    if (t10 === 1 && t100 !== 11) word = 'день';
+    else if (t10 >= 2 && t10 <= 4 && (t100 < 12 || t100 > 14)) word = 'дня';
+    else word = 'дней';
+
+    var daysEl = rail.querySelector('[data-days]');
+    if (daysEl) daysEl.textContent = days + ' ' + word;
+
+    // в блоке продукта слово уже стоит в подписи — там нужна голая цифра
+    Array.prototype.forEach.call(document.querySelectorAll('[data-days-num]'), function (el) {
+      el.textContent = days;
+    });
+  }
+
+  // часы Нячанга — реальное местное время, а не эмуляция.
+  // Их два: в статус-рейле и в футере.
+  var clocks = document.querySelectorAll('[data-clock]');
+  if (clocks.length) {
+    var fmt = new Intl.DateTimeFormat('ru-RU', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    });
+    var tick = function () {
+      var now = fmt.format(new Date()) + ' ICT';
+      Array.prototype.forEach.call(clocks, function (el) { el.textContent = now; });
+    };
+    tick();
+    // раз в 15 с: минута успевает смениться, а таймер почти ничего не стоит
+    setInterval(tick, 15000);
   }
 
   /* ---------- scroll reveal ---------- */
