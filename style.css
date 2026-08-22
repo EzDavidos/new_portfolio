@@ -14,8 +14,8 @@
   /* чернила */
   --ink:      #17211E;
   --ink-soft: #4E5B56;
-  --ink-mute: #6B7873;
-  --ink-faint:#8A968F;
+  --ink-mute: #5F6C67;
+  --ink-faint:#7C8981;
 
   --line:     #E2ECE8;
   --line-2:   #CFDFD9;
@@ -26,9 +26,14 @@
   --green-dark: #12352C;   /* тёмный баннер */
   --green-soft: rgba(12,122,93,.09);
 
-  /* стекло */
-  --glass:     rgba(255,255,255,.62);
-  --glass-2:   rgba(255,255,255,.78);
+  /* стекло — три уровня. Уровень задаёт не только альфу, но и блюр:
+     чем прозрачнее плашка, тем сильнее она обязана размывать воду,
+     иначе текст садится на рябь и блок перестаёт читаться. */
+  --glass:     rgba(255,255,255,.30);   /* лежит на воде: pill, рейл, ghost */
+  --glass-2:   rgba(255,255,255,.54);   /* контент на воде: карточка, стат-бар */
+  --glass-3:   rgba(255,255,255,.96);   /* плашка там, где воды уже нет */
+  /* верхний блик: в референсе стекло светится в углу входа света */
+  --sheen: linear-gradient(158deg, rgba(255,255,255,.30), rgba(255,255,255,0) 48%);
   /* зеркальная кромка: ярко в одном углу, гаснет, слабый возврат
      в противоположном — этим Liquid Glass отличается от ровной обводки */
   --rim: linear-gradient(148deg,
@@ -37,13 +42,19 @@
            rgba(255,255,255,0)   52%,
            rgba(255,255,255,.12) 74%,
            rgba(255,255,255,.52) 100%);
+  --rim-pill: linear-gradient(172deg,
+           rgba(255,255,255,1)   0%,
+           rgba(255,255,255,.40) 38%,
+           rgba(255,255,255,.04) 62%,
+           rgba(255,255,255,.50) 100%);
   --rim-dark: linear-gradient(148deg,
            rgba(255,255,255,.34) 0%,
            rgba(255,255,255,.08) 30%,
            rgba(255,255,255,0)   56%,
            rgba(255,255,255,.06) 78%,
            rgba(255,255,255,.22) 100%);
-  --blur: 20px;
+  --blur:    30px;
+  --blur-sm: 18px;
 
   /* тени — мягкие, предмет лежит на воде */
   --sh-1: 0 1px 2px rgba(23,33,30,.03), 0 3px 10px rgba(23,33,30,.04);
@@ -56,7 +67,8 @@
   --f-mono:    "JetBrains Mono", ui-monospace, monospace;
 
   --fs-display: clamp(2.7rem, 7.4vw, 5.1rem);
-  --fs-h2:      clamp(1.9rem, 4.4vw, 3rem);
+  --fs-h2:      clamp(1.7rem, 3.2vw, 2.35rem);
+  --fs-h2-sm:   clamp(1.3rem, 2.2vw, 1.65rem);
   --fs-h3:      clamp(1.1rem, 2vw, 1.32rem);
   --fs-lead:    clamp(1.02rem, 1.6vw, 1.16rem);
   --fs-body:    clamp(1.02rem, 1.4vw, 1.08rem);
@@ -126,8 +138,8 @@ ul { list-style: none; padding: 0; }
 .water--hero {
   position: absolute; top: 0; left: 0;
   height: min(1180px, 132vh);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 74%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 0%, #000 74%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 81%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 81%, transparent 100%);
 }
 
 /* фолбэк без WebGL: не пустота, а мягкая мятная заливка.
@@ -149,9 +161,9 @@ ul { list-style: none; padding: 0; }
    ============================================================ */
 .glass {
   position: relative;
-  background: var(--glass);
-  backdrop-filter: blur(var(--blur)) saturate(1.6);
-  -webkit-backdrop-filter: blur(var(--blur)) saturate(1.6);
+  background: var(--sheen), var(--glass);
+  backdrop-filter: blur(var(--blur)) saturate(1.7);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(1.7);
   box-shadow: var(--sh-2);
 }
 .glass::before {
@@ -166,12 +178,21 @@ ul { list-style: none; padding: 0; }
   mask-composite: exclude;
   pointer-events: none;
 }
-.glass--solid { background: var(--glass-2); }
+.glass--solid { background: var(--sheen), var(--glass-2); }
+/* Плашка: ниже первого экрана воды нет, размывать нечего — там работает
+   не прозрачность, а волосяная граница и мягкая тень, как в референсе. */
+.glass--plate {
+  background: var(--glass-3);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  box-shadow: inset 0 0 0 1px var(--line), var(--sh-2);
+}
+.glass--plate::before { display: none; }
 .glass--dark { background: rgba(18,53,44,.55); color: #EAF3EF; }
 .glass--dark::before { background: var(--rim-dark); }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass { background: rgba(255,255,255,.94); }
+  .glass { background: rgba(255,255,255,.90); }
+  .glass--solid { background: rgba(255,255,255,.94); }
   .glass--dark { background: rgba(18,53,44,.92); }
 }
 
@@ -201,6 +222,7 @@ ul { list-style: none; padding: 0; }
   font-weight: 600; line-height: 1.12; letter-spacing: -.008em;
   text-wrap: balance;
 }
+.h2--sm { font-size: var(--fs-h2-sm); line-height: 1.2; }
 .h2 em, .hero__title em { font-style: normal; color: var(--green); }
 
 .lead { font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-soft); max-width: var(--measure); }
@@ -219,23 +241,70 @@ ul { list-style: none; padding: 0; }
 }
 .btn svg { width: 16px; height: 16px; flex: none; transition: transform .35s var(--ease); }
 
-.btn--primary { background: #141C1A; color: #fff; box-shadow: var(--sh-1); }
+.btn--primary {
+  background: #141C1A; color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), var(--sh-1);
+}
 .btn--primary:hover { background: var(--green-deep); transform: translateY(-2px); box-shadow: var(--sh-2); }
 .btn--primary:hover svg { transform: translateX(3px); }
 
+/* Главный приём референса: кнопка почти пустая, вода видна насквозь.
+   Держит её не заливка, а блюр под ней и зеркальная кромка — ровная
+   обводка тут читается наклейкой, поэтому кромка градиентная. */
 .btn--ghost {
+  position: relative;
   color: var(--ink);
-  background: rgba(255,255,255,.7);
-  backdrop-filter: blur(12px) saturate(1.5);
-  -webkit-backdrop-filter: blur(12px) saturate(1.5);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 2px 10px rgba(23,33,30,.05);
+  background: linear-gradient(158deg,
+                rgba(255,255,255,.42) 0%,
+                rgba(255,255,255,.10) 46%,
+                rgba(255,255,255,.24) 100%);
+  backdrop-filter: blur(var(--blur-sm)) saturate(1.7);
+  -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(1.7);
+  box-shadow: 0 1px 2px rgba(23,33,30,.03), 0 8px 22px rgba(23,33,30,.06);
+  transition: transform .35s var(--ease), background .35s var(--ease), color .25s, box-shadow .35s var(--ease);
 }
-.btn--ghost:hover { color: var(--green); transform: translateY(-2px); }
+.btn--ghost::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--rim-pill);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.btn--ghost > * { position: relative; }
+.btn--ghost:hover {
+  color: var(--green);
+  transform: translateY(-2px);
+  background: linear-gradient(158deg,
+                rgba(255,255,255,.60) 0%,
+                rgba(255,255,255,.24) 46%,
+                rgba(255,255,255,.38) 100%);
+}
+/* треугольник «плей» у вторичной кнопки — как в референсе */
+.btn__play { width: 13px; height: 13px; flex: none; }
 .btn--ghost:hover svg { transform: translateX(3px); }
+.btn--ghost:hover .btn__play { transform: none; }
+
+/* Та же вторичная кнопка, но там, где под ней бумага, а не вода:
+   размывать нечего, поэтому форму держит заливка и волосяная граница. */
+.btn--soft {
+  color: var(--ink);
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--line), var(--sh-1);
+}
+.btn--soft:hover {
+  color: var(--green); transform: translateY(-2px);
+  box-shadow: inset 0 0 0 1px var(--line-2), var(--sh-2);
+}
+.btn--soft:hover svg { transform: translateX(3px); }
 
 .btn--light { background: #fff; color: var(--ink); }
 .btn--light:hover { transform: translateY(-2px); box-shadow: var(--sh-2); }
-.btn--sm { padding: .62rem 1.2rem; font-size: .93rem; }
+.btn--sm { padding: .6rem 1.15rem; font-size: .92rem; }
 .btn--block { width: 100%; }
 
 /* ---------- CHIPS ---------- */
@@ -251,22 +320,44 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    HEADER
    ============================================================ */
-.header { position: sticky; top: 0; z-index: 100; }
-.header::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: rgba(244,248,246,.72);
-  backdrop-filter: blur(var(--blur)) saturate(1.6);
-  -webkit-backdrop-filter: blur(var(--blur)) saturate(1.6);
-  box-shadow: inset 0 -1px 0 var(--line);
-  opacity: 0; transition: opacity .35s var(--ease);
+/* Шапка в референсе — не полоса во всю ширину, а плавающая стеклянная
+   капсула с отступами от краёв: вода видна и над ней, и под ней. */
+.header {
+  position: sticky;
+  top: clamp(.5rem, 1.3vw, .9rem);
+  z-index: 100;
+  padding: clamp(.5rem, 1.3vw, .9rem) clamp(.9rem, 2.2vw, 1.4rem) 0;
 }
-.header.is-stuck::after { opacity: 1; }
-
 .header__inner {
+  position: relative;
   max-width: var(--wrap); margin-inline: auto;
-  padding: clamp(.85rem, 1.6vw, 1.25rem) var(--pad-x);
+  border-radius: var(--r-lg);
+  padding: clamp(.6rem, 1.2vw, .82rem) clamp(.9rem, 2vw, 1.6rem);
   display: flex; align-items: center; gap: var(--gap);
+  background: var(--sheen), var(--glass);
+  backdrop-filter: blur(var(--blur)) saturate(1.7);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(1.7);
+  box-shadow: var(--sh-2);
+  transition: background .35s var(--ease), box-shadow .35s var(--ease);
 }
+.header__inner::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+/* после скролла под капсулой уже не вода, а контент — плотнее вуаль */
+.header.is-stuck .header__inner {
+  background: var(--sheen), rgba(255,255,255,.62);
+  box-shadow: var(--sh-3);
+}
+.header__inner > * { position: relative; }
 .brand { display: flex; flex-direction: column; line-height: 1.2; margin-right: auto; }
 .brand__name { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -.006em; }
 .brand__role { font-family: var(--f-mono); font-size: .64rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-mute); }
@@ -310,10 +401,11 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 01 — HERO
    ============================================================ */
-.hero { padding-top: clamp(1.5rem, 4vw, 3rem); padding-bottom: clamp(2rem, 5vw, 3.5rem); }
+.hero { padding-top: clamp(1.5rem, 4vw, 3rem); padding-bottom: clamp(1.25rem, 2.6vw, 1.9rem); }
 .hero__grid { display: grid; gap: clamp(2rem, 5vw, 3.5rem); align-items: start; }
 
 .hero__status { display: flex; align-items: center; max-width: 100%; margin-bottom: clamp(1.5rem, 3.5vw, 2.25rem); }
+.pill::before { background: var(--rim-pill); }
 .pill {
   display: inline-flex; align-items: center; gap: .7rem;
   padding: .4rem 1rem .4rem .4rem;
@@ -345,14 +437,15 @@ ul { list-style: none; padding: 0; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.6rem, 3.2vw, 2.25rem); }
 
 /* карточка-выжимка справа — как в референсе */
-.gains { border-radius: var(--r-lg); padding: clamp(1.35rem, 2.6vw, 1.85rem); }
+.gains { border-radius: var(--r-xl); padding: clamp(1.5rem, 3vw, 2rem); }
 .gains__h { font-family: var(--f-display); font-size: 1.08rem; font-weight: 600; margin-bottom: 1.1rem; }
-.gains__list { display: grid; gap: .8rem; }
-.gains__list li { display: flex; align-items: center; gap: .7rem; font-size: .98rem; color: var(--ink-soft); }
+.gains__list { display: grid; gap: .95rem; }
+.gains__list li { display: flex; align-items: center; gap: .75rem; font-size: .98rem; color: var(--ink-soft); }
 .tick {
-  width: 20px; height: 20px; border-radius: 50%; flex: none;
+  width: 21px; height: 21px; border-radius: 50%; flex: none;
   background: var(--green); color: #fff;
   display: grid; place-content: center;
+  box-shadow: 0 2px 6px rgba(12,122,93,.28);
 }
 .tick svg { width: 11px; height: 11px; }
 
@@ -365,9 +458,10 @@ ul { list-style: none; padding: 0; }
 .rail::after {
   content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 46px;
   border-radius: 0 100px 100px 0;
-  background: linear-gradient(90deg, rgba(244,248,246,0), rgba(244,248,246,.9));
+  background: linear-gradient(90deg, rgba(244,248,246,0), rgba(244,248,246,.75));
   pointer-events: none;
 }
+.rail__inner::before { background: var(--rim-pill); }
 .rail__inner {
   border-radius: 100px;
   white-space: nowrap; overflow-x: auto; scrollbar-width: none;
@@ -377,7 +471,8 @@ ul { list-style: none; padding: 0; }
   gap: .45rem clamp(.8rem, 2.2vw, 1.5rem);
   font-family: var(--f-mono); font-size: var(--fs-mono);
   letter-spacing: .11em; text-transform: uppercase; font-weight: 500;
-  color: var(--ink-mute);
+  color: var(--ink-soft);
+  background: var(--sheen), rgba(255,255,255,.58);
 }
 .rail__live { display: inline-flex; align-items: center; gap: .55rem; color: var(--green); }
 .rail__dot {
@@ -394,16 +489,18 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 02 — PROOF (широкий стеклянный бар)
    ============================================================ */
-.proof { padding-block: clamp(1.5rem, 3.5vw, 2.5rem) clamp(2rem, 4vw, 3rem); }
+.proof { padding-block: clamp(.9rem, 2vw, 1.4rem) clamp(2rem, 4vw, 3rem); }
+/* В референсе бар лежит НА воде и разделителей между ячейками нет:
+   колонки держит только ритм отступов. */
 .proof__bar {
-  border-radius: var(--r-lg);
+  border-radius: var(--r-xl);
   display: grid; grid-template-columns: repeat(2, 1fr);
-  overflow: hidden;
+  padding: clamp(.5rem, 1vw, .7rem);
+  gap: clamp(.2rem, .6vw, .4rem);
 }
 .stat {
-  padding: clamp(1.1rem, 2.6vw, 1.75rem);
+  padding: clamp(.9rem, 2.1vw, 1.35rem) clamp(.9rem, 2.1vw, 1.4rem);
   display: flex; flex-direction: column; gap: .3rem;
-  box-shadow: inset 1px 0 0 var(--line), inset 0 1px 0 var(--line);
 }
 .stat__num {
   font-family: var(--f-display); font-size: clamp(1.7rem, 4vw, 2.35rem);
@@ -411,7 +508,14 @@ ul { list-style: none; padding: 0; }
   font-variant-numeric: tabular-nums; color: var(--ink);
 }
 .stat__label { font-size: .9rem; color: var(--ink-mute); line-height: 1.4; }
-.stat--tint { background: var(--tint); }
+/* последняя ячейка — вложенная карточка со своим скруглением */
+.stat--tint {
+  background: linear-gradient(160deg, rgba(255,255,255,.62), rgba(213,238,229,.72));
+  border-radius: var(--r);
+  box-shadow: inset 0 0 0 1px rgba(12,122,93,.10);
+  justify-content: center;
+}
+.stat--tint .stat__label { color: var(--ink-soft); }
 .stat--tint .stat__num { font-size: clamp(1.15rem, 2.4vw, 1.4rem); color: var(--green); }
 .proof__note { margin-top: clamp(1.1rem, 2.5vw, 1.5rem); font-size: .9rem; color: var(--ink-mute); max-width: 74ch; }
 .proof__note-ph { color: var(--green); }
@@ -427,7 +531,7 @@ ul { list-style: none; padding: 0; }
 }
 .frame__bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); flex: none; }
 .frame__url {
-  margin-left: .75rem; color: var(--ink-faint); font-size: .72rem;
+  margin-left: .75rem; color: var(--ink-mute); font-size: .72rem;
   letter-spacing: .06em; text-transform: none;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
@@ -472,10 +576,11 @@ ul { list-style: none; padding: 0; }
   padding: clamp(.7rem, 1.4vw, 1rem);
   align-items: stretch;
 }
+.panels .frame { box-shadow: inset 0 0 0 1px var(--line), var(--sh-2); }
 .panels > * { min-width: 0; }
 /* панели одной высоты: в референсе они выровнены в ряд */
 .panels .frame { display: flex; flex-direction: column; }
-.panels .shot { flex: 1; aspect-ratio: auto; min-height: clamp(230px, 34vw, 400px); }
+.panels .shot { flex: 1; aspect-ratio: auto; min-height: clamp(220px, 29vw, 340px); }
 
 .flagship__story {
   display: grid; gap: clamp(1.4rem, 2.8vw, 2.25rem);
@@ -510,22 +615,26 @@ ul { list-style: none; padding: 0; }
   padding: clamp(1.3rem, 2.6vw, 1.75rem);
   transition: transform .4s var(--ease), box-shadow .4s var(--ease);
 }
-.sol__card:hover { transform: translateY(-4px); box-shadow: var(--sh-3); }
+.sol__card:hover { transform: translateY(-4px); box-shadow: inset 0 0 0 1px var(--line), var(--sh-3); }
 .sol__ico {
-  width: 46px; height: 46px; border-radius: 13px;
-  background: var(--tint); color: var(--green);
+  width: 50px; height: 50px; border-radius: 15px;
+  background: linear-gradient(150deg, #FFFFFF 0%, var(--tint) 52%, #D8EEE5 100%);
+  color: var(--green);
   display: grid; place-content: center;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
-  box-shadow: inset 0 0 0 1px rgba(12,122,93,.12);
+  margin-bottom: clamp(1rem, 2vw, 1.35rem);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 0 0 1px rgba(12,122,93,.10),
+    0 6px 16px rgba(12,122,93,.13);
 }
-.sol__ico svg { width: 22px; height: 22px; }
-.sol__kind { color: var(--green); display: block; margin-bottom: .55rem; }
+.sol__ico svg { width: 23px; height: 23px; }
+.sol__kind { color: var(--green); display: block; margin-bottom: .45rem; font-size: .72rem; }
 .sol__h {
   font-family: var(--f-display); font-size: var(--fs-h3);
   font-weight: 600; line-height: 1.25; letter-spacing: -.006em; margin-bottom: .5rem;
   text-wrap: balance;
 }
-.sol__card p { color: var(--ink-mute); font-size: .96rem; }
+.sol__card p { color: var(--ink-soft); font-size: .95rem; line-height: 1.5; }
 
 /* ============================================================
    BLOCK 07 — PROCESS
@@ -542,11 +651,14 @@ ul { list-style: none; padding: 0; }
 .step__n {
   font-family: var(--f-display); font-size: 1.5rem; font-weight: 600;
   color: var(--ink-faint); letter-spacing: -.01em;
-  display: block; margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  display: block; margin-bottom: clamp(1rem, 2vw, 1.4rem);
 }
 .step__h { font-family: var(--f-display); font-size: 1.02rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.004em; }
-.step p { font-size: .93rem; color: var(--ink-mute); line-height: 1.5; }
-.step--on { background: var(--tint); }
+.step p { font-size: .93rem; color: var(--ink-soft); line-height: 1.5; }
+.step--on {
+  background: linear-gradient(158deg, #FFFFFF, var(--tint) 62%, #DCF0E8);
+  box-shadow: inset 0 0 0 1px rgba(12,122,93,.14), var(--sh-2);
+}
 .step--on .step__n { color: var(--green); }
 
 /* ============================================================
@@ -562,7 +674,11 @@ ul { list-style: none; padding: 0; }
   display: grid; gap: clamp(1.5rem, 3.5vw, 2.5rem); align-items: center;
   color: #EAF3EF;
 }
-.final__inner .water { z-index: -1; opacity: .85; }
+.final__inner .water {
+  z-index: -1; opacity: .9;
+  -webkit-mask-image: linear-gradient(to right, #000 0 22%, rgba(0,0,0,.4) 28%, transparent 34%);
+          mask-image: linear-gradient(to right, #000 0 22%, rgba(0,0,0,.4) 28%, transparent 34%);
+}
 .final__h { font-family: var(--f-display); font-size: clamp(1.65rem, 3.6vw, 2.5rem); font-weight: 600; letter-spacing: -.01em; line-height: 1.15; color: #fff; }
 .final p { color: rgba(234,243,239,.78); margin-top: .8rem; max-width: 46ch; }
 .final__side { display: flex; flex-direction: column; gap: .7rem; align-items: flex-start; }
@@ -606,9 +722,8 @@ ul { list-style: none; padding: 0; }
   .rail        { grid-column: 1 / -1; grid-row: 2; margin-top: 0; }
 
   .proof__bar { grid-template-columns: repeat(4, 1fr); }
-  .stat:first-child { box-shadow: inset 0 1px 0 var(--line); }
 
-  .flagship__top { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); }
+  .flagship__top { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; }
   .panels { grid-template-columns: 1.25fr .85fr .8fr; }
   .flagship__story { grid-template-columns: repeat(3, 1fr); }
 
@@ -616,15 +731,25 @@ ul { list-style: none; padding: 0; }
 
   .process__grid { grid-template-columns: minmax(0, .72fr) minmax(0, 2.28fr); }
   .steps { grid-template-columns: repeat(4, 1fr); }
-  /* соединители между шагами — порядок здесь реально что-то значит */
+  /* соединители между шагами — порядок здесь реально что-то значит.
+     Пунктир и кольцо на нём: связь читается как последовательность,
+     а не как случайная точка между карточками. */
   .step + .step::before {
     content: ""; position: absolute;
-    left: calc(var(--gap) / -2 - 3px); top: 50%;
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--line-2); transform: translateY(-50%);
+    left: calc(var(--gap) * -1); top: 50%;
+    width: var(--gap); height: 1px; transform: translateY(-50%);
+    background: repeating-linear-gradient(90deg, var(--line-2) 0 3px, transparent 3px 6px);
   }
+  .step + .step::after {
+    content: ""; position: absolute;
+    left: calc(var(--gap) / -2 - 4px); top: 50%;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--paper); transform: translateY(-50%);
+    box-shadow: inset 0 0 0 1.5px var(--line-2);
+  }
+  .step--on::after { box-shadow: inset 0 0 0 1.5px var(--green); }
 
-  .final__inner { grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); }
+  .final__inner { grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); padding-left: 32%; }
   .final__side { align-items: flex-end; text-align: right; }
 }
 
