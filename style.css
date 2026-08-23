@@ -894,7 +894,10 @@ ul { list-style: none; padding: 0; }
   font-size: clamp(1.45rem, 2.9vw, 1.9rem); color: var(--ink);
   letter-spacing: -.012em; font-variant-numeric: tabular-nums;
 }
-.plan__term { color: var(--green); margin-top: .35rem; }
+/* «Считается индивидуально» встаёт на место суммы: тот же ряд, но кегль
+   ниже — иначе фраза лезет в две строки и ломает линию цен */
+.plan__price--calc span { font-size: clamp(1.05rem, 1.9vw, 1.25rem); }
+.plan__list strong { color: var(--ink); font-weight: 600; }
 .plan__list {
   display: grid; gap: .6rem;
   margin-top: clamp(1.1rem, 2.2vw, 1.5rem);
@@ -915,6 +918,28 @@ ul { list-style: none; padding: 0; }
   box-shadow: inset 0 0 0 1px rgba(12,122,93,.14), var(--sh-2);
 }
 .plan--on .plan__list { border-top-color: rgba(12,122,93,.16); }
+/* поддержка: цена в месяц, поэтому отдельной полосой под тарифами */
+.care {
+  border-radius: var(--r-lg);
+  padding: clamp(1.4rem, 2.8vw, 1.9rem);
+  margin-top: var(--gap);
+  display: grid; gap: clamp(1.25rem, 2.6vw, 2rem);
+}
+.care__h { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 600; letter-spacing: -.006em; margin-top: .35rem; }
+.care__lead { color: var(--ink-mute); font-size: .92rem; line-height: 1.5; margin-top: .5rem; max-width: 46ch; }
+.care__list { display: grid; gap: clamp(.7rem, 1.6vw, 1rem); align-content: center; }
+.care__item {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding-bottom: .7rem; border-bottom: 1px solid var(--line);
+}
+.care__item:last-child { border-bottom: 0; padding-bottom: 0; }
+.care__name { color: var(--ink-soft); font-size: .95rem; }
+.care__price {
+  font-family: var(--f-display); font-weight: 600; font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  color: var(--ink); letter-spacing: -.012em; font-variant-numeric: tabular-nums;
+}
+.care__price i { font-style: normal; font-size: .82rem; font-weight: 500; color: var(--ink-mute); margin-left: .15rem; }
+
 .pricing__note {
   margin-top: clamp(1.25rem, 2.6vw, 1.75rem);
   font-size: .9rem; color: var(--ink-mute); max-width: 74ch;
@@ -1078,6 +1103,7 @@ ul { list-style: none; padding: 0; }
   .product__inner { grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); }
   .works__grid { grid-template-columns: repeat(3, 1fr); }
   .plans { grid-template-columns: repeat(3, 1fr); }
+  .care { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; }
   .trust__grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
   .footer__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, .55fr) minmax(0, .55fr); }
 
