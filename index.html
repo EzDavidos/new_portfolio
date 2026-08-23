@@ -159,9 +159,15 @@
         <span class="stat__num">live</span>
         <span class="stat__label">продукт в продакшне</span>
       </div>
+      <!-- срок читается первым, подпись — под ним. Цифра растянута ровно
+           по ширине подписи: textLength в SVG тянет сами буквы, поэтому
+           строки совпадают по краям при любой ширине колонки и не зависят
+           от того, успел ли загрузиться Inter Tight. -->
       <div class="stat stat--tint">
+        <svg class="stat__stretch" viewBox="0 0 200 44" role="img" aria-label="10 дней" preserveAspectRatio="xMidYMid meet">
+          <text x="0" y="35" textLength="200" lengthAdjust="spacingAndGlyphs">10 дней</text>
+        </svg>
         <span class="stat__label">Срок от идеи до запуска</span>
-        <span class="stat__num">10 дней</span>
       </div>
     </div>
     <p class="proof__note reveal">

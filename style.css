@@ -558,6 +558,13 @@ ul { list-style: none; padding: 0; }
 }
 .stat--tint .stat__label { color: var(--ink-soft); }
 .stat--tint .stat__num { font-size: clamp(1.15rem, 2.4vw, 1.4rem); color: var(--green); }
+/* растянутая цифра: SVG держит пропорцию сам, высота идёт от ширины
+   колонки, поэтому строка всегда садится по краям подписи под ней */
+.stat__stretch { display: block; width: 100%; height: auto; }
+.stat__stretch text {
+  font-family: var(--f-display); font-size: 38px; font-weight: 600;
+  fill: var(--green); font-variant-numeric: tabular-nums;
+}
 .proof__note { margin-top: clamp(1.1rem, 2.5vw, 1.5rem); font-size: .9rem; color: var(--ink-mute); max-width: 74ch; }
 .proof__note-ph { color: var(--green); }
 
