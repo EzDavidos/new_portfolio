@@ -592,6 +592,7 @@ ul { list-style: none; padding: 0; }
   box-shadow: inset 0 0 0 1px var(--line);
   font-size: .74rem; text-align: center;
 }
+.shot--video { display: block; width: 100%; height: auto; object-fit: cover; background: var(--paper-2); }
 .frame--phone { border-radius: 24px; box-shadow: 0 0 0 6px var(--ink), var(--sh-3); }
 .frame--phone .shot { border-radius: 18px; }
 .frame--dark { background: #10201B; box-shadow: inset 0 0 0 1px rgba(255,255,255,.07), var(--sh-3); }

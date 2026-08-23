@@ -126,6 +126,25 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(showVisible);
   }
 
+  /* ---------- видео-демо: не крутим его без нужды ----------
+     autoplay стоит в разметке, но с prefers-reduced-motion ролик
+     останавливаем на постере, а за экраном — ставим на паузу,
+     чтобы не жечь батарею на телефоне. */
+  Array.prototype.forEach.call(document.querySelectorAll('.shot--video'), function (v) {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      v.removeAttribute('autoplay');
+      v.pause();
+      return;
+    }
+    if (!('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        else v.pause();
+      });
+    }, { threshold: 0.25 }).observe(v);
+  });
+
   /* ---------- активный пункт навигации ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
   var targets = links
