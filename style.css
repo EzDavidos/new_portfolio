@@ -584,7 +584,9 @@ ul { list-style: none; padding: 0; }
 }
 .shot--16x9  { aspect-ratio: 16 / 9; }
 .shot--16x10 { aspect-ratio: 16 / 10; }
-.shot--phone { aspect-ratio: 9 / 19; }
+/* пропорции экрана iPhone 16: 393×852 pt — под них снята запись,
+   поэтому видео садится в рамку кадр в кадр, без обрезки по краям */
+.shot--phone { aspect-ratio: 393 / 852; }
 .shot--tall  { aspect-ratio: 3 / 4; }
 .shot__tag {
   color: var(--ink-mute); background: rgba(255,255,255,.9);
@@ -593,8 +595,18 @@ ul { list-style: none; padding: 0; }
   font-size: .74rem; text-align: center;
 }
 .shot--video { display: block; width: 100%; height: auto; object-fit: cover; background: var(--paper-2); }
-.frame--phone { border-radius: 24px; box-shadow: 0 0 0 6px var(--ink), var(--sh-3); }
-.frame--phone .shot { border-radius: 18px; }
+/* корпус iPhone 16. Радиус экрана — 55 pt при 393×852 pt, то есть 14%
+   ширины и 6,5% высоты: задаём его в процентах через слеш, иначе на
+   вытянутом экране углы поедут в эллипс. Рамка корпуса — кольцо тенью,
+   она сама повторяет этот радиус. */
+.frame--phone {
+  border-radius: 14% / 6.5%;
+  box-shadow:
+    0 0 0 6px var(--ink),
+    0 0 0 7px rgba(23,33,30,.55),
+    var(--sh-3);
+}
+.frame--phone .shot { border-radius: inherit; }
 .frame--dark { background: #10201B; box-shadow: inset 0 0 0 1px rgba(255,255,255,.07), var(--sh-3); }
 .frame--dark .shot {
   background:
