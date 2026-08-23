@@ -186,29 +186,31 @@
     <div class="flagship__top">
       <header class="flagship__head reveal">
         <p class="label mono">Главный кейс</p>
-        <h2 class="h2">Проекты, которые решают <em>реальные задачи</em></h2>
+        <h2 class="h2">FlyGuru — сайт школы <em>и система, в которой она живёт</em></h2>
         <p class="lead">
-          [PLACEHOLDER] Одно предложение о том, чем занимается бизнес клиента
-          и какая задача стояла. Без технологий — на языке владельца.
+          Школа электрофойлов в Нячанге: обучение, тандемы, морские сафари и
+          клубные абонементы. Нужен был сайт, с которого приходят заявки, — и
+          учёт вместо тетради и переписок, где видно занятия, абонементы,
+          зарплаты и деньги в кассе.
         </p>
         <ul class="tagline" role="list">
-          <li class="chip">[Ниша]</li>
-          <li class="chip">[Год]</li>
-          <li class="chip">[Роль: продукт + разработка]</li>
+          <li class="chip">Школа электрофойлов</li>
+          <li class="chip">2026</li>
+          <li class="chip">Продукт и разработка</li>
         </ul>
       </header>
 
       <!-- три панели продукта: сайт, внутренняя система, мобильный -->
       <div class="panels glass glass--plate reveal">
         <figure class="frame frame--xl">
-          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__url mono">[домен]</span></div>
-          <div class="shot shot--tall"><span class="shot__tag mono">SLOT · сайт</span></div>
+          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__url mono">flyguru.pro</span></div>
+          <div class="shot shot--tall"><span class="shot__tag mono">SLOT · главная сайта</span></div>
         </figure>
         <figure class="frame frame--dark frame--xl">
-          <div class="shot shot--tall"><span class="shot__tag mono">SLOT · CRM</span></div>
+          <div class="shot shot--tall"><span class="shot__tag mono">SLOT · дашборд админа</span></div>
         </figure>
         <figure class="frame frame--phone">
-          <div class="shot shot--phone"><span class="shot__tag mono">SLOT · мобильный</span></div>
+          <div class="shot shot--phone"><span class="shot__tag mono">SLOT · кабинет инструктора</span></div>
         </figure>
       </div>
     </div>
@@ -217,29 +219,60 @@
     <div class="flagship__story">
       <article class="story reveal">
         <h3 class="story__h"><span class="mono">01</span> Задача</h3>
-        <p>[PLACEHOLDER] Что было до: где именно терялось время, деньги или клиенты. Конкретный процесс, а не абстракция.</p>
+        <p>Занятия записывались в тетрадь, заявки собирались в переписке. Заработок
+        инструкторов, остаток минут на абонементах и деньги в кассе считались руками
+        и по трём разным отчётам. Отдельно — агенты, которые приводят клиентов:
+        их вознаграждение никто не отслеживал.</p>
       </article>
       <article class="story reveal">
         <h3 class="story__h"><span class="mono">02</span> Решение</h3>
-        <p>[PLACEHOLDER] Что построено: сайт как витрина плюс внутренняя система, где команда ведёт работу.</p>
+        <p>Публичный сайт, с которого заявка сразу падает в Telegram инструкторам
+        с кнопкой «Принять». Под ним — система с четырьмя кабинетами: админ, инструктор,
+        механик и СММ. Смена открывается по фото, минуты списываются с абонемента в пару
+        тапов, зарплата считается сама, у каждого агента своя ссылка со скидкой и QR-код.</p>
       </article>
       <article class="story reveal">
         <h3 class="story__h"><span class="mono">03</span> Результат</h3>
-        <p>[PLACEHOLDER] Что изменилось в работе бизнеса. <strong>Цифры — только реальные, от клиента.</strong></p>
+        <p>Школа ведёт учёт в системе с 24 июля 2026 года: через неё прошли
+        <strong>140 занятий, 109 клиентов и 16 выплат зарплаты</strong>.
+        Бумажный учёт больше не используется.</p>
       </article>
     </div>
 
+    <!-- цифры кейса: всё из боевой базы школы (Supabase), а не из презентации -->
+    <ul class="fnums reveal" role="list">
+      <li class="fnum">
+        <span class="fnum__num">109</span>
+        <span class="fnum__cap">клиентов в базе школы</span>
+      </li>
+      <li class="fnum">
+        <span class="fnum__num">140</span>
+        <span class="fnum__cap">занятий учтено в системе</span>
+      </li>
+      <li class="fnum">
+        <span class="fnum__num">18 дней</span>
+        <span class="fnum__cap">от первой строки кода до работы в бою</span>
+      </li>
+      <li class="fnum">
+        <span class="fnum__num">4</span>
+        <span class="fnum__cap">кабинета: админ, инструктор, механик, СММ</span>
+      </li>
+    </ul>
+
     <div class="flagship__foot reveal">
       <ul class="stack" role="list">
-        <li class="chip chip--mono">[stack]</li>
-        <li class="chip chip--mono">[stack]</li>
-        <li class="chip chip--mono">[stack]</li>
-        <li class="chip chip--mono">[stack]</li>
+        <li class="chip chip--mono">Next.js 16</li>
+        <li class="chip chip--mono">TypeScript</li>
+        <li class="chip chip--mono">Supabase / Postgres</li>
+        <li class="chip chip--mono">Vercel</li>
       </ul>
-      <a href="#contact" class="btn btn--soft">
-        Нужна такая же система
-        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      <div class="flagship__acts">
+        <a href="https://www.flyguru.pro" class="btn btn--soft" target="_blank" rel="noopener">Открыть flyguru.pro</a>
+        <a href="#contact" class="btn btn--soft">
+          Нужна такая же система
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
 
   </div>

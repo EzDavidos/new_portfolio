@@ -659,12 +659,30 @@ ul { list-style: none; padding: 0; }
 .story p { color: var(--ink-soft); }
 .story strong { color: var(--ink); font-weight: 600; }
 
+/* цифры кейса: та же линейка, что у стат-бара, но на бумаге и без плашки —
+   блок 03 должен доказывать так же, как блок 05, но не спорить с ним по весу */
+.fnums {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.1rem, 2.4vw, 1.75rem);
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--line);
+}
+.fnum { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
+.fnum__num {
+  font-family: var(--f-display); font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+  font-weight: 600; line-height: 1.1; letter-spacing: -.012em;
+  font-variant-numeric: tabular-nums; color: var(--green);
+}
+.fnum__cap { font-size: .88rem; line-height: 1.4; color: var(--ink-mute); }
+
 .flagship__foot {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--gap);
   margin-top: clamp(1.75rem, 3.5vw, 2.75rem); padding-top: clamp(1.35rem, 3vw, 2rem);
   border-top: 1px solid var(--line);
 }
 .stack { display: flex; flex-wrap: wrap; gap: .45rem; }
+.flagship__acts { display: flex; flex-wrap: wrap; gap: .6rem; }
 
 /* ============================================================
    BLOCK 04 — SOLUTIONS
@@ -1008,6 +1026,7 @@ ul { list-style: none; padding: 0; }
   .flagship__top { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; }
   .panels { grid-template-columns: 1.25fr .85fr .8fr; }
   .flagship__story { grid-template-columns: repeat(3, 1fr); }
+  .fnums { grid-template-columns: repeat(4, 1fr); }
 
   .sol { grid-template-columns: repeat(4, 1fr); }
 
