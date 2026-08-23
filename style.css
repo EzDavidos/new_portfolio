@@ -812,7 +812,21 @@ ul { list-style: none; padding: 0; }
 }
 .product__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.5rem, 3vw, 2rem); }
 .product__shots { display: grid; place-items: center; }
-.product__shots .frame--phone { width: min(255px, 72%); }
+/* мокап телефона: корпус — прозрачный PNG, запись лежит под ним и видна
+   только в вырезе экрана. Проценты сняты с самого файла — вырез 351×769
+   в кадре 388×800, — поэтому видео садится в экран без подгонки на глаз.
+   Углы видео не скругляем: скруглённый вырез корпуса сам их и обрезает. */
+.mock { position: relative; margin: 0; width: min(284px, 78%); }
+.mock__body {
+  position: relative; z-index: 2;
+  display: block; width: 100%; height: auto; pointer-events: none;
+  filter: drop-shadow(0 20px 38px rgba(6,26,20,.42));
+}
+.mock__screen {
+  position: absolute; z-index: 1;
+  left: 5.155%; top: 2.125%; width: 90.464%; height: 96.125%;
+  object-fit: cover; background: #000;
+}
 
 /* ============================================================
    BLOCK 06 — ДРУГИЕ ПРОЕКТЫ

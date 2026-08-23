@@ -376,14 +376,18 @@
       </div>
 
       <div class="product__shots">
-        <figure class="frame frame--phone">
-          <!-- запись экрана мини-аппа: без звука, сама себя крутит, в поток
-               страницы не лезет — playsinline держит её в рамке на iOS. -->
-          <video class="shot shot--phone shot--video"
+        <!-- корпус — PNG с прозрачным экраном, запись лежит под ним и видна
+             ровно в вырезе. Порядок в разметке обратный слоям: видео сначала,
+             корпус поверх. Запись без звука, сама себя крутит, в поток страницы
+             не лезет — playsinline держит её в рамке на iOS. -->
+        <figure class="mock">
+          <video class="mock__screen shot--video"
                  src="assets/video/100lovaya.mp4"
                  poster="assets/img/100lovaya-poster.jpg"
                  autoplay muted loop playsinline preload="metadata"
                  aria-label="Запись экрана мини-аппа 100ловая"></video>
+          <img class="mock__body" src="assets/img/iphone-16-pro-max.png"
+               alt="" aria-hidden="true" width="388" height="800" loading="lazy">
         </figure>
       </div>
 
