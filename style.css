@@ -4,6 +4,15 @@
    вода в фоне, изумрудный акцент, воздушная типографика.
    ============================================================ */
 
+/* Bebas Neue с кириллицей — в Google Fonts её нет (там только latin),
+   поэтому шрифт лежит рядом. Нужен ровно для одного акцентного числа
+   в блоке «доказательств», поэтому и подключён локально, одним файлом. */
+@font-face {
+  font-family: "Bebas Neue Cyrillic";
+  src: url("assets/fonts/bebas-neue-cyrillic.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
 :root {
   /* поверхности — почти белая мятная бумага */
   --paper:    #F4F8F6;
@@ -65,6 +74,7 @@
   --f-display: "Inter Tight", system-ui, sans-serif;
   --f-text:    "Inter", system-ui, sans-serif;
   --f-mono:    "JetBrains Mono", ui-monospace, monospace;
+  --f-num:     "Bebas Neue Cyrillic", "Inter Tight", system-ui, sans-serif;
 
   --fs-display: clamp(2.7rem, 7.4vw, 5.1rem);
   --fs-h2:      clamp(1.7rem, 3.2vw, 2.35rem);
@@ -557,13 +567,13 @@ ul { list-style: none; padding: 0; }
   justify-content: center;
 }
 .stat--tint .stat__label { color: var(--ink-soft); }
-.stat--tint .stat__num { font-size: clamp(1.15rem, 2.4vw, 1.4rem); color: var(--green); }
-/* растянутая цифра: SVG держит пропорцию сам, высота идёт от ширины
-   колонки, поэтому строка всегда садится по краям подписи под ней */
-.stat__stretch { display: block; width: 100%; height: auto; }
-.stat__stretch text {
-  font-family: var(--f-display); font-size: 38px; font-weight: 600;
-  fill: var(--green); font-variant-numeric: tabular-nums;
+/* срок — единственное число, набранное Bebas: он узкий и высокий, поэтому
+   крупно читается, не упираясь в края плашки. Глифы не растягиваем —
+   ширину строке даёт сам кегль, отсюда и умеренный clamp. */
+.stat--tint .stat__num {
+  font-family: var(--f-num); font-size: clamp(2.15rem, 4.4vw, 3.3rem);
+  font-weight: 400; line-height: .95; letter-spacing: .01em;
+  color: var(--green);
 }
 .proof__note { margin-top: clamp(1.1rem, 2.5vw, 1.5rem); font-size: .9rem; color: var(--ink-mute); max-width: 74ch; }
 .proof__note-ph { color: var(--green); }
