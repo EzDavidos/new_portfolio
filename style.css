@@ -458,10 +458,9 @@ ul { list-style: none; padding: 0; }
 }
 
 /* Свободные слоты: data-slots на .pill задаёт светофор.
-   3 — свободен, 2–1 — заполняюсь, 0 — занят. Цифра в подписи
+   3–2 — свободен, 1 — последний, 0 — занят. Цифра в подписи
    красится тем же токеном, чтобы взгляд цеплялся именно за неё. */
 .pill { --slot: var(--green); --slot-halo: rgba(12,122,93,.5); }
-.pill[data-slots="2"],
 .pill[data-slots="1"] { --slot: #D9741A; --slot-halo: rgba(217,116,26,.5); }
 .pill[data-slots="0"] { --slot: #C0392B; --slot-halo: rgba(192,57,43,.5); }
 .pill b { color: var(--slot); font-weight: 600; font-variant-numeric: tabular-nums; }
