@@ -833,6 +833,17 @@ ul { list-style: none; padding: 0; }
   font-weight: 600; letter-spacing: -.006em; line-height: 1.25; margin-bottom: .45rem;
 }
 .work__body p { color: var(--ink-soft); font-size: .95rem; line-height: 1.5; }
+/* ссылка на живой проект в карточке: мелкая и моноширинная, чтобы не спорить
+   с заголовком карточки и не притворяться кнопкой */
+.work__link {
+  display: inline-flex; align-items: center; gap: .4rem;
+  margin-top: .8rem; align-self: flex-start;
+  font-size: .74rem; color: var(--green);
+  border-bottom: 1px solid rgba(12,122,93,.28);
+  transition: border-color .3s var(--ease);
+}
+.work__link svg { width: 13px; height: 13px; flex: none; }
+.work__link:hover { border-bottom-color: var(--green); }
 .work .stack { margin-top: auto; padding-top: clamp(.9rem, 2vw, 1.25rem); }
 
 /* ============================================================
