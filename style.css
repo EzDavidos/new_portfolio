@@ -866,6 +866,18 @@ ul { list-style: none; padding: 0; }
   border-radius: 12.9cqw;   /* 50 / 388 ширины корпуса */
 }
 
+/* Макет телефона в блоке FlyGuru. Ширину задаём здесь явно: у .mock она
+   min(284px, 78%), а проценты тут считать не от чего — фигура центрируется
+   в сетке и сама сжимается по содержимому. */
+.flagship__mobile {
+  margin: clamp(2rem, 4.5vw, 3rem) auto 0;
+  display: grid; justify-items: center; gap: .9rem;
+}
+.flagship__mobile .mock { width: min(284px, 68vw); }
+.flagship__mobile figcaption {
+  color: var(--ink-mute); font-size: .74rem; letter-spacing: .06em;
+}
+
 /* ============================================================
    BLOCK 06 — ДРУГИЕ ПРОЕКТЫ
    ============================================================ */

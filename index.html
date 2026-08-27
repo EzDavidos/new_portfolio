@@ -250,6 +250,23 @@
       </article>
     </div>
 
+    <!-- Тот же сайт на телефоне. Отдельным макетом, а не четвёртой панелью:
+         у панелей пропорции слотов зафиксированы, а корпус здесь — прозрачный
+         PNG поверх записи, в слот такое не встаёт. Запись обрезана по экрану
+         исходного мокапа, поэтому чёрного поля вокруг телефона нет. -->
+    <figure class="flagship__mobile reveal">
+      <div class="mock">
+        <video class="mock__screen shot--video"
+               src="assets/video/flyguru-mobile.mp4"
+               poster="assets/img/flyguru-mobile-poster.webp"
+               autoplay muted loop playsinline preload="none"
+               aria-label="Запись сайта flyguru.pro на телефоне"></video>
+        <img class="mock__body" src="assets/img/iphone-16-pro-max.png"
+             alt="" aria-hidden="true" width="388" height="800" loading="lazy">
+      </div>
+      <figcaption class="mono">flyguru.pro на телефоне</figcaption>
+    </figure>
+
     <!-- цифры кейса: всё из боевой базы школы (Supabase), а не из презентации -->
     <ul class="fnums reveal" role="list">
       <li class="fnum">
