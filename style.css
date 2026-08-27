@@ -601,13 +601,7 @@ ul { list-style: none; padding: 0; }
 }
 .shot--16x9  { aspect-ratio: 16 / 9; }
 .shot--16x10 { aspect-ratio: 16 / 10; }
-/* пропорции экрана iPhone 16: 393×852 pt — под них снята запись,
-   поэтому видео садится в рамку кадр в кадр, без обрезки по краям */
-.shot--phone { aspect-ratio: 393 / 852; }
 .shot--tall  { aspect-ratio: 3 / 4; }
-/* узкая вертикаль тёмной панели: та же высота кадра, что у телефона рядом,
-   но своя пропорция — под неё готовится отдельный футаж */
-.shot--strip { aspect-ratio: 9 / 19.5; }
 .shot__tag {
   color: var(--ink-mute); background: rgba(255,255,255,.9);
   padding: .45rem .8rem; border-radius: 100px;
@@ -624,30 +618,67 @@ ul { list-style: none; padding: 0; }
   display: block; width: 100%; height: 100%;
   object-fit: cover;
 }
-/* корпус iPhone 16. Радиус экрана — 55 pt при 393×852 pt, то есть 14%
-   ширины и 6,5% высоты: задаём его в процентах через слеш, иначе на
-   вытянутом экране углы поедут в эллипс. Рамка корпуса — кольцо тенью,
-   она сама повторяет этот радиус. */
-.frame--phone {
-  border-radius: 14% / 6.5%;
-  box-shadow:
-    0 0 0 6px var(--ink),
-    0 0 0 7px rgba(23,33,30,.55),
-    var(--sh-3);
-}
-.frame--phone .shot { border-radius: inherit; }
-.frame--dark { background: #10201B; box-shadow: inset 0 0 0 1px rgba(255,255,255,.07), var(--sh-3); }
-.frame--dark .shot {
-  background:
-    linear-gradient(135deg, rgba(12,122,93,.30), rgba(88,186,160,.12)),
-    repeating-linear-gradient(45deg, #14251F 0 12px, #182B24 12px 24px);
-}
-.frame--dark .shot__tag { background: rgba(255,255,255,.1); color: #CFE3DC; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
 
 /* ============================================================
    BLOCK 03 — FLAGSHIP
    ============================================================ */
 .flagship { padding-block: clamp(3rem, 6vw, 5rem); }
+
+/* Кейс одной карточкой в цветах клиента. Цвета сняты с самого продукта:
+   тил #0C8397 — шапка FlyGuru, оранжевый #FC7918 — его кнопка записи.
+   Фон взят глубже фирменного тила: на крупной плашке #0C8397 в упор спорит
+   с зелёным низом страницы и перетягивает на себя весь экран, а тил при
+   этом никуда не девается — он работает акцентом на тексте.
+   Акцентный тон осветлён до #46C6D8: сам #0C8397 на таком фоне даёт
+   контраст около 1.9, читать его нельзя. */
+.case { border-radius: var(--r-xl); }
+.case--flyguru {
+  --case-ink:    #EAF6F8;
+  --case-mute:   rgba(226,244,247,.74);
+  --case-accent: #46C6D8;
+  --case-cta:    #FC7918;
+  --case-hair:   rgba(255,255,255,.16);
+
+  padding: clamp(1.4rem, 3.6vw, 3rem);
+  background: linear-gradient(168deg, #0C5A67 0%, #0A4B56 46%, #083C46 100%);
+  color: var(--case-ink);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), var(--sh-3);
+}
+
+/* Плашка под панелями внутри карточки не нужна: панели и так со своими
+   рамками, а вторая подложка читалась бы карточкой в карточке. */
+.case--flyguru .panels { padding: 0; }
+
+.case--flyguru .label { color: var(--case-accent); }
+.case--flyguru .h2 { color: var(--case-ink); }
+.case--flyguru .h2 em { color: var(--case-accent); }
+.case--flyguru .lead { color: var(--case-mute); }
+.case--flyguru .chip {
+  color: var(--case-ink);
+  background: rgba(255,255,255,.10);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22);
+}
+.case--flyguru .story__h { color: var(--case-ink); }
+.case--flyguru .story__h .mono { color: var(--case-accent); }
+.case--flyguru .story p { color: var(--case-mute); }
+.case--flyguru .story p strong { color: var(--case-ink); }
+.case--flyguru .flagship__mobile figcaption { color: var(--case-mute); }
+.case--flyguru .fnum__num { color: var(--case-cta); }
+.case--flyguru .fnum__cap { color: var(--case-mute); }
+.case--flyguru .flagship__story,
+.case--flyguru .fnums,
+.case--flyguru .flagship__foot { border-top-color: var(--case-hair); }
+
+/* Фирменная кнопка кейса. Текст на оранжевом тёмный: белый на #FC7918
+   даёт контраст 2.6 и на кнопке не читается. */
+.case--flyguru .btn--brand {
+  color: #10262B; background: var(--case-cta);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.2), var(--sh-1);
+}
+.case--flyguru .btn--brand:hover {
+  transform: translateY(-2px); filter: brightness(1.07);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.3), var(--sh-2);
+}
 .flagship__top { display: grid; gap: clamp(2rem, 4.5vw, 3.5rem); align-items: start; }
 .flagship__head .h2 { margin-bottom: clamp(.9rem, 2vw, 1.35rem); }
 .tagline { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: clamp(1.1rem, 2.4vw, 1.6rem); }
@@ -864,6 +895,34 @@ ul { list-style: none; padding: 0; }
   object-fit: cover; background: #000;
   border-radius: 36px;      /* фолбэк для браузеров без cqw */
   border-radius: 12.9cqw;   /* 50 / 388 ширины корпуса */
+}
+
+/* Корпуса телефонов в панелях кейса. Устроены как макет 100ловой: скриншот
+   лежит под прозрачным PNG и виден ровно в вырезе экрана. Проценты сняты с
+   альфы самих файлов, а не подобраны на глаз. Пропорцию панели тут задаёт
+   сам корпус, поэтому aspect-ratio не нужен — геометрия и есть картинка.
+   Радиус экрана повторяем на скриншоте в cqw, чтобы он тянулся с шириной:
+   квадратные углы вылезали бы за силуэт поверх скруглений. */
+.device { position: relative; margin: 0; container-type: inline-size; }
+.device__body {
+  position: relative; z-index: 2;
+  display: block; width: 100%; height: auto; pointer-events: none;
+  filter: drop-shadow(0 16px 30px rgba(3,18,22,.5));
+}
+.device__screen {
+  position: absolute; z-index: 1; display: block;
+  object-fit: cover; background: #000;
+}
+/* iPhone 16 Pro Max: вырез 355×771 в кадре 388×800, радиус 50 */
+.device--iphone .device__screen {
+  left: 4.381%; top: 1.5%; width: 91.495%; height: 97.125%;
+  border-radius: 36px; border-radius: 12.9cqw;
+}
+/* Galaxy S25 Ultra: вырез 592×1283 в кадре 640×1328, радиус 25 — углы у
+   него заметно площе айфоновских, отсюда втрое меньший процент */
+.device--samsung .device__screen {
+  left: 3.75%; top: 1.581%; width: 92.5%; height: 96.611%;
+  border-radius: 12px; border-radius: 3.91cqw;
 }
 
 /* Макет телефона в блоке FlyGuru. Ширину задаём здесь явно: у .mock она
@@ -1136,12 +1195,14 @@ ul { list-style: none; padding: 0; }
   .proof__bar { grid-template-columns: repeat(4, 1fr); }
 
   .flagship__top { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; }
-  /* Доли подобраны под фиксированные пропорции слотов: при них три рамки
-     сходятся по высоте. Точно свести их одним набором долей нельзя — строка
-     браузера в первой панели занимает постоянные 42px, а не долю высоты,
-     поэтому нужная ширина первой колонки зависит от размера ряда. На 1.4fr
-     остаточный разброс 3-11px, то есть меньше 3% высоты. */
-  .panels { grid-template-columns: 1.4fr 1fr 1fr; }
+  /* Доли подобраны под пропорции панелей: слот сайта 3:4 плюс постоянные
+     42px строки браузера, корпуса телефонов 0.482 и 0.485. При них три
+     панели сходятся по высоте. Точно свести одним набором долей нельзя —
+     строка браузера занимает постоянную высоту, а не долю, поэтому нужная
+     ширина первой колонки зависит от размера ряда. Остаточный разброс
+     около 10px, то есть меньше 3% высоты. Меняешь пропорцию панели —
+     пересчитывай доли. */
+  .panels { grid-template-columns: 1.33fr 1fr 1fr; }
   .flagship__story { grid-template-columns: repeat(3, 1fr); }
   .fnums { grid-template-columns: repeat(4, 1fr); }
 
