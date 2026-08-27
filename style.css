@@ -605,6 +605,9 @@ ul { list-style: none; padding: 0; }
    поэтому видео садится в рамку кадр в кадр, без обрезки по краям */
 .shot--phone { aspect-ratio: 393 / 852; }
 .shot--tall  { aspect-ratio: 3 / 4; }
+/* узкая вертикаль тёмной панели: та же высота кадра, что у телефона рядом,
+   но своя пропорция — под неё готовится отдельный футаж */
+.shot--strip { aspect-ratio: 9 / 19.5; }
 .shot__tag {
   color: var(--ink-mute); background: rgba(255,255,255,.9);
   padding: .45rem .8rem; border-radius: 100px;
@@ -645,13 +648,19 @@ ul { list-style: none; padding: 0; }
   display: grid; gap: clamp(.7rem, 1.4vw, 1rem);
   border-radius: var(--r-xl);
   padding: clamp(.7rem, 1.4vw, 1rem);
-  align-items: stretch;
+  /* высоту панелей теперь задаёт пропорция слота, а не растяжение по ряду */
+  align-items: start;
 }
 .panels .frame { box-shadow: inset 0 0 0 1px var(--line), var(--sh-2); }
 .panels > * { min-width: 0; }
 /* панели одной высоты: в референсе они выровнены в ряд */
 .panels .frame { display: flex; flex-direction: column; }
-.panels .shot { flex: 1; aspect-ratio: auto; min-height: clamp(220px, 29vw, 340px); }
+/* Слот держит СВОЮ пропорцию, а не тянется под высоту ряда. Раньше было
+   наоборот — flex: 1 и aspect-ratio: auto, — и форма кадра гуляла от 3:1
+   на телефоне до 0.46 на десктопе: подготовить под такое картинку нельзя,
+   object-fit резал её каждый раз по-новому. Теперь под каждый слот
+   готовится один файл, и он садится одинаково на любом экране. */
+.panels .shot { flex: none; }
 
 .flagship__story {
   display: grid; gap: clamp(1.4rem, 2.8vw, 2.25rem);
@@ -1069,6 +1078,18 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BREAKPOINTS
    ============================================================ */
+/* Ниже трёх колонок: сайт занимает всю ширину, а две вертикальные панели
+   встают рядом. Столбиком в одну колонку они дали бы полтора экрана скролла
+   на пустых, по сути, картинках. */
+@media (max-width: 859px) {
+  /* Ширина ограничена не ради вкуса: при фиксированной пропорции кадр
+     сайта во всю ширину планшета вырастает до 758×1010, и блок из трёх
+     панелей занимает под 1900px скролла. Ограничение режет это вдвое,
+     а на телефоне до предела не достаёт и ничего не меняет. */
+  .panels { grid-template-columns: 1fr 1fr; align-items: end; max-width: 620px; margin-inline: auto; }
+  .panels > :first-child { grid-column: 1 / -1; }
+}
+
 @media (min-width: 600px) {
   .sol { grid-template-columns: repeat(2, 1fr); }
   .steps { grid-template-columns: repeat(2, 1fr); }
@@ -1094,7 +1115,12 @@ ul { list-style: none; padding: 0; }
   .proof__bar { grid-template-columns: repeat(4, 1fr); }
 
   .flagship__top { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; }
-  .panels { grid-template-columns: 1.25fr .85fr .8fr; }
+  /* Доли подобраны под фиксированные пропорции слотов: при них три рамки
+     сходятся по высоте. Точно свести их одним набором долей нельзя — строка
+     браузера в первой панели занимает постоянные 42px, а не долю высоты,
+     поэтому нужная ширина первой колонки зависит от размера ряда. На 1.4fr
+     остаточный разброс 3-11px, то есть меньше 3% высоты. */
+  .panels { grid-template-columns: 1.4fr 1fr 1fr; }
   .flagship__story { grid-template-columns: repeat(3, 1fr); }
   .fnums { grid-template-columns: repeat(4, 1fr); }
 
