@@ -15,6 +15,7 @@
    · домен изогнут по осевой линии — форма и течение совпадают по построению
    · разрешение рендера подстраивается под реальный FPS
    · курсор мягко расталкивает поверхность в радиусе ~2 см
+   · толчок остаётся в воде на секунду с небольшим и растворяется
    ============================================================ */
 (function () {
   'use strict';
@@ -27,6 +28,25 @@
   var PX_PER_CM = 96 / 2.54;
   var RADIUS_CSS_PX = 1.5 * PX_PER_CM;
 
+  // След курсора. Толчок не исчезает вместе с курсором, а копится в
+  // отдельном буфере, гаснет по экспоненте и расплывается — поэтому мышью
+  // по воде можно рисовать, а нарисованное растворяется само.
+  //
+  // TAU — время затухания в e раз. При 0.42 с хвост уходит в неразличимое
+  // за ~1.2 с: достаточно, чтобы жест успел прочитаться линией, и мало,
+  // чтобы экран не превращался в исчёрканную доску.
+  //
+  // DIV — во сколько раз буфер следа мельче канваса. Ядро линзы ~57 px,
+  // на половинном разрешении это 28 текселей — разницы не видно, а проход
+  // стоит четверть площади.
+  //
+  // BLUR — насколько след расползается за кадр, в ЭКРАННЫХ пикселях:
+  // иначе на пониженных ступенях качества размытие росло бы вместе с
+  // текселем и хвост расплывался бы тем сильнее, чем слабее машина.
+  var TRAIL_TAU = 0.42;
+  var TRAIL_DIV = 2;
+  var TRAIL_BLUR_PX = 1.2;
+
   var VERT = [
     'attribute vec2 aPos;',
     'void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }'
@@ -37,9 +57,7 @@
     'uniform vec2  uRes;',
     'uniform float uTime;',
     'uniform float uDark;',
-    'uniform vec2  uMouse;',
-    'uniform float uMouseAmt;',
-    'uniform float uRadius;',
+    'uniform sampler2D uTrail;',
 
     'float hash(vec2 p){',
     '  p = fract(p * vec2(123.34, 456.21));',
@@ -172,20 +190,15 @@
     // то есть блики, и трогать его ради уровня плотности нельзя.
     '  ps.y -= 2.0 * comp;',
 
-    /* ---------- курсор: мягкая линза ---------- */
-    '  vec2 md = gl_FragCoord.xy - uMouse;',
-    '  float r = length(md);',
-    '  vec2 rdir = r > 0.0001 ? md / r : vec2(0.0);',
-    '  float q = r / max(uRadius, 1.0);',
-
-    // Один гладкий колокол вместо пары «плато + вал»: у него нет кромки,
-    // поэтому эффект читается как локальное преломление, а не как диск.
-    '  float lens = exp(-q * q * 1.35) * uMouseAmt;',
-
-    // Смещение линзы: ноль в центре, максимум в средней зоне, плавно в ноль
-    // на периферии. Ноль в центре и убирает стягивание в точку курсора.
-    '  float disp = q * exp(-q * q * 1.1) * uMouseAmt;',
-    '  ps -= R * rdir * disp * 0.30;',
+    /* ---------- курсор: след ---------- */
+    // Сами формулы линзы переехали в проход следа (TRAIL_FRAG), здесь
+    // остаётся выборка готового поля: в красном канале сила линзы, в
+    // зелёном и синем — вектор смещения со сдвигом на 0.5. Действие на
+    // поверхность ниже не изменилось ни на строку: те же lens и то же
+    // смещение выборки, просто теперь у них есть память.
+    '  vec4 trail = texture2D(uTrail, gl_FragCoord.xy / uRes);',
+    '  float lens = trail.r;',
+    '  ps -= R * (trail.gb - 0.5) * 0.30;',
 
     // Тёмной секции время варпа подаётся с прежним знаком: её внутреннее
     // движение должно остаться ровно таким, каким было.
@@ -548,6 +561,70 @@
     '}'
   ].join('\n');
 
+  /* ============================================================
+     Проход следа
+
+     Отдельная программа на маленький буфер: в него каждый кадр
+     подмешивается свежий толчок курсора, а то, что было раньше,
+     затухает и расплывается. Главный шейдер потом просто читает
+     результат — поэтому длина следа ничего не стоит в кадре.
+
+     Формат RGBA8: R — сила линзы (0..1), GB — вектор смещения со
+     сдвигом на 0.5. Компоненты вектора не выходят за ±0.41 (максимум
+     q*exp(-q*q*1.1) равен 0.409 при q = 0.674), так что в 0..1 они
+     помещаются целиком, а шаг кванта 1/255 даёт ошибку смещения
+     около сотой доли пикселя на экране.
+     ============================================================ */
+  var TRAIL_FRAG = [
+    'precision highp float;',
+    'uniform sampler2D uPrev;',
+    'uniform vec2  uTexel;',
+    'uniform vec2  uMouse;',
+    'uniform float uMouseAmt;',
+    'uniform float uRadius;',
+    'uniform float uDecay;',
+    'uniform float uBlur;',
+
+    'void main(){',
+    '  vec2 uv = gl_FragCoord.xy * uTexel;',
+
+    // Растворение: крест по соседям с суммой весов ровно 1. Сумма
+    // единичная не для красоты — GB хранят вектор со сдвигом, и при
+    // любой другой сумме сдвиг поехал бы вместе с весами.
+    '  vec2 o = uTexel * uBlur;',
+    '  vec4 s = texture2D(uPrev, uv) * 0.40',
+    '         + texture2D(uPrev, uv + vec2(o.x, 0.0)) * 0.15',
+    '         + texture2D(uPrev, uv - vec2(o.x, 0.0)) * 0.15',
+    '         + texture2D(uPrev, uv + vec2(0.0, o.y)) * 0.15',
+    '         + texture2D(uPrev, uv - vec2(0.0, o.y)) * 0.15;',
+    '  float oldLens = s.r * uDecay;',
+    '  vec2  oldDisp = (s.gb - 0.5) * uDecay;',
+
+    // Свежий толчок — ровно те формулы, что раньше стояли в главном
+    // шейдере: гладкий колокол для линзы и вал с нулём в центре для
+    // смещения. Физика не менялась, изменилось только время её жизни.
+    '  vec2 md = gl_FragCoord.xy - uMouse;',
+    '  float r = length(md);',
+    '  vec2 rdir = r > 0.0001 ? md / r : vec2(0.0);',
+    '  float q = r / max(uRadius, 1.0);',
+    '  float newLens = exp(-q * q * 1.35) * uMouseAmt;',
+    '  vec2  newDisp = rdir * (q * exp(-q * q * 1.1) * uMouseAmt);',
+
+    // Сила берётся МАКСИМУМОМ, а не суммой: иначе курсор, проведённый
+    // по собственному следу или просто замерший на месте, складывал бы
+    // кадр за кадром и вспухал валом вместо толчка.
+    //
+    // Направление же — среднее по весам. Максимум по вектору взять
+    // нельзя, а выбор «кто сильнее» дал бы на стыке старого и нового
+    // разрыв направления, то есть видимый шов поперёк следа.
+    '  float lens = max(oldLens, newLens);',
+    '  float w = oldLens + newLens + 1e-4;',
+    '  vec2  disp = (oldDisp * oldLens + newDisp * newLens) / w;',
+
+    '  gl_FragColor = vec4(lens, disp + 0.5, 1.0);',
+    '}'
+  ].join('\n');
+
   Array.prototype.forEach.call(canvases, init);
 
   function init(canvas) {
@@ -586,11 +663,20 @@
     var fs = compile(gl.FRAGMENT_SHADER, FRAG);
     if (!vs || !fs) { document.documentElement.classList.add('no-webgl'); return; }
 
-    var prog = gl.createProgram();
-    gl.attachShader(prog, vs);
-    gl.attachShader(prog, fs);
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    // Обе программы получают aPos в слот 0 принудительно: иначе линковщик
+    // волен раздать им разные слоты, и один настроенный vertexAttribPointer
+    // на обе программы перестал бы работать.
+    function link(v, f) {
+      var pr = gl.createProgram();
+      gl.attachShader(pr, v);
+      gl.attachShader(pr, f);
+      gl.bindAttribLocation(pr, 0, 'aPos');
+      gl.linkProgram(pr);
+      return gl.getProgramParameter(pr, gl.LINK_STATUS) ? pr : null;
+    }
+
+    var prog = link(vs, fs);
+    if (!prog) {
       document.documentElement.classList.add('no-webgl');
       return;
     }
@@ -599,16 +685,102 @@
     var buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    var aPos = gl.getAttribLocation(prog, 'aPos');
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
     var uRes = gl.getUniformLocation(prog, 'uRes');
     var uTime = gl.getUniformLocation(prog, 'uTime');
-    var uMouse = gl.getUniformLocation(prog, 'uMouse');
-    var uMouseAmt = gl.getUniformLocation(prog, 'uMouseAmt');
-    var uRadius = gl.getUniformLocation(prog, 'uRadius');
     gl.uniform1f(gl.getUniformLocation(prog, 'uDark'), dark);
+    gl.uniform1i(gl.getUniformLocation(prog, 'uTrail'), 0);
+
+    /* ---------- ресурсы следа ---------- */
+    var tfs = compile(gl.FRAGMENT_SHADER, TRAIL_FRAG);
+    var trailProg = tfs ? link(vs, tfs) : null;
+    var tU = null;
+    if (trailProg) {
+      gl.useProgram(trailProg);
+      gl.uniform1i(gl.getUniformLocation(trailProg, 'uPrev'), 0);
+      tU = {
+        texel:  gl.getUniformLocation(trailProg, 'uTexel'),
+        mouse:  gl.getUniformLocation(trailProg, 'uMouse'),
+        amt:    gl.getUniformLocation(trailProg, 'uMouseAmt'),
+        radius: gl.getUniformLocation(trailProg, 'uRadius'),
+        decay:  gl.getUniformLocation(trailProg, 'uDecay'),
+        blur:   gl.getUniformLocation(trailProg, 'uBlur')
+      };
+      gl.useProgram(prog);
+    }
+
+    // Пинг-понг: читаем из [0], пишем в [1], меняем местами. Фильтрация
+    // линейная — буфер вдвое мельче канваса, и главный шейдер берёт из
+    // него дробные координаты.
+    var trailTex = [null, null], trailFbo = [null, null];
+    var tw = 0, th = 0;
+
+    function makeTrailTarget(i, w, h) {
+      if (!trailTex[i]) {
+        trailTex[i] = gl.createTexture();
+        trailFbo[i] = gl.createFramebuffer();
+      }
+      gl.bindTexture(gl.TEXTURE_2D, trailTex[i]);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, trailFbo[i]);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, trailTex[i], 0);
+      // Пустой след — это не чёрный кадр: сила ноль, а вектор смещения
+      // хранится со сдвигом, поэтому нейтраль равна (0, 0.5, 0.5).
+      gl.clearColor(0.0, 0.5, 0.5, 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+    }
+
+    function swapTrail() {
+      var t = trailTex[0]; trailTex[0] = trailTex[1]; trailTex[1] = t;
+      var f = trailFbo[0]; trailFbo[0] = trailFbo[1]; trailFbo[1] = f;
+    }
+
+    // Ступень качества меняет размер канваса, а вместе с ним и буфера
+    // следа — и нарисованное обязано это пережить. Иначе любая просадка
+    // FPS стирает след целиком, причём именно тогда, когда человек по
+    // воде и водит: лестница срабатывает как раз под нагрузкой.
+    //
+    // Старое содержимое переносится тем же проходом следа с нулевым
+    // затуханием и нулевым размытием: пять отсчётов сходятся в один
+    // тексель, веса дают в сумме единицу — получается чистое копирование
+    // с растяжением, отдельная программа под него не нужна.
+    //
+    // Сам буфер выделяется всегда, даже когда проход следа не собрался:
+    // из несозданной текстуры выборка вернула бы нули, а ноль в GB — это
+    // не пустой след, а смещение на -0.5 по всему кадру.
+    function resizeTrail(w, h) {
+      var nw = Math.max(1, Math.round(w / TRAIL_DIV));
+      var nh = Math.max(1, Math.round(h / TRAIL_DIV));
+      var had = tw > 0 && !!trailProg;
+
+      makeTrailTarget(1, nw, nh);
+      if (had) {
+        gl.useProgram(trailProg);
+        gl.disable(gl.BLEND);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, trailFbo[1]);
+        gl.viewport(0, 0, nw, nh);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, trailTex[0]);
+        gl.uniform2f(tU.texel, 1 / nw, 1 / nh);
+        gl.uniform1f(tU.amt, 0.0);
+        gl.uniform1f(tU.decay, 1.0);
+        gl.uniform1f(tU.blur, 0.0);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        gl.enable(gl.BLEND);
+        swapTrail();
+        makeTrailTarget(1, nw, nh);
+      } else {
+        makeTrailTarget(0, nw, nh);
+      }
+
+      tw = nw; th = nh;
+    }
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -630,9 +802,16 @@
       if (canvas.width === w && canvas.height === h) return;
       canvas.width = w;
       canvas.height = h;
+      // resize зовут и из обработчика окна, где текущей могла остаться
+      // программа следа: uRes живёт в главной, её и ставим.
+      gl.useProgram(prog);
       gl.viewport(0, 0, w, h);
       gl.uniform2f(uRes, w, h);
-      gl.uniform1f(uRadius, RADIUS_CSS_PX * scale);
+
+      resizeTrail(w, h);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.useProgram(prog);
+      gl.viewport(0, 0, w, h);
     }
 
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -667,6 +846,10 @@
       if (curX < -9000) { curX = tgX; curY = tgY; }
     }
 
+    // На тач-устройствах и при prefers-reduced-motion проход следа не
+    // запускается вовсе: буфер остаётся нейтральным, лишней работы нет.
+    var trailOn = !!trailProg && pointerFine && !reduced;
+
     if (pointerFine && !reduced) {
       window.addEventListener('mousemove', onMove, { passive: true });
       window.addEventListener('mouseout', function (e) { if (!e.relatedTarget) tgAmt = 0; }, { passive: true });
@@ -682,9 +865,37 @@
       curX += (tgX - curX) * 0.085;
       curY += (tgY - curY) * 0.085;
       curAmt += (tgAmt - curAmt) * 0.05;
-      gl.uniform2f(uMouse, curX, curY);
-      gl.uniform1f(uMouseAmt, curAmt);
 
+      // Затухание привязано ко времени, а не к кадру: на 30 fps след
+      // обязан жить те же секунды, что и на 144. Шаг подрезан сверху,
+      // иначе первый кадр после возврата вкладки стирал бы след целиком.
+      var dts = prev ? Math.min((now - prev) / 1000, 0.05) : 1 / 60;
+
+      if (trailOn) {
+        gl.useProgram(trailProg);
+        gl.disable(gl.BLEND);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, trailFbo[1]);
+        gl.viewport(0, 0, tw, th);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, trailTex[0]);
+        gl.uniform2f(tU.texel, 1 / tw, 1 / th);
+        gl.uniform2f(tU.mouse, curX / TRAIL_DIV, curY / TRAIL_DIV);
+        gl.uniform1f(tU.amt, curAmt);
+        gl.uniform1f(tU.radius, RADIUS_CSS_PX * scale / TRAIL_DIV);
+        gl.uniform1f(tU.decay, Math.exp(-dts / TRAIL_TAU));
+        gl.uniform1f(tU.blur, TRAIL_BLUR_PX * scale / TRAIL_DIV);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+        swapTrail();
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.enable(gl.BLEND);
+        gl.useProgram(prog);
+      }
+
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, trailTex[0]);
       gl.uniform1f(uTime, (now - start) / 1000);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
 
@@ -710,9 +921,11 @@
     function stop() { if (raf !== null) { cancelAnimationFrame(raf); raf = null; } }
 
     if (reduced) {
+      // Буфер следа остаётся нейтральным после resize, так что курсор
+      // на статичный кадр не влияет — обнулять уже нечего.
       resize();
-      gl.uniform2f(uMouse, -9999, -9999);
-      gl.uniform1f(uMouseAmt, 0);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, trailTex[0]);
       gl.uniform1f(uTime, 12.0);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     } else {
