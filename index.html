@@ -222,11 +222,15 @@
 
       <div class="fgh__phone">
         <div class="fgh__stage">
-          <video class="fgh__screen shot--video"
-                 src="assets/video/flyguru-hero.mp4"
-                 poster="assets/img/flyguru-hero-poster.webp"
-                 autoplay muted loop playsinline preload="none"
-                 aria-label="Запись сайта flyguru.pro на телефоне"></video>
+          <!-- Ролик режется по форме выреза, а не по прямоугольнику: сам он
+               намеренно на 2% больше выреза, чтобы по краям не было щелей. -->
+          <div class="fgh__screenclip">
+            <video class="fgh__screen shot--video"
+                   src="assets/video/flyguru-hero.mp4"
+                   poster="assets/img/flyguru-hero-poster.webp"
+                   autoplay muted loop playsinline preload="none"
+                   aria-label="Запись сайта flyguru.pro на телефоне"></video>
+          </div>
           <img class="fgh__frame" src="assets/img/iphone-3d.webp" alt=""
                aria-hidden="true" width="1151" height="1366" loading="lazy" decoding="async">
         </div>

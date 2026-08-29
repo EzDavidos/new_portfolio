@@ -145,6 +145,26 @@
     }, { threshold: 0.25 }).observe(v);
   });
 
+  /* ---------- масштаб гомографии в мокапе FlyGuru ----------
+     matrix3d в .fgh__screen задана в пикселях канвы мокапа (1151px).
+     CSS сам поделить ширину сцены на 1151 не умеет, поэтому коэффициент
+     приходит отсюда. До первого замера --fgh-k = 0, и ролик не виден:
+     лучше пустой экран, чем ролик во всю страницу. */
+  var fghStage = document.querySelector('.fgh__stage');
+  if (fghStage) {
+    var setK = function () {
+      fghStage.style.setProperty('--fgh-k', fghStage.clientWidth / 1151);
+    };
+    setK();
+    if ('ResizeObserver' in window) new ResizeObserver(setK).observe(fghStage);
+    else window.addEventListener('resize', setK);
+    /* ResizeObserver ловит не всё: если первый замер попал на кадр до
+       раскладки, ширина сцены дальше может не измениться, и коэффициент
+       застрянет неверным. Дешевле пересчитать ещё раз по загрузке. */
+    window.addEventListener('load', setK);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setK);
+  }
+
   /* ---------- активный пункт навигации ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
   var targets = links
