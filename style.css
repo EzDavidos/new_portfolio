@@ -221,8 +221,8 @@ ul { list-style: none; padding: 0; }
 /* Grid- и flex-элементы по умолчанию имеют min-width:auto и не сжимаются
    ниже ширины содержимого — из-за этого длинная строка рейла растягивала
    всю колонку и ломала мобильную вёрстку. */
-.hero__grid > *, .flagship__top > *, .process__grid > *,
-.panels > *, .sol > *, .steps > *, .final__inner > *,
+.hero__grid > *, .fgh > *, .process__grid > *,
+.sol > *, .steps > *, .final__inner > *,
 .works__grid > *, .plans > *, .trust__grid > *, .footer__grid > *,
 .product__inner > *, .product__facts > *,
 .rail, .rail__inner, .proof__bar > * { min-width: 0; }
@@ -582,17 +582,6 @@ ul { list-style: none; padding: 0; }
    РАМКИ ПОД СКРИНШОТЫ
    ============================================================ */
 .frame { background: var(--card); border-radius: var(--r-lg); overflow: hidden; box-shadow: inset 0 0 0 1px var(--line), var(--sh-3); }
-.frame--xl { border-radius: var(--r-xl); }
-.frame__bar {
-  display: flex; align-items: center; gap: .4rem;
-  padding: .7rem .95rem; border-bottom: 1px solid var(--line); background: var(--paper-2);
-}
-.frame__bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); flex: none; }
-.frame__url {
-  margin-left: .75rem; color: var(--ink-mute); font-size: .72rem;
-  letter-spacing: .06em; text-transform: none;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
 .shot {
   position: relative; display: grid; place-content: center;
   background:
@@ -601,7 +590,6 @@ ul { list-style: none; padding: 0; }
 }
 .shot--16x9  { aspect-ratio: 16 / 9; }
 .shot--16x10 { aspect-ratio: 16 / 10; }
-.shot--tall  { aspect-ratio: 3 / 4; }
 .shot__tag {
   color: var(--ink-mute); background: rgba(255,255,255,.9);
   padding: .45rem .8rem; border-radius: 100px;
@@ -621,127 +609,199 @@ ul { list-style: none; padding: 0; }
 
 /* ============================================================
    BLOCK 03 — FLAGSHIP
+   Кейс FlyGuru одной карточкой-героем: фото воды клиента на фон,
+   3D-мокап телефона справа, текст и цифры слева.
    ============================================================ */
 .flagship { padding-block: clamp(3rem, 6vw, 5rem); }
 
-/* Кейс одной карточкой в цветах клиента. Цвета сняты с самого продукта:
-   тил #0C8397 — шапка FlyGuru, оранжевый #FC7918 — его кнопка записи.
-   Фон взят глубже фирменного тила: на крупной плашке #0C8397 в упор спорит
-   с зелёным низом страницы и перетягивает на себя весь экран, а тил при
-   этом никуда не девается — он работает акцентом на тексте.
-   Акцентный тон осветлён до #46C6D8: сам #0C8397 на таком фоне даёт
-   контраст около 1.9, читать его нельзя. */
-.case { border-radius: var(--r-xl); }
+/* Цвета сняты с самого продукта: тил #0C8397 — шапка FlyGuru, оранжевый
+   #FC7918 — его кнопка записи. Акцентный тон осветлён до #45D6EE: сам
+   #0C8397 на тёмной воде даёт контраст около 1.9, читать его нельзя. */
 .case--flyguru {
-  --case-ink:    #EAF6F8;
-  --case-mute:   rgba(226,244,247,.74);
-  --case-accent: #46C6D8;
+  --case-ink:    #F2FAFC;
+  --case-mute:   rgba(233,246,249,.80);
+  --case-accent: #45D6EE;
   --case-cta:    #FC7918;
-  --case-hair:   rgba(255,255,255,.16);
+  --case-hair:   rgba(255,255,255,.15);
+}
 
-  padding: clamp(1.4rem, 3.6vw, 3rem);
-  background: linear-gradient(168deg, #0C5A67 0%, #0A4B56 46%, #083C46 100%);
+.fgh {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--r-xl);
+  overflow: hidden;
   color: var(--case-ink);
+  background: #063346;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), var(--sh-3);
+  padding: clamp(1.8rem, 6.3vw, 5.7rem) clamp(1.3rem, 4.8vw, 4.4rem)
+           clamp(1.5rem, 4vw, 3.5rem);
 }
 
-/* Плашка под панелями внутри карточки не нужна: панели и так со своими
-   рамками, а вторая подложка читалась бы карточкой в карточке. */
-.case--flyguru .panels { padding: 0; }
-
-.case--flyguru .label { color: var(--case-accent); }
-.case--flyguru .h2 { color: var(--case-ink); }
-.case--flyguru .h2 em { color: var(--case-accent); }
-.case--flyguru .lead { color: var(--case-mute); }
-.case--flyguru .chip {
-  color: var(--case-ink);
-  background: rgba(255,255,255,.10);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22);
+/* Кадрирование снято с макета по доске с мачтой: обычный cover по ширине,
+   точка по вертикали 77%. При этих значениях доска встаёт в 161px от верха
+   карточки — в макете 162. Никакого дополнительного зума быть не должно:
+   он сразу разъезжается с макетом на 17%. */
+.fgh__bg {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 77%;
 }
-.case--flyguru .story__h { color: var(--case-ink); }
-.case--flyguru .story__h .mono { color: var(--case-accent); }
-.case--flyguru .story p { color: var(--case-mute); }
-.case--flyguru .story p strong { color: var(--case-ink); }
-.case--flyguru .flagship__mobile figcaption { color: var(--case-mute); }
-.case--flyguru .fnum__num { color: var(--case-cta); }
-.case--flyguru .fnum__cap { color: var(--case-mute); }
-.case--flyguru .flagship__story,
-.case--flyguru .fnums,
-.case--flyguru .flagship__foot { border-top-color: var(--case-hair); }
+
+/* Вуаль снята с макета, а не подобрана на глаз: по паре «макет / та же
+   подложка без вуали» решается ref = a·C + (1−a)·bg, и на ровной воде,
+   где ошибка совмещения ничего не ломает, ответ везде один — C = (5,70,92),
+   a = 0.44 ниже середины и 0 у верхнего края. Горизонтали в вуали нет:
+   левый столбец гасит сама подложка, она уже затемнена под текст.
+   (Оценки a у линии горизонта скачут до 0.7 и до −0.1, но там подложка
+   меняется на пиксель, и промах в 1px даёт любой ответ — не по ним.) */
+.fgh__scrim {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg,
+    rgba(5,70,92,0)   0%,
+    rgba(5,70,92,.14) 18%,
+    rgba(5,70,92,.44) 47%,
+    rgba(5,70,92,.44) 100%);
+}
+
+.fgh__text { position: relative; z-index: 1; max-width: 34rem; }
+.fgh .label { color: var(--case-accent); margin-bottom: clamp(.7rem, 1.6vw, 1.05rem); }
+
+.fgh__title {
+  font-family: var(--f-display);
+  font-size: clamp(2.5rem, 5.6vw, 3.15rem);
+  font-weight: 700; line-height: 1; letter-spacing: -.022em;
+  color: #fff;
+  margin-bottom: clamp(1.1rem, 3.1vw, 2.3rem);
+}
+.fgh__sub {
+  font-family: var(--f-display);
+  font-size: clamp(1.4rem, 3.7vw, 2.25rem);
+  font-weight: 700; line-height: 1.2; letter-spacing: -.014em;
+  color: #fff;
+}
+.fgh__sub em { font-style: normal; color: var(--case-accent); }
+
+.fgh__lead {
+  margin-top: clamp(.6rem, 1.3vw, .7rem);
+  font-size: clamp(.95rem, 1.3vw, 1rem);
+  line-height: 1.5;
+  color: var(--case-mute);
+}
+/* Ручные переносы в лиде и подзаголовке держат ритм макета, но на узком
+   экране они рвут строку не там — там текст переносится сам. Перед <br>
+   в разметке стоит пробел: без него скрытый перенос склеивает слова. */
+@media (max-width: 599px) {
+  .fgh__lead br, .fgh__sub br { display: none; }
+}
+
+/* Вуаль выше снята с макета, а макет — широкая карточка. Когда карточка
+   становится квадратнее, cover режет кадр по горизонтали и под текст
+   уезжает светлая линия горизонта, по которой белый уже не читается.
+   Ниже 1200px добавляется горизонтальный слой под текстовую колонку,
+   а на мобильном, где текст лежит поверх середины кадра, вуаль почти
+   сплошная и расступается только к низу, под свечение мокапа. */
+@media (max-width: 1199px) {
+  .fgh__scrim {
+    background:
+      linear-gradient(100deg,
+        rgba(4,48,66,.80)  0%,
+        rgba(4,48,66,.62) 34%,
+        rgba(5,60,80,.24) 58%,
+        rgba(5,70,92,0)   76%),
+      linear-gradient(180deg,
+        rgba(5,70,92,0)   0%,
+        rgba(5,70,92,.14) 18%,
+        rgba(5,70,92,.44) 47%,
+        rgba(5,70,92,.44) 100%);
+  }
+}
+@media (max-width: 859px) {
+  .fgh__scrim {
+    background: linear-gradient(180deg,
+      rgba(4,48,66,.90)  0%,
+      rgba(4,48,66,.86) 50%,
+      rgba(5,62,84,.56) 72%,
+      rgba(5,70,92,.42) 100%);
+  }
+}
+
+.fgh__nums {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(.9rem, 2.2vw, 1.6rem);
+  margin-top: clamp(.85rem, 1.7vw, 1.2rem);
+  padding-top: clamp(.95rem, 1.9vw, 1.25rem);
+  border-top: 1px solid var(--case-hair);
+}
+.fgh__stat { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+.fgh__num {
+  font-family: var(--f-display);
+  font-size: clamp(1.7rem, 3.6vw, 2.15rem);
+  font-weight: 700; line-height: 1.05; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--case-cta);
+}
+.fgh__cap { font-size: .88rem; line-height: 1.35; color: var(--case-mute); }
+
+.fgh__acts {
+  display: flex; flex-wrap: wrap; gap: .65rem;
+  margin-top: clamp(1.4rem, 3vw, 2.2rem);
+}
+/* В макете кнопки ниже базовых: 42px против 52. */
+.fgh .btn { padding: .72rem 1.4rem; font-size: .94rem; }
 
 /* Фирменная кнопка кейса. Текст на оранжевом тёмный: белый на #FC7918
    даёт контраст 2.6 и на кнопке не читается. */
-.case--flyguru .btn--brand {
+.fgh .btn--brand {
   color: #10262B; background: var(--case-cta);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.2), var(--sh-1);
 }
-.case--flyguru .btn--brand:hover {
+.fgh .btn--brand:hover {
   transform: translateY(-2px); filter: brightness(1.07);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.3), var(--sh-2);
 }
-.flagship__top { display: grid; gap: clamp(2rem, 4.5vw, 3.5rem); align-items: start; }
-.flagship__head .h2 { margin-bottom: clamp(.9rem, 2vw, 1.35rem); }
-.tagline { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: clamp(1.1rem, 2.4vw, 1.6rem); }
 
-/* три панели продукта, как в референсе */
-.panels {
-  display: grid; gap: clamp(.7rem, 1.4vw, 1rem);
-  border-radius: var(--r-xl);
-  padding: clamp(.7rem, 1.4vw, 1rem);
-  /* высоту панелей теперь задаёт пропорция слота, а не растяжение по ряду */
-  align-items: start;
-}
-.panels .frame { box-shadow: inset 0 0 0 1px var(--line), var(--sh-2); }
-.panels > * { min-width: 0; }
-/* панели одной высоты: в референсе они выровнены в ряд */
-.panels .frame { display: flex; flex-direction: column; }
-/* Слот держит СВОЮ пропорцию, а не тянется под высоту ряда. Раньше было
-   наоборот — flex: 1 и aspect-ratio: auto, — и форма кадра гуляла от 3:1
-   на телефоне до 0.46 на десктопе: подготовить под такое картинку нельзя,
-   object-fit резал её каждый раз по-новому. Теперь под каждый слот
-   готовится один файл, и он садится одинаково на любом экране. */
-.panels .shot { flex: none; }
+/* ---------- 3D-мокап телефона ----------
+   .fgh__frame — PNG, у которого экран ВЫРЕЗАН в альфе; видео лежит под ним
+   и видно в дырке. Дырка не прямоугольная: телефон повёрнут по Y примерно
+   на 29°, из-за чего ширина экрана сжата с 466 до 407 пикселей мокапа, а
+   правая грань на 2.5% выше левой. Углы выреза сняты заливкой по альфе
+   (координаты в пикселях файла 1151×1366):
+       TL 364.8 / 164.3     TR 771.7 / 156.3
+       BL 358.7 / 1164.4    BR 766.1 / 1181.9
 
-.flagship__story {
-  display: grid; gap: clamp(1.4rem, 2.8vw, 2.25rem);
-  margin-top: clamp(2.25rem, 5vw, 3.5rem);
-  padding-top: clamp(1.75rem, 3.5vw, 2.5rem);
-  border-top: 1px solid var(--line);
+   Видео ставится матрицей, которая переводит прямоугольник 466×1012 (это
+   ровно пропорция ролика 1080:2346, кадр не искажается) в этот
+   четырёхугольник. Матрица здесь аффинная, а не перспективная, и это не
+   упрощение от лени: точная гомография живёт в matrix3d, а её члены
+   заданы в ПИКСЕЛЯХ — на другой ширине мокапа она разъезжается, и
+   пересчитать её средствами CSS нельзя (scale() требует число, а
+   calc(100cqw / 1151) даёт длину). Аффинная же часть безразмерная:
+   перенос делают left/top в процентах, а matrix() — только наклон и
+   масштаб, и оба конца преобразования тянутся вместе с мокапом.
+   Расплата — 6..18px расхождения с настоящим вырезом на канве 1151px.
+   Поэтому прямоугольник ещё и раздут на 2.2%: все четыре угла уходят
+   НАРУЖУ выреза, дырка перекрыта целиком и фон сквозь неё не сквозит,
+   а лишнее срезает сам корпус, лежащий сверху. */
+.fgh__phone {
+  position: relative; z-index: 1;
+  width: min(100%, 380px);
+  margin: clamp(1.6rem, 4vw, 2.6rem) auto 0;
 }
-/* нумерация тут честная: это последовательность */
-.story__h {
-  display: flex; align-items: baseline; gap: .65rem;
-  font-family: var(--f-display); font-size: var(--fs-h3);
-  font-weight: 600; letter-spacing: -.006em; margin-bottom: .5rem;
+.fgh__stage { position: relative; aspect-ratio: 1151 / 1366; }
+.fgh__screen {
+  position: absolute;
+  left: 31.2976%; top: 10.7426%;
+  width: 40.4865%; height: 74.0849%;
+  object-fit: cover;
+  transform-origin: 0 0;
+  transform: matrix(0.89293, 0.010453, -0.005882, 1.022815, 0, 0);
+  background: #0C5A67;
 }
-.story__h .mono { color: var(--green); }
-.story p { color: var(--ink-soft); }
-.story strong { color: var(--ink); font-weight: 600; }
-
-/* цифры кейса: та же линейка, что у стат-бара, но на бумаге и без плашки —
-   блок 03 должен доказывать так же, как блок 05, но не спорить с ним по весу */
-.fnums {
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: clamp(1.1rem, 2.4vw, 1.75rem);
-  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
-  padding-top: clamp(1.5rem, 3vw, 2.25rem);
-  border-top: 1px solid var(--line);
+.fgh__frame {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
 }
-.fnum { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
-.fnum__num {
-  font-family: var(--f-display); font-size: clamp(1.5rem, 3.2vw, 2.05rem);
-  font-weight: 600; line-height: 1.1; letter-spacing: -.012em;
-  font-variant-numeric: tabular-nums; color: var(--green);
-}
-.fnum__cap { font-size: .88rem; line-height: 1.4; color: var(--ink-mute); }
-
-.flagship__foot {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--gap);
-  margin-top: clamp(1.75rem, 3.5vw, 2.75rem); padding-top: clamp(1.35rem, 3vw, 2rem);
-  border-top: 1px solid var(--line);
-}
-.stack { display: flex; flex-wrap: wrap; gap: .45rem; }
-.flagship__acts { display: flex; flex-wrap: wrap; gap: .6rem; }
 
 /* ============================================================
    BLOCK 04 — SOLUTIONS
@@ -897,45 +957,6 @@ ul { list-style: none; padding: 0; }
   border-radius: 12.9cqw;   /* 50 / 388 ширины корпуса */
 }
 
-/* Корпуса телефонов в панелях кейса. Устроены как макет 100ловой: скриншот
-   лежит под прозрачным PNG и виден ровно в вырезе экрана. Проценты сняты с
-   альфы самих файлов, а не подобраны на глаз. Пропорцию панели тут задаёт
-   сам корпус, поэтому aspect-ratio не нужен — геометрия и есть картинка.
-   Радиус экрана повторяем на скриншоте в cqw, чтобы он тянулся с шириной:
-   квадратные углы вылезали бы за силуэт поверх скруглений. */
-.device { position: relative; margin: 0; container-type: inline-size; }
-.device__body {
-  position: relative; z-index: 2;
-  display: block; width: 100%; height: auto; pointer-events: none;
-  filter: drop-shadow(0 16px 30px rgba(3,18,22,.5));
-}
-.device__screen {
-  position: absolute; z-index: 1; display: block;
-  object-fit: cover; background: #000;
-}
-/* iPhone 16 Pro Max: вырез 355×771 в кадре 388×800, радиус 50 */
-.device--iphone .device__screen {
-  left: 4.381%; top: 1.5%; width: 91.495%; height: 97.125%;
-  border-radius: 36px; border-radius: 12.9cqw;
-}
-/* Galaxy S25 Ultra: вырез 592×1283 в кадре 640×1328, радиус 25 — углы у
-   него заметно площе айфоновских, отсюда втрое меньший процент */
-.device--samsung .device__screen {
-  left: 3.75%; top: 1.581%; width: 92.5%; height: 96.611%;
-  border-radius: 12px; border-radius: 3.91cqw;
-}
-
-/* Макет телефона в блоке FlyGuru. Ширину задаём здесь явно: у .mock она
-   min(284px, 78%), а проценты тут считать не от чего — фигура центрируется
-   в сетке и сама сжимается по содержимому. */
-.flagship__mobile {
-  margin: clamp(2rem, 4.5vw, 3rem) auto 0;
-  display: grid; justify-items: center; gap: .9rem;
-}
-.flagship__mobile .mock { width: min(284px, 68vw); }
-.flagship__mobile figcaption {
-  color: var(--ink-mute); font-size: .74rem; letter-spacing: .06em;
-}
 
 /* ============================================================
    BLOCK 06 — ДРУГИЕ ПРОЕКТЫ
@@ -1158,18 +1179,6 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BREAKPOINTS
    ============================================================ */
-/* Ниже трёх колонок: сайт занимает всю ширину, а две вертикальные панели
-   встают рядом. Столбиком в одну колонку они дали бы полтора экрана скролла
-   на пустых, по сути, картинках. */
-@media (max-width: 859px) {
-  /* Ширина ограничена не ради вкуса: при фиксированной пропорции кадр
-     сайта во всю ширину планшета вырастает до 758×1010, и блок из трёх
-     панелей занимает под 1900px скролла. Ограничение режет это вдвое,
-     а на телефоне до предела не достаёт и ничего не меняет. */
-  .panels { grid-template-columns: 1fr 1fr; align-items: end; max-width: 620px; margin-inline: auto; }
-  .panels > :first-child { grid-column: 1 / -1; }
-}
-
 @media (min-width: 600px) {
   .sol { grid-template-columns: repeat(2, 1fr); }
   .steps { grid-template-columns: repeat(2, 1fr); }
@@ -1194,17 +1203,26 @@ ul { list-style: none; padding: 0; }
 
   .proof__bar { grid-template-columns: repeat(4, 1fr); }
 
-  .flagship__top { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; }
-  /* Доли подобраны под пропорции панелей: слот сайта 3:4 плюс постоянные
-     42px строки браузера, корпуса телефонов 0.482 и 0.485. При них три
-     панели сходятся по высоте. Точно свести одним набором долей нельзя —
-     строка браузера занимает постоянную высоту, а не долю, поэтому нужная
-     ширина первой колонки зависит от размера ряда. Остаточный разброс
-     около 10px, то есть меньше 3% высоты. Меняешь пропорцию панели —
-     пересчитывай доли. */
-  .panels { grid-template-columns: 1.33fr 1fr 1fr; }
-  .flagship__story { grid-template-columns: repeat(3, 1fr); }
-  .fnums { grid-template-columns: repeat(4, 1fr); }
+  /* Телефон кладём абсолютом, а не колонкой сетки. Так высоту карточки
+     задаёт один только текст — как в макете, где мокап выше карточки и
+     торчит за оба её края, а лишнее срезает overflow. В сетке пришлось бы
+     либо растить карточку под мокап, либо мельчить мокап под карточку.
+     Ширина и правый вылет сняты с макета: мокап 730 из 1494 ширины
+     карточки, правый край почти вплотную к её кромке. */
+  .fgh__text { max-width: 46%; }
+  .fgh__phone {
+    position: absolute; right: .3%; top: 50%;
+    width: 48.86%; max-width: none; margin: 0;
+    transform: translateY(-50%);
+  }
+  /* Колонки цифр не равной ширины: в макете они по контенту, а между ними
+     стоят волосяные разделители посреди отступа. Поэтому не сетка, а флекс
+     с симметричным padding-inline — граница тогда сама встаёт по центру. */
+  .fgh__nums { display: flex; flex-wrap: nowrap; gap: 0; }
+  .fgh__stat { padding-inline: clamp(.85rem, 2.3vw, 2.1rem); }
+  .fgh__stat:first-child { padding-left: 0; }
+  .fgh__stat:last-child  { padding-right: 0; }
+  .fgh__stat + .fgh__stat { border-left: 1px solid var(--case-hair); }
 
   .sol { grid-template-columns: repeat(4, 1fr); }
 
