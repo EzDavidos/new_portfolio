@@ -224,7 +224,7 @@ ul { list-style: none; padding: 0; }
 .hero__grid > *, .fgh > *, .process__grid > *,
 .sol > *, .steps > *, .final__inner > *,
 .works__grid > *, .plans > *, .trust__grid > *, .footer__grid > *,
-.product__inner > *, .product__facts > *,
+.p100 > *, .p100__nums > *,
 .rail, .rail__inner, .proof__bar > * { min-width: 0; }
 
 /* ---------- LAYOUT ---------- */
@@ -929,57 +929,175 @@ ul { list-style: none; padding: 0; }
 .final__note { font-size: .88rem; color: rgba(234,243,239,.65); }
 
 /* ============================================================
-   BLOCK 05 — СОБСТВЕННЫЙ ПРОДУКТ
-   Тёмная плашка без воды: канвас оставлен первому экрану и
-   финальному CTA — третий работающий шейдер на странице не стоит
-   того, что он добавляет. Объём даёт градиентная подсветка.
+   BLOCK 05 — СОБСТВЕННЫЙ ПРОДУКТ «100ЛОВАЯ»
+   Карточка-герой по макету photo_video/100lovaya_card. Меряется он
+   так же, как макет FlyGuru: это скриншот той же страницы, карточка
+   внутри него 1488x806 px против реальных 1176 CSS-px, то есть всё
+   делится на 1.2653. Ниже в комментариях стоят исходные числа макета.
    ============================================================ */
 .product { padding-block: clamp(3rem, 6vw, 5rem); }
-.product__inner {
+
+/* Цвета сняты пипеткой с макета: заливка кнопки (178,39,27), акцент
+   текста светлее её — на тёмном фото густой кирпичный читается плохо.
+   Белый на #B2271B даёт контраст 6.6, так что подпись кнопки белая. */
+.p100 {
+  --p100-ink:    #FDF4E8;
+  --p100-mute:   #E9D5C3;
+  --p100-accent: #DE4632;
+  --p100-cta:    #B2271B;
+  --p100-hair:   rgba(255,235,220,.18);
+
   position: relative;
+  isolation: isolate;
   border-radius: var(--r-xl);
   overflow: hidden;
-  background:
-    radial-gradient(105% 85% at 88% 6%,  rgba(31,132,104,.62), transparent 58%),
-    radial-gradient(85% 70% at 4% 100%, rgba(10,95,73,.55),   transparent 62%),
-    var(--green-dark);
-  color: rgba(230,241,236,.82);
-  padding: clamp(1.75rem, 4vw, 3.25rem);
-  display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: center;
+  color: var(--p100-mute);
+  background: #2A1710;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.07), var(--sh-3);
+  /* отступы макета: сверху 76px, слева 116, снизу 104 (в его масштабе) */
+  padding: clamp(1.6rem, 4.3vw, 3.45rem) clamp(1.3rem, 7.2vw, 5.75rem)
+           clamp(1.6rem, 6.4vw, 5.15rem);
 }
-.product .label { color: #7FDCBB; }
-.product__h {
-  font-family: var(--f-display); font-size: var(--fs-h2);
-  font-weight: 600; line-height: 1.12; letter-spacing: -.008em;
-  color: #fff; text-wrap: balance;
-  margin-bottom: clamp(.9rem, 2vw, 1.3rem);
-}
-.product__h em { font-style: normal; color: #7FDCBB; }
-.product__lead { font-size: var(--fs-lead); line-height: 1.6; max-width: 46ch; }
 
-.product__facts {
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: clamp(1rem, 2.4vw, 1.6rem);
-  margin-top: clamp(1.5rem, 3vw, 2.25rem);
-  padding-top: clamp(1.5rem, 3vw, 2.25rem);
-  border-top: 1px solid rgba(255,255,255,.15);
+/* Шаблон фона уже несёт градиент тёмное-слева / светлое-справа, поэтому
+   никакой вуали сверху не нужно: контрольные точки макета и шаблона
+   сходятся при обычном cover без сдвига — (800,400) даёт (242,219,193)
+   против (246,219,191). Свою вуаль добавляют только узкие ширины ниже. */
+.p100__bg {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 50%;
 }
-.product__num {
+.p100__scrim { position: absolute; inset: 0; z-index: -1; }
+
+/* Бледная плита под телефоном: в макете это волосок со скруглением ~90px,
+   уходящий за правый край карточки. Заливки у неё почти нет — разница с
+   фоном меньше двух уровней яркости, держит форму именно кромка. */
+.p100__plate {
+  position: absolute; z-index: -1;
+  left: 52.5%; right: -8%; top: 8.8%; bottom: 10.9%;
+  border-radius: clamp(34px, 6vw, 72px);
+  border: 1px solid rgba(255,255,255,.34);
+  background: rgba(255,255,255,.05);
+}
+
+.p100__text { position: relative; z-index: 1; max-width: 34rem; }
+.p100 .label { color: var(--p100-accent); font-size: .83rem; margin-bottom: clamp(.7rem, 1.5vw, .85rem); }
+
+/* Заголовок блока — это логотип продукта плюс сама формулировка. Держим
+   их одним h2: иначе имя продукта выпадает из структуры страницы. */
+.p100__h { margin: 0; }
+.p100__logo {
   display: block;
-  font-family: var(--f-display); font-size: clamp(1.55rem, 3.2vw, 2.05rem);
-  font-weight: 600; line-height: 1.1; letter-spacing: -.012em;
-  font-variant-numeric: tabular-nums; color: #fff;
+  font-family: var(--f-display);
+  font-size: clamp(2.1rem, 4.9vw, 2.8rem);   /* ширина лого в макете 203px */
+  font-weight: 700; line-height: 1; letter-spacing: -.005em;
+  color: #fff;
 }
-.product__cap { font-size: .88rem; line-height: 1.4; color: rgba(230,241,236,.80); }
-.product__note {
-  margin-top: clamp(1.25rem, 2.6vw, 1.75rem);
-  font-size: .92rem; color: rgba(230,241,236,.78); max-width: 54ch;
+.p100__logo-num { color: var(--p100-accent); }
+
+.p100__hl {
+  display: block;
+  margin-top: clamp(.8rem, 2vw, 1.25rem);
+  font-family: var(--f-display);
+  font-size: clamp(1.55rem, 3.9vw, 2.75rem);  /* строка «Магазин, который» в макете 371px */
+  font-weight: 700; line-height: 1.186; letter-spacing: -.018em;
+  color: var(--p100-ink);
 }
-.product__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.5rem, 3vw, 2rem); }
-.product__shots { display: grid; place-items: center; }
+
+.p100__lead {
+  margin-top: clamp(.7rem, 1.7vw, .89rem);
+  max-width: 23.5rem;
+  font-size: clamp(.95rem, 1.3vw, 1rem);
+  line-height: 1.5;
+  color: var(--p100-mute);
+}
+/* Ручной перенос в заголовке держит ритм макета, но на узком экране рвёт
+   строку не там. Пробел перед <br> обязателен: без него скрытый перенос
+   склеивает слова. */
+@media (max-width: 599px) {
+  .p100__hl br { display: none; }
+}
+
+/* Ниже 1200px cover режет кадр по горизонтали, под текст уезжает светлая
+   половина стола, и белый по ней не читается. Там добавляется свой
+   градиент; на мобильном текст лежит поверх середины кадра, поэтому
+   вуаль почти сплошная и расступается только к низу, под мокап. */
+@media (max-width: 1199px) {
+  .p100__scrim {
+    background: linear-gradient(100deg,
+      rgba(28,14,9,.86)  0%,
+      rgba(30,16,10,.72) 36%,
+      rgba(34,19,12,.30) 60%,
+      rgba(40,22,14,0)   78%);
+  }
+}
+@media (max-width: 859px) {
+  .p100__scrim {
+    background: linear-gradient(180deg,
+      rgba(26,13,8,.90)  0%,
+      rgba(28,15,9,.86) 46%,
+      rgba(34,19,12,.52) 74%,
+      rgba(40,22,14,.34) 100%);
+  }
+  .p100__plate { display: none; }
+}
+
+/* В макете цифры выключены по центру своей колонки, а не влево, как
+   в кейсе FlyGuru: разделители стоят на 251.5 / 393.5 / 547.5 px, ровно
+   посреди просветов между колонками. */
+.p100__nums {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(.9rem, 2.2vw, 1.4rem);
+  margin-top: clamp(1rem, 2.1vw, 1.31rem);
+  padding-top: clamp(.8rem, 1.6vw, 1.2rem);
+  border-top: 1px solid var(--p100-hair);
+}
+.p100__stat { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
+.p100__num {
+  font-family: var(--f-display);
+  font-size: clamp(1.5rem, 3vw, 1.75rem);    /* ширина «521» в макете 46px */
+  font-weight: 700; line-height: 1.05; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--p100-accent);
+}
+.p100__cap { font-size: .95rem; line-height: 1.3; color: var(--p100-mute); }
+
+.p100__acts {
+  display: flex; flex-wrap: wrap; gap: .6rem;
+  margin-top: clamp(1.4rem, 3.1vw, 2.42rem);
+}
+/* высота кнопки в макете 52px — это базовый размер системы, но базовый
+   вертикальный padding даёт 55, поэтому чуть поджат */
+.p100 .btn { padding: .8rem 1.5rem; }
+.p100 .btn--brand {
+  color: #fff; background: var(--p100-cta);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.14), var(--sh-1);
+}
+.p100 .btn--brand:hover {
+  transform: translateY(-2px); filter: brightness(1.1);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.24), var(--sh-2);
+}
+/* обводка вторичной кнопки в макете тёплая, а не холодная как в базовом
+   .btn--on-dark: на песочном столе голубоватый волосок читается чужим */
+.p100 .btn--on-dark {
+  color: var(--p100-ink);
+  background: rgba(255,255,255,.06);
+  box-shadow: inset 0 0 0 1px rgba(255,238,224,.42);
+}
+.p100 .btn--on-dark:hover {
+  background: rgba(255,255,255,.13);
+  box-shadow: inset 0 0 0 1px rgba(255,238,224,.6);
+}
+
+/* Телефон в макете стоит по вертикали почти по центру карточки (его центр
+   на 395 против 403 у карточки) и занимает 91% её высоты. */
+.p100__phone { margin: clamp(1.8rem, 4vw, 2.6rem) auto 0; width: min(100%, 260px); }
+.p100 .mock { width: 100%; }
+
 /* мокап телефона: корпус — прозрачный PNG, запись лежит под ним и видна
    только в вырезе экрана. Проценты сняты с альфы самого файла — вырез
-   355×771 с отступом 17/15 в кадре 388×800, — поэтому видео садится в
+   355x771 с отступом 17/15 в кадре 388x800, — поэтому видео садится в
    экран без подгонки на глаз. Вырез скруглён (радиус ~50px в тех же 388),
    и корпус углы видео НЕ обрезает: квадратные углы вылезали за силуэт
    корпуса поверх скруглений. Поэтому радиус повторяем на самом видео,
@@ -1292,7 +1410,28 @@ ul { list-style: none; padding: 0; }
   }
   .step--on::after { box-shadow: inset 0 0 0 1.5px var(--green); }
 
-  .product__inner { grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); }
+  /* Телефон кладём абсолютом, а не колонкой сетки: высоту карточки
+     задаёт текст, как в макете. Числа сняты с него — корпус занимает
+     24% ширины карточки, правый край в 15.9% от её кромки. */
+  .p100__text { max-width: 52%; }
+  /* Ширина корпуса — 24% карточки, правый край в 15.9% от её кромки; это
+     числа макета, снятые при карточке в 1176px. На более узком десктопе
+     карточка становится выше, и в тех же 24% телефон теряется рядом с
+     плитой, поэтому там он крупнее. */
+  .p100__phone {
+    position: absolute; right: 15.9%; top: 50%;
+    width: 28%; margin: 0;
+    transform: translateY(-50%);
+  }
+  /* Колонки цифр по контенту, между ними волосяные разделители посреди
+     отступа; текст в колонке выключен по центру — так в макете. */
+  .p100__nums { display: flex; flex-wrap: nowrap; gap: 0; }
+  .p100__nums { width: fit-content; max-width: 100%; }
+  .p100__stat { align-items: center; text-align: center; padding-inline: clamp(.7rem, 1.8vw, 1.64rem); }
+  .p100__stat:first-child { padding-left: 0; }
+  .p100__stat:last-child  { padding-right: 0; }
+  .p100__stat + .p100__stat { border-left: 1px solid var(--p100-hair); }
+
   .works__grid { grid-template-columns: repeat(3, 1fr); }
   .plans { grid-template-columns: repeat(3, 1fr); }
   .care { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; }
@@ -1301,6 +1440,10 @@ ul { list-style: none; padding: 0; }
 
   .final__inner { grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); padding-left: 32%; }
   .final__side { align-items: flex-end; text-align: right; }
+}
+
+@media (min-width: 1280px) {
+  .p100__phone { width: 24%; }
 }
 
 @media (min-width: 1120px) {

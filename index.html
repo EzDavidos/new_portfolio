@@ -287,48 +287,44 @@
      Единственный блок, где цифры можно называть без согласования:
      продукт мой, данные из его собственной базы. Поэтому он тёмный
      и крупный — это самое сильное доказательство на странице.
+
+     Собран той же карточкой-героем, что и кейс FlyGuru, но по своему
+     макету: фон — предметная съёмка кухни, тёмная слева под текст и
+     светлая справа под телефон, плоский мокап стоит на бледной плите.
      ============================================================ -->
 <section class="product" id="product">
   <div class="wrap">
-    <div class="product__inner reveal">
 
-      <div class="product__body">
+    <article class="p100 reveal">
+      <img class="p100__bg" src="assets/img/100lovaya-hero-bg.webp" alt=""
+           aria-hidden="true" width="1715" height="911" loading="lazy" decoding="async">
+      <div class="p100__scrim" aria-hidden="true"></div>
+      <div class="p100__plate" aria-hidden="true"></div>
+
+      <div class="p100__text">
         <p class="label mono">Собственный продукт</p>
-        <h2 class="product__h">100ловая — <em>магазин, который живёт в Telegram</em></h2>
-        <p class="product__lead">
-          Домашняя кухня в Нячанге: готовят еду дома и развозят клиентам. Весь путь
-          клиента — меню, корзина, оплата, повторный заказ — живёт внутри Telegram,
-          а товары, клиенты, статистика и рассылки лежат в админке того же
-          мини-аппа. Отдельного сайта и отдельной CRM у бизнеса нет вообще.
+
+        <h2 class="p100__h">
+          <span class="p100__logo"><span class="p100__logo-num">100</span>ловая</span>
+          <span class="p100__hl">Магазин, который <br>живёт в Telegram</span>
+        </h2>
+
+        <p class="p100__lead">
+          Меню, корзина, оплата и повторный заказ работают внутри Telegram.
+          Товары, клиенты, статистика и рассылки — в админке того же приложения.
         </p>
 
-        <ul class="product__facts" role="list">
-          <li>
-            <span class="product__num">521</span>
-            <span class="product__cap">заказ прошёл через продукт</span>
-          </li>
-          <li>
-            <span class="product__num">150</span>
-            <span class="product__cap">клиентов в базе</span>
-          </li>
-          <li>
-            <span class="product__num">44%</span>
-            <span class="product__cap">клиентов вернулись за повторным заказом</span>
-          </li>
-          <li>
-            <span class="product__num" data-days-num>—</span>
-            <span class="product__cap">дней в продакшне без простоев</span>
-          </li>
+        <!-- цифры из боевой базы продукта: первый живой заказ 25 апреля 2026,
+             день считает script.js, чтобы строка не устаревала -->
+        <ul class="p100__nums" role="list">
+          <li class="p100__stat"><span class="p100__num">521</span><span class="p100__cap">заказ</span></li>
+          <li class="p100__stat"><span class="p100__num">150</span><span class="p100__cap">клиентов</span></li>
+          <li class="p100__stat"><span class="p100__num">44%</span><span class="p100__cap">вернулись</span></li>
+          <li class="p100__stat"><span class="p100__num" data-days-num>—</span><span class="p100__cap">дней</span></li>
         </ul>
 
-        <p class="product__note">
-          Это не демо и не учебный проект: первый живой заказ прошёл 25 апреля 2026,
-          с тех пор кухня работает на нём каждый день. У самого частого клиента —
-          79 заказов. Все цифры выше посчитаны в боевой базе, а не в презентации.
-        </p>
-
-        <div class="product__cta">
-          <a href="https://t.me/davidnaumenko" class="btn btn--light" target="_blank" rel="noopener">
+        <div class="p100__acts">
+          <a href="https://t.me/davidnaumenko" class="btn btn--brand" target="_blank" rel="noopener">
             Хочу такой же продукт
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -336,7 +332,7 @@
         </div>
       </div>
 
-      <div class="product__shots">
+      <div class="p100__phone">
         <!-- корпус — PNG с прозрачным экраном, запись лежит под ним и видна
              ровно в вырезе. Порядок в разметке обратный слоям: видео сначала,
              корпус поверх. Запись без звука, сама себя крутит, в поток страницы
@@ -351,8 +347,8 @@
                alt="" aria-hidden="true" width="388" height="800" loading="lazy">
         </figure>
       </div>
+    </article>
 
-    </div>
   </div>
 </section>
 
