@@ -806,23 +806,6 @@ ul { list-style: none; padding: 0; }
 }
 .fgh__stage { position: relative; aspect-ratio: 1151 / 1366; }
 
-/* Тень контакта. В самом PNG было запечено свечение из чужой сцены:
-   бирюзовый ореол вокруг корпуса (альфа до 187 при цвете 43,227,242) и
-   светлая «лужа» под низом — она непрозрачная, поэтому по одной альфе
-   не отделялась и снималась по цвету. Обе убраны из ассета; вместо них
-   телефон ставит на плоскость обычная тень: широкое мягкое пятно плюс
-   узкое тёмное ядро прямо под гранью. Нижняя грань корпуса в файле
-   лежит на y≈1200 из 1366, то есть на 88% высоты сцены. */
-.fgh__stage::before {
-  content: "";
-  position: absolute; z-index: -1;
-  left: 22%; right: 20%; bottom: 4.4%; height: 11%;
-  background:
-    radial-gradient(closest-side, rgba(1,16,22,.52), rgba(1,16,22,0) 100%),
-    radial-gradient(40% 30% at 48% 50%, rgba(0,8,12,.8), rgba(0,8,12,0) 100%);
-  filter: blur(4px);
-}
-
 .fgh__screenclip {
   position: absolute; inset: 0;
   clip-path: polygon(
