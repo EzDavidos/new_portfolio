@@ -846,6 +846,16 @@ ul { list-style: none; padding: 0; }
   text-wrap: balance;
 }
 .sol__card p { color: var(--ink-soft); font-size: .95rem; line-height: 1.5; }
+.sol__note {
+  margin-top: clamp(1.25rem, 2.6vw, 1.75rem);
+  font-size: .9rem; color: var(--ink-mute); max-width: 74ch;
+}
+.sol__note a {
+  color: var(--green); font-weight: 500;
+  box-shadow: inset 0 -1px 0 rgba(12,122,93,.28);
+  transition: box-shadow .3s var(--ease);
+}
+.sol__note a:hover { box-shadow: inset 0 -1px 0 var(--green); }
 
 /* ============================================================
    BLOCK 07 — PROCESS
