@@ -1201,6 +1201,29 @@ ul { list-style: none; padding: 0; }
 }
 .care__price i { font-style: normal; font-size: .82rem; font-weight: 500; color: var(--ink-mute); margin-left: .15rem; }
 
+/* Визуальная концепция: та же плашка, но справа не прайс-лист, а состав
+   работы — поэтому строки без второй колонки и с маркером вместо цены.
+   Сама цена уезжает в шапку: она одна на всю услугу. */
+.care__from {
+  margin-top: clamp(.9rem, 2vw, 1.2rem);
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .4rem;
+  color: var(--ink-mute); font-size: .92rem;
+}
+.care__from span {
+  font-family: var(--f-display); font-weight: 600; font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+  color: var(--ink); letter-spacing: -.014em; font-variant-numeric: tabular-nums;
+}
+.care__from i { font-style: normal; font-size: .82rem; }
+
+.care--design .care__item { justify-content: flex-start; gap: .7rem; }
+.care--design .care__name { color: var(--ink-soft); }
+.care--design .care__item::before {
+  /* пустой блок в baseline-строке равняется нижним краем по базовой линии,
+     поэтому приподнимаем точку к середине строчных */
+  content: ""; flex: none; width: 6px; height: 6px; margin-bottom: .22em;
+  border-radius: 50%; background: var(--green);
+}
+
 .pricing__note {
   margin-top: clamp(1.25rem, 2.6vw, 1.75rem);
   font-size: .9rem; color: var(--ink-mute); max-width: 74ch;
