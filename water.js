@@ -670,7 +670,9 @@
 
     if (!gl) { document.documentElement.classList.add('no-webgl'); return; }
 
-    var dark = canvas.dataset.tone === 'dark' ? 1.0 : 0.0;
+    // Mint accents use a mid-strength material: visibly teal on paper while
+    // retaining the lighter refraction of the hero water.
+    var dark = canvas.dataset.tone === 'dark' ? 1.0 : canvas.dataset.tone === 'mint' ? 0.38 : 0.0;
 
     function compile(type, src) {
       var sh = gl.createShader(type);
