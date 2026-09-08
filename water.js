@@ -812,7 +812,10 @@
       tw = nw; th = nh;
     }
 
-    gl.enable(gl.BLEND);
+    // Плашки выводят готовый premultiplied RGBA и полностью заменяют кадр.
+    // Повторное смешивание здесь возводило бы альфу в квадрат.
+    if (flowShader) gl.disable(gl.BLEND);
+    else gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
     // Разрешение: целимся в физические пиксели экрана, но при просадке
