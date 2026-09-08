@@ -113,10 +113,8 @@ html {
 body {
   position: relative;
   background-color: var(--paper);
-  background-image:
-    linear-gradient(rgba(12,122,93,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(12,122,93,.035) 1px, transparent 1px);
-  background-size: 72px 72px;
+  background-image: url("assets/img/grid-relief.svg");
+  background-size: 1152px 1152px;
   color: var(--ink);
   font-family: var(--f-text);
   font-size: var(--fs-body);
@@ -833,23 +831,23 @@ ul { list-style: none; padding: 0; }
   background: var(--tint); box-shadow: var(--sh-2);
 }
 .water--accent {
-  opacity: .55;
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
-  mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
+  opacity: .88;
 }
-.no-webgl .water--accent { background: radial-gradient(ellipse, #9DDCCB, transparent 70%); }
-.solutions__water { inset: -80px auto auto -180px; width: 820px; height: 700px; }
-.solutions__water { opacity: .82; filter: saturate(1.75) contrast(1.08); mix-blend-mode: multiply; }
+.no-webgl .solutions__water { background: linear-gradient(0deg, #69BBA7, #C2E9DE 60%, transparent 80%); }
+.no-webgl .pricing__water { background: linear-gradient(155deg, transparent 42%, #A9DCCD 62%, #73BEAA 85%, #C2E9DE); }
+/* Канвасы совпадают с границами плашек. Силуэт потока задаёт шейдер,
+   скругления и стенки — overflow родителя; радиальной растушёвки нет. */
+.solutions__water { inset: auto 0 0; width: 100%; height: 45%; }
 .solutions__head { position: relative; padding: clamp(1.5rem, 3.3vw, 2.7rem); }
-.solutions__head .h2 { margin-top: .9rem; max-width: 13ch; text-wrap: balance; }
+.solutions__head .h2 { max-width: 13ch; text-wrap: balance; }
 .solutions__intro { margin-top: 1.1rem; color: var(--ink-soft); font-size: .95rem; line-height: 1.6; max-width: 34ch; }
 .solutions__link { display: inline-flex; align-items: center; gap: 1rem; margin-top: 1.7rem; padding-block: .5rem; color: var(--green-deep); font-size: .9rem; font-weight: 500; border-bottom: 1px solid rgba(12,122,93,.3); }
 .solutions__link:hover { border-color: var(--green); }
 .sol { position: relative; display: grid; }
-.sol__card { padding: clamp(1.5rem, 2.5vw, 2rem); border-top: 1px solid rgba(12,122,93,.16); background: rgba(255,255,255,.57); backdrop-filter: blur(20px) saturate(1.3); -webkit-backdrop-filter: blur(20px) saturate(1.3); }
-.sol__kind { color: var(--green); display: block; margin-bottom: 1.1rem; font-size: .65rem; letter-spacing: .07em; text-transform: uppercase; }
-.sol__h { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 600; line-height: 1.25; margin-bottom: .75rem; text-wrap: balance; }
+.sol__card { padding: clamp(1.5rem, 2.5vw, 2rem); border-top: 1px solid rgba(12,122,93,.16); background: rgba(255,255,255,.48); backdrop-filter: blur(6px) saturate(1.15); -webkit-backdrop-filter: blur(6px) saturate(1.15); }
+.sol__h { font-family: var(--f-display); color: var(--green-deep); font-size: clamp(1.35rem, 1.8vw, 1.6rem); font-weight: 600; line-height: 1.2; margin-bottom: 1rem; text-wrap: balance; }
 .sol__card p { color: var(--ink-soft); font-size: .92rem; line-height: 1.6; }
+.sol__card .sol__problem { color: var(--ink); font-weight: 500; margin-bottom: .35rem; }
 .sol__note { position: relative; padding: 1.3rem clamp(1.5rem, 3.3vw, 2.7rem); border-top: 1px solid var(--line-2); background: rgba(255,255,255,.62); font-size: .85rem; line-height: 1.6; color: var(--ink-soft); }
 .sol__note a { display: inline-block; color: var(--green-deep); font-weight: 500; margin-top: .5rem; }
 .sol__note a:hover { text-decoration: underline; text-underline-offset: 4px; }
@@ -859,7 +857,6 @@ ul { list-style: none; padding: 0; }
 }
 @media (min-width: 1000px) {
   .solutions__panel { grid-template-columns: minmax(0, .85fr) minmax(0, 1.45fr); }
-  .solutions__water { top: auto; bottom: -40px; }
   .sol { border-left: 1px solid var(--line-2); }
   .sol__card:nth-child(-n+2) { border-top: 0; }
   .sol__note { grid-column: 1 / -1; display: flex; align-items: center; gap: 3rem; }
@@ -1156,8 +1153,7 @@ ul { list-style: none; padding: 0; }
   padding: clamp(1.4rem, 4vw, 3rem);
   border-bottom: 1px solid var(--line-2);
 }
-.pricing__water { inset: -100px -40px auto auto; width: 480px; height: 430px; opacity: .24; z-index: -1; }
-.pricing__water { opacity: .8; filter: saturate(1.65) contrast(1.08); mix-blend-mode: multiply; }
+.pricing__water { inset: 0; width: 100%; height: 100%; z-index: -1; }
 .pricing__head .h2 { margin-top: .6rem; }
 .pricing__intro { max-width: 48ch; margin-top: .8rem; color: var(--ink-soft); font-size: .98rem; }
 .pricing__terms { color: var(--ink-soft); font-size: .8rem; }

@@ -673,6 +673,8 @@
     // Mint accents use a mid-strength material: visibly teal on paper while
     // retaining the lighter refraction of the hero water.
     var dark = canvas.dataset.tone === 'dark' ? 1.0 : canvas.dataset.tone === 'mint' ? 0.38 : 0.0;
+    var flow = canvas.dataset.flow === 'basin' ? 1 : canvas.dataset.flow === 'rising' ? 2 : 0;
+    var flowShader = flow && window.PortfolioFlowShader;
 
     function compile(type, src) {
       var sh = gl.createShader(type);
@@ -686,7 +688,7 @@
     }
 
     var vs = compile(gl.VERTEX_SHADER, VERT);
-    var fs = compile(gl.FRAGMENT_SHADER, FRAG);
+    var fs = compile(gl.FRAGMENT_SHADER, flowShader || FRAG);
     if (!vs || !fs) { document.documentElement.classList.add('no-webgl'); return; }
 
     // Обе программы получают aPos в слот 0 принудительно: иначе линковщик
@@ -717,11 +719,12 @@
     var uRes = gl.getUniformLocation(prog, 'uRes');
     var uTime = gl.getUniformLocation(prog, 'uTime');
     gl.uniform1f(gl.getUniformLocation(prog, 'uDark'), dark);
+    gl.uniform1f(gl.getUniformLocation(prog, 'uFlow'), flow);
     gl.uniform1i(gl.getUniformLocation(prog, 'uTrail'), 0);
     gl.uniform2f(gl.getUniformLocation(prog, 'uTrailShape'), TRAIL_HEAD, TRAIL_LIFT);
 
     /* ---------- ресурсы следа ---------- */
-    var tfs = compile(gl.FRAGMENT_SHADER, TRAIL_FRAG);
+    var tfs = flowShader ? null : compile(gl.FRAGMENT_SHADER, TRAIL_FRAG);
     var trailProg = tfs ? link(vs, tfs) : null;
     var tU = null;
     if (trailProg) {
@@ -835,7 +838,7 @@
       gl.viewport(0, 0, w, h);
       gl.uniform2f(uRes, w, h);
 
-      resizeTrail(w, h);
+      if (!flowShader) resizeTrail(w, h);
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
       gl.useProgram(prog);
       gl.viewport(0, 0, w, h);
@@ -877,7 +880,7 @@
     // запускается вовсе: буфер остаётся нейтральным, лишней работы нет.
     var trailOn = !!trailProg && pointerFine && !reduced;
 
-    if (pointerFine && !reduced) {
+    if (trailOn) {
       window.addEventListener('mousemove', onMove, { passive: true });
       window.addEventListener('mouseout', function (e) { if (!e.relatedTarget) tgAmt = 0; }, { passive: true });
     }
@@ -921,10 +924,7 @@
         gl.useProgram(prog);
       }
 
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, trailTex[0]);
-      gl.uniform1f(uTime, (now - start) / 1000);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      drawWater((now - start) / 1000);
 
       // Ступенчатая деградация: 12 тяжёлых кадров подряд — снижаем
       // разрешение; 240 лёгких — пробуем вернуть обратно.
@@ -947,17 +947,26 @@
     function play() { if (raf === null && visible) { prev = 0; raf = requestAnimationFrame(frame); } }
     function stop() { if (raf !== null) { cancelAnimationFrame(raf); raf = null; } }
 
+    function drawWater(seconds) {
+      if (flowShader) {
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+      }
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, trailTex[0]);
+      gl.uniform1f(uTime, seconds);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+
     if (reduced) {
       // Спокойные акценты и reduced motion: один кадр, повтор только при resize.
       function drawStill() {
         resize();
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, trailTex[0]);
-        gl.uniform1f(uTime, 12.0);
-        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        drawWater(12.0);
       }
       drawStill();
       window.addEventListener('resize', drawStill, { passive: true });
+      if ('ResizeObserver' in window) new ResizeObserver(drawStill).observe(canvas);
     } else {
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (entries) {
@@ -969,6 +978,7 @@
         if (document.hidden) stop(); else play();
       });
       window.addEventListener('resize', resize, { passive: true });
+      if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas);
       play();
     }
 
