@@ -839,7 +839,7 @@
       gl.viewport(0, 0, w, h);
     }
 
-    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var reduced = canvas.dataset.motion === 'still' || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var visible = true;
     var raf = null;
     // Фаза на загрузке. Оба канваса стартуют не с нуля: у них есть участок
@@ -946,13 +946,16 @@
     function stop() { if (raf !== null) { cancelAnimationFrame(raf); raf = null; } }
 
     if (reduced) {
-      // Буфер следа остаётся нейтральным после resize, так что курсор
-      // на статичный кадр не влияет — обнулять уже нечего.
-      resize();
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, trailTex[0]);
-      gl.uniform1f(uTime, 12.0);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      // Спокойные акценты и reduced motion: один кадр, повтор только при resize.
+      function drawStill() {
+        resize();
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, trailTex[0]);
+        gl.uniform1f(uTime, 12.0);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+      drawStill();
+      window.addEventListener('resize', drawStill, { passive: true });
     } else {
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (entries) {

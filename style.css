@@ -761,42 +761,29 @@ ul { list-style: none; padding: 0; }
 }
 
 /* ---------- 3D-мокап телефона ----------
-   .fgh__frame — PNG, у которого экран ВЫРЕЗАН в альфе; видео лежит под ним
-   и видно в дырке. Углы выреза сняты заливкой по альфе и подгонкой прямых
-   МНК по четырём граням (координаты в пикселях файла 1151×1366):
-       TL 364.9 / 164.8     TR 771.5 / 156.4
-       BL 359.1 / 1164.3    BR 766.0 / 1181.6
-
-   Вырез — ТРАПЕЦИЯ: боковые грани параллельны, а верхняя идёт вверх-вправо
-   на 1.19°, нижняя вниз-вправо на 2.43°. Аффинное преобразование
-   параллельность сохраняет, поэтому вписать в такое оно не может в
-   принципе: строки сайта расходились с рамкой на 1.8° у верхнего края —
-   экран выглядел фронтальным на повёрнутом корпусе. Поэтому здесь
-   настоящая гомография в matrix3d.
-
-   Её члены заданы в ПИКСЕЛЯХ канвы 1151×1366, так что и бокс видео задан
-   в них же, а под реальную ширину всё это сжимает scale(--fgh-k). Сам
-   коэффициент ставит script.js: средствами CSS его не получить, scale()
-   требует число, а деление длин в calc() слишком свежее, чтобы на него
-   опираться. scale стоит ПЕРЕД matrix3d — то есть применяется последним,
-   и пиксельные члены гомографии от него не страдают.
-
-   Ролик раздут на 2% вокруг центра выреза (углы уходят на ~11px наружу),
-   чтобы по кромке не было щелей от округлений, а лишнее срезает
-   clip-path на .fgh__screenclip — ровно по форме дырки, в процентах, так
-   что он верен на любой ширине. Раньше вместо этого была аффинка с
-   раздутием и без обрезки, и её углы вылезали поверх корпуса. */
+   Геометрия задана в координатах исходного мокапа 1151×1366.
+   SVG-маски сохраняют корпус, вырезают остатки фона и скругляют экран.
+   Видео по-прежнему вписано гомографией; script.js задаёт --fgh-k
+   для масштабирования её пиксельных координат под ширину сцены. */
 .fgh__phone {
   position: relative; z-index: 1;
   width: min(100%, 380px);
   margin: clamp(1.6rem, 4vw, 2.6rem) auto 0;
 }
 .fgh__stage { position: relative; aspect-ratio: 1151 / 1366; }
+/* Свечение отдельно от растровой рамки: без обрывков исходного фона. */
+.fgh__stage::before {
+  content: "";
+  position: absolute; inset: 11% 30% 12% 30%;
+  border-radius: 18% / 8%;
+  box-shadow: 0 0 26px 5px rgba(34, 211, 224, .32);
+  pointer-events: none;
+}
 
 .fgh__screenclip {
   position: absolute; inset: 0;
-  clip-path: polygon(31.7011% 12.0637%, 67.0321% 11.4473%,
-                     66.5465% 86.4978%, 31.1998% 85.2350%);
+  -webkit-mask: url("assets/img/flyguru-screen-mask.svg") center / 100% 100% no-repeat;
+  mask: url("assets/img/flyguru-screen-mask.svg") center / 100% 100% no-repeat;
   background: #0C5A67;
 }
 .fgh__screen {
@@ -813,6 +800,8 @@ ul { list-style: none; padding: 0; }
 .fgh__frame {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
+  -webkit-mask: url("assets/img/flyguru-frame-mask.svg") center / 100% 100% no-repeat;
+  mask: url("assets/img/flyguru-frame-mask.svg") center / 100% 100% no-repeat;
   pointer-events: none;
 }
 
@@ -820,42 +809,43 @@ ul { list-style: none; padding: 0; }
    BLOCK 04 — SOLUTIONS
    ============================================================ */
 .solutions { padding-block: clamp(3rem, 6vw, 5rem); }
-.sol { display: grid; gap: var(--gap); }
-.sol__card {
-  border-radius: var(--r-lg);
-  padding: clamp(1.3rem, 2.6vw, 1.75rem);
-  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+.solutions__panel {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; border: 1px solid #fff; border-radius: var(--r-xl);
+  background: var(--tint); box-shadow: var(--sh-2);
 }
-.sol__card:hover { transform: translateY(-4px); box-shadow: inset 0 0 0 1px var(--line), var(--sh-3); }
-.sol__ico {
-  width: 50px; height: 50px; border-radius: 15px;
-  background: linear-gradient(150deg, #FFFFFF 0%, var(--tint) 52%, #D8EEE5 100%);
-  color: var(--green);
-  display: grid; place-content: center;
-  margin-bottom: clamp(1rem, 2vw, 1.35rem);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.95),
-    inset 0 0 0 1px rgba(12,122,93,.10),
-    0 6px 16px rgba(12,122,93,.13);
+.water--accent {
+  opacity: .55;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
+  mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
 }
-.sol__ico svg { width: 23px; height: 23px; }
-.sol__kind { color: var(--green); display: block; margin-bottom: .45rem; font-size: .72rem; }
-.sol__h {
-  font-family: var(--f-display); font-size: var(--fs-h3);
-  font-weight: 600; line-height: 1.25; letter-spacing: -.006em; margin-bottom: .5rem;
-  text-wrap: balance;
+.no-webgl .water--accent { background: radial-gradient(ellipse, #9DDCCB, transparent 70%); }
+.solutions__water { inset: -80px auto auto -180px; width: 820px; height: 700px; }
+.solutions__head { position: relative; padding: clamp(1.5rem, 3.3vw, 2.7rem); }
+.solutions__head .h2 { margin-top: .9rem; max-width: 13ch; text-wrap: balance; }
+.solutions__intro { margin-top: 1.1rem; color: var(--ink-soft); font-size: .95rem; line-height: 1.6; max-width: 34ch; }
+.solutions__link { display: inline-flex; align-items: center; gap: 1rem; margin-top: 1.7rem; padding-block: .5rem; color: var(--green-deep); font-size: .9rem; font-weight: 500; border-bottom: 1px solid rgba(12,122,93,.3); }
+.solutions__link:hover { border-color: var(--green); }
+.sol { position: relative; display: grid; }
+.sol__card { padding: clamp(1.5rem, 2.5vw, 2rem); border-top: 1px solid var(--line-2); background: rgba(255,255,255,.76); }
+.sol__kind { color: var(--green); display: block; margin-bottom: 1.1rem; font-size: .65rem; letter-spacing: .07em; text-transform: uppercase; }
+.sol__h { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 600; line-height: 1.25; margin-bottom: .75rem; text-wrap: balance; }
+.sol__card p { color: var(--ink-soft); font-size: .92rem; line-height: 1.6; }
+.sol__note { position: relative; padding: 1.3rem clamp(1.5rem, 3.3vw, 2.7rem); border-top: 1px solid var(--line-2); background: rgba(255,255,255,.62); font-size: .85rem; line-height: 1.6; color: var(--ink-soft); }
+.sol__note a { display: inline-block; color: var(--green-deep); font-weight: 500; margin-top: .5rem; }
+.sol__note a:hover { text-decoration: underline; text-underline-offset: 4px; }
+@media (min-width: 600px) {
+  .sol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sol__card:nth-child(even) { border-left: 1px solid var(--line-2); }
 }
-.sol__card p { color: var(--ink-soft); font-size: .95rem; line-height: 1.5; }
-.sol__note {
-  margin-top: clamp(1.25rem, 2.6vw, 1.75rem);
-  font-size: .9rem; color: var(--ink-mute); max-width: 74ch;
+@media (min-width: 1000px) {
+  .solutions__panel { grid-template-columns: minmax(0, .85fr) minmax(0, 1.45fr); }
+  .solutions__water { top: auto; bottom: -40px; }
+  .sol { border-left: 1px solid var(--line-2); }
+  .sol__card:nth-child(-n+2) { border-top: 0; }
+  .sol__note { grid-column: 1 / -1; display: flex; align-items: center; gap: 3rem; }
+  .sol__note a { flex: none; margin: 0; }
 }
-.sol__note a {
-  color: var(--green); font-weight: 500;
-  box-shadow: inset 0 -1px 0 rgba(12,122,93,.28);
-  transition: box-shadow .3s var(--ease);
-}
-.sol__note a:hover { box-shadow: inset 0 -1px 0 var(--green); }
 
 /* ============================================================
    BLOCK 07 — PROCESS
@@ -1135,108 +1125,84 @@ ul { list-style: none; padding: 0; }
    BLOCK 08 — ЦЕНЫ
    ============================================================ */
 .pricing { padding-block: clamp(3rem, 6vw, 5rem); }
-.plans { display: grid; gap: var(--gap); align-items: stretch; }
+.pricing__panel {
+  overflow: hidden; border-radius: var(--r-xl);
+  border: 1px solid #fff;
+  background: linear-gradient(150deg, #fff, var(--tint));
+  box-shadow: var(--sh-2);
+}
+.pricing__head {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; gap: 1.5rem;
+  padding: clamp(1.4rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line-2);
+}
+.pricing__water { inset: -100px -40px auto auto; width: 480px; height: 430px; opacity: .24; z-index: -1; }
+.pricing__head .h2 { margin-top: .6rem; }
+.pricing__intro { max-width: 48ch; margin-top: .8rem; color: var(--ink-soft); font-size: .98rem; }
+.pricing__terms { color: var(--ink-soft); font-size: .8rem; }
+.pricing__terms strong { display: block; color: var(--green-deep); font-weight: 500; margin-bottom: .35rem; }
+.plans { display: grid; align-items: stretch; }
 .plan {
-  position: relative;
-  border-radius: var(--r-lg);
-  padding: clamp(1.4rem, 2.8vw, 1.9rem);
+  position: relative; min-width: 0;
+  padding: clamp(1.4rem, 2.8vw, 2.2rem);
   display: flex; flex-direction: column;
 }
-.plan__tag {
-  position: absolute;
-  top: clamp(1.4rem, 2.8vw, 1.9rem);
-  right: clamp(1.4rem, 2.8vw, 1.9rem);
-  color: var(--green); font-size: .68rem;
-  padding: .3rem .6rem; border-radius: 100px;
-  background: rgba(255,255,255,.7);
-  box-shadow: inset 0 0 0 1px rgba(12,122,93,.16);
-}
-/* под бейдж заезжает только строка заголовка — описание идёт ниже него
-   и должно занимать всю ширину, иначе цены перестают стоять на одной линии */
-.plan--on .plan__h { padding-right: 8.5rem; }
-.plan__h { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 600; letter-spacing: -.006em; }
-.plan__for { color: var(--ink-mute); font-size: .9rem; line-height: 1.45; margin-top: .35rem; }
+.plan + .plan { border-top: 1px solid var(--line-2); }
+.plan--on { background: linear-gradient(145deg, rgba(255,255,255,.35), #DCEFE7); }
+.plan__kind { color: var(--green); font-size: .64rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1rem; }
+.plan__h { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 600; }
+.plan__for { color: var(--ink-soft); font-size: .9rem; line-height: 1.5; margin-top: .65rem; }
 .plan__price {
   display: flex; align-items: baseline; gap: .4rem;
-  margin-top: clamp(1rem, 2vw, 1.4rem);
-  font-family: var(--f-display); font-weight: 600; font-size: .95rem; color: var(--ink-mute);
+  margin-top: 1.7rem; font-family: var(--f-display);
+  font-size: .95rem; color: var(--ink-mute);
 }
-.plan__price span {
-  font-size: clamp(1.45rem, 2.9vw, 1.9rem); color: var(--ink);
-  letter-spacing: -.012em; font-variant-numeric: tabular-nums;
-}
-/* «Считается индивидуально» встаёт на место суммы: тот же ряд, но кегль
-   ниже — иначе фраза лезет в две строки и ломает линию цен */
-.plan__price--calc span { font-size: clamp(1.05rem, 1.9vw, 1.25rem); }
-.plan__list strong { color: var(--ink); font-weight: 600; }
-.plan__list {
-  display: grid; gap: .6rem;
-  margin-top: clamp(1.1rem, 2.2vw, 1.5rem);
-  padding-top: clamp(1.1rem, 2.2vw, 1.5rem);
-  border-top: 1px solid var(--line);
-  font-size: .94rem; line-height: 1.45; color: var(--ink-soft);
-}
+.plan__price span { font-size: clamp(2.3rem, 3.4vw, 3rem); line-height: 1.1; font-weight: 600; color: var(--ink); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.plan__price--calc span { font-size: 2rem; letter-spacing: -.025em; }
+.plan__scope { margin-top: 1.6rem; padding-top: 1.3rem; border-top: 1px solid var(--line-2); color: var(--ink-mute); font-size: .78rem; }
+.plan__list { display: grid; gap: .7rem; margin: 1rem 0 1.5rem; color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
 .plan__list li { display: flex; gap: .65rem; align-items: flex-start; }
-.plan__list li::before {
-  content: ""; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--green); flex: none; margin-top: .5rem;
-}
-/* кнопки всех тарифов встают на одну линию независимо от длины списка */
-.plan .btn { margin-top: auto; }
-.plan__list { margin-bottom: clamp(1.35rem, 2.6vw, 1.75rem); }
-.plan--on {
-  background: linear-gradient(158deg, #FFFFFF, var(--tint) 62%, #DCF0E8);
-  box-shadow: inset 0 0 0 1px rgba(12,122,93,.14), var(--sh-2);
-}
-.plan--on .plan__list { border-top-color: rgba(12,122,93,.16); }
-/* поддержка: цена в месяц, поэтому отдельной полосой под тарифами */
+.plan__list li::before { content: "✓"; color: var(--green); flex: none; }
+.plan__details { margin-top: auto; border-top: 1px solid var(--line-2); }
+.plan__details summary { display: flex; justify-content: space-between; gap: .6rem; padding: 1rem 0; font-size: .82rem; font-weight: 500; cursor: pointer; list-style: none; }
+.plan__details summary::-webkit-details-marker { display: none; }
+.plan__details summary::after { content: "+"; color: var(--green); font-size: 1.1rem; line-height: 1; }
+.plan__details[open] summary::after { content: "−"; }
+.plan__details summary:hover { color: var(--green); }
+.plan__expanded { padding-bottom: 1.2rem; color: var(--ink-soft); font-size: .86rem; line-height: 1.55; }
+.plan__expanded p + p { margin-top: .9rem; }
+.plan__expanded strong { display: block; color: var(--ink); margin-bottom: .2rem; font-weight: 600; }
+.plan .btn { margin-top: .5rem; }
 .care {
-  border-radius: var(--r-lg);
-  padding: clamp(1.4rem, 2.8vw, 1.9rem);
-  margin-top: var(--gap);
-  display: grid; gap: clamp(1.25rem, 2.6vw, 2rem);
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  border-top: 1px solid var(--line-2);
+  display: grid; gap: 1.4rem;
+  background: rgba(255,255,255,.35);
 }
-.care__h { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 600; letter-spacing: -.006em; margin-top: .35rem; }
-.care__lead { color: var(--ink-mute); font-size: .92rem; line-height: 1.5; margin-top: .5rem; max-width: 46ch; }
-.care__list { display: grid; gap: clamp(.7rem, 1.6vw, 1rem); align-content: center; }
-.care__item {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
-  padding-bottom: .7rem; border-bottom: 1px solid var(--line);
-}
+.care .label { font-size: .65rem; }
+.care__h { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; margin-top: .45rem; }
+.care__lead { color: var(--ink-soft); font-size: .88rem; line-height: 1.5; margin-top: .5rem; max-width: 49ch; }
+.care__list { display: grid; gap: .6rem; align-content: center; }
+.care__item { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-bottom: .6rem; border-bottom: 1px solid var(--line); }
 .care__item:last-child { border-bottom: 0; padding-bottom: 0; }
-.care__name { color: var(--ink-soft); font-size: .95rem; }
-.care__price {
-  font-family: var(--f-display); font-weight: 600; font-size: clamp(1.15rem, 2.2vw, 1.4rem);
-  color: var(--ink); letter-spacing: -.012em; font-variant-numeric: tabular-nums;
-}
-.care__price i { font-style: normal; font-size: .82rem; font-weight: 500; color: var(--ink-mute); margin-left: .15rem; }
-
-/* Визуальная концепция: та же плашка, но справа не прайс-лист, а состав
-   работы — поэтому строки без второй колонки и с маркером вместо цены.
-   Сама цена уезжает в шапку: она одна на всю услугу. */
-.care__from {
-  margin-top: clamp(.9rem, 2vw, 1.2rem);
-  display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .4rem;
-  color: var(--ink-mute); font-size: .92rem;
-}
-.care__from span {
-  font-family: var(--f-display); font-weight: 600; font-size: clamp(1.35rem, 2.6vw, 1.7rem);
-  color: var(--ink); letter-spacing: -.014em; font-variant-numeric: tabular-nums;
-}
-.care__from i { font-style: normal; font-size: .82rem; }
-
-.care--design .care__item { justify-content: flex-start; gap: .7rem; }
-.care--design .care__name { color: var(--ink-soft); }
-.care--design .care__item::before {
-  /* пустой блок в baseline-строке равняется нижним краем по базовой линии,
-     поэтому приподнимаем точку к середине строчных */
-  content: ""; flex: none; width: 6px; height: 6px; margin-bottom: .22em;
-  border-radius: 50%; background: var(--green);
-}
-
-.pricing__note {
-  margin-top: clamp(1.25rem, 2.6vw, 1.75rem);
-  font-size: .9rem; color: var(--ink-mute); max-width: 74ch;
+.care__name { color: var(--ink-soft); font-size: .88rem; }
+.care__price { font-family: var(--f-display); font-weight: 600; font-size: 1.15rem; white-space: nowrap; }
+.care__price i { font-style: normal; font-size: .8rem; font-weight: 400; color: var(--ink-mute); }
+.care__from { display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem; margin-top: .75rem; color: var(--ink-mute); font-size: .85rem; }
+.care__from span { font-family: var(--f-display); font-weight: 600; font-size: 1.5rem; color: var(--ink); }
+.care__from i { font-style: normal; font-size: .8rem; }
+.pricing__footer { display: grid; gap: 1.1rem; padding: clamp(1.4rem, 3vw, 2.2rem); background: var(--green-dark); color: #C8DDD4; font-size: .82rem; line-height: 1.6; }
+.pricing__footer strong { display: block; margin-bottom: .35rem; color: #fff; font-size: .92rem; font-weight: 500; }
+@media (min-width: 1000px) {
+  .pricing__head { grid-template-columns: 1fr auto; align-items: end; }
+  .pricing__terms { text-align: right; }
+  .plans { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .plan + .plan { border-top: 0; border-left: 1px solid var(--line-2); }
+  .plan__for { min-height: 4.5em; }
+  .plan__price { height: 3.3rem; align-items: baseline; }
+  .care { grid-template-columns: 1fr 1fr; align-items: center; gap: 3rem; }
+  .pricing__footer { grid-template-columns: 1fr 1fr; gap: 3rem; }
 }
 
 /* ============================================================
@@ -1344,10 +1310,8 @@ ul { list-style: none; padding: 0; }
    BREAKPOINTS
    ============================================================ */
 @media (min-width: 600px) {
-  .sol { grid-template-columns: repeat(2, 1fr); }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .works__grid { grid-template-columns: repeat(2, 1fr); }
-  .plans { grid-template-columns: repeat(2, 1fr); }
   .footer__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -1388,7 +1352,6 @@ ul { list-style: none; padding: 0; }
   .fgh__stat:last-child  { padding-right: 0; }
   .fgh__stat + .fgh__stat { border-left: 1px solid var(--case-hair); }
 
-  .sol { grid-template-columns: repeat(4, 1fr); }
 
   .process__grid { grid-template-columns: minmax(0, .72fr) minmax(0, 2.28fr); }
   .steps { grid-template-columns: repeat(4, 1fr); }
@@ -1432,9 +1395,7 @@ ul { list-style: none; padding: 0; }
   .p100__stat:last-child  { padding-right: 0; }
   .p100__stat + .p100__stat { border-left: 1px solid var(--p100-hair); }
 
-  .works__grid { grid-template-columns: repeat(3, 1fr); }
-  .plans { grid-template-columns: repeat(3, 1fr); }
-  .care { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; }
+  .works__grid { grid-template-columns: repeat(2, 1fr); }
   .trust__grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
   .footer__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, .55fr) minmax(0, .55fr); }
 

@@ -66,17 +66,16 @@
 
     <div class="hero__main">
       <div class="hero__status reveal">
-        <!-- Свободные слоты. Меняется одна цифра в data-slots (3/2/1/0) —
-             от неё считается и цвет точки, и тон подписи:
+        <!-- Свободные слоты. Обновляйте data-slots (3/2/1/0) и текст подписи.
+             Атрибут задаёт цвет цифры и точки:
              3–2 — зелёный, 1 — оранжевый, 0 — красный. -->
-        <span class="pill glass" data-slots="1">
+        <span class="pill glass" data-slots="2">
           <img class="pill__ava" src="assets/img/david-portrait.jpg" alt="David Naumenko" width="34" height="34" loading="eager">
-          <span>Свободен <b>1</b> слот из 3</span>
+          <span>Свободны <b>2</b> слота из 3</span>
           <span class="pill__dot" aria-hidden="true"></span>
         </span>
       </div>
 
-      <!-- PLACEHOLDER COPY -->
       <h1 class="hero__title reveal">
         Автоматизирую<br>любые <em>офлайн<br>и онлайн системы.</em>
       </h1>
@@ -222,8 +221,8 @@
 
       <div class="fgh__phone">
         <div class="fgh__stage">
-          <!-- Ролик режется по форме выреза, а не по прямоугольнику: сам он
-               намеренно на 2% больше выреза, чтобы по краям не было щелей. -->
+          <!-- SVG-маски экрана и корпуса используют канву 1151×1366.
+               Видео остаётся с запасом под рамкой; маска скругляет углы. -->
           <div class="fgh__screenclip">
             <video class="fgh__screen shot--video"
                    src="assets/video/flyguru-hero.mp4"
@@ -245,48 +244,38 @@
      ============================================================ -->
 <section class="solutions" id="solutions">
   <div class="wrap">
-    <header class="sec-head measure">
-      <p class="label mono reveal">Что я решаю</p>
-      <h2 class="h2 h2--sm reveal">Решения под задачи вашего бизнеса</h2>
-    </header>
-
-    <div class="sol">
-      <article class="sol__card glass glass--plate reveal">
-        <span class="sol__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="4" width="19" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 20.5h6M12 17v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-        <span class="sol__kind mono">Витрина</span>
-        <h3 class="sol__h">Сайты и лендинги</h3>
-        <p>Многостраничный сайт или лендинг, собранный под путь клиента и заявку. Не витрина ради витрины, а вход в вашу систему продаж.</p>
-      </article>
-
-      <article class="sol__card glass glass--plate reveal">
-        <span class="sol__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8l8 4.4v9.6l-8 4.4-8-4.4V7.2l8-4.4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4.3 7.4L12 11.7l7.7-4.3M12 11.7V21" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
-        <span class="sol__kind mono">Внутренняя система</span>
-        <h3 class="sol__h">CRM и рабочие инструменты</h3>
-        <p>Когда учёт живёт в журнале, таблицах и переписке — собираю один экран, где видны заявки, клиенты, статусы и деньги.</p>
-      </article>
-
-      <article class="sol__card glass glass--plate reveal">
-        <span class="sol__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M21.3 2.9L2.6 9.7c-.7.2-.7 1.2 0 1.4l7.3 2.4 2.4 7.3c.2.7 1.2.7 1.4 0l6.8-18.7c.2-.6-.4-1.2-1.2-1.2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M21.6 3.2l-11.7 10.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-        <span class="sol__kind mono">Telegram</span>
-        <h3 class="sol__h">Боты и Mini Apps</h3>
-        <p>Магазин, запись или заявка целиком внутри Telegram — там, где клиент уже сидит. Без установки приложений и лишних переходов.</p>
-      </article>
-
-      <article class="sol__card glass glass--plate reveal">
-        <span class="sol__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h7M17 7h3M4 17h3M13 17h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="7" r="2.6" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="17" r="2.6" stroke="currentColor" stroke-width="1.6"/></svg></span>
-        <span class="sol__kind mono">Автоматизация</span>
-        <h3 class="sol__h">Автоматизации и связки</h3>
-        <p>Напоминания, уведомления, отчёты, перенос данных между сервисами. Всё, что вы делаете руками по одному и тому же сценарию, начинает делаться само.</p>
-      </article>
+    <div class="solutions__panel">
+      <canvas class="water water--accent solutions__water" data-motion="still" aria-hidden="true"></canvas>
+      <header class="solutions__head reveal">
+        <p class="label mono">Что я решаю</p>
+        <h2 class="h2">Решения под задачи вашего бизнеса</h2>
+        <p class="solutions__intro">Начинаем с того, где теряются заявки, время или данные. Под эту задачу собираем нужный инструмент.</p>
+        <a href="https://t.me/davidnaumenko" class="solutions__link" target="_blank" rel="noopener">Разобрать мою задачу <span aria-hidden="true">↗</span></a>
+      </header>
+      <div class="sol">
+        <article class="sol__card reveal">
+          <span class="sol__kind mono">CRM и учёт</span>
+          <h3 class="sol__h">Заявки теряются в переписке</h3>
+          <p>Собираю клиентов, статусы, записи и деньги в одном месте. Команда видит, кому ответить и что делать дальше.</p>
+        </article>
+        <article class="sol__card reveal">
+          <span class="sol__kind mono">Боты и Mini Apps</span>
+          <h3 class="sol__h">Клиентам неудобно записываться</h3>
+          <p>Запись, заказ или покупка прямо в Telegram. Клиент выбирает сам, а вы получаете готовую заявку.</p>
+        </article>
+        <article class="sol__card reveal">
+          <span class="sol__kind mono">Сайты и лендинги</span>
+          <h3 class="sol__h">Нужен сайт для привлечения клиентов</h3>
+          <p>Помогаю понятно представить предложение и выстроить путь от знакомства с продуктом до обращения.</p>
+        </article>
+        <article class="sol__card reveal">
+          <span class="sol__kind mono">Автоматизация</span>
+          <h3 class="sol__h">Рутина съедает рабочий день</h3>
+          <p>Связываю сервисы: данные передаются, отчёты собираются, напоминания приходят без ручных действий.</p>
+        </article>
+      </div>
+      <p class="sol__note reveal">Инструменты можно объединить в одну систему: сайт принимает заявку, CRM сохраняет клиента, бот отправляет уведомление. <a href="#pricing">Посмотреть стоимость <span aria-hidden="true">↗</span></a></p>
     </div>
-
-    <!-- визуал — не пятая карта: он ложится поверх любого из четырёх решений,
-         поэтому строкой под сеткой и со ссылкой на цену, где он разобран. -->
-    <p class="sol__note reveal">
-      Любое из этих решений можно взять вместе с визуальной концепцией: общий
-      стиль, оформление экранов и вся нужная графика — <a href="#pricing">от $300
-      к стоимости разработки</a>.
-    </p>
   </div>
 </section>
 
@@ -422,18 +411,6 @@
         </div>
       </article>
 
-      <article class="work glass glass--plate reveal">
-        <div class="shot work__shot"><span class="shot__tag mono">SLOT · превью</span></div>
-        <div class="work__body">
-          <span class="work__kind mono">[Ниша]</span>
-          <h3 class="work__h">[Название проекта]</h3>
-          <p>[PLACEHOLDER] Одна строка: что было задачей и что изменилось после запуска.</p>
-          <ul class="stack" role="list">
-            <li class="chip chip--mono">[stack]</li>
-            <li class="chip chip--mono">[stack]</li>
-          </ul>
-        </div>
-      </article>
     </div>
   </div>
 </section>
@@ -446,19 +423,19 @@
     <header class="reveal">
       <p class="label mono">Как я работаю</p>
       <h2 class="h2">Как<br>я работаю</h2>
-      <p class="lead">[PLACEHOLDER] Прозрачный процесс от идеи до результата: на каждом шаге видно, что происходит.</p>
+      <p class="lead">Сначала согласуем задачу, объём и цену. Затем вы следите за сборкой и проверяете промежуточные версии.</p>
     </header>
 
     <div class="steps">
       <article class="step glass glass--plate reveal">
         <span class="step__n">01</span>
-        <h3 class="step__h">Созвон</h3>
-        <p>Разбираем задачу и бизнес-процессы, находим, где теряется время и деньги.</p>
+        <h3 class="step__h">Обсуждение задачи</h3>
+        <p>В переписке или на созвоне разбираем задачу и процессы, находим, где теряются время и деньги.</p>
       </article>
       <article class="step glass glass--plate reveal">
         <span class="step__n">02</span>
         <h3 class="step__h">План и фиксация цены</h3>
-        <p>Присылаю решения, цену и сроки. Цена в процессе работы не меняется.</p>
+        <p>Фиксируем функционал, объём, цену и сроки до старта. Дополнительные задачи согласуем отдельно.</p>
       </article>
       <article class="step glass glass--plate step--on reveal">
         <span class="step__n">03</span>
@@ -468,7 +445,7 @@
       <article class="step glass glass--plate reveal">
         <span class="step__n">04</span>
         <h3 class="step__h">Запуск и поддержка</h3>
-        <p>Первую неделю активно слежу за работой, дальше — гарантия на код.</p>
+        <p>Первую неделю активно слежу за работой. Свои ошибки исправляю бесплатно в течение года после запуска.</p>
       </article>
     </div>
   </div>
@@ -479,67 +456,92 @@
      ============================================================ -->
 <section class="pricing" id="pricing">
   <div class="wrap">
-    <header class="sec-head measure">
-      <p class="label mono reveal">Цены</p>
-      <h2 class="h2 h2--sm reveal">Сколько это стоит</h2>
-      <p class="lead reveal">
-        Вилка зависит от объёма: сколько экранов, сколько процессов внутри и что
-        уже есть у вас на руках. Точную цифру называю после созвона — и дальше
-        она не меняется.
-      </p>
+    <div class="pricing__panel">
+    <header class="pricing__head reveal">
+      <canvas class="water water--accent pricing__water" data-motion="still" aria-hidden="true"></canvas>
+      <div>
+        <p class="label mono">Стоимость разработки</p>
+        <h2 class="h2">Сколько это стоит</h2>
+        <p class="pricing__intro">Выберите, с чего начать. Точный объём, сроки и цену согласуем после бесплатного обсуждения задачи.</p>
+      </div>
+      <p class="pricing__terms"><strong>50% до старта · 50% после запуска</strong><span>Для крупных проектов — оплата по этапам</span></p>
     </header>
 
     <div class="plans">
-      <article class="plan glass glass--plate reveal">
+      <article class="plan reveal">
+        <p class="plan__kind mono">Продажи в Telegram</p>
         <h3 class="plan__h">Бот или Mini App</h3>
-        <p class="plan__for">Кому: заказы, запись или заявки идут в переписке, и вы разбираете их руками.</p>
+        <p class="plan__for">Для заказов, записи и заявок, которые сейчас приходится разбирать в переписке.</p>
         <p class="plan__price">от <span>$400</span></p>
+        <p class="plan__scope">Базовая комплектация</p>
         <ul class="plan__list" role="list">
-          <li><span><strong>Starter — от $400.</strong> Витрина, запись или заявка прямо в Telegram, уведомления вам в чат</span></li>
-          <li><span><strong>Business — от $900.</strong> Плюс админка: товары и цены, база клиентов, статистика, рассылки</span></li>
-          <li><span><strong>MAX — от $1500.</strong> Логика под ваш процесс, роли и доступы, приём оплаты, интеграции</span></li>
+          <li>Витрина, запись или приём заявок</li>
+          <li>Уведомления вам в Telegram</li>
+          <li>Клиенту не нужно отдельное приложение</li>
         </ul>
-        <a href="#contact" class="btn btn--soft btn--block">Обсудить задачу</a>
+        <details class="plan__details">
+          <summary>Комплектации и сроки</summary>
+          <div class="plan__expanded">
+            <p><strong>Starter · от $400</strong>Витрина, запись или заявка и уведомления в чат.</p>
+            <p><strong>Business · от $900</strong>Дополнительно: админка, товары и цены, база клиентов, статистика и рассылки.</p>
+            <p><strong>MAX · от $1500</strong>Логика под ваш процесс, роли, приём оплаты и интеграции.</p>
+            <p>Ориентир: бот — около недели, Mini App — около двух недель. Срок зависит от объёма.</p>
+          </div>
+        </details>
+        <a href="https://t.me/davidnaumenko" class="btn btn--soft btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
       </article>
 
-      <article class="plan glass glass--plate plan--on reveal">
-        <span class="plan__tag mono">Чаще всего берут</span>
+      <article class="plan plan--on reveal">
+        <p class="plan__kind mono">Сайт + внутренняя система</p>
         <h3 class="plan__h">Сайт и CRM</h3>
-        <p class="plan__for">Кому: сайт должен приносить заявки, а команда — вести их в одном месте.</p>
+        <p class="plan__for">Для бизнеса, которому нужно получать заявки с сайта и вести клиентов в одном месте.</p>
         <p class="plan__price">от <span>$500</span></p>
+        <p class="plan__scope">Базовая комплектация</p>
         <ul class="plan__list" role="list">
-          <li><span><strong>Сайт + стандартная CRM — от $500.</strong> Заявки, клиенты, статусы и деньги на одном экране</span></li>
-          <li><span><strong>Сайт + кастомная CRM и брендинг — от $1000.</strong> Своя логика, свой визуальный язык</span></li>
-          <li><span>Роли и доступы для команды, обучение после запуска</span></li>
-          <li><span>Сложные конфигурации считаются индивидуально — после разбора процессов</span></li>
+          <li>Сайт и стандартная CRM</li>
+          <li>Заявки, клиенты, статусы и деньги</li>
+          <li>Доступы для команды и обучение</li>
         </ul>
-        <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--block" target="_blank" rel="noopener">Написать в Telegram</a>
+        <details class="plan__details">
+          <summary>Комплектации и сроки</summary>
+          <div class="plan__expanded">
+            <p><strong>Стандартная · от $500</strong>Сайт и CRM для работы с заявками и клиентами.</p>
+            <p><strong>Индивидуальная · от $1000</strong>Сайт, кастомная CRM и визуальная концепция. Своя логика и визуальный стиль — уже в стоимости комплектации.</p>
+            <p>Сложные конфигурации оцениваю после разбора процессов. Сайт или CRM — от месяца, в зависимости от задачи.</p>
+          </div>
+        </details>
+        <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
       </article>
 
-      <article class="plan glass glass--plate reveal">
+      <article class="plan reveal">
+        <p class="plan__kind mono">Меньше ручной работы</p>
         <h3 class="plan__h">Автоматизации</h3>
-        <p class="plan__for">Кому: одно и то же делается руками по одному и тому же сценарию.</p>
-        <p class="plan__price plan__price--calc"><span>Считается индивидуально</span></p>
+        <p class="plan__for">Для повторяющихся задач и сервисов, между которыми вы переносите данные вручную.</p>
+        <p class="plan__price plan__price--calc"><span>По задаче</span></p>
+        <p class="plan__scope">Возможные сценарии</p>
         <ul class="plan__list" role="list">
-          <li><span>Напоминания и уведомления вместо ручного контроля</span></li>
-          <li><span>Отчёты и выгрузки, которые собираются сами</span></li>
-          <li><span>Связки между сервисами, которые у вас уже работают</span></li>
-          <li><span>Цена зависит от числа шагов и от того, что уже настроено — считаю после разбора</span></li>
+          <li>Напоминания и уведомления</li>
+          <li>Автоматические отчёты и выгрузки</li>
+          <li>Обмен данными между сервисами</li>
         </ul>
-        <a href="#contact" class="btn btn--soft btn--block">Обсудить задачу</a>
+        <details class="plan__details">
+          <summary>Как считаются цена и срок</summary>
+          <div class="plan__expanded">
+            <p>Разбираем ваш сценарий: какие сервисы участвуют, сколько шагов нужно автоматизировать и что уже настроено.</p>
+            <p>После обсуждения фиксируем объём, стоимость и сроки до начала работы.</p>
+          </div>
+        </details>
+        <a href="https://t.me/davidnaumenko" class="btn btn--soft btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
       </article>
     </div>
 
-    <!-- визуальная концепция — не четвёртый тариф, а надбавка поверх любого
-         из трёх: цена дана «к разработке», поэтому та же широкая плашка, что
-         и у поддержки. Порядок в секции — таймлайн: разработка → визуал →
-         жизнь после запуска. -->
-    <div class="care care--design glass glass--plate reveal">
+    <div class="care care--design reveal">
       <div class="care__head">
         <p class="label mono">Дополнительно</p>
-        <h3 class="care__h">Визуальная концепция цифрового продукта</h3>
-        <p class="care__lead">Полностью разрабатываю визуальную концепцию сайта, Mini App, CRM или другого продукта. В результате вы получаете цельный и узнаваемый продукт — без отдельных поисков дизайнера.</p>
+        <h3 class="care__h">Визуальная концепция</h3>
+        <p class="care__lead">Единый стиль сайта, Mini App или CRM: от первого экрана до служебных разделов.</p>
         <p class="care__from">от <span>$300</span><i>к стоимости разработки</i></p>
+        <p class="care__lead">В индивидуальной комплектации «Сайт и CRM» от $1000 уже включена — без доплаты.</p>
       </div>
       <ul class="care__list" role="list">
         <li class="care__item">
@@ -556,7 +558,7 @@
 
     <!-- поддержка стоит отдельно: это цена в месяц, и в одном ряду с разовой
          ценой проекта она читалась бы как четвёртый тариф -->
-    <div class="care glass glass--plate reveal">
+    <div class="care reveal">
       <div class="care__head">
         <p class="label mono">После запуска</p>
         <h3 class="care__h">Ежемесячная поддержка</h3>
@@ -578,12 +580,11 @@
       </ul>
     </div>
 
-    <p class="pricing__note reveal">
-      Цена фиксируется до старта и в процессе работы не меняется — это тот же
-      второй шаг процесса, только записанный цифрой. Нужна одна страница без
-      системы за ней — лендинг делаю от $150, но это вход, а не основной формат
-      работы.
-    </p>
+    <div class="pricing__footer reveal">
+      <p><strong>Год гарантии на мой код</strong>Свои ошибки исправляю бесплатно. Новые функции и изменения исходной задачи оцениваем отдельно.</p>
+      <p><strong>Нужен только лендинг?</strong>Одна страница без системы за ней — от $150. Объём и сроки обсуждаем до старта.</p>
+    </div>
+    </div>
   </div>
 </section>
 
@@ -598,23 +599,23 @@
       <p class="label mono">Доверие и риски</p>
       <h2 class="h2">Что будет,<br>если что-то пойдёт не так</h2>
       <p class="lead">
-        [PLACEHOLDER] Работать с одним разработчиком — это риск, и делать вид,
-        что его нет, глупо. Поэтому вот что я делаю, чтобы он вас не касался.
+        До начала работы договариваемся об объёме, цене и сроках.
+        Доступы остаются у вас, а мои ошибки после запуска покрывает гарантия.
       </p>
     </header>
 
     <ul class="risks" role="list">
       <li class="risk reveal">
         <p class="risk__q">«А если цена вырастет по ходу работы?»</p>
-        <p class="risk__a">Не вырастет. Цена и объём фиксируются до старта. Если по дороге появляется новая задача — она считается отдельно, и вы решаете, брать её сейчас или потом.</p>
+        <p class="risk__a">Цена согласованного объёма не меняется. Новые функции и переработку ранее согласованных решений оцениваю отдельно — приступаю к ним после согласования стоимости.</p>
       </li>
       <li class="risk reveal">
         <p class="risk__q">«А если результат не тот, что я представлял?»</p>
-        <p class="risk__a">Вы видите промежуточные версии с первой недели, а не готовый продукт в конце. Правки вносятся по ходу, пока это дёшево, — а не после запуска, когда переделывать больно.</p>
+        <p class="risk__a">Вы видите промежуточные версии по ходу работы и можете проверить, как всё устроено. Сверяем результат с согласованной задачей. Если хотите изменить исходные требования, отдельно обсуждаем объём, стоимость и сроки.</p>
       </li>
       <li class="risk reveal">
         <p class="risk__q">«А если вы пропадёте?»</p>
-        <p class="risk__a">[PLACEHOLDER] Код и доступы ваши с самого начала: репозиторий, хостинг, домен, база — всё оформлено на вас. Другой разработчик сможет продолжить с того места, где остановились.</p>
+        <p class="risk__a">Проект с самого начала создаётся на ваших аккаунтах: репозиторий, хостинг, домен и база остаются под вашим контролем. При необходимости вы сможете дать доступ другому разработчику.</p>
       </li>
       <li class="risk reveal">
         <p class="risk__q">«А если что-то сломается после запуска?»</p>
@@ -642,32 +643,32 @@
     <div class="qa-list">
       <details class="qa reveal">
         <summary class="qa__q">С чего начинается работа?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>[PLACEHOLDER] С созвона на 30–40 минут. Разбираем задачу и процессы, я задаю вопросы про то, где именно теряется время. После созвона присылаю решение, цену и срок — до этого момента вы ничего не платите.</p></div>
+        <div class="qa__a"><p>С бесплатного обсуждения в переписке или созвона на 30–40 минут — как вам удобнее. Разбираем задачу и процессы, затем я предлагаю решение, цену и сроки. До согласования и начала работы вы ничего не платите.</p></div>
       </details>
 
       <details class="qa reveal">
         <summary class="qa__q">Сколько времени это займёт?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>[PLACEHOLDER] Лендинг — [N] недели, система — [N] недель, продукт под ключ — от [N]. Точный срок называю вместе с ценой, после разбора задачи.</p></div>
+        <div class="qa__a"><p>Ориентиры: Telegram-бот — около недели, Mini App — около двух недель, сайт или CRM — от месяца, настройка VPN — около одного дня. Срок зависит от задачи и объёма. Точную оценку даю до начала работы.</p></div>
       </details>
 
       <details class="qa reveal">
         <summary class="qa__q">Как происходит оплата?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>Предоплата 50% на старте, остальные 50% — после запуска. На больших проектах разбиваем на этапы: платите за то, что уже видите работающим.</p></div>
+        <div class="qa__a"><p>50% — перед началом работы, 50% — после запуска. Датой запуска считаем день, когда я подтверждаю готовность проекта к рабочему использованию по согласованному функционалу. Свои ошибки, обнаруженные после этого, исправляю бесплатно по годовой гарантии. Для крупных проектов отдельно согласуем этапы и оплату каждого из них.</p></div>
       </details>
 
       <details class="qa reveal">
         <summary class="qa__q">Что если у меня уже есть сайт или система?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>[PLACEHOLDER] Тогда сначала смотрю, что можно оставить. Переписывать с нуля то, что работает, — это ваши деньги на ветер. Часто дешевле достроить недостающее и связать с тем, что уже есть.</p></div>
+        <div class="qa__a"><p>Сначала изучаю код и устройство проекта, затем решаю, смогу ли взяться за доработку. Если существующая основа не подходит для задачи и дорабатывать её нецелесообразно, объясняю причины и предлагаю полную переработку.</p></div>
       </details>
 
       <details class="qa reveal">
         <summary class="qa__q">Кому будет принадлежать код?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>[PLACEHOLDER] Вам. Репозиторий, хостинг, домен и база оформляются на вас с самого начала, а не передаются в конце. Никакой привязки ко мне.</p></div>
+        <div class="qa__a"><p>Вам. Нужные аккаунты создаём на вас с самого начала: репозиторий, хостинг, домен и база находятся под вашим контролем. Вы сохраняете код и доступы и можете продолжить работу с другим разработчиком.</p></div>
       </details>
 
       <details class="qa reveal">
         <summary class="qa__q">Вы работаете из Вьетнама — это проблема?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>[PLACEHOLDER] Нет. Нячанг — это UTC+7, разница с Москвой четыре часа: мой день начинается раньше вашего и заканчивается вместе с ним. Созвоны ставим на удобное вам время.</p></div>
+        <div class="qa__a"><p>Я нахожусь в Нячанге, Вьетнам (UTC+7). На связи с 8:00 до 22:00 по местному времени, отвечаю в течение 40 минут. Работу можно вести в переписке, а время созвона согласуем заранее.</p></div>
       </details>
     </div>
   </div>
@@ -689,7 +690,7 @@
           Написать в Telegram
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <span class="final__note">Отвечаю в течение 40 минут · 8:00–22:00 (UTC+7, Хошимин)</span>
+        <span class="final__note">Отвечаю в течение 40 минут · 8:00–22:00 (UTC+7, Нячанг)</span>
       </div>
     </div>
   </div>
