@@ -1164,12 +1164,18 @@ ul { list-style: none; padding: 0; }
    BLOCK 08 — ЦЕНЫ
    ============================================================ */
 .pricing { padding-block: clamp(3rem, 6vw, 5rem); }
+/* Блоки цен стоят стопкой, каждый — самостоятельное предложение. */
+.pricing__stack { display: grid; gap: clamp(1rem, 2.2vw, 1.6rem); }
+/* Контраст к бумаге держит не белый фон, а глубина градиента и тень:
+   на #F4F8F6 почти белая плашка сливалась с фоном. Фон страницы при этом
+   не трогается — его значение лежит константой PAPER в шейдере воды. */
 .pricing__panel {
   overflow: hidden; border-radius: var(--r-xl);
-  border: 1px solid #fff;
-  background: linear-gradient(150deg, #fff, var(--tint));
-  box-shadow: var(--sh-2);
+  border: 1px solid rgba(255,255,255,.92);
+  background: linear-gradient(152deg, #FFFFFF 0%, #F1F8F5 40%, #DCEDE6 100%);
+  box-shadow: var(--sh-3);
 }
+.pricing__panel--after { background: linear-gradient(152deg, #FFFFFF 0%, #F3F9F7 55%, #E4F0EB 100%); }
 .pricing__head {
   position: relative; isolation: isolate; overflow: hidden;
   display: grid; gap: 1.5rem;
@@ -1177,7 +1183,8 @@ ul { list-style: none; padding: 0; }
   border-bottom: 1px solid var(--line-2);
 }
 .pricing__water { inset: 0; width: 100%; height: 100%; z-index: -1; }
-.pricing__head .h2 { margin-top: .6rem; }
+/* Заголовок секции — сам зелёный: отдельной подписи над ним больше нет. */
+.pricing__title { color: var(--green); }
 .pricing__intro { max-width: 48ch; margin-top: .8rem; color: var(--ink-soft); font-size: .98rem; }
 .pricing__terms { color: var(--ink-soft); font-size: .8rem; }
 .pricing__terms strong { display: block; color: var(--green-deep); font-weight: 500; margin-bottom: .35rem; }
@@ -1189,7 +1196,15 @@ ul { list-style: none; padding: 0; }
 }
 .plan + .plan { border-top: 1px solid var(--line-2); }
 .plan--on { background: linear-gradient(145deg, rgba(255,255,255,.35), #DCEFE7); }
-.plan__kind { color: var(--green); font-size: .64rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1rem; }
+/* Подпись над тарифом называет ЗАДАЧУ клиента, а не продукт, — она важнее
+   собственного кегля .64rem, на котором терялась. Штрих слева ставит её в
+   один ряд с зелёными акцентами блока. */
+.plan__kind {
+  display: flex; align-items: center; gap: .55rem;
+  color: var(--green-deep); font-size: .72rem; font-weight: 600;
+  letter-spacing: .09em; text-transform: uppercase; margin-bottom: 1.1rem;
+}
+.plan__kind::before { content: ""; flex: none; width: 15px; height: 2px; border-radius: 2px; background: var(--green); }
 .plan__h { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 600; }
 .plan__for { color: var(--ink-soft); font-size: .9rem; line-height: 1.5; margin-top: .65rem; }
 .plan__price {
@@ -1220,6 +1235,22 @@ ul { list-style: none; padding: 0; }
   background: rgba(255,255,255,.35);
 }
 .care .label { font-size: .65rem; }
+.care--flush { border-top: 0; background: none; }
+/* «Дополнительно» — не тариф, а надстройка к любому из них. Своя плашка,
+   зелёная подсветка и кегль на ступень выше, чем у служебных подписей. */
+.care--panel {
+  border-top: 0; border-radius: var(--r-xl);
+  padding: clamp(1.6rem, 3.4vw, 2.6rem);
+  background: linear-gradient(152deg, #FFFFFF 0%, #E9F5F0 46%, #D5EBE2 100%);
+  border: 1px solid rgba(255,255,255,.92);
+  box-shadow: var(--sh-3), inset 0 0 0 1px rgba(12,122,93,.09);
+}
+.care--panel .care__label { font-size: .78rem; letter-spacing: .16em; font-weight: 600; }
+.care--panel .care__h { font-size: clamp(1.3rem, 2.1vw, 1.65rem); margin-top: .6rem; }
+.care--panel .care__lead { font-size: .95rem; }
+.care--panel .care__item { border-bottom-color: rgba(12,122,93,.18); }
+.care--panel .care__name { color: var(--ink); font-size: .92rem; }
+.care--panel .care__from span { font-size: 1.7rem; }
 .care__h { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; margin-top: .45rem; }
 .care__lead { color: var(--ink-soft); font-size: .88rem; line-height: 1.5; margin-top: .5rem; max-width: 49ch; }
 .care__list { display: grid; gap: .6rem; align-content: center; }

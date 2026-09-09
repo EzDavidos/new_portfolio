@@ -454,13 +454,15 @@
      BLOCK 08 — ЦЕНЫ
      ============================================================ -->
 <section class="pricing" id="pricing">
-  <div class="wrap">
+  <div class="wrap pricing__stack">
+    <!-- Плашка 1 — закрытая: стоимость разработки и три направления.
+         Всё, что дальше, это отдельные предложения, и они стоят своими
+         плашками: в одной коробке они читались бы четвёртым тарифом. -->
     <div class="pricing__panel">
     <header class="pricing__head reveal">
       <canvas class="water water--accent pricing__water" data-flow="rising" aria-hidden="true"></canvas>
       <div>
-        <p class="label mono">Стоимость разработки</p>
-        <h2 class="h2">Сколько это стоит</h2>
+        <h2 class="h2 pricing__title">Стоимость разработки</h2>
         <p class="pricing__intro">Выберите, с чего начать. Точный объём, сроки и цену согласуем после бесплатного обсуждения задачи.</p>
       </div>
       <p class="pricing__terms"><strong>50% до старта · 50% после запуска</strong><span>Для крупных проектов — оплата по этапам</span></p>
@@ -534,9 +536,13 @@
       </article>
     </div>
 
-    <div class="care care--design reveal">
+    </div>
+
+    <!-- Плашка 2 — «Дополнительно»: не тариф, а надстройка к любому из них,
+         поэтому она вынесена из коробки цен и подсвечена зелёным. -->
+    <div class="care care--design care--panel reveal">
       <div class="care__head">
-        <p class="label mono">Дополнительно</p>
+        <p class="label mono care__label">Дополнительно</p>
         <h3 class="care__h">Визуальная концепция</h3>
         <p class="care__lead">Единый стиль сайта, Mini App или CRM: от первого экрана до служебных разделов.</p>
         <p class="care__from">от <span>$300</span><i>к стоимости разработки</i></p>
@@ -555,9 +561,10 @@
       </ul>
     </div>
 
-    <!-- поддержка стоит отдельно: это цена в месяц, и в одном ряду с разовой
-         ценой проекта она читалась бы как четвёртый тариф -->
-    <div class="care reveal">
+    <!-- Плашка 3 — что происходит после запуска: поддержка (цена в месяц,
+         а не за проект) и условия по гарантии. -->
+    <div class="pricing__panel pricing__panel--after">
+    <div class="care care--flush reveal">
       <div class="care__head">
         <p class="label mono">После запуска</p>
         <h3 class="care__h">Ежемесячная поддержка</h3>
