@@ -831,24 +831,47 @@ ul { list-style: none; padding: 0; }
   background: var(--tint); box-shadow: var(--sh-2);
 }
 .water--accent {
-  opacity: .88;
+  /* Материал тот же, что на первом экране; гасить его вуалью незачем —
+     плотность задаёт сам шейдер маской, а не прозрачность канваса. */
+  opacity: 1;
 }
 .no-webgl .solutions__water { background: linear-gradient(0deg, #69BBA7, #C2E9DE 60%, transparent 80%); }
 .no-webgl .pricing__water { background: linear-gradient(155deg, transparent 42%, #A9DCCD 62%, #73BEAA 85%, #C2E9DE); }
 /* Канвасы совпадают с границами плашек. Силуэт потока задаёт шейдер,
    скругления и стенки — overflow родителя; радиальной растушёвки нет. */
-.solutions__water { inset: auto 0 0; width: 100%; height: 45%; }
+.solutions__water { inset: auto 0 0; width: 100%; height: min(55%, 300px); }
 .solutions__head { position: relative; padding: clamp(1.5rem, 3.3vw, 2.7rem); }
 .solutions__head .h2 { max-width: 13ch; text-wrap: balance; }
 .solutions__intro { margin-top: 1.1rem; color: var(--ink-soft); font-size: .95rem; line-height: 1.6; max-width: 34ch; }
 .solutions__link { display: inline-flex; align-items: center; gap: 1rem; margin-top: 1.7rem; padding-block: .5rem; color: var(--green-deep); font-size: .9rem; font-weight: 500; border-bottom: 1px solid rgba(12,122,93,.3); }
 .solutions__link:hover { border-color: var(--green); }
 .sol { position: relative; display: grid; }
-.sol__card { padding: clamp(1.5rem, 2.5vw, 2rem); border-top: 1px solid rgba(12,122,93,.16); background: rgba(255,255,255,.48); backdrop-filter: blur(6px) saturate(1.15); -webkit-backdrop-filter: blur(6px) saturate(1.15); }
+/* Стекло карточки не ровное: под текстом оно плотное, а к низу, где под
+   ним стоит вода, истончается. Ровные 48% белого гасили как раз ту часть
+   волны, ради которой она в блоке и нужна. */
+.sol__card {
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  border-top: 1px solid rgba(12,122,93,.16);
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,.60) 0%,
+    rgba(255,255,255,.60) 70%,
+    rgba(255,255,255,.42) 82%,
+    rgba(255,255,255,.04) 100%);
+  /* Размытие снижено: текст карточки заканчивается выше воды, размывать под
+     ним нечего, а по нижней кромке блюр съедал как раз кромку волны. */
+  backdrop-filter: blur(3px) saturate(1.15);
+  -webkit-backdrop-filter: blur(3px) saturate(1.15);
+}
 .sol__h { font-family: var(--f-display); color: var(--green-deep); font-size: clamp(1.35rem, 1.8vw, 1.6rem); font-weight: 600; line-height: 1.2; margin-bottom: 1rem; text-wrap: balance; }
 .sol__card p { color: var(--ink-soft); font-size: .92rem; line-height: 1.6; }
 .sol__card .sol__problem { color: var(--ink); font-weight: 500; margin-bottom: .35rem; }
-.sol__note { position: relative; padding: 1.3rem clamp(1.5rem, 3.3vw, 2.7rem); border-top: 1px solid var(--line-2); background: rgba(255,255,255,.62); font-size: .85rem; line-height: 1.6; color: var(--ink-soft); }
+.sol__note {
+  position: relative; padding: 1.3rem clamp(1.5rem, 3.3vw, 2.7rem);
+  border-top: 1px solid var(--line-2);
+  background: rgba(255,255,255,.62);
+  backdrop-filter: blur(8px) saturate(1.1); -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  font-size: .85rem; line-height: 1.6; color: var(--ink-soft);
+}
 .sol__note a { display: inline-block; color: var(--green-deep); font-weight: 500; margin-top: .5rem; }
 .sol__note a:hover { text-decoration: underline; text-underline-offset: 4px; }
 @media (min-width: 600px) {
