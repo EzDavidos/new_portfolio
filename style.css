@@ -228,7 +228,7 @@ ul { list-style: none; padding: 0; }
 .sol > *, .steps > *, .final__inner > *,
 .works__grid > *, .plans > *, .trust__grid > *, .footer__grid > *,
 .p100 > *, .p100__nums > *,
-.rail, .rail__inner { min-width: 0; }
+.rail, .rail__inner, .author__card > * { min-width: 0; }
 
 /* ---------- LAYOUT ---------- */
 .wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--pad-x); }
@@ -487,6 +487,14 @@ ul { list-style: none; padding: 0; }
 .hero__lead { font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.6rem, 3.2vw, 2.25rem); }
 
+/* зелёная галочка в кружке — маркер списка в блоке «Кто делает» */
+.tick {
+  width: 21px; height: 21px; border-radius: 50%; flex: none;
+  background: var(--green); color: #fff;
+  display: grid; place-content: center;
+  box-shadow: 0 2px 6px rgba(12,122,93,.28);
+}
+.tick svg { width: 11px; height: 11px; }
 
 /* ============================================================
    СТАТУС-РЕЙЛ — живые значения
@@ -528,6 +536,29 @@ ul { list-style: none; padding: 0; }
 .rail__time { margin-left: auto; padding-left: clamp(.7rem, 1.5vw, 1.05rem); flex: none; }
 .rail__inner::-webkit-scrollbar { display: none; }
 
+/* ============================================================
+   BLOCK 02 — КТО ДЕЛАЕТ
+   Стоит там, где раньше был стат-бар, и так же лежит на хвосте воды,
+   поэтому стекло того же уровня — .glass--solid. Фото сбоку от 600px,
+   кадр 4:3 без обрезки; на телефоне сверху и режется в 16:10, чтобы
+   блок не занимал весь экран.
+   ============================================================ */
+.author { padding-block: clamp(.9rem, 2vw, 1.4rem) clamp(2rem, 4vw, 3rem); }
+.author__card {
+  border-radius: var(--r-xl);
+  display: grid; gap: clamp(1.1rem, 2.6vw, 2rem); align-items: center;
+  padding: clamp(.6rem, 1.2vw, .8rem);
+}
+.author__photo {
+  aspect-ratio: 16 / 10; border-radius: var(--r-lg); overflow: hidden;
+  background: var(--paper-2);
+}
+.author__photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 62% 40%; }
+.author__text { padding: 0 clamp(.5rem, 1.6vw, 1rem) clamp(.7rem, 1.6vw, 1rem); }
+.author__h { max-width: 24ch; margin-bottom: clamp(1rem, 2vw, 1.3rem); }
+.author__list { display: grid; gap: .8rem; }
+.author__list li { display: flex; align-items: flex-start; gap: .75rem; font-size: .98rem; line-height: 1.45; color: var(--ink-soft); }
+.author__list .tick { margin-top: .05rem; }
 
 /* ============================================================
    РАМКИ ПОД СКРИНШОТЫ
@@ -1339,6 +1370,12 @@ ul { list-style: none; padding: 0; }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .works__grid { grid-template-columns: repeat(2, 1fr); }
   .footer__grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* фото сбоку уже с планшета: в одну колонку кадр во всю ширину
+     растягивал блок до 700px, а он должен остаться коротким */
+  .author__card { grid-template-columns: minmax(0, 38%) minmax(0, 1fr); gap: clamp(1.1rem, 3.5vw, 3rem); }
+  .author__photo { aspect-ratio: 4 / 3; }
+  .author__text { padding: clamp(.6rem, 1.4vw, 1rem) clamp(.6rem, 1.4vw, 1rem) clamp(.6rem, 1.4vw, 1rem) 0; }
 }
 
 @media (min-width: 860px) {
@@ -1354,6 +1391,8 @@ ul { list-style: none; padding: 0; }
      строка не помещалась и обрезала часовой пояс */
   .hero__main  { grid-column: 1; grid-row: 1; }
   .rail        { grid-column: 1 / -1; grid-row: 2; margin-top: 0; }
+
+  .author__card { grid-template-columns: minmax(0, 23rem) minmax(0, 1fr); }
 
   /* Телефон кладём абсолютом, а не колонкой сетки. Так высоту карточки
      задаёт один только текст — как в макете, где мокап выше карточки и
