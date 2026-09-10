@@ -484,7 +484,7 @@ ul { list-style: none; padding: 0; }
   max-width: 13ch;
   margin-bottom: clamp(1.35rem, 2.8vw, 2rem);
 }
-.hero__lead { font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-soft); }
+.hero__lead { font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.6rem, 3.2vw, 2.25rem); }
 
 
