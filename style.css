@@ -228,7 +228,7 @@ ul { list-style: none; padding: 0; }
 .sol > *, .steps > *, .final__inner > *,
 .works__grid > *, .plans > *, .trust__grid > *, .footer__grid > *,
 .p100 > *, .p100__nums > *,
-.rail, .rail__inner, .proof__bar > * { min-width: 0; }
+.rail, .rail__inner, .author__card > * { min-width: 0; }
 
 /* ---------- LAYOUT ---------- */
 .wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--pad-x); }
@@ -484,14 +484,10 @@ ul { list-style: none; padding: 0; }
   max-width: 13ch;
   margin-bottom: clamp(1.35rem, 2.8vw, 2rem);
 }
-.hero__lead { font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-soft); }
+.hero__lead { font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.6rem, 3.2vw, 2.25rem); }
 
-/* карточка-выжимка справа — как в референсе */
-.gains { border-radius: var(--r-xl); padding: clamp(1.5rem, 3vw, 2rem); }
-.gains__h { font-family: var(--f-display); font-size: 1.08rem; font-weight: 600; margin-bottom: 1.1rem; }
-.gains__list { display: grid; gap: .95rem; }
-.gains__list li { display: flex; align-items: center; gap: .75rem; font-size: .98rem; color: var(--ink-soft); }
+/* зелёная галочка в кружке — маркер списка в блоке «Кто делает» */
 .tick {
   width: 21px; height: 21px; border-radius: 50%; flex: none;
   background: var(--green); color: #fff;
@@ -541,45 +537,28 @@ ul { list-style: none; padding: 0; }
 .rail__inner::-webkit-scrollbar { display: none; }
 
 /* ============================================================
-   BLOCK 02 — PROOF (широкий стеклянный бар)
+   BLOCK 02 — КТО ДЕЛАЕТ
+   Стоит там, где раньше был стат-бар, и так же лежит на хвосте воды,
+   поэтому стекло того же уровня — .glass--solid. Фото сбоку от 600px,
+   кадр 4:3 без обрезки; на телефоне сверху и режется в 16:10, чтобы
+   блок не занимал весь экран.
    ============================================================ */
-.proof { padding-block: clamp(.9rem, 2vw, 1.4rem) clamp(2rem, 4vw, 3rem); }
-/* В референсе бар лежит НА воде и разделителей между ячейками нет:
-   колонки держит только ритм отступов. */
-.proof__bar {
+.author { padding-block: clamp(.9rem, 2vw, 1.4rem) clamp(2rem, 4vw, 3rem); }
+.author__card {
   border-radius: var(--r-xl);
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  padding: clamp(.5rem, 1vw, .7rem);
-  gap: clamp(.2rem, .6vw, .4rem);
+  display: grid; gap: clamp(1.1rem, 2.6vw, 2rem); align-items: center;
+  padding: clamp(.6rem, 1.2vw, .8rem);
 }
-.stat {
-  padding: clamp(.9rem, 2.1vw, 1.35rem) clamp(.9rem, 2.1vw, 1.4rem);
-  display: flex; flex-direction: column; gap: .3rem;
+.author__photo {
+  aspect-ratio: 16 / 10; border-radius: var(--r-lg); overflow: hidden;
+  background: var(--paper-2);
 }
-.stat__num {
-  font-family: var(--f-display); font-size: clamp(1.7rem, 4vw, 2.35rem);
-  font-weight: 600; line-height: 1.1; letter-spacing: -.012em;
-  font-variant-numeric: tabular-nums; color: var(--ink);
-}
-.stat__label { font-size: .9rem; color: var(--ink-mute); line-height: 1.4; }
-/* последняя ячейка — вложенная карточка со своим скруглением */
-.stat--tint {
-  background: linear-gradient(160deg, rgba(255,255,255,.62), rgba(213,238,229,.72));
-  border-radius: var(--r);
-  box-shadow: inset 0 0 0 1px rgba(12,122,93,.10);
-  justify-content: center;
-}
-.stat--tint .stat__label { color: var(--ink-soft); }
-/* срок — единственное число, набранное Bebas: он узкий и высокий, поэтому
-   крупно читается, не упираясь в края плашки. Глифы не растягиваем —
-   ширину строке даёт сам кегль, отсюда и умеренный clamp. */
-.stat--tint .stat__num {
-  font-family: var(--f-num); font-size: clamp(2.15rem, 4.4vw, 3.3rem);
-  font-weight: 400; line-height: .95; letter-spacing: .01em;
-  color: var(--green);
-}
-.proof__note { margin-top: clamp(1.1rem, 2.5vw, 1.5rem); font-size: .9rem; color: var(--ink-mute); max-width: 74ch; }
-.proof__note-ph { color: var(--green); }
+.author__photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 62% 40%; }
+.author__text { padding: 0 clamp(.5rem, 1.6vw, 1rem) clamp(.7rem, 1.6vw, 1rem); }
+.author__h { max-width: 24ch; margin-bottom: clamp(1rem, 2vw, 1.3rem); }
+.author__list { display: grid; gap: .8rem; }
+.author__list li { display: flex; align-items: flex-start; gap: .75rem; font-size: .98rem; line-height: 1.45; color: var(--ink-soft); }
+.author__list .tick { margin-top: .05rem; }
 
 /* ============================================================
    РАМКИ ПОД СКРИНШОТЫ
@@ -1068,6 +1047,7 @@ ul { list-style: none; padding: 0; }
   color: var(--p100-accent);
 }
 .p100__cap { font-size: .95rem; line-height: 1.3; color: var(--p100-mute); }
+.p100__more { margin-top: clamp(.8rem, 1.6vw, 1rem); max-width: 26rem; font-size: .9rem; line-height: 1.45; color: var(--p100-mute); }
 
 .p100__acts {
   display: flex; flex-wrap: wrap; gap: .6rem;
@@ -1390,6 +1370,12 @@ ul { list-style: none; padding: 0; }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .works__grid { grid-template-columns: repeat(2, 1fr); }
   .footer__grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* фото сбоку уже с планшета: в одну колонку кадр во всю ширину
+     растягивал блок до 700px, а он должен остаться коротким */
+  .author__card { grid-template-columns: minmax(0, 38%) minmax(0, 1fr); gap: clamp(1.1rem, 3.5vw, 3rem); }
+  .author__photo { aspect-ratio: 4 / 3; }
+  .author__text { padding: clamp(.6rem, 1.4vw, 1rem) clamp(.6rem, 1.4vw, 1rem) clamp(.6rem, 1.4vw, 1rem) 0; }
 }
 
 @media (min-width: 860px) {
@@ -1399,14 +1385,14 @@ ul { list-style: none; padding: 0; }
   .sheet { display: none !important; }
 
   .rail::after { display: none; }
+  /* правая колонка пустая намеренно: там гребень воды, текст на него не лезет */
   .hero__grid { grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); }
   /* рейл кладём отдельной строкой во всю ширину: в левой колонке
      строка не помещалась и обрезала часовой пояс */
   .hero__main  { grid-column: 1; grid-row: 1; }
-  .hero__aside { grid-column: 2; grid-row: 1; padding-top: clamp(3rem, 7vw, 6rem); }
   .rail        { grid-column: 1 / -1; grid-row: 2; margin-top: 0; }
 
-  .proof__bar { grid-template-columns: repeat(4, 1fr); }
+  .author__card { grid-template-columns: minmax(0, 23rem) minmax(0, 1fr); }
 
   /* Телефон кладём абсолютом, а не колонкой сетки. Так высоту карточки
      задаёт один только текст — как в макете, где мокап выше карточки и
@@ -1486,7 +1472,6 @@ ul { list-style: none; padding: 0; }
 
 @media (min-width: 1120px) {
   .hero__title { max-width: 12ch; }
-  .proof__bar { grid-template-columns: repeat(4, 1fr) 1.15fr; }
 }
 
 /* ============================================================
