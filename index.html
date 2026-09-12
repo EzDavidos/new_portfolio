@@ -202,18 +202,20 @@
 
         <!-- цифры из боевой базы школы (Supabase), а не из презентации -->
         <ul class="fgh__nums" role="list">
-          <li class="fgh__stat"><span class="fgh__num">109</span><span class="fgh__cap">клиентов</span></li>
-          <li class="fgh__stat"><span class="fgh__num">140</span><span class="fgh__cap">занятий</span></li>
+          <li class="fgh__stat"><span class="fgh__num">170+</span><span class="fgh__cap">клиентов</span></li>
+          <li class="fgh__stat"><span class="fgh__num">140+</span><span class="fgh__cap">занятий</span></li>
           <li class="fgh__stat"><span class="fgh__num">18</span><span class="fgh__cap">дней</span></li>
           <li class="fgh__stat"><span class="fgh__num">4</span><span class="fgh__cap">кабинета</span></li>
         </ul>
 
+        <!-- «Смотреть кейс» открывает окно кейса (шаблон ниже), «Нужна такая
+             же система» переехала в само окно — туда, где интерес выше всего -->
         <div class="fgh__acts">
-          <a href="https://www.flyguru.pro" class="btn btn--brand" target="_blank" rel="noopener">Открыть flyguru.pro</a>
-          <a href="#contact" class="btn btn--on-dark">
-            Нужна такая же система
+          <button type="button" class="btn btn--brand" data-case="flyguru">
+            Смотреть кейс
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          </button>
+          <a href="https://www.flyguru.pro" class="btn btn--on-dark" target="_blank" rel="noopener">Открыть flyguru.pro</a>
         </div>
       </div>
 
@@ -230,9 +232,185 @@
           </div>
           <img class="fgh__frame" src="assets/img/iphone-3d.webp" alt=""
                aria-hidden="true" width="1151" height="1366" loading="lazy" decoding="async">
+          <button type="button" class="fgh__open" data-case="flyguru" tabindex="-1" aria-hidden="true"></button>
         </div>
       </div>
     </article>
+
+    <!-- Окно кейса FlyGuru. Тексты — по documents/projects/flyguru.md, цифры
+         12.09.2026: 174 клиента (со слов Давида), занятий 140 на 23.08. -->
+    <template id="case-flyguru" data-theme="flyguru">
+      <div class="cv__id">
+        <h2 class="cv__title" id="cv-title-flyguru">FlyGuru</h2>
+        <p class="cv__sub">Сайт и CRM для школы электрофойлов в Нячанге</p>
+      </div>
+
+      <section class="cv__gal" aria-label="Экраны проекта">
+        <div class="cv__track">
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/home-phone.webp" width="900" height="1957" alt="Главная страница flyguru.pro на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Главная</b>Первый экран с видео с воды. Кнопка записи всегда внизу, под пальцем.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/learn-phone.webp" width="900" height="1957" alt="Страница обучения на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Обучение</b>Что нужно знать до первого занятия: сколько длится, с какого возраста, до какого веса.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/lesson-steps-pc.webp" width="1892" height="860" alt="Раздел «Занятие по шагам» на компьютере" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Как проходит занятие</b>Четыре шага от инструктажа на берегу до полёта и видео с пляжа — новичок знает, что его ждёт.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/prices-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/prices-pc.webp" width="1892" height="862" alt="Прайс на компьютере" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Прайс</b>Услуги по вкладкам: обучение, тандем, аренда, абонементы, выезды. Скидка по ссылке агента видна прямо в цене.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/shop-pc.webp" width="1897" height="862" alt="Раздел магазина и частые вопросы" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Магазин и вопросы</b>Школа продаёт электрофойлы — для этого свой раздел. Ответы на вопросы новичков стоят рядом.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/booking-phone.webp" width="900" height="1957" alt="Форма записи на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Запись</b>Имя, телефон, мессенджер и услуга. Заявка сразу приходит инструкторам в Telegram.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/menu-phone.webp" width="900" height="1957" alt="Меню разделов CRM на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Разделы системы</b>Заявки, клиенты, календарь, абонементы, сертификаты, статистика, зарплаты и расходы — в одном меню.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/clients-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/clients-pc.webp" width="1892" height="862" alt="Список клиентов в CRM" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Клиенты</b>База с поиском и сортировкой по числу занятий, тратам, последнему визиту и возрасту.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/calendar-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/calendar-pc.webp" width="1892" height="862" alt="Календарь смен и записей" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Календарь</b>Смены и записи по дням. Клик по дню — кто работает и кто записан.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/sessions-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/sessions-pc.webp" width="1892" height="856" alt="Список занятий в CRM" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Занятия</b>Каждое катание: клиент, услуга, время и оплата. Из этих записей считаются зарплаты.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/subscriptions-phone.webp" width="900" height="1957" alt="Абонементы в CRM на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Абонементы</b>Сколько минут внесено и когда оплачено. Остаток списывается после каждого катания.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/salary-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/salary-pc.webp" width="1892" height="861" alt="Расчёт зарплат сотрудников" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Зарплаты</b>Сколько заработал каждый за период и сколько осталось выдать. «Как посчитали» раскрывает формулу.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/payouts-phone.webp" width="900" height="1957" alt="История выплат на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>История выплат</b>Кому, сколько и когда выдали — вместо отдельной тетради.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/stats-pc.webp" width="1896" height="861" alt="Статистика школы" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Статистика</b>Выручка по дням и категориям, топ услуг, работа инструкторов и статусы заявок.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/report-pc.webp" width="1892" height="861" alt="Отчёт за период с выгрузкой" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Отчёт за период</b>Выручка и деньги на руках за любой период, список визитов с выгрузкой в Excel.</figcaption>
+      </figure>
+        </div>
+      </section>
+
+      <section class="cv__info" aria-label="О проекте">
+        <ul class="cv__nums" role="list">
+          <li><b>170+</b><span>клиентов в базе школы</span></li>
+          <li><b>140+</b><span>занятий учтено в системе</span></li>
+          <li><b>18</b><span>дней от первой строки кода до работы в бою</span></li>
+          <li><b>4</b><span>кабинета: админ, инструктор, механик, СММ</span></li>
+        </ul>
+
+        <div class="cv__grid">
+          <div>
+            <h3 class="cv__h mono">Задача</h3>
+            <p class="cv__lead">Школе нужен был сайт, с которого приходят заявки, и учёт вместо тетрадок и переписок.</p>
+            <p>Владелец хотел видеть, кто из инструкторов сколько заработал, сколько минут осталось у клиента на абонементе и сколько денег реально в кассе.</p>
+            <h3 class="cv__h mono">Нестандартная часть</h3>
+            <p>Зарплата считается слоями — фикс, процент с чека, доля дневной выручки и доля с абонемента — и делится между теми, кто в этот день реально открыл смену, а не между теми, кто стоял в графике.</p>
+          </div>
+
+          <div>
+            <h3 class="cv__h mono">Что сделано</h3>
+            <ul class="cv__list" role="list">
+              <li>Сайт: обучение, тандем, клуб, прайс, отзывы, контакты с картой</li>
+              <li>Заявка с сайта сразу приходит в Telegram — в общий чат и группу инструкторов с кнопкой «Принять»</li>
+              <li>Кабинет инструктора под телефон: записи на сегодня, списание минут, своя зарплата</li>
+              <li>Смена открывается и закрывается по фото с места</li>
+              <li>Абонементы с живым остатком минут и сроком сгорания</li>
+              <li>Зарплаты, расходы и касса: одна цифра «деньги на руках» вместо трёх отчётов</li>
+              <li>Реферальные ссылки агентов и учёт переходов с YouTube, Instagram и рекламы</li>
+              <li>Статистика с выгрузкой в Excel</li>
+            </ul>
+          </div>
+
+          <div class="cv__facts">
+            <div>
+              <h3 class="cv__h mono">Сроки</h3>
+              <ol class="cv__time" role="list">
+                <li><time datetime="2026-07-06">6 июля 2026</time>первая строка кода</li>
+                <li><time datetime="2026-07-24">24 июля 2026</time>школа работает в системе</li>
+              </ol>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Стек</h3>
+              <ul class="cv__stack" role="list">
+                <li>Next.js 16</li><li>React 19</li><li>TypeScript</li><li>Supabase · Postgres</li>
+                <li>Tailwind CSS</li><li>Vercel</li><li>Telegram Bot API</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Ссылки</h3>
+              <ul class="cv__links" role="list">
+                <li><a href="https://www.flyguru.pro" target="_blank" rel="noopener">flyguru.pro <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+              </ul>
+              <p class="cv__note">Код принадлежит школе, поэтому закрыт.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cv__end">
+        <div class="cv__endin">
+          <p>Нужна такая же система для вашего бизнеса?</p>
+          <div class="cv__endacts">
+            <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </template>
 
   </div>
 </section>
@@ -311,19 +489,20 @@
         <!-- цифры из боевой базы продукта: первый живой заказ 25 апреля 2026,
              день считает script.js, чтобы строка не устаревала -->
         <ul class="p100__nums" role="list">
-          <li class="p100__stat"><span class="p100__num">521</span><span class="p100__cap">заказ</span></li>
-          <li class="p100__stat"><span class="p100__num">150</span><span class="p100__cap">клиентов</span></li>
+          <li class="p100__stat"><span class="p100__num">580+</span><span class="p100__cap">заказов</span></li>
+          <li class="p100__stat"><span class="p100__num">150+</span><span class="p100__cap">клиентов</span></li>
           <li class="p100__stat"><span class="p100__num">44%</span><span class="p100__cap">вернулись</span></li>
           <li class="p100__stat"><span class="p100__num" data-days-num>—</span><span class="p100__cap">дней</span></li>
         </ul>
         <!-- перенесено из верхнего proof-бара (master-plan, 1.3) -->
-        <p class="p100__more">79 заказов у самого активного клиента <br>Около 4&nbsp;заказов в&nbsp;день <br>9 дней от первого коммита до первого&nbsp;заказа</p>
+        <p class="p100__more">90+ заказов у самого активного клиента <br>Около 4&nbsp;заказов в&nbsp;день <br>9 дней от первого коммита до первого&nbsp;заказа</p>
 
+        <!-- «Хочу такой же продукт» переехала в окно кейса, как и у FlyGuru -->
         <div class="p100__acts">
-          <a href="https://t.me/davidnaumenko" class="btn btn--brand" target="_blank" rel="noopener">
-            Хочу такой же продукт
+          <button type="button" class="btn btn--brand" data-case="100lovaya">
+            Смотреть кейс
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          </button>
           <a href="https://t.me/100lovaya_bot" class="btn btn--on-dark" target="_blank" rel="noopener">Открыть @100lovaya_bot</a>
         </div>
       </div>
@@ -341,9 +520,138 @@
                  aria-label="Запись экрана мини-аппа 100ловая"></video>
           <img class="mock__body" src="assets/img/iphone-16-pro-max.png"
                alt="" aria-hidden="true" width="388" height="800" loading="lazy">
+          <button type="button" class="mock__open" data-case="100lovaya" tabindex="-1" aria-hidden="true"></button>
         </figure>
       </div>
     </article>
+
+    <!-- Окно кейса 100ловой. Тексты — по documents/projects/100lovaya.md,
+         цифры — экран «Статистика» 12.09.2026 (586 заказов) и база 23.08. -->
+    <template id="case-100lovaya" data-theme="100lovaya">
+      <div class="cv__id">
+        <h2 class="cv__title" id="cv-title-100lovaya"><span>100</span>ловая</h2>
+        <p class="cv__sub">Магазин в Telegram для домашней кухни в Нячанге</p>
+      </div>
+
+      <section class="cv__gal" aria-label="Экраны проекта">
+        <div class="cv__track">
+      <figure class="cv__slide" data-chapter="Магазин">
+        <picture>
+          <img src="assets/img/cases/100lovaya/catalog.webp" width="900" height="1957" alt="Каталог блюд в мини-приложении" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Каталог</b>Витрина с фото, поиском, избранным и акциями. «Повторить прошлый заказ» собирает корзину в один тап.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Магазин">
+        <picture>
+          <img src="assets/img/cases/100lovaya/product.webp" width="900" height="1957" alt="Карточка блюда" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Карточка блюда</b>Фото, цена со скидкой, количество — и в корзину.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Магазин">
+        <picture>
+          <img src="assets/img/cases/100lovaya/cart.webp" width="900" height="1957" alt="Корзина и оформление заказа" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Корзина и оформление</b>Контакт и адрес запоминаются для следующего заказа. Оплата наличными, по QR, криптой или картой.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/admin.webp" width="900" height="1957" alt="Панель владельца" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Панель владельца</b>Статистика, заказы, товары, категории, оплата и часы работы — в том же приложении, что и магазин.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/admin-products.webp" width="900" height="1957" alt="Список товаров в админке" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Товары</b>Цена, скидка и категория. Глазок прячет блюдо из меню одним тапом.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/clients.webp" width="900" height="1957" alt="База клиентов в админке" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Клиенты</b>Кто сколько раз заказывал, теги вроде «Постоянник» и поиск по имени.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/stats.webp" width="850" height="1850" alt="Статистика заказов" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Статистика</b>Заказы, выручка и средний чек за любой период, статусы заказов и топ блюд.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/newsletter.webp" width="900" height="1957" alt="Рассылка по клиентам" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Рассылка</b>Сообщение всем, кто заказывал, — с фото и предпросмотром перед отправкой.</figcaption>
+      </figure>
+        </div>
+      </section>
+
+      <section class="cv__info" aria-label="О проекте">
+        <ul class="cv__nums" role="list">
+          <li><b>580+</b><span>заказов через приложение</span></li>
+          <li><b>150+</b><span>клиентов</span></li>
+          <li><b>44%</b><span>вернулись за повторным заказом</span></li>
+          <li><b>9</b><span>дней от первой строки кода до первого заказа</span></li>
+        </ul>
+
+        <div class="cv__grid">
+          <div>
+            <h3 class="cv__h mono">Задача</h3>
+            <p class="cv__lead">Заказы собирались перепиской в мессенджере. Нужен был магазин прямо в Telegram — без сайта и без приложения, которое надо скачивать.</p>
+            <p>А владельцу — управление с телефона: блюда и цены, заказы, база клиентов и выручка, без бумажек.</p>
+            <h3 class="cv__h mono">Нестандартная часть</h3>
+            <p>Весь магазин и вся админка — один HTML-файл без фреймворков и сборки, который работает внутри Telegram. Отдельного сайта и отдельной CRM у бизнеса нет вообще.</p>
+          </div>
+
+          <div>
+            <h3 class="cv__h mono">Что сделано</h3>
+            <ul class="cv__list" role="list">
+              <li>Меню в Telegram: фото, категории, поиск, сортировка по цене, избранное</li>
+              <li>Корзина с адресом, комментарием и выбором оплаты; адрес запоминается</li>
+              <li>История заказов и повтор прошлого заказа одним нажатием</li>
+              <li>Заказ приходит владельцу в Telegram с кнопками: подтвердить, отменить, оплачен, доставлен</li>
+              <li>Клиент получает статус на каждом шаге и реквизиты для оплаты</li>
+              <li>Через 30 минут после доставки бот сам спрашивает, как всё прошло</li>
+              <li>Админка в том же приложении: блюда, цены, скидки, клиенты с тегами, статистика, рассылка</li>
+              <li>Часы работы: вне их в приложении висит баннер «закрыто»</li>
+            </ul>
+          </div>
+
+          <div class="cv__facts">
+            <div>
+              <h3 class="cv__h mono">Сроки</h3>
+              <ol class="cv__time" role="list">
+                <li><time datetime="2026-04-16">16 апреля 2026</time>первая строка кода</li>
+                <li><time datetime="2026-04-25">25 апреля 2026</time>первый живой заказ</li>
+              </ol>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Стек</h3>
+              <ul class="cv__stack" role="list">
+                <li>Python</li><li>aiogram 3</li><li>FastAPI</li><li>PostgreSQL</li>
+                <li>JavaScript без фреймворков</li><li>Telegram Mini Apps</li><li>Railway</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Ссылки</h3>
+              <ul class="cv__links" role="list">
+                <li><a href="https://t.me/100lovaya_bot" target="_blank" rel="noopener">@100lovaya_bot <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+              </ul>
+              <p class="cv__note">Код закрыт.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cv__end">
+        <div class="cv__endin">
+          <p>Нужен такой же магазин в Telegram?</p>
+          <div class="cv__endacts">
+            <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </template>
 
   </div>
 </section>
@@ -366,6 +674,7 @@
           <img class="shot__media" src="assets/img/moodbot-cover.webp"
                alt="Обложка курса «Перезавантаження настрою»"
                width="1100" height="688" loading="lazy" decoding="async">
+          <button type="button" class="work__cover" data-case="mood" tabindex="-1" aria-hidden="true"><span class="work__count mono">9 экранов</span></button>
         </div>
         <div class="work__body">
           <span class="work__kind mono">Инфопродукт</span>
@@ -373,10 +682,17 @@
           <p>Оплата картой в боте или на лендинге — доступ к семи урокам открывается
           сам, без участия автора. Следующий урок не откроется, пока не отмечен
           предыдущий, а пропал на два дня — бот сам напомнит.</p>
-          <a class="work__link mono" href="https://t.me/coursemood_bot" target="_blank" rel="noopener">
-            Открыть @coursemood_bot
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <!-- демо-бот, а не рабочий: рабочий платный, в демо можно пройти курс самому -->
+          <div class="work__acts">
+            <button type="button" class="work__link work__case mono" data-case="mood">
+              Смотреть кейс
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <a class="work__link mono" href="https://t.me/demomoodbot" target="_blank" rel="noopener">
+              Открыть @demomoodbot
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
           <ul class="stack" role="list">
             <li class="chip chip--mono">aiogram 3</li>
             <li class="chip chip--mono">PostgreSQL</li>
@@ -390,6 +706,7 @@
           <img class="shot__media" src="assets/img/agentboy-cover.webp"
                alt="Первый экран пресс-кита AGENTBOY"
                width="1100" height="688" loading="lazy" decoding="async">
+          <button type="button" class="work__cover" data-case="agentboy" tabindex="-1" aria-hidden="true"><span class="work__count mono">4 экрана</span></button>
         </div>
         <div class="work__body">
           <span class="work__kind mono">Музыка</span>
@@ -398,10 +715,16 @@
           двенадцать видео с сетами, площадки пяти стран и пресс-пак на скачивание.
           Переключатель EN/RU запоминает выбор и подставляется в ссылку — русскую
           версию можно отправить сразу нужной.</p>
-          <a class="work__link mono" href="https://agentboy.org/?lang=en#hero" target="_blank" rel="noopener">
-            Открыть пресс-кит
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <div class="work__acts">
+            <button type="button" class="work__link work__case mono" data-case="agentboy">
+              Смотреть кейс
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <a class="work__link mono" href="https://agentboy.org/?lang=en#hero" target="_blank" rel="noopener">
+              Открыть пресс-кит
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
           <ul class="stack" role="list">
             <li class="chip chip--mono">JavaScript</li>
             <li class="chip chip--mono">i18n EN/RU</li>
@@ -411,6 +734,242 @@
       </article>
 
     </div>
+
+    <!-- Окно кейса MoodBot. Тексты — по documents/projects/moodbot.md; продаж не называем: боевой базы нет. -->
+    <template id="case-mood" data-theme="mood">
+      <div class="cv__id">
+        <h2 class="cv__title" id="cv-title-mood">MoodBot</h2>
+        <p class="cv__sub">Бот, который продаёт курс и сам ведёт покупателя семь дней</p>
+      </div>
+
+      <section class="cv__gal" aria-label="Экраны проекта">
+        <div class="cv__track">
+      <figure class="cv__slide" data-chapter="Лендинг">
+        <picture>
+          <img src="assets/img/cases/mood/landing-hero-pc.webp" width="1890" height="817" alt="Первый экран лендинга курса" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Лендинг курса</b>Здесь тоже покупают картой, а доступ открывается в Telegram по персональной ссылке из письма.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Лендинг">
+        <picture>
+          <img src="assets/img/cases/mood/landing-format-pc.webp" width="1890" height="808" alt="Блок лендинга о формате курса" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Формат и результат</b>Что человек получит за семь дней и сколько времени это займёт в день.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-start.webp" width="900" height="1957" alt="Стартовый экран бота" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Старт</b>Предложение курса и две кнопки: оплатить картой или ввести код доступа.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-menu.webp" width="900" height="1957" alt="Меню бота после оплаты" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Меню с доступом</b>Язык и формат видео, мой путь, сброс прогресса и напоминания — всё в одном меню.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-days.webp" width="900" height="1957" alt="Ввод кода и список дней курса" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Дни курса</b>После оплаты или кода открываются семь дней. Пройденные отмечаются галочкой.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-lesson.webp" width="900" height="1957" alt="Видеоурок в боте" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Урок</b>Видео нельзя переслать или скачать. После урока — вопрос дня и прогресс 1/7.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-locked.webp" width="900" height="1957" alt="Бот не пускает к следующему дню" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Строгий порядок</b>Следующий день не откроется, пока не пройден предыдущий и нет ответа на вопрос.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-my-path.webp" width="900" height="1957" alt="Экран «Мой путь» со своими ответами" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Мой путь</b>Все свои ответы за семь дней одним списком — перечитать в конце курса.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-bonus.webp" width="900" height="1957" alt="Бонусы после седьмого дня" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Бонусы за 7/7</b>Бонусный блок открывается только тем, кто прошёл все семь дней.</figcaption>
+      </figure>
+        </div>
+      </section>
+
+      <section class="cv__info" aria-label="О проекте">
+        <ul class="cv__nums" role="list">
+          <li><b>7</b><span>дней курса, урок в день</span></li>
+          <li><b>28</b><span>версий видеоуроков: два языка, с музыкой и без</span></li>
+          <li><b>5</b><span>дней от первой строки кода до версии с оплатой</span></li>
+          <li><b>2</b><span>способа купить: в боте и на лендинге</span></li>
+        </ul>
+
+        <div class="cv__grid">
+          <div>
+            <h3 class="cv__h mono">Задача</h3>
+            <p class="cv__lead">Продавать мини-курс без ручной работы: человек платит и сразу получает уроки, а не ждёт, пока автор вышлет видео.</p>
+            <p>И довести его до конца: такой курс легко бросить на третьем уроке. Плюс не отдавать платные видео наружу.</p>
+            <h3 class="cv__h mono">Нестандартная часть</h3>
+            <p>Покупка с лендинга и покупка в Telegram сводятся в одну точку. Если платёж пришёл без Telegram, бот выпускает одноразовый токен и зашивает его в ссылку в письме — первый вход по ней навсегда привязывает оплату к аккаунту.</p>
+          </div>
+
+          <div>
+            <h3 class="cv__h mono">Что сделано</h3>
+            <ul class="cv__list" role="list">
+              <li>Оплата картой прямо в боте через WayForPay — доступ открывается сам</li>
+              <li>Оплата на лендинге: письмо с персональной кнопкой «Открыть курс в Telegram»</li>
+              <li>Коды доступа для друзей, блогеров и возвратов</li>
+              <li>Семь видеоуроков в четырёх версиях: украинский и русский, с музыкой и без</li>
+              <li>Запрет на пересылку и скачивание видео</li>
+              <li>Вопрос-рефлексия после урока и экран «Мой путь» со всеми ответами</li>
+              <li>Напоминание, если человек пропал на два дня</li>
+              <li>Админка в боте: продажи, на каком дне бросают, рассылка, выгрузка в CSV</li>
+            </ul>
+          </div>
+
+          <div class="cv__facts">
+            <div>
+              <h3 class="cv__h mono">Сроки</h3>
+              <ol class="cv__time" role="list">
+                <li><time datetime="2026-03-16">16 марта 2026</time>первая строка кода</li>
+                <li><time datetime="2026-03-21">21 марта 2026</time>версия с оплатой и сервером</li>
+              </ol>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Стек</h3>
+              <ul class="cv__stack" role="list">
+                <li>Python</li><li>aiogram 3</li><li>PostgreSQL</li><li>aiohttp</li><li>WayForPay</li><li>Resend</li><li>Railway</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Ссылки</h3>
+              <ul class="cv__links" role="list">
+                <li><a href="https://t.me/demomoodbot" target="_blank" rel="noopener">@demomoodbot <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><small>демо — можно пройти самому</small></li>
+                <li><a href="https://t.me/coursemood_bot" target="_blank" rel="noopener">@coursemood_bot <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><small>рабочий бот, курс платный</small></li>
+                <li><a href="https://5i80g.weblium.site/" target="_blank" rel="noopener">Лендинг курса <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+                <li><a href="https://github.com/EzDavidos/course_bot" target="_blank" rel="noopener">Код на GitHub <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><small>репозиторий открыт</small></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cv__end">
+        <div class="cv__endin">
+          <p>Нужно продавать курс или доступ без ручной работы?</p>
+          <div class="cv__endacts">
+            <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Окно кейса AGENTBOY. Тексты — по documents/projects/agentboy.md. -->
+    <template id="case-agentboy" data-theme="agentboy">
+      <div class="cv__id">
+        <h2 class="cv__title" id="cv-title-agentboy">AGENT<span>BOY</span></h2>
+        <p class="cv__sub">Пресс-кит диджея: одна ссылка вместо десятка файлов для промоутера</p>
+      </div>
+
+      <section class="cv__gal" aria-label="Экраны проекта">
+        <div class="cv__track">
+      <figure class="cv__slide" data-chapter="Компьютер">
+        <picture>
+          <img src="assets/img/cases/agentboy/hero-pc.webp" width="1891" height="857" alt="Первый экран пресс-кита на компьютере" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Первый экран</b>Карточка артиста: роли, BPM-диапазон, жанры и две кнопки — букинг и послушать.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Компьютер">
+        <picture>
+          <img src="assets/img/cases/agentboy/music-pc.webp" width="1890" height="857" alt="Раздел музыки на компьютере" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Музыка</b>Все площадки одной сеткой и живые сеты с YouTube во встроенном плеере.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Телефон">
+        <picture>
+          <img src="assets/img/cases/agentboy/hero-phone.webp" width="900" height="1957" alt="Первый экран пресс-кита на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Первый экран на телефоне</b>Та же карточка, собранная под узкий экран, и переключатель EN/RU в шапке.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Телефон">
+        <picture>
+          <img src="assets/img/cases/agentboy/links-phone.webp" width="900" height="1957" alt="Ссылки на музыкальные площадки на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Площадки</b>Spotify, Apple Music, Beatport, YouTube, Instagram, SoundCloud — каждая строка нажимается целиком.</figcaption>
+      </figure>
+        </div>
+      </section>
+
+      <section class="cv__info" aria-label="О проекте">
+        <ul class="cv__nums" role="list">
+          <li><b>23</b><span>площадки в пресс-ките</span></li>
+          <li><b>5</b><span>стран, где выступал артист</span></li>
+          <li><b>12</b><span>видео сетов и релизов</span></li>
+          <li><b>2</b><span>языка: английский и русский</span></li>
+        </ul>
+
+        <div class="cv__grid">
+          <div>
+            <h3 class="cv__h mono">Задача</h3>
+            <p class="cv__lead">Артисту нужна была одна ссылка, которую можно отправить промоутеру вместо разрозненных сообщений с фото, видео и биографией.</p>
+            <p>Сайт на двух языках — с запасом под французский, немецкий, испанский и греческий.</p>
+            <h3 class="cv__h mono">Нестандартная часть</h3>
+            <p>Переводы подключаются обычными скриптами, а не загрузкой по сети, поэтому сайт целиком работает даже с флешки без интернета — артист может показать его прямо на площадке.</p>
+          </div>
+
+          <div>
+            <h3 class="cv__h mono">Что сделано</h3>
+            <ul class="cv__list" role="list">
+              <li>Карточка-герой: фото, роли, BPM-диапазон, кнопки Book now и Listen</li>
+              <li>Переключатель EN/RU: выбор запоминается и попадает в ссылку — можно сразу отправить русскую версию</li>
+              <li>12 видео во всплывающем плеере, на телефоне листаются пальцем</li>
+              <li>Площадки по странам: Греция, Вьетнам, Таиланд, Австрия, Чехия</li>
+              <li>Форматы и букинг, короткая биография с кнопкой «Скопировать»</li>
+              <li>Пресс-пак ZIP на скачивание: фото, логотип и биография на двух языках</li>
+              <li>Галерея с полноэкранным просмотром и свайпом</li>
+              <li>Карточка превью, когда ссылку отправляют в мессенджер</li>
+            </ul>
+          </div>
+
+          <div class="cv__facts">
+            <div>
+              <h3 class="cv__h mono">Сроки</h3>
+              <ol class="cv__time" role="list">
+                <li><time datetime="2026-06-25">25 июня 2026</time>первая демо-версия</li>
+                <li><time datetime="2026-08-13">13 августа 2026</time>опубликован с контентом артиста</li>
+              </ol>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Стек</h3>
+              <ul class="cv__stack" role="list">
+                <li>HTML</li><li>CSS Grid</li><li>JavaScript без фреймворков</li><li>Свой i18n EN/RU</li><li>GitHub Pages</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Ссылки</h3>
+              <ul class="cv__links" role="list">
+                <li><a href="https://agentboy.org/?lang=en#hero" target="_blank" rel="noopener">agentboy.org <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+                <li><a href="https://github.com/EzDavidos/agentboy-presskit" target="_blank" rel="noopener">Код на GitHub <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><small>репозиторий открыт</small></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cv__end">
+        <div class="cv__endin">
+          <p>Нужна одна ссылка, в которой есть всё о вас?</p>
+          <div class="cv__endacts">
+            <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 </section>
 
@@ -751,6 +1310,28 @@
 
   </div>
 </footer>
+
+<!-- Окно кейса: одно на все проекты, наполнение — из <template id="case-…">
+     рядом с карточкой. Логика — script.js, «ОКНО КЕЙСА». -->
+<dialog class="cv" id="case" tabindex="-1">
+  <div class="cv__bar">
+    <div class="cv__id" data-cv-id></div>
+    <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener" aria-label="Обсудить проект в Telegram">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 3.5 2.9 10.6c-.8.3-.8 1.4 0 1.7l4.4 1.5 1.7 5.3c.2.7 1.1.9 1.6.4l2.5-2.3 4.6 3.4c.6.4 1.4.1 1.6-.6L22.2 4.7c.2-.8-.5-1.5-1.2-1.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m7.3 13.8 9.2-6.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span>Обсудить проект</span>
+    </a>
+    <button type="button" class="cv__x" data-cv-close aria-label="Закрыть кейс">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div data-cv-body></div>
+  <div class="cv__zoom" hidden>
+    <img alt="">
+    <button type="button" class="cv__x" aria-label="Закрыть увеличение">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</dialog>
 
 <script src="water.js"></script>
 <script src="script.js"></script>
