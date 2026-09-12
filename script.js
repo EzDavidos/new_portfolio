@@ -165,6 +165,304 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(setK);
   }
 
+  /* ============================================================
+     ОКНО КЕЙСА
+     Наполнение лежит в <template id="case-<id>"> рядом с карточкой:
+     пока окно не открыто, его картинки не грузятся вовсе. Открыть
+     можно кнопкой с data-case="<id>" или ссылкой #case-<id> — такую
+     удобно сразу скинуть клиенту. «Назад» на телефоне закрывает окно,
+     а не уводит с сайта: при открытии в историю кладётся шаг с хэшем.
+     ============================================================ */
+  var cv = document.getElementById('case');
+  if (cv && typeof cv.showModal === 'function') {
+    var cvId = cv.querySelector('[data-cv-id]');
+    var cvBody = cv.querySelector('[data-cv-body]');
+    var cvZoom = cv.querySelector('.cv__zoom');
+    var cvPhone = window.matchMedia('(max-width: 859px)');
+    var cvPushed = false;
+    var g = null;   // лента текущего кейса
+
+    var arrowSvg = function (d) {
+      return '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="' + d +
+        '" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    };
+
+    // Размер кадра считается здесь, а не в CSS: кадр ограничен и высотой
+    // сцены, и шириной экрана, а пропорция у ПК- и телефонной версии
+    // одного экрана разная. Размеры берутся из атрибутов width/height,
+    // поэтому раскладка готова до загрузки картинок и не прыгает.
+    var cvLayout = function () {
+      if (!g) return;
+      var H = g.probe.offsetHeight, MW = g.probe.offsetWidth, phone = cvPhone.matches;
+      g.slides.forEach(function (s) {
+        var src = s.querySelector('source'), img = s.querySelector('img');
+        var el = phone && src ? src : img;
+        var r = el.getAttribute('width') / el.getAttribute('height');
+        var h = Math.min(H, MW / r), w = h * r;
+        img.style.width = Math.round(w) + 'px';
+        img.style.height = Math.round(h) + 'px';
+        s.style.width = phone ? '' : Math.round(w) + 'px';
+        s.classList.toggle('is-wide', phone && r > 1.2);
+      });
+      var gap = parseFloat(getComputedStyle(g.track).columnGap) || 0;
+      var tw = g.track.clientWidth, n = g.slides.length;
+      var pad = function (s) { return Math.max(0, (tw - s.offsetWidth) / 2 - gap) + 'px'; };
+      g.track.style.setProperty('--cv-pl', pad(g.slides[0]));
+      g.track.style.setProperty('--cv-pr', pad(g.slides[n - 1]));
+      cvGo(g.on, true);
+    };
+
+    var cvSet = function (i) {
+      if (!g || i === g.on && g.slides[i].classList.contains('is-on')) return;
+      g.on = i;
+      g.slides.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
+      g.count.textContent = (i + 1) + ' / ' + g.slides.length;
+      g.prev.disabled = i === 0;
+      g.next.disabled = i === g.slides.length - 1;
+      g.thumbs.forEach(function (t, k) { t.setAttribute('aria-current', String(k === i)); });
+      var t = g.thumbs[i], box = t.parentNode;
+      if (t.offsetLeft < box.scrollLeft || t.offsetLeft + t.offsetWidth > box.scrollLeft + box.clientWidth) {
+        box.scrollLeft = t.offsetLeft - (box.clientWidth - t.offsetWidth) / 2;
+      }
+      var ch = g.slides[i].dataset.chapter;
+      g.chapters.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.chapter === ch)); });
+    };
+
+    var cvGo = function (i, instant) {
+      if (!g) return;
+      i = Math.max(0, Math.min(g.slides.length - 1, i));
+      var s = g.slides[i];
+      // пока лента плавно едет к кадру, промежуточные кадры не считаются
+      // активными — иначе быстрые нажатия стрелки теряются по дороге
+      g.lock = i;
+      clearTimeout(g.lockT);
+      g.lockT = setTimeout(cvUnlock, 1500);
+      g.track.scrollTo({
+        left: s.offsetLeft + s.offsetWidth / 2 - g.track.clientWidth / 2,
+        behavior: instant || reduced ? 'auto' : 'smooth'
+      });
+      cvSet(i);
+    };
+
+    // снимается по scrollend; таймер — запасной путь для Safari, где этого события нет
+    var cvUnlock = function () {
+      if (!g || g.lock === null) return;
+      clearTimeout(g.lockT);
+      g.lock = null;
+      cvScroll();
+    };
+
+    // активный кадр — тот, чей центр ближе к центру ленты
+    var cvTick = false;
+    var cvScroll = function () {
+      if (cvTick) return;
+      cvTick = true;
+      requestAnimationFrame(function () {
+        cvTick = false;
+        if (!g) return;
+        var c = g.track.scrollLeft + g.track.clientWidth / 2, best = 0, dist = Infinity;
+        g.slides.forEach(function (s, k) {
+          var d = Math.abs(s.offsetLeft + s.offsetWidth / 2 - c);
+          if (d < dist) { dist = d; best = k; }
+        });
+        if (g.lock !== null) { if (best !== g.lock) return; g.lock = null; }
+        cvSet(best);
+      });
+    };
+
+    var cvBuild = function () {
+      var track = cvBody.querySelector('.cv__track');
+      if (!track) { g = null; return; }
+      var slides = Array.prototype.slice.call(track.querySelectorAll('.cv__slide'));
+
+      var stage = document.createElement('div');
+      stage.className = 'cv__stage';
+      track.parentNode.insertBefore(stage, track);
+      stage.appendChild(track);
+      var probe = document.createElement('div');
+      probe.className = 'cv__probe';
+      probe.setAttribute('aria-hidden', 'true');
+      stage.appendChild(probe);
+
+      var prev = document.createElement('button'), next = document.createElement('button');
+      prev.type = next.type = 'button';
+      prev.className = 'cv__arrow cv__arrow--prev';
+      next.className = 'cv__arrow cv__arrow--next';
+      prev.setAttribute('aria-label', 'Предыдущий экран');
+      next.setAttribute('aria-label', 'Следующий экран');
+      prev.innerHTML = arrowSvg('M12.5 4.5 7 10l5.5 5.5');
+      next.innerHTML = arrowSvg('M7.5 4.5 13 10l-5.5 5.5');
+      stage.appendChild(prev);
+      stage.appendChild(next);
+
+      // строка над лентой: главы и счётчик
+      var row = document.createElement('div');
+      row.className = 'cv__row';
+      var chapBox = document.createElement('div');
+      chapBox.className = 'cv__chapters';
+      var chapters = [];
+      slides.forEach(function (s, k) {
+        var name = s.dataset.chapter;
+        if (!name) return;
+        var b = chapters.filter(function (x) { return x.dataset.chapter === name; })[0];
+        if (!b) {
+          b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'cv__chapter';
+          b.dataset.chapter = name;
+          b.dataset.first = k;
+          b.dataset.n = 0;
+          chapters.push(b);
+          chapBox.appendChild(b);
+        }
+        b.dataset.n = +b.dataset.n + 1;
+        b.textContent = name + ' ';
+        var num = document.createElement('span');
+        num.textContent = b.dataset.n;
+        b.appendChild(num);
+      });
+      var count = document.createElement('span');
+      count.className = 'cv__count';
+      row.appendChild(chapBox);
+      row.appendChild(count);
+      stage.parentNode.insertBefore(row, stage);
+
+      // превью — уменьшенные копии рядом с кадром: <имя>-t.webp
+      var thumbBox = document.createElement('div');
+      thumbBox.className = 'cv__thumbs';
+      var thumbs = slides.map(function (s, k) {
+        var img = s.querySelector('img'), b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'cv__thumb';
+        b.setAttribute('aria-label', 'Экран ' + (k + 1) + ': ' + (s.querySelector('b') || {}).textContent);
+        var ti = document.createElement('img');
+        ti.alt = '';
+        ti.loading = 'lazy';
+        ti.decoding = 'async';
+        ti.src = img.getAttribute('src').replace(/\.webp$/, '-t.webp');
+        b.appendChild(ti);
+        b.addEventListener('click', function () { cvGo(k); });
+        thumbBox.appendChild(b);
+        return b;
+      });
+      stage.parentNode.insertBefore(thumbBox, stage.nextSibling);
+
+      slides.forEach(function (s, k) {
+        var hint = document.createElement('span');
+        hint.className = 'cv__zoomhint';
+        hint.textContent = 'Нажмите, чтобы увеличить';
+        s.appendChild(hint);
+        s.addEventListener('click', function () {
+          if (k !== g.on) { cvGo(k); return; }
+          if (s.classList.contains('is-wide')) cvZoomOpen(s.querySelector('img'));
+        });
+      });
+      chapters.forEach(function (b) { b.addEventListener('click', function () { cvGo(+b.dataset.first); }); });
+      prev.addEventListener('click', function () { cvGo(g.on - 1); });
+      next.addEventListener('click', function () { cvGo(g.on + 1); });
+      track.addEventListener('scroll', cvScroll, { passive: true });
+      track.addEventListener('scrollend', cvUnlock);
+
+      g = { track: track, slides: slides, probe: probe, prev: prev, next: next,
+            count: count, thumbs: thumbs, chapters: chapters, on: 0, lock: null, lockT: 0 };
+      cvLayout();
+    };
+
+    var cvZoomOpen = function (img) {
+      var z = cvZoom.querySelector('img');
+      z.src = img.currentSrc || img.src;
+      z.alt = img.alt;
+      cvZoom.hidden = false;
+      cvZoom.scrollLeft = 0;
+      cvZoom.querySelector('button').focus();
+    };
+    var cvZoomClose = function () { cvZoom.hidden = true; };
+    cvZoom.addEventListener('click', cvZoomClose);
+
+    var cvShow = function (id) {
+      var tpl = document.getElementById('case-' + id);
+      if (!tpl) return false;
+      cvId.textContent = '';
+      cvBody.textContent = '';
+      cvBody.appendChild(tpl.content.cloneNode(true));
+      var head = cvBody.querySelector('.cv__id');
+      if (head) { while (head.firstChild) cvId.appendChild(head.firstChild); head.remove(); }
+      var title = cvId.querySelector('.cv__title');
+      if (title) cv.setAttribute('aria-labelledby', title.id);
+      cv.dataset.theme = tpl.dataset.theme || id;
+
+      // страница под окном не прокручивается; ширину скроллбара возвращаем
+      // отступом, иначе страница под листом дёргается вбок
+      var sbw = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      if (sbw > 0) document.body.style.paddingRight = sbw + 'px';
+
+      cv.showModal();
+      // фокус на само окно, а не на первую кнопку: иначе после первой же
+      // стрелки на «Обсудить проект» загорается рамка фокуса
+      cv.focus();
+      cv.scrollTop = 0;
+      cvBuild();
+      return true;
+    };
+
+    var cvHide = function () {
+      cvZoomClose();
+      if (cv.open) cv.close();
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      cvPushed = false;
+      if (g) clearTimeout(g.lockT);
+      g = null;
+    };
+
+    var cvOpen = function (id) {
+      if (cv.open || !cvShow(id)) return;
+      history.pushState({ cv: id }, '', '#case-' + id);
+      cvPushed = true;
+    };
+    var cvClose = function () { if (cvPushed) history.back(); else cvHide(); };
+
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-case]');
+      if (!t) return;
+      e.preventDefault();
+      cvOpen(t.dataset.case);
+    });
+    cv.querySelector('[data-cv-close]').addEventListener('click', cvClose);
+    cv.addEventListener('cancel', function (e) {
+      e.preventDefault();
+      if (!cvZoom.hidden) cvZoomClose(); else cvClose();
+    });
+    // клик по затемнению вокруг листа (на десктопе лист не во весь экран)
+    cv.addEventListener('click', function (e) {
+      if (e.target !== cv) return;
+      var r = cv.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) cvClose();
+    });
+    cv.addEventListener('keydown', function (e) {
+      if (!g || !cvZoom.hidden || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); cvGo(g.on + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); cvGo(g.on - 1); }
+    });
+
+    window.addEventListener('popstate', function () {
+      var m = /^#case-([\w-]+)$/.exec(location.hash);
+      if (cv.open && !m) cvHide();
+      else if (!cv.open && m && cvShow(m[1])) cvPushed = true;
+    });
+    window.addEventListener('resize', function () { if (cv.open) cvLayout(); });
+    cvPhone.addEventListener('change', function () { if (cv.open) cvLayout(); });
+
+    // открыли сайт по ссылке на кейс: сначала шаг без хэша, чтобы «Назад»
+    // из окна вернул на страницу, а не на прошлый сайт
+    var m0 = /^#case-([\w-]+)$/.exec(location.hash);
+    if (m0 && document.getElementById('case-' + m0[1])) {
+      history.replaceState(null, '', location.pathname + location.search);
+      cvOpen(m0[1]);
+    }
+  }
+
   /* ---------- активный пункт навигации ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
   var targets = links
