@@ -754,7 +754,7 @@ ul { list-style: none; padding: 0; }
 }
 .fgh__stage { position: relative; aspect-ratio: 1151 / 1366; }
 /* мокап открывает окно кейса — прозрачная кнопка поверх всей сцены */
-.fgh__open { position: absolute; inset: 0; z-index: 2; cursor: pointer; }
+.fgh__open { position: absolute; inset: 0; z-index: 2; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 /* Свечение отдельно от растровой рамки: без обрывков исходного фона. */
 .fgh__stage::before {
   content: "";
@@ -1097,7 +1097,7 @@ ul { list-style: none; padding: 0; }
    закрывает сам. */
 .mock { position: relative; margin: 0; width: min(284px, 78%); container-type: inline-size; }
 /* мокап открывает окно кейса — прозрачная кнопка поверх корпуса */
-.mock__open { position: absolute; inset: 0; z-index: 3; cursor: pointer; }
+.mock__open { position: absolute; inset: 0; z-index: 3; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .mock__body {
   position: relative; z-index: 2;
   display: block; width: 100%; height: auto; pointer-events: none;
@@ -1152,7 +1152,7 @@ ul { list-style: none; padding: 0; }
 .work__case:hover svg { transform: translateX(3px); }
 .work__case svg { transition: transform .35s var(--ease); }
 /* обложка тоже открывает кейс; плашка сразу говорит, что внутри есть экраны */
-.work__cover { position: absolute; inset: 0; z-index: 1; cursor: pointer; }
+.work__cover { position: absolute; inset: 0; z-index: 1; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .work__count {
   position: absolute; left: .8rem; bottom: .8rem;
   padding: .4rem .75rem; border-radius: 100px;
@@ -1162,6 +1162,10 @@ ul { list-style: none; padding: 0; }
   transition: transform .35s var(--ease);
 }
 .work__cover:hover .work__count { transform: translateY(-2px); }
+/* эти кнопки — дубль «Смотреть кейс» для пальца и мыши, с клавиатуры до них
+   не дойти (tabindex=-1). После закрытия окна браузер возвращает на них
+   фокус, и без этого правила вокруг мокапа мелькала зелёная рамка */
+.fgh__open:focus, .mock__open:focus, .work__cover:focus { outline: none; }
 
 /* ============================================================
    ОКНО КЕЙСА
