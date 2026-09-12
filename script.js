@@ -180,7 +180,8 @@
     var cvZoom = cv.querySelector('.cv__zoom');
     var cvPhone = window.matchMedia('(max-width: 859px)');
     var cvPushed = false;
-    var g = null;   // лента текущего кейса
+    var cvCur = null;   // id открытого кейса
+    var g = null;       // лента текущего кейса
 
     var arrowSvg = function (d) {
       return '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="' + d +
@@ -390,6 +391,7 @@
       var title = cvId.querySelector('.cv__title');
       if (title) cv.setAttribute('aria-labelledby', title.id);
       cv.dataset.theme = tpl.dataset.theme || id;
+      cvCur = id;
 
       // страница под окном не прокручивается; ширину скроллбара возвращаем
       // отступом, иначе страница под листом дёргается вбок
@@ -412,6 +414,7 @@
       document.body.style.overflow = '';
       document.body.style.paddingRight = '';
       cvPushed = false;
+      cvCur = null;
       if (g) clearTimeout(g.lockT);
       g = null;
     };
@@ -440,16 +443,19 @@
       var r = cv.getBoundingClientRect();
       if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) cvClose();
     });
-    cv.addEventListener('keydown', function (e) {
-      if (!g || !cvZoom.hidden || e.altKey || e.ctrlKey || e.metaKey) return;
+    // стрелки слушаем на документе, а не на окне: при открытии по ссылке
+    // браузер после загрузки уводит фокус на body, мимо окна
+    document.addEventListener('keydown', function (e) {
+      if (!cv.open || !g || !cvZoom.hidden || e.altKey || e.ctrlKey || e.metaKey) return;
       if (e.key === 'ArrowRight') { e.preventDefault(); cvGo(g.on + 1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); cvGo(g.on - 1); }
     });
 
     window.addEventListener('popstate', function () {
       var m = /^#case-([\w-]+)$/.exec(location.hash);
-      if (cv.open && !m) cvHide();
-      else if (!cv.open && m && cvShow(m[1])) cvPushed = true;
+      if (m && m[1] === cvCur) return;
+      if (cv.open) cvHide();
+      if (m && cvShow(m[1])) cvPushed = true;
     });
     window.addEventListener('resize', function () { if (cv.open) cvLayout(); });
     cvPhone.addEventListener('change', function () { if (cv.open) cvLayout(); });
@@ -460,6 +466,9 @@
     if (m0 && document.getElementById('case-' + m0[1])) {
       history.replaceState(null, '', location.pathname + location.search);
       cvOpen(m0[1]);
+      window.addEventListener('load', function () {
+        if (cv.open && !cv.contains(document.activeElement)) cv.focus();
+      });
     }
   }
 
