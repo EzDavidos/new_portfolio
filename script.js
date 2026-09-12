@@ -423,6 +423,7 @@
     };
 
     var cvShow = function (id) {
+      if (cvClosing) cvDone();
       if (!cvFill(id)) return false;
 
       // страница под окном не прокручивается; ширину скроллбара возвращаем
@@ -440,9 +441,21 @@
       return true;
     };
 
-    var cvHide = function () {
-      cvZoomClose();
+    // закрытие доигрывает анимацию из CSS (.is-closing), потом закрывает окно
+    var cvClosing = 0;
+    var cvDone = function () {
+      clearTimeout(cvClosing);
+      cvClosing = 0;
+      cv.classList.remove('is-closing');
       if (cv.open) cv.close();
+    };
+    var cvHide = function () {
+      if (cvClosing) return;
+      cvZoomClose();
+      if (cv.open && !reduced) {
+        cv.classList.add('is-closing');
+        cvClosing = setTimeout(cvDone, 260);
+      } else cvDone();
       document.body.style.overflow = '';
       document.body.style.paddingRight = '';
       cvPushed = false;
@@ -452,7 +465,7 @@
     };
 
     var cvOpen = function (id) {
-      if (cv.open || !cvShow(id)) return;
+      if (cv.open && !cvClosing || !cvShow(id)) return;
       history.pushState({ cv: id }, '', '#case-' + id);
       cvPushed = true;
     };
@@ -491,7 +504,7 @@
     });
     window.addEventListener('resize', function () { if (cv.open) cvLayout(); });
     cvPhone.addEventListener('change', function () {
-      if (!cv.open) return;
+      if (!cv.open || cvClosing) return;
       cvFill(cvCur);
       cv.scrollTop = 0;
     });
