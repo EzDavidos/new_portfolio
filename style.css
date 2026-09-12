@@ -754,7 +754,7 @@ ul { list-style: none; padding: 0; }
 }
 .fgh__stage { position: relative; aspect-ratio: 1151 / 1366; }
 /* мокап открывает окно кейса — прозрачная кнопка поверх всей сцены */
-.fgh__open { position: absolute; inset: 0; z-index: 2; cursor: pointer; }
+.fgh__open { position: absolute; inset: 0; z-index: 2; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 /* Свечение отдельно от растровой рамки: без обрывков исходного фона. */
 .fgh__stage::before {
   content: "";
@@ -1097,7 +1097,7 @@ ul { list-style: none; padding: 0; }
    закрывает сам. */
 .mock { position: relative; margin: 0; width: min(284px, 78%); container-type: inline-size; }
 /* мокап открывает окно кейса — прозрачная кнопка поверх корпуса */
-.mock__open { position: absolute; inset: 0; z-index: 3; cursor: pointer; }
+.mock__open { position: absolute; inset: 0; z-index: 3; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .mock__body {
   position: relative; z-index: 2;
   display: block; width: 100%; height: auto; pointer-events: none;
@@ -1152,7 +1152,7 @@ ul { list-style: none; padding: 0; }
 .work__case:hover svg { transform: translateX(3px); }
 .work__case svg { transition: transform .35s var(--ease); }
 /* обложка тоже открывает кейс; плашка сразу говорит, что внутри есть экраны */
-.work__cover { position: absolute; inset: 0; z-index: 1; cursor: pointer; }
+.work__cover { position: absolute; inset: 0; z-index: 1; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .work__count {
   position: absolute; left: .8rem; bottom: .8rem;
   padding: .4rem .75rem; border-radius: 100px;
@@ -1162,32 +1162,44 @@ ul { list-style: none; padding: 0; }
   transition: transform .35s var(--ease);
 }
 .work__cover:hover .work__count { transform: translateY(-2px); }
+/* эти кнопки — дубль «Смотреть кейс» для пальца и мыши, с клавиатуры до них
+   не дойти (tabindex=-1). После закрытия окна браузер возвращает на них
+   фокус, и без этого правила вокруг мокапа мелькала зелёная рамка */
+.fgh__open:focus, .mock__open:focus, .work__cover:focus { outline: none; }
 
 /* ============================================================
    ОКНО КЕЙСА
    Один <dialog> на все проекты: наполнение приходит из <template>
    рядом с карточкой кейса, поэтому ни одна картинка галереи не
-   грузится, пока окно не открыли. Сверху лента экранов, ниже —
-   подробности проекта. Окно красится в цвета самого продукта,
-   как и карточки кейсов: FlyGuru — тил и оранжевый, 100ловая —
-   кирпич на тёмном дереве.
+   грузится, пока окно не открыли. Сверху лента экранов и ссылки на
+   живой продукт, ниже — подробности проекта.
+   Окно одето в гамму самого продукта, чтобы человек как будто зашёл
+   в него: FlyGuru — светлый сайт с тиловой шапкой, 100ловая — кремовый
+   мини-апп с кирпичом, MoodBot — лендинг с синим и жёлтым, AGENTBOY —
+   чёрный с красным. Лист полупрозрачный: под ним размытая страница.
    ============================================================ */
 .cv {
-  /* нейтральная тема — зелёная, из палитры сайта */
-  --cv-bg:     #10302A;
-  --cv-ink:    #EEF6F3;
-  --cv-mute:   rgba(226,240,235,.74);
-  --cv-accent: #7FD9BD;
-  --cv-num:    #7FD9BD;
-  --cv-cta:    #FFFFFF;
-  --cv-cta-ink:#12352C;
-  --cv-hair:   rgba(255,255,255,.12);
+  /* нейтральная тема — палитра сайта */
+  --cv-bg:      #F4F8F6;
+  --cv-ink:     #17211E;
+  --cv-mute:    #5F6C67;
+  --cv-accent:  #0C7A5D;
+  --cv-num:     var(--cv-accent);
+  --cv-cta:     #141C1A;
+  --cv-cta-ink: #FFFFFF;
+  --cv-go:      var(--cv-accent);   /* главная ссылка на продукт */
+  --cv-go-ink:  #FFFFFF;
+  --cv-bar:     var(--cv-bg);       /* шапка окна */
+  --cv-bar-ink: var(--cv-ink);
+  --cv-bar-mute:var(--cv-mute);
+  --cv-hair:    color-mix(in srgb, var(--cv-ink) 12%, transparent);
+  --cv-shot-sh: 0 0 0 1px color-mix(in srgb, var(--cv-ink) 8%, transparent), 0 18px 44px color-mix(in srgb, var(--cv-ink) 16%, transparent);
 
   --cv-gut:   clamp(1rem, 3.2vw, 2.25rem);
   --cv-gap:   clamp(14px, 1.8vw, 26px);
   /* высота кадра: всё, что остаётся от экрана после шапки, строки глав,
-     подписи и превью. Кадр не мельче 300px и не выше 780. */
-  --cv-stage: clamp(300px, calc(100svh - 22.5rem), 780px);
+     подписи, ссылок и превью. Кадр не мельче 300px и не выше 760. */
+  --cv-stage: clamp(300px, calc(100svh - 25.5rem), 760px);
   --cv-slide-max: min(1400px, calc(100vw - 2 * var(--cv-gut) - 8.5rem));
 
   position: fixed; inset: 0;
@@ -1195,56 +1207,82 @@ ul { list-style: none; padding: 0; }
   margin: 0; padding: 0; border: 0;
   overflow-y: auto; overscroll-behavior: contain;
   color: var(--cv-ink);
+  /* лист полупрозрачный, размытие даёт ::backdrop: блюр на самом окне
+     сделал бы его контейнером для fixed-потомков, и увеличенный кадр
+     уезжал бы вместе с прокруткой */
   background:
-    radial-gradient(90% 55% at 50% -8%, color-mix(in srgb, var(--cv-accent) 16%, transparent), transparent 70%),
-    var(--cv-bg);
+    radial-gradient(80% 45% at 50% 0%, color-mix(in srgb, var(--cv-accent) 9%, transparent), transparent 70%),
+    color-mix(in srgb, var(--cv-bg) 86%, transparent);
+  box-shadow: 0 -1px 0 rgba(255,255,255,.5) inset, 0 30px 90px rgba(10,20,24,.28);
   font-size: 1rem;
+  -webkit-tap-highlight-color: transparent;
 }
-.cv[open] { animation: cv-in .34s var(--ease); }
-.cv::backdrop { background: rgba(8,18,16,.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-@keyframes cv-in { from { opacity: 0; transform: translateY(14px); } }
+.cv::backdrop {
+  background: rgba(12,24,26,.26);
+  backdrop-filter: blur(22px) saturate(1.2); -webkit-backdrop-filter: blur(22px) saturate(1.2);
+}
+/* всплывает и уплывает плавно; закрытие доигрывает script.js */
+.cv[open] { animation: cv-in .5s cubic-bezier(.22,1,.36,1); }
+.cv[open]::backdrop { animation: cv-fade .4s ease-out; }
+.cv.is-closing { animation: cv-out .26s ease-in forwards; }
+.cv.is-closing::backdrop { animation: cv-fade .26s ease-in reverse forwards; }
+@keyframes cv-in  { from { opacity: 0; transform: translateY(48px); } }
+@keyframes cv-out { to   { opacity: 0; transform: translateY(48px); } }
+@keyframes cv-fade { from { opacity: 0; } }
 
+/* FlyGuru: светлый фон и тиловая шапка сайта, оранжевая кнопка записи.
+   Шапка на тон глубже сайтовой #0C8498: белый на ней даёт 4.9, а не 4.4 */
 .cv[data-theme="flyguru"] {
-  --cv-bg:     #062C3A;
-  --cv-mute:   rgba(233,246,249,.74);
-  --cv-accent: #45D6EE;
-  --cv-num:    #FC7918;
-  --cv-cta:    #FC7918;
-  --cv-cta-ink:#10262B;
+  --cv-bg:      #F2F6F9;
+  --cv-ink:     #14303A;
+  --cv-mute:    #4A626C;
+  --cv-accent:  #0B7285;
+  --cv-cta:     #FC7918;
+  --cv-cta-ink: #10262B;
+  --cv-bar:     #0C7C90;
+  --cv-bar-ink: #FFFFFF;
+  --cv-bar-mute:rgba(255,255,255,.86);
 }
-/* цвета карточки 100ловой; белый на кирпичной кнопке даёт 6.6 */
+/* 100ловая: кремовый фон мини-аппа, кирпич с кнопки «В корзину»,
+   тёмно-коричневый логотипа — на кнопке связи, чтобы не спорить с кирпичом */
 .cv[data-theme="100lovaya"] {
-  --cv-bg:     #22130E;
-  --cv-ink:    #FDF4E8;
-  --cv-mute:   rgba(240,222,205,.78);
-  --cv-accent: #E8604C;
-  --cv-num:    #E8604C;
-  --cv-cta:    #B2271B;
-  --cv-cta-ink:#FFFFFF;
-  --cv-hair:   rgba(255,235,220,.14);
+  --cv-bg:      #F7EEE6;
+  --cv-ink:     #3A2218;
+  --cv-mute:    #6B5446;
+  --cv-accent:  #A63A2B;
+  --cv-cta:     #54301C;
+  --cv-cta-ink: #FFFFFF;
 }
-/* цвета лендинга курса: синее небо и жёлтый заголовок */
+/* MoodBot: синяя шапка и жёлтая кнопка с тёмно-синей подписью, как на лендинге */
 .cv[data-theme="mood"] {
-  --cv-bg:     #06143A;
-  --cv-ink:    #F3F6FF;
-  --cv-mute:   rgba(226,233,255,.74);
-  --cv-accent: #F5C442;
-  --cv-num:    #F5C442;
-  --cv-cta:    #F5C442;
-  --cv-cta-ink:#10204A;
+  --cv-bg:      #F2F6FF;
+  --cv-ink:     #283858;
+  --cv-mute:    #56617C;
+  --cv-accent:  #0050D8;
+  --cv-cta:     #F4C440;
+  --cv-cta-ink: #283858;
+  --cv-bar:     #0050D8;
+  --cv-bar-ink: #FFFFFF;
+  --cv-bar-mute:rgba(255,255,255,.86);
 }
-/* чёрный и красный пресс-кита. Фирменный #FF1F3D под белой подписью
-   даёт 3.8, поэтому кнопка на тон глубже: #E0102E — 4.9 */
+/* AGENTBOY остаётся тёмным — это его настоящая гамма. Фирменный #FF1F3D
+   под белой подписью даёт 3.8, поэтому кнопка на тон глубже: #E0102E — 4.9 */
 .cv[data-theme="agentboy"] {
-  --cv-bg:     #0C0809;
-  --cv-ink:    #F4F1F1;
-  --cv-mute:   rgba(236,228,229,.72);
-  --cv-accent: #FF1F3D;
-  --cv-num:    #FF1F3D;
-  --cv-cta:    #E0102E;
-  --cv-cta-ink:#FFFFFF;
+  --cv-bg:      #0C0809;
+  --cv-ink:     #F4F1F1;
+  --cv-mute:    rgba(236,228,229,.74);
+  --cv-accent:  #FF1F3D;
+  --cv-cta:     #E0102E;
+  --cv-cta-ink: #FFFFFF;
+  --cv-go:      #F4F1F1;
+  --cv-go-ink:  #0C0809;
+  --cv-shot-sh: 0 0 0 1px rgba(255,255,255,.10), 0 24px 60px rgba(0,0,0,.45);
 }
+.cv[data-theme="agentboy"] { background: radial-gradient(80% 45% at 50% 0%, rgba(255,31,61,.14), transparent 70%), rgba(12,8,9,.9); }
 .cv__title span { color: var(--cv-accent); }
+.cv__bar .cv__title span { color: inherit; }
+.cv[data-theme="100lovaya"] .cv__bar .cv__title span,
+.cv[data-theme="agentboy"] .cv__bar .cv__title span { color: var(--cv-accent); }
 
 /* шапка липкая: при прокрутке к подробностям название и кнопка связи
    остаются на месте */
@@ -1252,7 +1290,8 @@ ul { list-style: none; padding: 0; }
   position: sticky; top: 0; z-index: 3;
   display: flex; align-items: center; gap: .75rem;
   padding: clamp(.8rem, 1.6vw, 1.1rem) var(--cv-gut);
-  background: color-mix(in srgb, var(--cv-bg) 86%, transparent);
+  color: var(--cv-bar-ink);
+  background: color-mix(in srgb, var(--cv-bar) 92%, transparent);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 1px 0 var(--cv-hair);
 }
@@ -1262,26 +1301,27 @@ ul { list-style: none; padding: 0; }
   font-family: var(--f-display); font-weight: 700;
   font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.1; letter-spacing: -.01em;
 }
-.cv__sub { display: none; color: var(--cv-mute); font-size: .95rem; line-height: 1.4; }
+.cv__sub { display: none; color: var(--cv-bar-mute); font-size: .95rem; line-height: 1.4; }
 
 .cv__talk {
   flex: none; padding: .62rem 1.1rem; font-size: .9rem;
   color: var(--cv-cta-ink); background: var(--cv-cta);
 }
-.cv__talk:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.28); }
+.cv__talk:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.2); }
 .cv__talk:hover svg { transform: translateX(3px); }
 
 .cv__x {
   flex: none; width: 44px; height: 44px; border-radius: 50%;
   display: grid; place-items: center;
-  color: var(--cv-ink);
-  background: rgba(255,255,255,.08);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+  color: currentColor;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 22%, transparent);
   transition: background .25s, transform .35s var(--ease);
 }
-.cv__x:hover { background: rgba(255,255,255,.16); transform: rotate(90deg); }
+.cv__x:hover { background: color-mix(in srgb, currentColor 16%, transparent); transform: rotate(90deg); }
 .cv__x svg { width: 18px; height: 18px; }
 .cv :focus-visible { outline-color: var(--cv-accent); }
+.cv__bar :focus-visible { outline-color: currentColor; }
 
 /* ---------- лента экранов ---------- */
 .cv__gal { padding-top: clamp(.8rem, 1.8vw, 1.3rem); }
@@ -1299,8 +1339,8 @@ ul { list-style: none; padding: 0; }
 .cv__chapter span { font-family: var(--f-mono); font-size: .74rem; opacity: .7; margin-left: .1rem; }
 .cv__chapter:hover { color: var(--cv-ink); }
 .cv__chapter[aria-pressed="true"] {
-  color: var(--cv-ink); background: rgba(255,255,255,.10);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.28);
+  color: var(--cv-ink); background: color-mix(in srgb, var(--cv-ink) 8%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cv-ink) 26%, transparent);
 }
 .cv__count { flex: none; font-family: var(--f-mono); font-size: .8rem; letter-spacing: .06em; color: var(--cv-mute); }
 
@@ -1327,13 +1367,13 @@ ul { list-style: none; padding: 0; }
   display: flex; flex-direction: column;
   transition: opacity .4s var(--ease);
 }
-.cv__slide:not(.is-on) { opacity: .34; cursor: pointer; }
+.cv__slide:not(.is-on) { opacity: .4; cursor: pointer; }
 .cv__slide picture { display: contents; }
 .cv__slide img {
   display: block; max-width: none;
   border-radius: 14px;
-  background: rgba(255,255,255,.06);
-  box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 24px 60px rgba(0,0,0,.34);
+  background: color-mix(in srgb, var(--cv-ink) 6%, transparent);
+  box-shadow: var(--cv-shot-sh);
 }
 .cv__slide figcaption {
   margin-top: .85rem; font-size: .93rem; line-height: 1.45; color: var(--cv-mute);
@@ -1347,9 +1387,9 @@ ul { list-style: none; padding: 0; }
   width: 52px; height: 52px; margin-top: -26px; border-radius: 50%;
   display: none; place-items: center;
   color: var(--cv-ink);
-  background: color-mix(in srgb, var(--cv-bg) 55%, rgba(255,255,255,.16));
+  background: color-mix(in srgb, var(--cv-bg) 72%, transparent);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 10px 26px rgba(0,0,0,.25);
+  box-shadow: inset 0 0 0 1px var(--cv-hair), 0 10px 26px rgba(0,0,0,.16);
   transition: opacity .25s, transform .35s var(--ease);
 }
 .cv__arrow svg { width: 20px; height: 20px; }
@@ -1365,12 +1405,32 @@ ul { list-style: none; padding: 0; }
 }
 .cv__thumb {
   flex: none; height: 48px; border-radius: 7px; overflow: hidden;
-  opacity: .45; box-shadow: inset 0 0 0 1px var(--cv-hair);
+  opacity: .5; box-shadow: inset 0 0 0 1px var(--cv-hair);
   transition: opacity .25s, box-shadow .25s, transform .35s var(--ease);
 }
 .cv__thumb img { height: 100%; width: auto; max-width: none; }
-.cv__thumb:hover { opacity: .8; }
+.cv__thumb:hover { opacity: .85; }
 .cv__thumb[aria-current="true"] { opacity: 1; box-shadow: 0 0 0 2px var(--cv-accent); }
+
+/* ссылки на живой продукт — сразу под экранами: посмотрел и тут же
+   пошёл потрогать сам, не пролистывая описание */
+.cv__go {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .55rem .6rem;
+  padding: clamp(1rem, 2vw, 1.3rem) var(--cv-gut) 0;
+}
+.cv__golink {
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: .62rem 1.05rem; border-radius: 100px;
+  font-family: var(--f-display); font-weight: 600; font-size: .92rem; white-space: nowrap;
+  color: var(--cv-ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cv-ink) 22%, transparent);
+  transition: transform .35s var(--ease), box-shadow .25s, background .25s;
+}
+.cv__golink svg { width: 14px; height: 14px; flex: none; }
+.cv__golink:hover { transform: translateY(-2px); background: color-mix(in srgb, var(--cv-ink) 6%, transparent); }
+.cv__golink--main { color: var(--cv-go-ink); background: var(--cv-go); box-shadow: 0 6px 18px color-mix(in srgb, var(--cv-go) 30%, transparent); }
+.cv__golink--main:hover { background: var(--cv-go); box-shadow: 0 10px 24px color-mix(in srgb, var(--cv-go) 36%, transparent); }
+.cv__gonote { flex-basis: 100%; text-align: center; font-size: .84rem; color: var(--cv-mute); }
 
 /* ПК-скрин на телефоне: целиком он мелкий, по тапу открывается крупно
    с прокруткой вбок */
@@ -1387,12 +1447,12 @@ ul { list-style: none; padding: 0; }
 }
 .cv__zoom[hidden] { display: none; }
 .cv__zoom img { height: min(72svh, 100vw * 1.1); width: auto; max-width: none; flex: none; margin-inline: 1rem; border-radius: 10px; }
-.cv__zoom .cv__x { position: fixed; top: 14px; right: 14px; background: rgba(20,30,32,.8); }
+.cv__zoom .cv__x { position: fixed; top: 14px; right: 14px; color: #fff; background: rgba(20,30,32,.8); }
 
 /* ---------- подробности ---------- */
 .cv__info {
   max-width: 1180px; margin-inline: auto;
-  padding: clamp(2.2rem, 5vw, 3.6rem) var(--cv-gut) clamp(1.5rem, 3vw, 2.2rem);
+  padding: clamp(2rem, 4.4vw, 3.2rem) var(--cv-gut) clamp(1.5rem, 3vw, 2.2rem);
 }
 .cv__nums {
   list-style: none; padding: 0 0 clamp(1.4rem, 3vw, 2rem);
@@ -1436,17 +1496,6 @@ ul { list-style: none; padding: 0; }
   font-family: var(--f-mono); font-size: .74rem; letter-spacing: .03em; color: var(--cv-ink);
   box-shadow: inset 0 0 0 1px var(--cv-hair);
 }
-.cv__links { list-style: none; padding: 0; display: grid; gap: .5rem; }
-.cv__links a {
-  display: inline-flex; align-items: center; gap: .45rem;
-  color: var(--cv-ink); font-weight: 500;
-  border-bottom: 1px solid color-mix(in srgb, var(--cv-accent) 45%, transparent);
-  transition: border-color .25s;
-}
-.cv__links a:hover { border-bottom-color: var(--cv-accent); }
-.cv__links a svg { width: 13px; height: 13px; flex: none; }
-.cv__links small { display: block; color: var(--cv-mute); font-size: .84rem; }
-.cv__note { margin-top: .7rem; font-size: .86rem !important; }
 
 .cv__end {
   max-width: 1180px; margin-inline: auto;
@@ -1456,16 +1505,22 @@ ul { list-style: none; padding: 0; }
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 1.5rem;
   padding: clamp(1.2rem, 2.6vw, 1.8rem) clamp(1.2rem, 2.8vw, 2rem);
   border-radius: var(--r-xl);
-  background: rgba(255,255,255,.06);
+  background: color-mix(in srgb, var(--cv-ink) 5%, transparent);
   box-shadow: inset 0 0 0 1px var(--cv-hair);
 }
 .cv__endin p { font-family: var(--f-display); font-weight: 600; font-size: clamp(1.15rem, 2vw, 1.4rem); line-height: 1.25; }
 .cv__endacts { display: flex; flex-wrap: wrap; gap: .6rem; }
 .cv__endacts .cv__talk { padding: .85rem 1.4rem; font-size: 1rem; }
 
-/* телефон: окно во весь экран, один кадр на всю ширину, листается пальцем */
+/* телефон: лист выезжает снизу, сверху виден краешек страницы;
+   один кадр на всю ширину, листается пальцем */
 @media (max-width: 859px) {
-  .cv { --cv-stage: clamp(280px, calc(100svh - 17.5rem), 760px); --cv-slide-max: calc(100vw - 2 * var(--cv-gut)); }
+  .cv {
+    --cv-stage: clamp(280px, calc(100svh - 21rem), 740px);
+    --cv-slide-max: calc(100vw - 2 * var(--cv-gut));
+    inset: max(14px, env(safe-area-inset-top)) 0 0; height: auto;
+    border-radius: 22px 22px 0 0;
+  }
   .cv__talk span { display: none; }
   .cv__talk { padding: .62rem .9rem; }
   .cv__slide { width: 100%; align-items: center; padding-inline: var(--cv-gut); }
@@ -1473,11 +1528,13 @@ ul { list-style: none; padding: 0; }
   .cv__slide figcaption { align-self: stretch; }
   .cv__slide.is-wide .cv__zoomhint { display: block; }
   .cv__slide.is-wide img { cursor: zoom-in; }
+  .cv__go { justify-content: flex-start; padding-top: .9rem; }
+  .cv__gonote { text-align: left; }
 }
 
 @media (min-width: 860px) {
   /* на десктопе окно — лист поверх страницы, по краям видна сама страница */
-  .cv { inset: 14px; width: auto; height: auto; border-radius: var(--r-xl); box-shadow: 0 30px 90px rgba(0,0,0,.4); }
+  .cv { inset: 14px; width: auto; height: auto; border-radius: var(--r-xl); }
   .cv__sub { display: block; }
   .cv__arrow { display: grid; }
   .cv__thumbs { display: flex; }
@@ -1492,7 +1549,7 @@ ul { list-style: none; padding: 0; }
   }
   .cv__nums { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .cv__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
-  .cv__facts { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+  .cv__facts { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
 }
 @media (min-width: 1120px) {
   .cv__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.15fr) minmax(0, .9fr); }
@@ -1501,8 +1558,9 @@ ul { list-style: none; padding: 0; }
 /* низкий ноутбук: превью уступают высоту кадру — навигацию держат
    стрелки, главы и соседние кадры */
 @media (min-width: 860px) and (max-height: 799px) {
-  .cv { --cv-stage: clamp(300px, calc(100svh - 18.5rem), 780px); }
+  .cv { --cv-stage: clamp(300px, calc(100svh - 21.5rem), 760px); }
   .cv__thumbs { display: none; }
+}
 }
 
 /* ============================================================
