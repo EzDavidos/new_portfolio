@@ -674,6 +674,7 @@
           <img class="shot__media" src="assets/img/moodbot-cover.webp"
                alt="Обложка курса «Перезавантаження настрою»"
                width="1100" height="688" loading="lazy" decoding="async">
+          <button type="button" class="work__cover" data-case="mood" tabindex="-1" aria-hidden="true"><span class="work__count mono">9 экранов</span></button>
         </div>
         <div class="work__body">
           <span class="work__kind mono">Инфопродукт</span>
@@ -681,10 +682,17 @@
           <p>Оплата картой в боте или на лендинге — доступ к семи урокам открывается
           сам, без участия автора. Следующий урок не откроется, пока не отмечен
           предыдущий, а пропал на два дня — бот сам напомнит.</p>
-          <a class="work__link mono" href="https://t.me/coursemood_bot" target="_blank" rel="noopener">
-            Открыть @coursemood_bot
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <!-- демо-бот, а не рабочий: рабочий платный, в демо можно пройти курс самому -->
+          <div class="work__acts">
+            <button type="button" class="work__link work__case mono" data-case="mood">
+              Смотреть кейс
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <a class="work__link mono" href="https://t.me/demomoodbot" target="_blank" rel="noopener">
+              Открыть @demomoodbot
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
           <ul class="stack" role="list">
             <li class="chip chip--mono">aiogram 3</li>
             <li class="chip chip--mono">PostgreSQL</li>
@@ -698,6 +706,7 @@
           <img class="shot__media" src="assets/img/agentboy-cover.webp"
                alt="Первый экран пресс-кита AGENTBOY"
                width="1100" height="688" loading="lazy" decoding="async">
+          <button type="button" class="work__cover" data-case="agentboy" tabindex="-1" aria-hidden="true"><span class="work__count mono">4 экрана</span></button>
         </div>
         <div class="work__body">
           <span class="work__kind mono">Музыка</span>
@@ -706,10 +715,16 @@
           двенадцать видео с сетами, площадки пяти стран и пресс-пак на скачивание.
           Переключатель EN/RU запоминает выбор и подставляется в ссылку — русскую
           версию можно отправить сразу нужной.</p>
-          <a class="work__link mono" href="https://agentboy.org/?lang=en#hero" target="_blank" rel="noopener">
-            Открыть пресс-кит
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <div class="work__acts">
+            <button type="button" class="work__link work__case mono" data-case="agentboy">
+              Смотреть кейс
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <a class="work__link mono" href="https://agentboy.org/?lang=en#hero" target="_blank" rel="noopener">
+              Открыть пресс-кит
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
           <ul class="stack" role="list">
             <li class="chip chip--mono">JavaScript</li>
             <li class="chip chip--mono">i18n EN/RU</li>
@@ -719,6 +734,242 @@
       </article>
 
     </div>
+
+    <!-- Окно кейса MoodBot. Тексты — по documents/projects/moodbot.md; продаж не называем: боевой базы нет. -->
+    <template id="case-mood" data-theme="mood">
+      <div class="cv__id">
+        <h2 class="cv__title" id="cv-title-mood">MoodBot</h2>
+        <p class="cv__sub">Бот, который продаёт курс и сам ведёт покупателя семь дней</p>
+      </div>
+
+      <section class="cv__gal" aria-label="Экраны проекта">
+        <div class="cv__track">
+      <figure class="cv__slide" data-chapter="Лендинг">
+        <picture>
+          <img src="assets/img/cases/mood/landing-hero-pc.webp" width="1890" height="817" alt="Первый экран лендинга курса" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Лендинг курса</b>Здесь тоже покупают картой, а доступ открывается в Telegram по персональной ссылке из письма.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Лендинг">
+        <picture>
+          <img src="assets/img/cases/mood/landing-format-pc.webp" width="1890" height="808" alt="Блок лендинга о формате курса" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Формат и результат</b>Что человек получит за семь дней и сколько времени это займёт в день.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-start.webp" width="900" height="1957" alt="Стартовый экран бота" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Старт</b>Предложение курса и две кнопки: оплатить картой или ввести код доступа.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-menu.webp" width="900" height="1957" alt="Меню бота после оплаты" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Меню с доступом</b>Язык и формат видео, мой путь, сброс прогресса и напоминания — всё в одном меню.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-days.webp" width="900" height="1957" alt="Ввод кода и список дней курса" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Дни курса</b>После оплаты или кода открываются семь дней. Пройденные отмечаются галочкой.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-lesson.webp" width="900" height="1957" alt="Видеоурок в боте" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Урок</b>Видео нельзя переслать или скачать. После урока — вопрос дня и прогресс 1/7.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-locked.webp" width="900" height="1957" alt="Бот не пускает к следующему дню" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Строгий порядок</b>Следующий день не откроется, пока не пройден предыдущий и нет ответа на вопрос.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-my-path.webp" width="900" height="1957" alt="Экран «Мой путь» со своими ответами" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Мой путь</b>Все свои ответы за семь дней одним списком — перечитать в конце курса.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Бот">
+        <picture>
+          <img src="assets/img/cases/mood/bot-bonus.webp" width="900" height="1957" alt="Бонусы после седьмого дня" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Бонусы за 7/7</b>Бонусный блок открывается только тем, кто прошёл все семь дней.</figcaption>
+      </figure>
+        </div>
+      </section>
+
+      <section class="cv__info" aria-label="О проекте">
+        <ul class="cv__nums" role="list">
+          <li><b>7</b><span>дней курса, урок в день</span></li>
+          <li><b>28</b><span>версий видеоуроков: два языка, с музыкой и без</span></li>
+          <li><b>5</b><span>дней от первой строки кода до версии с оплатой</span></li>
+          <li><b>2</b><span>способа купить: в боте и на лендинге</span></li>
+        </ul>
+
+        <div class="cv__grid">
+          <div>
+            <h3 class="cv__h mono">Задача</h3>
+            <p class="cv__lead">Продавать мини-курс без ручной работы: человек платит и сразу получает уроки, а не ждёт, пока автор вышлет видео.</p>
+            <p>И довести его до конца: такой курс легко бросить на третьем уроке. Плюс не отдавать платные видео наружу.</p>
+            <h3 class="cv__h mono">Нестандартная часть</h3>
+            <p>Покупка с лендинга и покупка в Telegram сводятся в одну точку. Если платёж пришёл без Telegram, бот выпускает одноразовый токен и зашивает его в ссылку в письме — первый вход по ней навсегда привязывает оплату к аккаунту.</p>
+          </div>
+
+          <div>
+            <h3 class="cv__h mono">Что сделано</h3>
+            <ul class="cv__list" role="list">
+              <li>Оплата картой прямо в боте через WayForPay — доступ открывается сам</li>
+              <li>Оплата на лендинге: письмо с персональной кнопкой «Открыть курс в Telegram»</li>
+              <li>Коды доступа для друзей, блогеров и возвратов</li>
+              <li>Семь видеоуроков в четырёх версиях: украинский и русский, с музыкой и без</li>
+              <li>Запрет на пересылку и скачивание видео</li>
+              <li>Вопрос-рефлексия после урока и экран «Мой путь» со всеми ответами</li>
+              <li>Напоминание, если человек пропал на два дня</li>
+              <li>Админка в боте: продажи, на каком дне бросают, рассылка, выгрузка в CSV</li>
+            </ul>
+          </div>
+
+          <div class="cv__facts">
+            <div>
+              <h3 class="cv__h mono">Сроки</h3>
+              <ol class="cv__time" role="list">
+                <li><time datetime="2026-03-16">16 марта 2026</time>первая строка кода</li>
+                <li><time datetime="2026-03-21">21 марта 2026</time>версия с оплатой и сервером</li>
+              </ol>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Стек</h3>
+              <ul class="cv__stack" role="list">
+                <li>Python</li><li>aiogram 3</li><li>PostgreSQL</li><li>aiohttp</li><li>WayForPay</li><li>Resend</li><li>Railway</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Ссылки</h3>
+              <ul class="cv__links" role="list">
+                <li><a href="https://t.me/demomoodbot" target="_blank" rel="noopener">@demomoodbot <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><small>демо — можно пройти самому</small></li>
+                <li><a href="https://t.me/coursemood_bot" target="_blank" rel="noopener">@coursemood_bot <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><small>рабочий бот, курс платный</small></li>
+                <li><a href="https://5i80g.weblium.site/" target="_blank" rel="noopener">Лендинг курса <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+                <li><a href="https://github.com/EzDavidos/course_bot" target="_blank" rel="noopener">Код на GitHub <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><small>репозиторий открыт</small></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cv__end">
+        <div class="cv__endin">
+          <p>Нужно продавать курс или доступ без ручной работы?</p>
+          <div class="cv__endacts">
+            <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Окно кейса AGENTBOY. Тексты — по documents/projects/agentboy.md. -->
+    <template id="case-agentboy" data-theme="agentboy">
+      <div class="cv__id">
+        <h2 class="cv__title" id="cv-title-agentboy">AGENT<span>BOY</span></h2>
+        <p class="cv__sub">Пресс-кит диджея: одна ссылка вместо десятка файлов для промоутера</p>
+      </div>
+
+      <section class="cv__gal" aria-label="Экраны проекта">
+        <div class="cv__track">
+      <figure class="cv__slide" data-chapter="Компьютер">
+        <picture>
+          <img src="assets/img/cases/agentboy/hero-pc.webp" width="1891" height="857" alt="Первый экран пресс-кита на компьютере" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Первый экран</b>Карточка артиста: роли, BPM-диапазон, жанры и две кнопки — букинг и послушать.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Компьютер">
+        <picture>
+          <img src="assets/img/cases/agentboy/music-pc.webp" width="1890" height="857" alt="Раздел музыки на компьютере" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Музыка</b>Все площадки одной сеткой и живые сеты с YouTube во встроенном плеере.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Телефон">
+        <picture>
+          <img src="assets/img/cases/agentboy/hero-phone.webp" width="900" height="1957" alt="Первый экран пресс-кита на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Первый экран на телефоне</b>Та же карточка, собранная под узкий экран, и переключатель EN/RU в шапке.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Телефон">
+        <picture>
+          <img src="assets/img/cases/agentboy/links-phone.webp" width="900" height="1957" alt="Ссылки на музыкальные площадки на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Площадки</b>Spotify, Apple Music, Beatport, YouTube, Instagram, SoundCloud — каждая строка нажимается целиком.</figcaption>
+      </figure>
+        </div>
+      </section>
+
+      <section class="cv__info" aria-label="О проекте">
+        <ul class="cv__nums" role="list">
+          <li><b>23</b><span>площадки в пресс-ките</span></li>
+          <li><b>5</b><span>стран, где выступал артист</span></li>
+          <li><b>12</b><span>видео сетов и релизов</span></li>
+          <li><b>2</b><span>языка: английский и русский</span></li>
+        </ul>
+
+        <div class="cv__grid">
+          <div>
+            <h3 class="cv__h mono">Задача</h3>
+            <p class="cv__lead">Артисту нужна была одна ссылка, которую можно отправить промоутеру вместо разрозненных сообщений с фото, видео и биографией.</p>
+            <p>Сайт на двух языках — с запасом под французский, немецкий, испанский и греческий.</p>
+            <h3 class="cv__h mono">Нестандартная часть</h3>
+            <p>Переводы подключаются обычными скриптами, а не загрузкой по сети, поэтому сайт целиком работает даже с флешки без интернета — артист может показать его прямо на площадке.</p>
+          </div>
+
+          <div>
+            <h3 class="cv__h mono">Что сделано</h3>
+            <ul class="cv__list" role="list">
+              <li>Карточка-герой: фото, роли, BPM-диапазон, кнопки Book now и Listen</li>
+              <li>Переключатель EN/RU: выбор запоминается и попадает в ссылку — можно сразу отправить русскую версию</li>
+              <li>12 видео во всплывающем плеере, на телефоне листаются пальцем</li>
+              <li>Площадки по странам: Греция, Вьетнам, Таиланд, Австрия, Чехия</li>
+              <li>Форматы и букинг, короткая биография с кнопкой «Скопировать»</li>
+              <li>Пресс-пак ZIP на скачивание: фото, логотип и биография на двух языках</li>
+              <li>Галерея с полноэкранным просмотром и свайпом</li>
+              <li>Карточка превью, когда ссылку отправляют в мессенджер</li>
+            </ul>
+          </div>
+
+          <div class="cv__facts">
+            <div>
+              <h3 class="cv__h mono">Сроки</h3>
+              <ol class="cv__time" role="list">
+                <li><time datetime="2026-06-25">25 июня 2026</time>первая демо-версия</li>
+                <li><time datetime="2026-08-13">13 августа 2026</time>опубликован с контентом артиста</li>
+              </ol>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Стек</h3>
+              <ul class="cv__stack" role="list">
+                <li>HTML</li><li>CSS Grid</li><li>JavaScript без фреймворков</li><li>Свой i18n EN/RU</li><li>GitHub Pages</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Ссылки</h3>
+              <ul class="cv__links" role="list">
+                <li><a href="https://agentboy.org/?lang=en#hero" target="_blank" rel="noopener">agentboy.org <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+                <li><a href="https://github.com/EzDavidos/agentboy-presskit" target="_blank" rel="noopener">Код на GitHub <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><small>репозиторий открыт</small></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cv__end">
+        <div class="cv__endin">
+          <p>Нужна одна ссылка, в которой есть всё о вас?</p>
+          <div class="cv__endacts">
+            <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 </section>
 
