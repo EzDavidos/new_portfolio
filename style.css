@@ -753,6 +753,8 @@ ul { list-style: none; padding: 0; }
   margin: clamp(1.6rem, 4vw, 2.6rem) auto 0;
 }
 .fgh__stage { position: relative; aspect-ratio: 1151 / 1366; }
+/* мокап открывает окно кейса — прозрачная кнопка поверх всей сцены */
+.fgh__open { position: absolute; inset: 0; z-index: 2; cursor: pointer; }
 /* Свечение отдельно от растровой рамки: без обрывков исходного фона. */
 .fgh__stage::before {
   content: "";

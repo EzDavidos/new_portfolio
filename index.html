@@ -208,12 +208,14 @@
           <li class="fgh__stat"><span class="fgh__num">4</span><span class="fgh__cap">кабинета</span></li>
         </ul>
 
+        <!-- «Смотреть кейс» открывает окно кейса (шаблон ниже), «Нужна такая
+             же система» переехала в само окно — туда, где интерес выше всего -->
         <div class="fgh__acts">
-          <a href="https://www.flyguru.pro" class="btn btn--brand" target="_blank" rel="noopener">Открыть flyguru.pro</a>
-          <a href="#contact" class="btn btn--on-dark">
-            Нужна такая же система
+          <button type="button" class="btn btn--brand" data-case="flyguru">
+            Смотреть кейс
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          </button>
+          <a href="https://www.flyguru.pro" class="btn btn--on-dark" target="_blank" rel="noopener">Открыть flyguru.pro</a>
         </div>
       </div>
 
@@ -230,9 +232,185 @@
           </div>
           <img class="fgh__frame" src="assets/img/iphone-3d.webp" alt=""
                aria-hidden="true" width="1151" height="1366" loading="lazy" decoding="async">
+          <button type="button" class="fgh__open" data-case="flyguru" tabindex="-1" aria-hidden="true"></button>
         </div>
       </div>
     </article>
+
+    <!-- Окно кейса FlyGuru. Тексты — по documents/projects/flyguru.md, цифры
+         12.09.2026: 174 клиента (со слов Давида), занятий 140 на 23.08. -->
+    <template id="case-flyguru" data-theme="flyguru">
+      <div class="cv__id">
+        <h2 class="cv__title" id="cv-title-flyguru">FlyGuru</h2>
+        <p class="cv__sub">Сайт и CRM для школы электрофойлов в Нячанге</p>
+      </div>
+
+      <section class="cv__gal" aria-label="Экраны проекта">
+        <div class="cv__track">
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/home-phone.webp" width="900" height="1957" alt="Главная страница flyguru.pro на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Главная</b>Первый экран с видео с воды. Кнопка записи всегда внизу, под пальцем.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/learn-phone.webp" width="900" height="1957" alt="Страница обучения на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Обучение</b>Что нужно знать до первого занятия: сколько длится, с какого возраста, до какого веса.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/lesson-steps-pc.webp" width="1892" height="860" alt="Раздел «Занятие по шагам» на компьютере" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Как проходит занятие</b>Четыре шага от инструктажа на берегу до полёта и видео с пляжа — новичок знает, что его ждёт.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/prices-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/prices-pc.webp" width="1892" height="862" alt="Прайс на компьютере" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Прайс</b>Услуги по вкладкам: обучение, тандем, аренда, абонементы, выезды. Скидка по ссылке агента видна прямо в цене.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/shop-pc.webp" width="1897" height="862" alt="Раздел магазина и частые вопросы" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Магазин и вопросы</b>Школа продаёт электрофойлы — для этого свой раздел. Ответы на вопросы новичков стоят рядом.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Сайт">
+        <picture>
+          <img src="assets/img/cases/flyguru/booking-phone.webp" width="900" height="1957" alt="Форма записи на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Запись</b>Имя, телефон, мессенджер и услуга. Заявка сразу приходит инструкторам в Telegram.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/menu-phone.webp" width="900" height="1957" alt="Меню разделов CRM на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Разделы системы</b>Заявки, клиенты, календарь, абонементы, сертификаты, статистика, зарплаты и расходы — в одном меню.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/clients-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/clients-pc.webp" width="1892" height="862" alt="Список клиентов в CRM" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Клиенты</b>База с поиском и сортировкой по числу занятий, тратам, последнему визиту и возрасту.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/calendar-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/calendar-pc.webp" width="1892" height="862" alt="Календарь смен и записей" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Календарь</b>Смены и записи по дням. Клик по дню — кто работает и кто записан.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/sessions-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/sessions-pc.webp" width="1892" height="856" alt="Список занятий в CRM" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Занятия</b>Каждое катание: клиент, услуга, время и оплата. Из этих записей считаются зарплаты.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/subscriptions-phone.webp" width="900" height="1957" alt="Абонементы в CRM на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Абонементы</b>Сколько минут внесено и когда оплачено. Остаток списывается после каждого катания.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <source media="(max-width: 859px)" srcset="assets/img/cases/flyguru/salary-phone.webp" width="900" height="1957">
+          <img src="assets/img/cases/flyguru/salary-pc.webp" width="1892" height="861" alt="Расчёт зарплат сотрудников" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Зарплаты</b>Сколько заработал каждый за период и сколько осталось выдать. «Как посчитали» раскрывает формулу.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/payouts-phone.webp" width="900" height="1957" alt="История выплат на телефоне" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>История выплат</b>Кому, сколько и когда выдали — вместо отдельной тетради.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/stats-pc.webp" width="1896" height="861" alt="Статистика школы" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Статистика</b>Выручка по дням и категориям, топ услуг, работа инструкторов и статусы заявок.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="CRM">
+        <picture>
+          <img src="assets/img/cases/flyguru/report-pc.webp" width="1892" height="861" alt="Отчёт за период с выгрузкой" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Отчёт за период</b>Выручка и деньги на руках за любой период, список визитов с выгрузкой в Excel.</figcaption>
+      </figure>
+        </div>
+      </section>
+
+      <section class="cv__info" aria-label="О проекте">
+        <ul class="cv__nums" role="list">
+          <li><b>170+</b><span>клиентов в базе школы</span></li>
+          <li><b>140+</b><span>занятий учтено в системе</span></li>
+          <li><b>18</b><span>дней от первой строки кода до работы в бою</span></li>
+          <li><b>4</b><span>кабинета: админ, инструктор, механик, СММ</span></li>
+        </ul>
+
+        <div class="cv__grid">
+          <div>
+            <h3 class="cv__h mono">Задача</h3>
+            <p class="cv__lead">Школе нужен был сайт, с которого приходят заявки, и учёт вместо тетрадок и переписок.</p>
+            <p>Владелец хотел видеть, кто из инструкторов сколько заработал, сколько минут осталось у клиента на абонементе и сколько денег реально в кассе.</p>
+            <h3 class="cv__h mono">Нестандартная часть</h3>
+            <p>Зарплата считается слоями — фикс, процент с чека, доля дневной выручки и доля с абонемента — и делится между теми, кто в этот день реально открыл смену, а не между теми, кто стоял в графике.</p>
+          </div>
+
+          <div>
+            <h3 class="cv__h mono">Что сделано</h3>
+            <ul class="cv__list" role="list">
+              <li>Сайт: обучение, тандем, клуб, прайс, отзывы, контакты с картой</li>
+              <li>Заявка с сайта сразу приходит в Telegram — в общий чат и группу инструкторов с кнопкой «Принять»</li>
+              <li>Кабинет инструктора под телефон: записи на сегодня, списание минут, своя зарплата</li>
+              <li>Смена открывается и закрывается по фото с места</li>
+              <li>Абонементы с живым остатком минут и сроком сгорания</li>
+              <li>Зарплаты, расходы и касса: одна цифра «деньги на руках» вместо трёх отчётов</li>
+              <li>Реферальные ссылки агентов и учёт переходов с YouTube, Instagram и рекламы</li>
+              <li>Статистика с выгрузкой в Excel</li>
+            </ul>
+          </div>
+
+          <div class="cv__facts">
+            <div>
+              <h3 class="cv__h mono">Сроки</h3>
+              <ol class="cv__time" role="list">
+                <li><time datetime="2026-07-06">6 июля 2026</time>первая строка кода</li>
+                <li><time datetime="2026-07-24">24 июля 2026</time>школа работает в системе</li>
+              </ol>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Стек</h3>
+              <ul class="cv__stack" role="list">
+                <li>Next.js 16</li><li>React 19</li><li>TypeScript</li><li>Supabase · Postgres</li>
+                <li>Tailwind CSS</li><li>Vercel</li><li>Telegram Bot API</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Ссылки</h3>
+              <ul class="cv__links" role="list">
+                <li><a href="https://www.flyguru.pro" target="_blank" rel="noopener">flyguru.pro <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+              </ul>
+              <p class="cv__note">Код принадлежит школе, поэтому закрыт.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cv__end">
+        <div class="cv__endin">
+          <p>Нужна такая же система для вашего бизнеса?</p>
+          <div class="cv__endacts">
+            <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </template>
 
   </div>
 </section>
