@@ -497,11 +497,12 @@
         <!-- перенесено из верхнего proof-бара (master-plan, 1.3) -->
         <p class="p100__more">90+ заказов у самого активного клиента <br>Около 4&nbsp;заказов в&nbsp;день <br>9 дней от первого коммита до первого&nbsp;заказа</p>
 
+        <!-- «Хочу такой же продукт» переехала в окно кейса, как и у FlyGuru -->
         <div class="p100__acts">
-          <a href="https://t.me/davidnaumenko" class="btn btn--brand" target="_blank" rel="noopener">
-            Хочу такой же продукт
+          <button type="button" class="btn btn--brand" data-case="100lovaya">
+            Смотреть кейс
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          </button>
           <a href="https://t.me/100lovaya_bot" class="btn btn--on-dark" target="_blank" rel="noopener">Открыть @100lovaya_bot</a>
         </div>
       </div>
@@ -519,9 +520,138 @@
                  aria-label="Запись экрана мини-аппа 100ловая"></video>
           <img class="mock__body" src="assets/img/iphone-16-pro-max.png"
                alt="" aria-hidden="true" width="388" height="800" loading="lazy">
+          <button type="button" class="mock__open" data-case="100lovaya" tabindex="-1" aria-hidden="true"></button>
         </figure>
       </div>
     </article>
+
+    <!-- Окно кейса 100ловой. Тексты — по documents/projects/100lovaya.md,
+         цифры — экран «Статистика» 12.09.2026 (586 заказов) и база 23.08. -->
+    <template id="case-100lovaya" data-theme="100lovaya">
+      <div class="cv__id">
+        <h2 class="cv__title" id="cv-title-100lovaya"><span>100</span>ловая</h2>
+        <p class="cv__sub">Магазин в Telegram для домашней кухни в Нячанге</p>
+      </div>
+
+      <section class="cv__gal" aria-label="Экраны проекта">
+        <div class="cv__track">
+      <figure class="cv__slide" data-chapter="Магазин">
+        <picture>
+          <img src="assets/img/cases/100lovaya/catalog.webp" width="900" height="1957" alt="Каталог блюд в мини-приложении" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Каталог</b>Витрина с фото, поиском, избранным и акциями. «Повторить прошлый заказ» собирает корзину в один тап.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Магазин">
+        <picture>
+          <img src="assets/img/cases/100lovaya/product.webp" width="900" height="1957" alt="Карточка блюда" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Карточка блюда</b>Фото, цена со скидкой, количество — и в корзину.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Магазин">
+        <picture>
+          <img src="assets/img/cases/100lovaya/cart.webp" width="900" height="1957" alt="Корзина и оформление заказа" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Корзина и оформление</b>Контакт и адрес запоминаются для следующего заказа. Оплата наличными, по QR, криптой или картой.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/admin.webp" width="900" height="1957" alt="Панель владельца" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Панель владельца</b>Статистика, заказы, товары, категории, оплата и часы работы — в том же приложении, что и магазин.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/admin-products.webp" width="900" height="1957" alt="Список товаров в админке" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Товары</b>Цена, скидка и категория. Глазок прячет блюдо из меню одним тапом.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/clients.webp" width="900" height="1957" alt="База клиентов в админке" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Клиенты</b>Кто сколько раз заказывал, теги вроде «Постоянник» и поиск по имени.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/stats.webp" width="850" height="1850" alt="Статистика заказов" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Статистика</b>Заказы, выручка и средний чек за любой период, статусы заказов и топ блюд.</figcaption>
+      </figure>
+      <figure class="cv__slide" data-chapter="Админка">
+        <picture>
+          <img src="assets/img/cases/100lovaya/newsletter.webp" width="900" height="1957" alt="Рассылка по клиентам" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><b>Рассылка</b>Сообщение всем, кто заказывал, — с фото и предпросмотром перед отправкой.</figcaption>
+      </figure>
+        </div>
+      </section>
+
+      <section class="cv__info" aria-label="О проекте">
+        <ul class="cv__nums" role="list">
+          <li><b>580+</b><span>заказов через приложение</span></li>
+          <li><b>150+</b><span>клиентов</span></li>
+          <li><b>44%</b><span>вернулись за повторным заказом</span></li>
+          <li><b>9</b><span>дней от первой строки кода до первого заказа</span></li>
+        </ul>
+
+        <div class="cv__grid">
+          <div>
+            <h3 class="cv__h mono">Задача</h3>
+            <p class="cv__lead">Заказы собирались перепиской в мессенджере. Нужен был магазин прямо в Telegram — без сайта и без приложения, которое надо скачивать.</p>
+            <p>А владельцу — управление с телефона: блюда и цены, заказы, база клиентов и выручка, без бумажек.</p>
+            <h3 class="cv__h mono">Нестандартная часть</h3>
+            <p>Весь магазин и вся админка — один HTML-файл без фреймворков и сборки, который работает внутри Telegram. Отдельного сайта и отдельной CRM у бизнеса нет вообще.</p>
+          </div>
+
+          <div>
+            <h3 class="cv__h mono">Что сделано</h3>
+            <ul class="cv__list" role="list">
+              <li>Меню в Telegram: фото, категории, поиск, сортировка по цене, избранное</li>
+              <li>Корзина с адресом, комментарием и выбором оплаты; адрес запоминается</li>
+              <li>История заказов и повтор прошлого заказа одним нажатием</li>
+              <li>Заказ приходит владельцу в Telegram с кнопками: подтвердить, отменить, оплачен, доставлен</li>
+              <li>Клиент получает статус на каждом шаге и реквизиты для оплаты</li>
+              <li>Через 30 минут после доставки бот сам спрашивает, как всё прошло</li>
+              <li>Админка в том же приложении: блюда, цены, скидки, клиенты с тегами, статистика, рассылка</li>
+              <li>Часы работы: вне их в приложении висит баннер «закрыто»</li>
+            </ul>
+          </div>
+
+          <div class="cv__facts">
+            <div>
+              <h3 class="cv__h mono">Сроки</h3>
+              <ol class="cv__time" role="list">
+                <li><time datetime="2026-04-16">16 апреля 2026</time>первая строка кода</li>
+                <li><time datetime="2026-04-25">25 апреля 2026</time>первый живой заказ</li>
+              </ol>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Стек</h3>
+              <ul class="cv__stack" role="list">
+                <li>Python</li><li>aiogram 3</li><li>FastAPI</li><li>PostgreSQL</li>
+                <li>JavaScript без фреймворков</li><li>Telegram Mini Apps</li><li>Railway</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="cv__h mono">Ссылки</h3>
+              <ul class="cv__links" role="list">
+                <li><a href="https://t.me/100lovaya_bot" target="_blank" rel="noopener">@100lovaya_bot <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+              </ul>
+              <p class="cv__note">Код закрыт.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cv__end">
+        <div class="cv__endin">
+          <p>Нужен такой же магазин в Telegram?</p>
+          <div class="cv__endacts">
+            <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </template>
 
   </div>
 </section>
