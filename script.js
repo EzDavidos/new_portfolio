@@ -276,6 +276,29 @@
       if (!track) { g = null; return; }
       var slides = Array.prototype.slice.call(track.querySelectorAll('.cv__slide'));
 
+      // На телефоне сначала телефонные экраны, потом ПК: широкий кадр на узком
+      // экране занимает полосу, а под ним пусто. Порядок меняется внутри
+      // главы, чтобы главы не перемешались; главы, где есть телефонные
+      // экраны, идут первыми. «Телефонный» — кадр с парой <source> под
+      // телефон или просто вертикальный.
+      if (cvPhone.matches) {
+        var narrow = function (s) {
+          var img = s.querySelector('img');
+          return !!s.querySelector('source') || img.getAttribute('width') / img.getAttribute('height') < 1.2;
+        };
+        var names = [];
+        slides.forEach(function (s) { if (names.indexOf(s.dataset.chapter) < 0) names.push(s.dataset.chapter); });
+        var hasNarrow = function (n) { return slides.some(function (s) { return s.dataset.chapter === n && narrow(s); }); };
+        names = names.filter(hasNarrow).concat(names.filter(function (n) { return !hasNarrow(n); }));
+        var order = [];
+        names.forEach(function (n) {
+          var inCh = slides.filter(function (s) { return s.dataset.chapter === n; });
+          order = order.concat(inCh.filter(narrow), inCh.filter(function (s) { return !narrow(s); }));
+        });
+        order.forEach(function (s) { track.appendChild(s); });
+        slides = order;
+      }
+
       var stage = document.createElement('div');
       stage.className = 'cv__stage';
       track.parentNode.insertBefore(stage, track);
@@ -380,9 +403,12 @@
     var cvZoomClose = function () { cvZoom.hidden = true; };
     cvZoom.addEventListener('click', cvZoomClose);
 
-    var cvShow = function (id) {
+    // наполнить окно кейсом; при смене раскладки телефон/десктоп
+    // вызывается повторно, потому что меняется порядок кадров
+    var cvFill = function (id) {
       var tpl = document.getElementById('case-' + id);
       if (!tpl) return false;
+      if (g) clearTimeout(g.lockT);
       cvId.textContent = '';
       cvBody.textContent = '';
       cvBody.appendChild(tpl.content.cloneNode(true));
@@ -392,6 +418,12 @@
       if (title) cv.setAttribute('aria-labelledby', title.id);
       cv.dataset.theme = tpl.dataset.theme || id;
       cvCur = id;
+      if (cv.open) cvBuild();
+      return true;
+    };
+
+    var cvShow = function (id) {
+      if (!cvFill(id)) return false;
 
       // страница под окном не прокручивается; ширину скроллбара возвращаем
       // отступом, иначе страница под листом дёргается вбок
@@ -458,7 +490,11 @@
       if (m && cvShow(m[1])) cvPushed = true;
     });
     window.addEventListener('resize', function () { if (cv.open) cvLayout(); });
-    cvPhone.addEventListener('change', function () { if (cv.open) cvLayout(); });
+    cvPhone.addEventListener('change', function () {
+      if (!cv.open) return;
+      cvFill(cvCur);
+      cv.scrollTop = 0;
+    });
 
     // открыли сайт по ссылке на кейс: сначала шаг без хэша, чтобы «Назад»
     // из окна вернул на страницу, а не на прошлый сайт
