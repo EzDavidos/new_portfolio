@@ -276,28 +276,30 @@
       if (!track) { g = null; return; }
       var slides = Array.prototype.slice.call(track.querySelectorAll('.cv__slide'));
 
-      // На телефоне сначала телефонные экраны, потом ПК: широкий кадр на узком
-      // экране занимает полосу, а под ним пусто. Порядок меняется внутри
-      // главы, чтобы главы не перемешались; главы, где есть телефонные
-      // экраны, идут первыми. «Телефонный» — кадр с парой <source> под
-      // телефон или просто вертикальный.
-      if (cvPhone.matches) {
-        var narrow = function (s) {
-          var img = s.querySelector('img');
-          return !!s.querySelector('source') || img.getAttribute('width') / img.getAttribute('height') < 1.2;
-        };
-        var names = [];
-        slides.forEach(function (s) { if (names.indexOf(s.dataset.chapter) < 0) names.push(s.dataset.chapter); });
-        var hasNarrow = function (n) { return slides.some(function (s) { return s.dataset.chapter === n && narrow(s); }); };
-        names = names.filter(hasNarrow).concat(names.filter(function (n) { return !hasNarrow(n); }));
-        var order = [];
-        names.forEach(function (n) {
-          var inCh = slides.filter(function (s) { return s.dataset.chapter === n; });
-          order = order.concat(inCh.filter(narrow), inCh.filter(function (s) { return !narrow(s); }));
-        });
-        order.forEach(function (s) { track.appendChild(s); });
-        slides = order;
-      }
+      // Первыми идут кадры под текущий экран: на телефоне — телефонные,
+      // на десктопе — ПК. Широкий кадр на телефоне — полоса с пустотой
+      // под ней, а на десктопе открывать кейс с узкого телефона незачем.
+      // Порядок меняется внутри главы, чтобы главы не перемешались; главы,
+      // где такие кадры есть, идут первыми. Какой кадр телефонный, решает
+      // то, что он покажет сейчас: у пары <source> на телефоне это
+      // телефонная версия, на десктопе — ПК.
+      var phone = cvPhone.matches;
+      var fits = function (s) {
+        var src = s.querySelector('source'), img = s.querySelector('img');
+        var el = phone && src ? src : img;
+        return (el.getAttribute('width') / el.getAttribute('height') < 1.2) === phone;
+      };
+      var names = [];
+      slides.forEach(function (s) { if (names.indexOf(s.dataset.chapter) < 0) names.push(s.dataset.chapter); });
+      var hasFit = function (n) { return slides.some(function (s) { return s.dataset.chapter === n && fits(s); }); };
+      names = names.filter(hasFit).concat(names.filter(function (n) { return !hasFit(n); }));
+      var order = [];
+      names.forEach(function (n) {
+        var inCh = slides.filter(function (s) { return s.dataset.chapter === n; });
+        order = order.concat(inCh.filter(fits), inCh.filter(function (s) { return !fits(s); }));
+      });
+      order.forEach(function (s) { track.appendChild(s); });
+      slides = order;
 
       var stage = document.createElement('div');
       stage.className = 'cv__stage';
