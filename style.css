@@ -1470,6 +1470,13 @@ ul { list-style: none; padding: 0; }
   .p100__phone { width: 24%; }
 }
 
+/* На узком десктопе колонка текста FlyGuru всего ~320px, и ряд из
+   «170+ · 140+ · 18 · 4» с макетными отступами в неё не влезает:
+   последняя подпись вылезала за линию над цифрами. */
+@media (min-width: 860px) and (max-width: 1279px) {
+  .fgh__stat { padding-inline: clamp(.5rem, 1.1vw, 2.1rem); }
+}
+
 @media (min-width: 1120px) {
   .hero__title { max-width: 12ch; }
 }
