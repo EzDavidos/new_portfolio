@@ -1652,20 +1652,26 @@ ul { list-style: none; padding: 0; }
 /* Уровни поддержки: цена мельче тарифной, а главное в колонке — фраза
    «для кого»: по ней видно, за что разница между $90 и $600. */
 .tiers { display: grid; margin-top: clamp(1.4rem, 3vw, 2rem); border-top: 1px solid rgba(12,122,93,.16); }
-.tier { display: grid; align-content: start; gap: .7rem; padding-block: 1.4rem; }
+.tier { display: flex; flex-direction: column; gap: .7rem; padding-block: 1.4rem; }
 .tier + .tier { border-top: 1px solid rgba(12,122,93,.16); }
 .tier__top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
 .tier__h { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; }
 .tier__price { font-family: var(--f-display); font-weight: 600; font-size: 1.45rem; letter-spacing: -.02em; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .tier__price i { font-style: normal; font-size: .8rem; font-weight: 400; letter-spacing: 0; color: var(--ink-mute); }
 .tier__for { color: var(--ink); font-size: .92rem; line-height: 1.5; }
-.tier__list { display: grid; gap: .5rem; color: var(--ink-soft); font-size: .86rem; line-height: 1.5; }
+.tier__list { display: grid; align-content: start; gap: .5rem; color: var(--ink-soft); font-size: .86rem; line-height: 1.5; }
 .tier__list li { display: flex; gap: .6rem; align-items: flex-start; }
 .tier__list li::before { content: "✓"; color: var(--green); flex: none; }
-.tiers__terms { padding-top: 1.1rem; border-top: 1px solid rgba(12,122,93,.16); color: var(--ink-mute); font-size: .8rem; line-height: 1.55; }
+.tier__details { margin-top: 0; border-top-color: rgba(12,122,93,.16); }
+.tier__full { display: grid; gap: .45rem; }
+.tier__full li { display: flex; gap: .55rem; align-items: flex-start; }
+.tier__full li::before { content: "—"; color: var(--green); flex: none; }
+.tiers__terms { display: grid; gap: .35rem; padding-top: 1.1rem; border-top: 1px solid rgba(12,122,93,.16); color: var(--ink-mute); font-size: .8rem; line-height: 1.55; }
 @media (min-width: 860px) {
-  .tiers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .tier { padding: 1.6rem clamp(1.2rem, 2.4vw, 2rem); }
+  /* Строки общие на все три колонки (subgrid): «Что входит» стоит на одной
+     линии, и раскрытие одной колонки не двигает соседние. */
+  .tiers { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); grid-auto-flow: column; }
+  .tier { display: grid; grid-row: span 4; grid-template-rows: subgrid; align-content: start; padding: 1.6rem clamp(1.2rem, 2.4vw, 2rem); }
   .tier:first-child { padding-left: 0; }
   .tier:last-child { padding-right: 0; }
   .tier + .tier { border-top: 0; border-left: 1px solid rgba(12,122,93,.16); }
