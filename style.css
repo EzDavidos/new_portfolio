@@ -926,6 +926,40 @@ ul { list-style: none; padding: 0; }
    ============================================================ */
 .product { padding-block: clamp(3rem, 6vw, 5rem); }
 
+/* Отзыв клиента под карточкой кейса. Цитата — дословная выдержка,
+   оригинал целиком открывается по ссылке «Весь отзыв». */
+.review {
+  display: grid; gap: 1.1rem;
+  margin-top: clamp(1rem, 2.2vw, 1.6rem);
+  padding: clamp(1.4rem, 3.2vw, 2.4rem) clamp(1.4rem, 3.6vw, 2.8rem);
+  border-radius: var(--r-xl);
+}
+.review__text {
+  position: relative; padding-left: clamp(2rem, 3.4vw, 2.8rem);
+  font-family: var(--f-display); font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+  line-height: 1.55; color: var(--ink); max-width: 70ch; text-wrap: pretty;
+}
+/* Кавычка — из антиквы: в гротеске заголовков она выглядит прямым штрихом. */
+.review__text::before {
+  content: "“"; position: absolute; left: 0; top: -.12em;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3.4em; line-height: 1; color: var(--green);
+}
+.review__who {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem;
+  padding-left: clamp(2rem, 3.4vw, 2.8rem);
+  color: var(--ink-soft); font-size: .88rem;
+}
+.review__who strong { color: var(--ink); font-weight: 600; }
+.review__src { color: var(--green-deep); font-weight: 500; border-bottom: 1px solid rgba(12,122,93,.3); }
+.review__src:hover { border-color: var(--green); }
+/* На телефоне кавычка встаёт над текстом: отступ слева съедал треть ширины. */
+@media (max-width: 599px) {
+  .review__text, .review__who { padding-left: 0; }
+  .review__text { padding-top: 1.5rem; }
+  .review__text::before { top: -.28em; font-size: 2.8em; }
+}
+
 /* Цвета сняты пипеткой с макета: заливка кнопки (178,39,27), акцент
    текста светлее её — на тёмном фото густой кирпичный читается плохо.
    Белый на #B2271B даёт контраст 6.6, так что подпись кнопки белая. */
@@ -1689,33 +1723,12 @@ ul { list-style: none; padding: 0; }
 }
 
 /* ============================================================
-   BLOCK 09 — ДОВЕРИЕ И РИСКИ
-   Список, а не карточки: блок должен читаться как разговор.
+   BLOCK 09 — ВОПРОСЫ И РИСКИ
+   Слева — заголовок и главное обещание, справа — 7 вопросов аккордеоном.
    ============================================================ */
 .trust { padding-block: clamp(3rem, 6vw, 5rem); }
 .trust__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
 .trust .lead { margin-top: 1rem; }
-.risks { display: grid; }
-.risk { padding-block: clamp(1.05rem, 2.4vw, 1.45rem); border-top: 1px solid var(--line); }
-.risk:last-child { border-bottom: 1px solid var(--line); }
-.risk__q {
-  display: flex; gap: .7rem; align-items: baseline;
-  font-family: var(--f-display); font-size: 1.04rem;
-  font-weight: 600; letter-spacing: -.004em;
-}
-.risk__q::before {
-  content: ""; width: 7px; height: 7px; border-radius: 50%;
-  background: var(--green); flex: none; transform: translateY(-1px);
-}
-.risk__a {
-  color: var(--ink-soft); font-size: .96rem; line-height: 1.55;
-  margin-top: .4rem; padding-left: 1.4rem; max-width: 68ch;
-}
-
-/* ============================================================
-   BLOCK 10 — FAQ
-   ============================================================ */
-.faq { padding-block: clamp(3rem, 6vw, 5rem); }
 .qa-list { display: grid; }
 .qa { border-top: 1px solid var(--line); }
 .qa:last-of-type { border-bottom: 1px solid var(--line); }
@@ -1745,6 +1758,8 @@ ul { list-style: none; padding: 0; }
 .qa[open] .qa__ico::before, .qa[open] .qa__ico::after { background: #fff; }
 .qa[open] .qa__ico::after { transform: rotate(90deg); }
 .qa__a { padding-bottom: clamp(1rem, 2.2vw, 1.4rem); color: var(--ink-soft); max-width: 76ch; }
+.qa__a a { color: var(--green-deep); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(12,122,93,.35); }
+.qa__a a:hover { text-decoration-color: currentColor; }
 
 /* ============================================================
    BLOCK 12 — ФУТЕР
