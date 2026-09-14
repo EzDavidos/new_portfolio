@@ -120,6 +120,9 @@
   --sec-y: clamp(4rem, 9vw, 7.5rem);
   --wrap:  1280px;
   --measure: 54ch;
+  /* Воздух над и под секцией. Было clamp(3rem, 6vw, 5rem) — 160 px между
+     блоками на десктопе читались пустотой (master-plan, 7.2): −25%. */
+  --sec-pad: clamp(2.5rem, 4.5vw, 3.75rem);
 
   --r-sm: 10px;
   --r:    14px;
@@ -629,7 +632,7 @@ ul { list-style: none; padding: 0; }
    Кейс FlyGuru одной карточкой-героем: фото воды клиента на фон,
    3D-мокап телефона справа, текст и цифры слева.
    ============================================================ */
-.flagship { padding-block: clamp(3rem, 6vw, 5rem); }
+.flagship { padding-block: var(--sec-pad); }
 
 /* Цвета сняты с самого продукта: тил #0C8397 — шапка FlyGuru, оранжевый
    #FC7918 — его кнопка записи. Акцентный тон осветлён до #45D6EE: сам
@@ -840,7 +843,7 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 04 — SOLUTIONS
    ============================================================ */
-.solutions { padding-block: clamp(3rem, 6vw, 5rem); }
+.solutions { padding-block: var(--sec-pad); }
 .solutions__panel {
   position: relative; isolation: isolate; overflow: hidden;
   display: grid; border: 1px solid #fff; border-radius: var(--r-xl);
@@ -907,7 +910,7 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 07 — PROCESS
    ============================================================ */
-.process { padding-block: clamp(3rem, 6vw, 5rem); }
+.process { padding-block: var(--sec-pad); }
 .process__grid .lead { margin-top: 1rem; }
 .process__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
 .steps { display: grid; gap: var(--gap); }
@@ -959,7 +962,7 @@ ul { list-style: none; padding: 0; }
    внутри него 1488x806 px против реальных 1176 CSS-px, то есть всё
    делится на 1.2653. Ниже в комментариях стоят исходные числа макета.
    ============================================================ */
-.product { padding-block: clamp(3rem, 6vw, 5rem); }
+.product { padding-block: var(--sec-pad); }
 
 /* Отзыв клиента под карточкой кейса. Цитата — дословная выдержка,
    оригинал целиком открывается по ссылке «Весь отзыв». */
@@ -1186,7 +1189,7 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 06 — ДРУГИЕ ПРОЕКТЫ
    ============================================================ */
-.works { padding-block: clamp(3rem, 6vw, 5rem); }
+.works { padding-block: var(--sec-pad); }
 .works__grid { display: grid; gap: var(--gap); }
 .work {
   border-radius: var(--r-lg); overflow: hidden;
@@ -1642,7 +1645,7 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 08 — ЦЕНЫ
    ============================================================ */
-.pricing { padding-block: clamp(3rem, 6vw, 5rem); }
+.pricing { padding-block: var(--sec-pad); }
 /* Блоки цен стоят стопкой, каждый — самостоятельное предложение. */
 .pricing__stack { display: grid; gap: clamp(1rem, 2.2vw, 1.6rem); }
 /* Контраст к бумаге держит не белый фон, а глубина градиента и тень:
@@ -1761,7 +1764,7 @@ ul { list-style: none; padding: 0; }
    BLOCK 09 — ВОПРОСЫ И РИСКИ
    Слева — заголовок и главное обещание, справа — 7 вопросов аккордеоном.
    ============================================================ */
-.trust { padding-block: clamp(3rem, 6vw, 5rem); }
+.trust { padding-block: var(--sec-pad); }
 .trust__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
 .trust .lead { margin-top: 1rem; }
 .qa-list { display: grid; }
