@@ -1106,27 +1106,50 @@
          ушла: в дорогих комплектациях она уже включена, а для готового
          продукта стоит одной строкой в условиях ниже, не тарифом. -->
     <div class="addon reveal">
-      <div class="care care--flush">
       <div class="care__head">
         <p class="care__when mono">После запуска</p>
         <h3 class="care__h">Ежемесячная поддержка</h3>
-        <p class="care__lead">Если нужно, чтобы продукт жил и дальше: следил, чинил, дорабатывал. Наполнение уровня подбираем под проект.</p>
+        <p class="care__lead">Гарантия чинит мои ошибки, когда вы о них сообщите. Поддержка — это когда я сам слежу за продуктом и развиваю его.</p>
       </div>
-      <ul class="care__list" role="list">
-        <li class="care__item">
-          <span class="care__name">Базовый</span>
-          <span class="care__price">$90<i>/мес</i></span>
-        </li>
-        <li class="care__item">
-          <span class="care__name">Расширенный</span>
-          <span class="care__price">$280<i>/мес</i></span>
-        </li>
-        <li class="care__item">
-          <span class="care__name">Партнёрский</span>
-          <span class="care__price">$600<i>/мес</i></span>
-        </li>
-      </ul>
+      <!-- Точный состав уровней Давид пришлёт отдельно — по нему добавить
+           раскрывашку «Что входит». До этого у уровня только смысл. -->
+      <div class="tiers">
+        <article class="tier">
+          <div class="tier__top">
+            <h4 class="tier__h">Базовый</h4>
+            <p class="tier__price">$90<i>/мес</i></p>
+          </div>
+          <p class="tier__for">Продукт работает, и нужно, чтобы так и оставалось.</p>
+          <ul class="tier__list" role="list">
+            <li>Регулярно проверяю код и работу сервисов</li>
+            <li>Администрирую, чтобы продукт не падал</li>
+          </ul>
+        </article>
+        <article class="tier">
+          <div class="tier__top">
+            <h4 class="tier__h">Расширенный</h4>
+            <p class="tier__price">$280<i>/мес</i></p>
+          </div>
+          <p class="tier__for">Продукт работает, и время от времени нужны правки.</p>
+          <ul class="tier__list" role="list">
+            <li>Всё из Базового</li>
+            <li>Правки и небольшие доработки по запросу</li>
+          </ul>
+        </article>
+        <article class="tier">
+          <div class="tier__top">
+            <h4 class="tier__h">Партнёрский</h4>
+            <p class="tier__price">$600<i>/мес</i></p>
+          </div>
+          <p class="tier__for">Продукт постоянно развивается.</p>
+          <ul class="tier__list" role="list">
+            <li>Всё из Расширенного</li>
+            <li>Постоянная работа над проектом: сказали&nbsp;— сделал</li>
+            <li>Всегда на связи</li>
+          </ul>
+        </article>
       </div>
+      <p class="tiers__terms">Минимальный срок — месяц, отменить можно в любой месяц. Проект, сделанный не мной, беру на поддержку после проверки кода.</p>
     </div>
 
     <!-- Условия стоят под всеми плашками: они про работу целиком, а не про

@@ -1637,14 +1637,6 @@ ul { list-style: none; padding: 0; }
 .plan__expanded p + p { margin-top: .9rem; }
 .plan__expanded strong { display: block; color: var(--ink); margin-bottom: .2rem; font-weight: 600; }
 .plan .btn { margin-top: .5rem; }
-.care {
-  padding: clamp(1.4rem, 3vw, 2.2rem);
-  border-top: 1px solid var(--line-2);
-  display: grid; gap: 1.4rem;
-  background: rgba(255,255,255,.35);
-}
-.care .label { font-size: .65rem; }
-.care--flush { border-top: 0; background: none; padding: 0; }
 /* Поддержка — не тариф, а надстройка сверх запуска: своя плашка,
    подсвеченная зелёным, чтобы блок не читался четвёртым тарифом. */
 .addon {
@@ -1655,18 +1647,29 @@ ul { list-style: none; padding: 0; }
   box-shadow: var(--sh-3), inset 0 0 0 1px rgba(12,122,93,.09);
 }
 .care__when { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--green); margin-bottom: .5rem; }
-.addon .care__h { font-size: clamp(1.3rem, 2.1vw, 1.65rem); }
-.addon .care__lead { font-size: .95rem; }
-.addon .care__item { border-bottom-color: rgba(12,122,93,.18); }
-.addon .care__name { color: var(--ink); font-size: .92rem; }
-.care__h { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; margin-top: .45rem; }
-.care__lead { color: var(--ink-soft); font-size: .88rem; line-height: 1.5; margin-top: .5rem; max-width: 49ch; }
-.care__list { display: grid; gap: .6rem; align-content: center; }
-.care__item { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-bottom: .6rem; border-bottom: 1px solid var(--line); }
-.care__item:last-child { border-bottom: 0; padding-bottom: 0; }
-.care__name { color: var(--ink-soft); font-size: .88rem; }
-.care__price { font-family: var(--f-display); font-weight: 600; font-size: 1.15rem; white-space: nowrap; }
-.care__price i { font-style: normal; font-size: .8rem; font-weight: 400; color: var(--ink-mute); }
+.care__h { font-family: var(--f-display); font-size: clamp(1.3rem, 2.1vw, 1.65rem); font-weight: 600; margin-top: .45rem; }
+.care__lead { color: var(--ink-soft); font-size: .95rem; line-height: 1.5; margin-top: .5rem; max-width: 60ch; text-wrap: pretty; }
+/* Уровни поддержки: цена мельче тарифной, а главное в колонке — фраза
+   «для кого»: по ней видно, за что разница между $90 и $600. */
+.tiers { display: grid; margin-top: clamp(1.4rem, 3vw, 2rem); border-top: 1px solid rgba(12,122,93,.16); }
+.tier { display: grid; align-content: start; gap: .7rem; padding-block: 1.4rem; }
+.tier + .tier { border-top: 1px solid rgba(12,122,93,.16); }
+.tier__top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.tier__h { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; }
+.tier__price { font-family: var(--f-display); font-weight: 600; font-size: 1.45rem; letter-spacing: -.02em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tier__price i { font-style: normal; font-size: .8rem; font-weight: 400; letter-spacing: 0; color: var(--ink-mute); }
+.tier__for { color: var(--ink); font-size: .92rem; line-height: 1.5; }
+.tier__list { display: grid; gap: .5rem; color: var(--ink-soft); font-size: .86rem; line-height: 1.5; }
+.tier__list li { display: flex; gap: .6rem; align-items: flex-start; }
+.tier__list li::before { content: "✓"; color: var(--green); flex: none; }
+.tiers__terms { padding-top: 1.1rem; border-top: 1px solid rgba(12,122,93,.16); color: var(--ink-mute); font-size: .8rem; line-height: 1.55; }
+@media (min-width: 860px) {
+  .tiers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tier { padding: 1.6rem clamp(1.2rem, 2.4vw, 2rem); }
+  .tier:first-child { padding-left: 0; }
+  .tier:last-child { padding-right: 0; }
+  .tier + .tier { border-top: 0; border-left: 1px solid rgba(12,122,93,.16); }
+}
 .pricing__footer { display: grid; gap: 1.1rem; padding: clamp(1.4rem, 3vw, 2.2rem); border-radius: var(--r-xl); background: var(--green-dark); color: #C8DDD4; font-size: .82rem; line-height: 1.6; }
 .pricing__footer strong { display: block; margin-bottom: .35rem; color: #fff; font-size: .92rem; font-weight: 500; }
 @media (min-width: 1000px) {
@@ -1676,7 +1679,6 @@ ul { list-style: none; padding: 0; }
   .plan + .plan { border-top: 0; border-left: 1px solid var(--line-2); }
   .plan__for { min-height: 4.5em; }
   .plan__price { height: 3.3rem; align-items: baseline; }
-  .care { grid-template-columns: 1fr 1fr; align-items: center; gap: 3rem; }
   .pricing__footer { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; }
 }
 
