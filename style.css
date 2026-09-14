@@ -1670,6 +1670,35 @@ ul { list-style: none; padding: 0; }
 .pricing__terms { color: var(--ink-soft); font-size: .8rem; }
 .pricing__terms strong { display: block; color: var(--green-deep); font-weight: 500; margin-bottom: .35rem; }
 .plans { display: grid; align-items: stretch; }
+/* До 1000 px тарифы листаются вбок, край следующего виден — стопка из трёх
+   карточек занимала на телефоне ~2400 px. Вкладки над лентой (.plans__nav)
+   показывают, какой тариф открыт, и перелистывают по нажатию. */
+.plans__nav { display: flex; gap: .35rem; padding: 1rem clamp(1.4rem, 2.8vw, 2.2rem) 0; overflow-x: auto; scrollbar-width: none; }
+.plans__nav::-webkit-scrollbar { display: none; }
+.plans__nav[hidden] { display: none; }
+.plans__tab {
+  flex: none; padding: .55rem .8rem; border-radius: 100px;
+  font-size: .82rem; font-weight: 500; color: var(--ink-soft);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background .25s, color .25s, box-shadow .25s;
+}
+.plans__tab[aria-current="true"] { background: var(--green-deep); color: #fff; box-shadow: none; }
+@media (max-width: 999px) {
+  .plans {
+    display: flex; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+  }
+  .plans::-webkit-scrollbar { display: none; }
+  .plan { flex: 0 0 min(86%, 380px); scroll-snap-align: start; }
+  .plan__for { min-height: 4.5em; } /* цены соседних карточек на одной линии */
+  .plan + .plan { border-top: 0; border-left: 1px solid var(--line-2); }
+  /* reveal смотрит на вьюпорт, а соседние карточки спрятаны лентой:
+     без этого они проявлялись бы уже во время свайпа */
+  .plan.reveal { opacity: 1; transform: none; transition: none; }
+}
+@media (min-width: 1000px) {
+  .plans__nav { display: none; }
+}
 .plan {
   position: relative; min-width: 0;
   padding: clamp(1.4rem, 2.8vw, 2.2rem);

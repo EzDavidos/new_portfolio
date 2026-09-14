@@ -1057,8 +1057,15 @@
       <p class="pricing__terms"><strong>50% до старта · 50% после запуска</strong><span>Для крупных проектов — оплата по этапам</span></p>
     </header>
 
+    <!-- До 1000 px тарифы листаются вбок; вкладки показывают, какой открыт,
+         и перелистывают по нажатию. На десктопе скрыты: там три колонки. -->
+    <div class="plans__nav" aria-label="Тарифы" hidden>
+      <button type="button" class="plans__tab" aria-controls="plan-bot" aria-current="true">Бот</button>
+      <button type="button" class="plans__tab" aria-controls="plan-crm" aria-current="false">Сайт и CRM</button>
+      <button type="button" class="plans__tab" aria-controls="plan-auto" aria-current="false">Автоматизации</button>
+    </div>
     <div class="plans">
-      <article class="plan reveal">
+      <article class="plan reveal" id="plan-bot">
         <p class="plan__kind mono">Продажи в Telegram</p>
         <h3 class="plan__h">Бот или Mini App</h3>
         <p class="plan__for">Для заказов, записи и заявок, которые сейчас приходится разбирать в переписке.</p>
@@ -1081,7 +1088,7 @@
         <a href="https://t.me/davidnaumenko" class="btn btn--soft btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
       </article>
 
-      <article class="plan plan--on reveal">
+      <article class="plan plan--on reveal" id="plan-crm">
         <p class="plan__kind mono">Сайт + внутренняя система</p>
         <h3 class="plan__h">Сайт и CRM</h3>
         <p class="plan__for">Для бизнеса, которому нужно получать заявки с сайта и вести клиентов в одном месте.</p>
@@ -1103,7 +1110,7 @@
         <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
       </article>
 
-      <article class="plan reveal">
+      <article class="plan reveal" id="plan-auto">
         <p class="plan__kind mono">Меньше ручной работы</p>
         <h3 class="plan__h">Автоматизации</h3>
         <p class="plan__for">Для повторяющихся задач и сервисов, между которыми вы переносите данные вручную.</p>

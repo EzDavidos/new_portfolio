@@ -523,6 +523,49 @@
     }
   }
 
+  /* ---------- лента тарифов на телефоне ---------- */
+  // Лента — чистый CSS (scroll-snap); скрипт только включает вкладки над ней,
+  // подсвечивает тариф, который сейчас в ленте, и перелистывает по нажатию.
+  var plansNav = document.querySelector('.plans__nav');
+  var plansTrack = document.querySelector('.plans');
+  if (plansNav && plansTrack && 'IntersectionObserver' in window) {
+    var planTabs = Array.prototype.slice.call(plansNav.querySelectorAll('.plans__tab'));
+    var setPlan = function (id) {
+      planTabs.forEach(function (t) {
+        t.setAttribute('aria-current', t.getAttribute('aria-controls') === id ? 'true' : 'false');
+      });
+    };
+    planTabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var plan = document.getElementById(t.getAttribute('aria-controls'));
+        var left = plansTrack.scrollLeft + plan.getBoundingClientRect().left - plansTrack.getBoundingClientRect().left;
+        plansTrack.scrollTo({ left: left, behavior: reduced ? 'auto' : 'smooth' });
+        setPlan(plan.id);
+      });
+    });
+    // Текущий — тот, что стоит у левого края ленты; в самом конце ленты —
+    // последний: на планшете видно две карточки, и до края он не доедет.
+    var plans = Array.prototype.slice.call(plansTrack.children);
+    var planTick = false;
+    var syncPlan = function () {
+      planTick = false;
+      var left = plansTrack.getBoundingClientRect().left;
+      var cur = plans[0];
+      if (plansTrack.scrollLeft >= plansTrack.scrollWidth - plansTrack.clientWidth - 2) {
+        cur = plans[plans.length - 1];
+      } else {
+        plans.forEach(function (p) {
+          if (Math.abs(p.getBoundingClientRect().left - left) < Math.abs(cur.getBoundingClientRect().left - left)) cur = p;
+        });
+      }
+      setPlan(cur.id);
+    };
+    plansTrack.addEventListener('scroll', function () {
+      if (!planTick) { planTick = true; requestAnimationFrame(syncPlan); }
+    }, { passive: true });
+    plansNav.hidden = false;
+  }
+
   /* ---------- активный пункт навигации ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
   var targets = links
