@@ -13,6 +13,37 @@
   font-weight: 400; font-style: normal; font-display: swap;
 }
 
+/* Заглушки под Inter и Inter Tight — Arial с подогнанным размером.
+   Пока Google Fonts грузится, текст стоит в заглушке; без подгонки при
+   подмене строки переносились иначе и hero прыгал (CLS 0.14 на медленной
+   сети). size-adjust снят замером ширины русского текста страницы
+   (Inter / Arial по каждому начертанию), вертикаль — метрики Inter. */
+@font-face {
+  font-family: "Inter Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo"), local("Roboto");
+  font-weight: 400 500; size-adjust: 106.3%;
+  ascent-override: 91.13%; descent-override: 22.78%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Arimo Bold"), local("Roboto Bold");
+  font-weight: 600 700; size-adjust: 101.1%;
+  ascent-override: 95.82%; descent-override: 23.96%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Tight Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo"), local("Roboto");
+  font-weight: 400 500; size-adjust: 98.4%;
+  ascent-override: 98.45%; descent-override: 24.61%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Tight Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Arimo Bold"), local("Roboto Bold");
+  font-weight: 600; size-adjust: 94.0%;
+  ascent-override: 103.06%; descent-override: 25.76%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Tight Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Arimo Bold"), local("Roboto Bold");
+  font-weight: 700; size-adjust: 95.7%;
+  ascent-override: 101.23%; descent-override: 25.31%; line-gap-override: 0%;
+}
+
 :root {
   /* поверхности — почти белая мятная бумага */
   --paper:    #F4F8F6;
@@ -71,10 +102,10 @@
   --sh-3: 0 6px 14px rgba(23,33,30,.05), 0 32px 74px rgba(23,33,30,.10);
 
   /* типографика */
-  --f-display: "Inter Tight", system-ui, sans-serif;
-  --f-text:    "Inter", system-ui, sans-serif;
+  --f-display: "Inter Tight", "Inter Tight Fallback", system-ui, sans-serif;
+  --f-text:    "Inter", "Inter Fallback", system-ui, sans-serif;
   --f-mono:    "JetBrains Mono", ui-monospace, monospace;
-  --f-num:     "Bebas Neue Cyrillic", "Inter Tight", system-ui, sans-serif;
+  --f-num:     "Bebas Neue Cyrillic", "Inter Tight", "Inter Tight Fallback", system-ui, sans-serif;
 
   --fs-display: clamp(2.7rem, 7.4vw, 5.1rem);
   --fs-h2:      clamp(1.7rem, 3.2vw, 2.35rem);
@@ -481,10 +512,14 @@ ul { list-style: none; padding: 0; }
 .hero__title {
   font-family: var(--f-display); font-size: var(--fs-display);
   font-weight: 600; line-height: 1.04; letter-spacing: -.014em;
-  max-width: 13ch;
+  /* 13ch в Inter Tight 600. Не в ch: ch берётся по цифре «0», а латиница
+     и кириллица шрифта приходят разными файлами — пока нет кириллицы,
+     ширина уже считалась по Inter, строки переносились иначе и hero прыгал. */
+  max-width: 8.19em;
   margin-bottom: clamp(1.35rem, 2.8vw, 2rem);
 }
 .hero__lead { font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
+.hero__lead.measure { max-width: 34.06em; } /* 54ch в Inter 400, в em по той же причине, что у заголовка */
 .hero__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.6rem, 3.2vw, 2.25rem); }
 
 /* зелёная галочка в кружке — маркер списка в блоке «Кто делает» */
@@ -1803,6 +1838,11 @@ ul { list-style: none; padding: 0; }
    ============================================================ */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
 .reveal.is-in { opacity: 1; transform: none; }
+/* Первый экран появляется CSS-анимацией сразу при отрисовке, без JS:
+   через .reveal заголовок hero ждал скрипт и 0.7 с перехода, и браузер
+   засчитывал главный элемент экрана (LCP) только после этого. */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+.rise { animation: rise .7s var(--ease) both; animation-delay: calc(var(--i, 0) * 60ms); }
 
 /* ============================================================
    BREAKPOINTS
@@ -1919,7 +1959,7 @@ ul { list-style: none; padding: 0; }
 }
 
 @media (min-width: 1120px) {
-  .hero__title { max-width: 12ch; }
+  .hero__title { max-width: 7.56em; } /* 12ch в Inter Tight 600 */
 }
 
 /* ============================================================
@@ -1933,4 +1973,5 @@ ul { list-style: none; padding: 0; }
     transition-duration: .01ms !important;
   }
   .reveal { opacity: 1; transform: none; }
+  .rise { animation: none; }
 }
