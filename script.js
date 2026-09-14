@@ -523,48 +523,58 @@
     }
   }
 
-  /* ---------- лента тарифов на телефоне ---------- */
-  // Лента — чистый CSS (scroll-snap); скрипт только включает вкладки над ней,
-  // подсвечивает тариф, который сейчас в ленте, и перелистывает по нажатию.
-  var plansNav = document.querySelector('.plans__nav');
-  var plansTrack = document.querySelector('.plans');
-  if (plansNav && plansTrack && 'IntersectionObserver' in window) {
-    var planTabs = Array.prototype.slice.call(plansNav.querySelectorAll('.plans__tab'));
-    var setPlan = function (id) {
-      planTabs.forEach(function (t) {
-        t.setAttribute('aria-current', t.getAttribute('aria-controls') === id ? 'true' : 'false');
-      });
+  /* ---------- ленты со вкладками: тарифы, поддержка, шаги ---------- */
+  // Сами ленты — чистый CSS (scroll-snap); скрипт включает вкладки над ними,
+  // подсвечивает пункт, который сейчас в ленте, и перелистывает по нажатию.
+  // Лента — общий родитель карточек, на которые указывают aria-controls.
+  Array.prototype.forEach.call(document.querySelectorAll('.swipe-tabs'), function (nav) {
+    var tabs = Array.prototype.slice.call(nav.querySelectorAll('[aria-controls]'));
+    var items = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+    if (!items.length || items.indexOf(null) !== -1) return;
+    var track = items[0].parentElement;
+
+    var setCurrent = function (item) {
+      tabs.forEach(function (t, i) { t.setAttribute('aria-current', items[i] === item ? 'true' : 'false'); });
     };
-    planTabs.forEach(function (t) {
+    // После нажатия подсветка держится на выбранной вкладке, пока лента
+    // едет: на планшете вторая карточка может упереться в конец ленты.
+    var picked = null, pickTimer = 0;
+    var release = function () { picked = null; };
+    track.addEventListener('scrollend', release);
+    tabs.forEach(function (t, i) {
       t.addEventListener('click', function () {
-        var plan = document.getElementById(t.getAttribute('aria-controls'));
-        var left = plansTrack.scrollLeft + plan.getBoundingClientRect().left - plansTrack.getBoundingClientRect().left;
-        plansTrack.scrollTo({ left: left, behavior: reduced ? 'auto' : 'smooth' });
-        setPlan(plan.id);
+        picked = items[i];
+        clearTimeout(pickTimer);
+        pickTimer = setTimeout(release, 900); // Safari без scrollend
+        var pad = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
+        var left = track.scrollLeft + items[i].getBoundingClientRect().left - track.getBoundingClientRect().left - pad;
+        track.scrollTo({ left: left, behavior: reduced ? 'auto' : 'smooth' });
+        setCurrent(items[i]);
       });
     });
+
     // Текущий — тот, что стоит у левого края ленты; в самом конце ленты —
     // последний: на планшете видно две карточки, и до края он не доедет.
-    var plans = Array.prototype.slice.call(plansTrack.children);
-    var planTick = false;
-    var syncPlan = function () {
-      planTick = false;
-      var left = plansTrack.getBoundingClientRect().left;
-      var cur = plans[0];
-      if (plansTrack.scrollLeft >= plansTrack.scrollWidth - plansTrack.clientWidth - 2) {
-        cur = plans[plans.length - 1];
+    var tick = false;
+    var sync = function () {
+      tick = false;
+      if (picked) { setCurrent(picked); return; }
+      var edge = track.getBoundingClientRect().left + (parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0);
+      var cur = items[0];
+      if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) {
+        cur = items[items.length - 1];
       } else {
-        plans.forEach(function (p) {
-          if (Math.abs(p.getBoundingClientRect().left - left) < Math.abs(cur.getBoundingClientRect().left - left)) cur = p;
+        items.forEach(function (it) {
+          if (Math.abs(it.getBoundingClientRect().left - edge) < Math.abs(cur.getBoundingClientRect().left - edge)) cur = it;
         });
       }
-      setPlan(cur.id);
+      setCurrent(cur);
     };
-    plansTrack.addEventListener('scroll', function () {
-      if (!planTick) { planTick = true; requestAnimationFrame(syncPlan); }
+    track.addEventListener('scroll', function () {
+      if (!tick) { tick = true; requestAnimationFrame(sync); }
     }, { passive: true });
-    plansNav.hidden = false;
-  }
+    nav.hidden = false;
+  });
 
   /* ---------- активный пункт навигации ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));

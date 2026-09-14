@@ -261,6 +261,7 @@ ul { list-style: none; padding: 0; }
 .hero__grid > *, .fgh > *, .process__grid > *,
 .sol > *, .steps > *, .final__inner > *,
 .works__grid > *, .plans > *, .trust__grid > *, .footer__grid > *,
+.pricing__stack > *, .tiers > *,
 .p100 > *, .p100__nums > *,
 .rail, .rail__inner, .author__card > * { min-width: 0; }
 
@@ -1671,18 +1672,8 @@ ul { list-style: none; padding: 0; }
 .pricing__terms strong { display: block; color: var(--green-deep); font-weight: 500; margin-bottom: .35rem; }
 .plans { display: grid; align-items: stretch; }
 /* До 1000 px тарифы листаются вбок, край следующего виден — стопка из трёх
-   карточек занимала на телефоне ~2400 px. Вкладки над лентой (.plans__nav)
-   показывают, какой тариф открыт, и перелистывают по нажатию. */
-.plans__nav { display: flex; gap: .35rem; padding: 1rem clamp(1.4rem, 2.8vw, 2.2rem) 0; overflow-x: auto; scrollbar-width: none; }
-.plans__nav::-webkit-scrollbar { display: none; }
-.plans__nav[hidden] { display: none; }
-.plans__tab {
-  flex: none; padding: .55rem .8rem; border-radius: 100px;
-  font-size: .82rem; font-weight: 500; color: var(--ink-soft);
-  box-shadow: inset 0 0 0 1px var(--line-2);
-  transition: background .25s, color .25s, box-shadow .25s;
-}
-.plans__tab[aria-current="true"] { background: var(--green-deep); color: #fff; box-shadow: none; }
+   карточек занимала на телефоне ~2400 px. Вкладки — общие .swipe-tabs. */
+.plans__nav { padding: 1rem clamp(1.4rem, 2.8vw, 2.2rem) 0; }
 @media (max-width: 999px) {
   .plans {
     display: flex; overflow-x: auto; overscroll-behavior-x: contain;
@@ -1695,9 +1686,6 @@ ul { list-style: none; padding: 0; }
   /* reveal смотрит на вьюпорт, а соседние карточки спрятаны лентой:
      без этого они проявлялись бы уже во время свайпа */
   .plan.reveal { opacity: 1; transform: none; transition: none; }
-}
-@media (min-width: 1000px) {
-  .plans__nav { display: none; }
 }
 .plan {
   position: relative; min-width: 0;
@@ -1877,6 +1865,63 @@ ul { list-style: none; padding: 0; }
    засчитывал главный элемент экрана (LCP) только после этого. */
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } }
 .rise { animation: rise .7s var(--ease) both; animation-delay: calc(var(--i, 0) * 60ms); }
+
+/* ---------- Ленты со вкладками (тарифы, поддержка, шаги) ----------
+   Карточки, которые на телефоне стояли стопкой, листаются вбок со
+   снапом, край следующей виден. Вкладки над лентой показывают, где вы,
+   и перелистывают по нажатию; включает их script.js, а на каком
+   брейкпоинте прятать — решает каждый блок сам. */
+.swipe-tabs { display: flex; gap: .3rem; overflow-x: auto; scrollbar-width: none; }
+.swipe-tabs::-webkit-scrollbar { display: none; }
+.swipe-tabs[hidden] { display: none; }
+.swipe-tabs__tab {
+  flex: none; padding: .55rem .7rem; border-radius: 100px;
+  font-size: .82rem; font-weight: 500; color: var(--ink-soft);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background .25s, color .25s, box-shadow .25s;
+}
+.swipe-tabs__tab[aria-current="true"] { background: var(--green-deep); color: #fff; box-shadow: none; }
+
+@media (min-width: 1000px) {
+  .plans__nav { display: none; }
+}
+
+/* Поддержка: лента до 860 px, дальше — три колонки на subgrid. Под поля
+   плашки лента не выходит: там из-под края торчали обрывки соседней
+   карточки. */
+.tiers__nav { margin-top: 1.2rem; }
+@media (max-width: 859px) {
+  .tiers {
+    display: flex; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-top: 1rem;
+  }
+  .tiers::-webkit-scrollbar { display: none; }
+  .tier { flex: 0 0 min(84%, 340px); scroll-snap-align: start; padding-right: 1.4rem; }
+  .tier + .tier { border-top: 0; border-left: 1px solid rgba(12,122,93,.16); padding-left: 1.4rem; }
+}
+@media (min-width: 860px) {
+  .tiers__nav { display: none; }
+}
+
+/* Шаги: лента только на телефоне, с 600 px — сетка. Лента выходит
+   к краям экрана; снизу запас, иначе overflow режет тень стекла. */
+.steps__nav { margin-bottom: 1rem; }
+@media (max-width: 599px) {
+  .steps {
+    display: flex; gap: .8rem; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(var(--pad-x) * -1);
+    padding: .25rem var(--pad-x) 2.2rem; scroll-padding-inline: var(--pad-x);
+    margin-bottom: -2rem;
+  }
+  .steps::-webkit-scrollbar { display: none; }
+  .step { flex: 0 0 78%; scroll-snap-align: start; }
+  .step.reveal { opacity: 1; transform: none; transition: none; }
+}
+@media (min-width: 600px) {
+  .steps__nav { display: none; }
+}
 
 /* ---------- Зоны нажатия и мелкий текст на телефоне ----------
    Мелкие текстовые ссылки остаются мелкими, но палец попадает в
