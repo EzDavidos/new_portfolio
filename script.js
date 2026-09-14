@@ -523,6 +523,59 @@
     }
   }
 
+  /* ---------- ленты со вкладками: тарифы, поддержка, шаги ---------- */
+  // Сами ленты — чистый CSS (scroll-snap); скрипт включает вкладки над ними,
+  // подсвечивает пункт, который сейчас в ленте, и перелистывает по нажатию.
+  // Лента — общий родитель карточек, на которые указывают aria-controls.
+  Array.prototype.forEach.call(document.querySelectorAll('.swipe-tabs'), function (nav) {
+    var tabs = Array.prototype.slice.call(nav.querySelectorAll('[aria-controls]'));
+    var items = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+    if (!items.length || items.indexOf(null) !== -1) return;
+    var track = items[0].parentElement;
+
+    var setCurrent = function (item) {
+      tabs.forEach(function (t, i) { t.setAttribute('aria-current', items[i] === item ? 'true' : 'false'); });
+    };
+    // После нажатия подсветка держится на выбранной вкладке, пока лента
+    // едет: на планшете вторая карточка может упереться в конец ленты.
+    var picked = null, pickTimer = 0;
+    var release = function () { picked = null; };
+    track.addEventListener('scrollend', release);
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () {
+        picked = items[i];
+        clearTimeout(pickTimer);
+        pickTimer = setTimeout(release, 900); // Safari без scrollend
+        var pad = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
+        var left = track.scrollLeft + items[i].getBoundingClientRect().left - track.getBoundingClientRect().left - pad;
+        track.scrollTo({ left: left, behavior: reduced ? 'auto' : 'smooth' });
+        setCurrent(items[i]);
+      });
+    });
+
+    // Текущий — тот, что стоит у левого края ленты; в самом конце ленты —
+    // последний: на планшете видно две карточки, и до края он не доедет.
+    var tick = false;
+    var sync = function () {
+      tick = false;
+      if (picked) { setCurrent(picked); return; }
+      var edge = track.getBoundingClientRect().left + (parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0);
+      var cur = items[0];
+      if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) {
+        cur = items[items.length - 1];
+      } else {
+        items.forEach(function (it) {
+          if (Math.abs(it.getBoundingClientRect().left - edge) < Math.abs(cur.getBoundingClientRect().left - edge)) cur = it;
+        });
+      }
+      setCurrent(cur);
+    };
+    track.addEventListener('scroll', function () {
+      if (!tick) { tick = true; requestAnimationFrame(sync); }
+    }, { passive: true });
+    nav.hidden = false;
+  });
+
   /* ---------- активный пункт навигации ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
   var targets = links

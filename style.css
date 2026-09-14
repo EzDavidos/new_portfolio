@@ -13,6 +13,37 @@
   font-weight: 400; font-style: normal; font-display: swap;
 }
 
+/* Заглушки под Inter и Inter Tight — Arial с подогнанным размером.
+   Пока Google Fonts грузится, текст стоит в заглушке; без подгонки при
+   подмене строки переносились иначе и hero прыгал (CLS 0.14 на медленной
+   сети). size-adjust снят замером ширины русского текста страницы
+   (Inter / Arial по каждому начертанию), вертикаль — метрики Inter. */
+@font-face {
+  font-family: "Inter Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo"), local("Roboto");
+  font-weight: 400 500; size-adjust: 106.3%;
+  ascent-override: 91.13%; descent-override: 22.78%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Arimo Bold"), local("Roboto Bold");
+  font-weight: 600 700; size-adjust: 101.1%;
+  ascent-override: 95.82%; descent-override: 23.96%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Tight Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo"), local("Roboto");
+  font-weight: 400 500; size-adjust: 98.4%;
+  ascent-override: 98.45%; descent-override: 24.61%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Tight Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Arimo Bold"), local("Roboto Bold");
+  font-weight: 600; size-adjust: 94.0%;
+  ascent-override: 103.06%; descent-override: 25.76%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Tight Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Arimo Bold"), local("Roboto Bold");
+  font-weight: 700; size-adjust: 95.7%;
+  ascent-override: 101.23%; descent-override: 25.31%; line-gap-override: 0%;
+}
+
 :root {
   /* поверхности — почти белая мятная бумага */
   --paper:    #F4F8F6;
@@ -71,10 +102,10 @@
   --sh-3: 0 6px 14px rgba(23,33,30,.05), 0 32px 74px rgba(23,33,30,.10);
 
   /* типографика */
-  --f-display: "Inter Tight", system-ui, sans-serif;
-  --f-text:    "Inter", system-ui, sans-serif;
+  --f-display: "Inter Tight", "Inter Tight Fallback", system-ui, sans-serif;
+  --f-text:    "Inter", "Inter Fallback", system-ui, sans-serif;
   --f-mono:    "JetBrains Mono", ui-monospace, monospace;
-  --f-num:     "Bebas Neue Cyrillic", "Inter Tight", system-ui, sans-serif;
+  --f-num:     "Bebas Neue Cyrillic", "Inter Tight", "Inter Tight Fallback", system-ui, sans-serif;
 
   --fs-display: clamp(2.7rem, 7.4vw, 5.1rem);
   --fs-h2:      clamp(1.7rem, 3.2vw, 2.35rem);
@@ -89,6 +120,9 @@
   --sec-y: clamp(4rem, 9vw, 7.5rem);
   --wrap:  1280px;
   --measure: 54ch;
+  /* Воздух над и под секцией. Было clamp(3rem, 6vw, 5rem) — 160 px между
+     блоками на десктопе читались пустотой (master-plan, 7.2): −25%. */
+  --sec-pad: clamp(2.5rem, 4.5vw, 3.75rem);
 
   --r-sm: 10px;
   --r:    14px;
@@ -227,6 +261,7 @@ ul { list-style: none; padding: 0; }
 .hero__grid > *, .fgh > *, .process__grid > *,
 .sol > *, .steps > *, .final__inner > *,
 .works__grid > *, .plans > *, .trust__grid > *, .footer__grid > *,
+.pricing__stack > *, .tiers > *,
 .p100 > *, .p100__nums > *,
 .rail, .rail__inner, .author__card > * { min-width: 0; }
 
@@ -481,10 +516,14 @@ ul { list-style: none; padding: 0; }
 .hero__title {
   font-family: var(--f-display); font-size: var(--fs-display);
   font-weight: 600; line-height: 1.04; letter-spacing: -.014em;
-  max-width: 13ch;
+  /* 13ch в Inter Tight 600. Не в ch: ch берётся по цифре «0», а латиница
+     и кириллица шрифта приходят разными файлами — пока нет кириллицы,
+     ширина уже считалась по Inter, строки переносились иначе и hero прыгал. */
+  max-width: 8.19em;
   margin-bottom: clamp(1.35rem, 2.8vw, 2rem);
 }
 .hero__lead { font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
+.hero__lead.measure { max-width: 34.06em; } /* 54ch в Inter 400, в em по той же причине, что у заголовка */
 .hero__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.6rem, 3.2vw, 2.25rem); }
 
 /* зелёная галочка в кружке — маркер списка в блоке «Кто делает» */
@@ -594,7 +633,7 @@ ul { list-style: none; padding: 0; }
    Кейс FlyGuru одной карточкой-героем: фото воды клиента на фон,
    3D-мокап телефона справа, текст и цифры слева.
    ============================================================ */
-.flagship { padding-block: clamp(3rem, 6vw, 5rem); }
+.flagship { padding-block: var(--sec-pad); }
 
 /* Цвета сняты с самого продукта: тил #0C8397 — шапка FlyGuru, оранжевый
    #FC7918 — его кнопка записи. Акцентный тон осветлён до #45D6EE: сам
@@ -805,7 +844,7 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 04 — SOLUTIONS
    ============================================================ */
-.solutions { padding-block: clamp(3rem, 6vw, 5rem); }
+.solutions { padding-block: var(--sec-pad); }
 .solutions__panel {
   position: relative; isolation: isolate; overflow: hidden;
   display: grid; border: 1px solid #fff; border-radius: var(--r-xl);
@@ -872,7 +911,7 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 07 — PROCESS
    ============================================================ */
-.process { padding-block: clamp(3rem, 6vw, 5rem); }
+.process { padding-block: var(--sec-pad); }
 .process__grid .lead { margin-top: 1rem; }
 .process__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
 .steps { display: grid; gap: var(--gap); }
@@ -924,7 +963,7 @@ ul { list-style: none; padding: 0; }
    внутри него 1488x806 px против реальных 1176 CSS-px, то есть всё
    делится на 1.2653. Ниже в комментариях стоят исходные числа макета.
    ============================================================ */
-.product { padding-block: clamp(3rem, 6vw, 5rem); }
+.product { padding-block: var(--sec-pad); }
 
 /* Отзыв клиента под карточкой кейса. Цитата — дословная выдержка,
    оригинал целиком открывается по ссылке «Весь отзыв». */
@@ -1151,7 +1190,7 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 06 — ДРУГИЕ ПРОЕКТЫ
    ============================================================ */
-.works { padding-block: clamp(3rem, 6vw, 5rem); }
+.works { padding-block: var(--sec-pad); }
 .works__grid { display: grid; gap: var(--gap); }
 .work {
   border-radius: var(--r-lg); overflow: hidden;
@@ -1607,7 +1646,7 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    BLOCK 08 — ЦЕНЫ
    ============================================================ */
-.pricing { padding-block: clamp(3rem, 6vw, 5rem); }
+.pricing { padding-block: var(--sec-pad); }
 /* Блоки цен стоят стопкой, каждый — самостоятельное предложение. */
 .pricing__stack { display: grid; gap: clamp(1rem, 2.2vw, 1.6rem); }
 /* Контраст к бумаге держит не белый фон, а глубина градиента и тень:
@@ -1632,6 +1671,22 @@ ul { list-style: none; padding: 0; }
 .pricing__terms { color: var(--ink-soft); font-size: .8rem; }
 .pricing__terms strong { display: block; color: var(--green-deep); font-weight: 500; margin-bottom: .35rem; }
 .plans { display: grid; align-items: stretch; }
+/* До 1000 px тарифы листаются вбок, край следующего виден — стопка из трёх
+   карточек занимала на телефоне ~2400 px. Вкладки — общие .swipe-tabs. */
+.plans__nav { padding: 1rem clamp(1.4rem, 2.8vw, 2.2rem) 0; }
+@media (max-width: 999px) {
+  .plans {
+    display: flex; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+  }
+  .plans::-webkit-scrollbar { display: none; }
+  .plan { flex: 0 0 min(86%, 380px); scroll-snap-align: start; }
+  .plan__for { min-height: 4.5em; } /* цены соседних карточек на одной линии */
+  .plan + .plan { border-top: 0; border-left: 1px solid var(--line-2); }
+  /* reveal смотрит на вьюпорт, а соседние карточки спрятаны лентой:
+     без этого они проявлялись бы уже во время свайпа */
+  .plan.reveal { opacity: 1; transform: none; transition: none; }
+}
 .plan {
   position: relative; min-width: 0;
   padding: clamp(1.4rem, 2.8vw, 2.2rem);
@@ -1726,7 +1781,7 @@ ul { list-style: none; padding: 0; }
    BLOCK 09 — ВОПРОСЫ И РИСКИ
    Слева — заголовок и главное обещание, справа — 7 вопросов аккордеоном.
    ============================================================ */
-.trust { padding-block: clamp(3rem, 6vw, 5rem); }
+.trust { padding-block: var(--sec-pad); }
 .trust__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
 .trust .lead { margin-top: 1rem; }
 .qa-list { display: grid; }
@@ -1779,8 +1834,10 @@ ul { list-style: none; padding: 0; }
   letter-spacing: .11em; text-transform: uppercase; font-weight: 500;
   color: rgba(230,241,236,.64); margin-bottom: .95rem;
 }
-.footer__list { display: grid; gap: .55rem; font-size: .95rem; }
-.footer__list a { transition: color .25s; }
+.footer__list { display: grid; font-size: .95rem; }
+/* Промежуток списка переехал в отступ ссылки: расстояние между строками
+   то же, а зона нажатия выросла с 19 до 32 px. */
+.footer__list a { display: inline-block; padding-block: .4rem; transition: color .25s; }
 .footer__list a:hover { color: #fff; }
 .footer__bottom {
   grid-column: 1 / -1;
@@ -1803,6 +1860,87 @@ ul { list-style: none; padding: 0; }
    ============================================================ */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
 .reveal.is-in { opacity: 1; transform: none; }
+/* Первый экран появляется CSS-анимацией сразу при отрисовке, без JS:
+   через .reveal заголовок hero ждал скрипт и 0.7 с перехода, и браузер
+   засчитывал главный элемент экрана (LCP) только после этого. */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+.rise { animation: rise .7s var(--ease) both; animation-delay: calc(var(--i, 0) * 60ms); }
+
+/* ---------- Ленты со вкладками (тарифы, поддержка, шаги) ----------
+   Карточки, которые на телефоне стояли стопкой, листаются вбок со
+   снапом, край следующей виден. Вкладки над лентой показывают, где вы,
+   и перелистывают по нажатию; включает их script.js, а на каком
+   брейкпоинте прятать — решает каждый блок сам. */
+.swipe-tabs { display: flex; gap: .3rem; overflow-x: auto; scrollbar-width: none; }
+.swipe-tabs::-webkit-scrollbar { display: none; }
+.swipe-tabs[hidden] { display: none; }
+.swipe-tabs__tab {
+  flex: none; padding: .55rem .7rem; border-radius: 100px;
+  font-size: .82rem; font-weight: 500; color: var(--ink-soft);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background .25s, color .25s, box-shadow .25s;
+}
+.swipe-tabs__tab[aria-current="true"] { background: var(--green-deep); color: #fff; box-shadow: none; }
+
+@media (min-width: 1000px) {
+  .plans__nav { display: none; }
+}
+
+/* Поддержка: лента до 860 px, дальше — три колонки на subgrid. Под поля
+   плашки лента не выходит: там из-под края торчали обрывки соседней
+   карточки. */
+.tiers__nav { margin-top: 1.2rem; }
+@media (max-width: 859px) {
+  .tiers {
+    display: flex; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-top: 1rem;
+  }
+  .tiers::-webkit-scrollbar { display: none; }
+  .tier { flex: 0 0 min(84%, 340px); scroll-snap-align: start; padding-right: 1.4rem; }
+  .tier + .tier { border-top: 0; border-left: 1px solid rgba(12,122,93,.16); padding-left: 1.4rem; }
+}
+@media (min-width: 860px) {
+  .tiers__nav { display: none; }
+}
+
+/* Шаги: лента только на телефоне, с 600 px — сетка. Лента выходит
+   к краям экрана; снизу запас, иначе overflow режет тень стекла. */
+.steps__nav { margin-bottom: 1rem; }
+@media (max-width: 599px) {
+  .steps {
+    display: flex; gap: .8rem; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(var(--pad-x) * -1);
+    padding: .25rem var(--pad-x) 2.2rem; scroll-padding-inline: var(--pad-x);
+    margin-bottom: -2rem;
+  }
+  .steps::-webkit-scrollbar { display: none; }
+  .step { flex: 0 0 78%; scroll-snap-align: start; }
+  .step.reveal { opacity: 1; transform: none; transition: none; }
+}
+@media (min-width: 600px) {
+  .steps__nav { display: none; }
+}
+
+/* ---------- Зоны нажатия и мелкий текст на телефоне ----------
+   Мелкие текстовые ссылки остаются мелкими, но палец попадает в
+   невидимую площадку вокруг них: было 20–24 px в высоту, минимум
+   по WCAG 2.5.8 — 24 px, удобно — от 36. */
+.work__link, .review__src, .sol__note a { position: relative; }
+.work__link::after, .review__src::after, .sol__note a::after {
+  content: ""; position: absolute; inset: -.5rem -.35rem;
+}
+/* На телефоне смысловой мелкий текст был 11–12.8 px. Подписи-метки
+   капсом (label, «Инфопродукт», DIGITAL SYSTEMS) не трогаем. */
+@media (max-width: 599px) {
+  .sol__card .sol__how { font-size: .8rem; }
+  .work__link { font-size: .8rem; }
+  .work__count { font-size: .74rem; }
+  .plan__kind { font-size: .76rem; }
+  .pricing__terms, .tiers__terms { font-size: .86rem; }
+  .pricing__footer { font-size: .88rem; }
+}
 
 /* ============================================================
    BREAKPOINTS
@@ -1919,7 +2057,7 @@ ul { list-style: none; padding: 0; }
 }
 
 @media (min-width: 1120px) {
-  .hero__title { max-width: 12ch; }
+  .hero__title { max-width: 7.56em; } /* 12ch в Inter Tight 600 */
 }
 
 /* ============================================================
@@ -1933,4 +2071,5 @@ ul { list-style: none; padding: 0; }
     transition-duration: .01ms !important;
   }
   .reveal { opacity: 1; transform: none; }
+  .rise { animation: none; }
 }
