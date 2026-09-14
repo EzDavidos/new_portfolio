@@ -1689,33 +1689,12 @@ ul { list-style: none; padding: 0; }
 }
 
 /* ============================================================
-   BLOCK 09 — ДОВЕРИЕ И РИСКИ
-   Список, а не карточки: блок должен читаться как разговор.
+   BLOCK 09 — ВОПРОСЫ И РИСКИ
+   Слева — заголовок и главное обещание, справа — 7 вопросов аккордеоном.
    ============================================================ */
 .trust { padding-block: clamp(3rem, 6vw, 5rem); }
 .trust__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
 .trust .lead { margin-top: 1rem; }
-.risks { display: grid; }
-.risk { padding-block: clamp(1.05rem, 2.4vw, 1.45rem); border-top: 1px solid var(--line); }
-.risk:last-child { border-bottom: 1px solid var(--line); }
-.risk__q {
-  display: flex; gap: .7rem; align-items: baseline;
-  font-family: var(--f-display); font-size: 1.04rem;
-  font-weight: 600; letter-spacing: -.004em;
-}
-.risk__q::before {
-  content: ""; width: 7px; height: 7px; border-radius: 50%;
-  background: var(--green); flex: none; transform: translateY(-1px);
-}
-.risk__a {
-  color: var(--ink-soft); font-size: .96rem; line-height: 1.55;
-  margin-top: .4rem; padding-left: 1.4rem; max-width: 68ch;
-}
-
-/* ============================================================
-   BLOCK 10 — FAQ
-   ============================================================ */
-.faq { padding-block: clamp(3rem, 6vw, 5rem); }
 .qa-list { display: grid; }
 .qa { border-top: 1px solid var(--line); }
 .qa:last-of-type { border-bottom: 1px solid var(--line); }
@@ -1745,6 +1724,8 @@ ul { list-style: none; padding: 0; }
 .qa[open] .qa__ico::before, .qa[open] .qa__ico::after { background: #fff; }
 .qa[open] .qa__ico::after { transform: rotate(90deg); }
 .qa__a { padding-bottom: clamp(1rem, 2.2vw, 1.4rem); color: var(--ink-soft); max-width: 76ch; }
+.qa__a a { color: var(--green-deep); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(12,122,93,.35); }
+.qa__a a:hover { text-decoration-color: currentColor; }
 
 /* ============================================================
    BLOCK 12 — ФУТЕР
