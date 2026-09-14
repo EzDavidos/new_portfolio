@@ -846,6 +846,8 @@ ul { list-style: none; padding: 0; }
 .sol__h { font-family: var(--f-display); color: var(--green-deep); font-size: clamp(1.35rem, 1.8vw, 1.6rem); font-weight: 600; line-height: 1.2; margin-bottom: 1rem; text-wrap: balance; }
 .sol__card p { color: var(--ink-soft); font-size: .92rem; line-height: 1.6; }
 .sol__card .sol__problem { color: var(--ink); font-weight: 500; margin-bottom: .35rem; }
+/* «Чем реализовано» — форматы, а не стек: блок не должен читаться каталогом. */
+.sol__card .sol__how { margin-top: 1rem; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .02em; line-height: 1.55; color: var(--green-deep); }
 .sol__note {
   position: relative; padding: 1.3rem clamp(1.5rem, 3.3vw, 2.7rem);
   border-top: 1px solid var(--line-2);
