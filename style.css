@@ -1645,9 +1645,8 @@ ul { list-style: none; padding: 0; }
 }
 .care .label { font-size: .65rem; }
 .care--flush { border-top: 0; background: none; padding: 0; }
-/* «Дополнительно» — не тарифы, а надстройки: концепция сверх разработки,
-   поддержка сверх запуска. Обе части живут в одной плашке под одной
-   подписью и подсвечены зелёным, чтобы блок не читался четвёртым тарифом. */
+/* Поддержка — не тариф, а надстройка сверх запуска: своя плашка,
+   подсвеченная зелёным, чтобы блок не читался четвёртым тарифом. */
 .addon {
   border-radius: var(--r-xl);
   padding: clamp(1.6rem, 3.4vw, 2.6rem);
@@ -1655,19 +1654,11 @@ ul { list-style: none; padding: 0; }
   border: 1px solid rgba(255,255,255,.92);
   box-shadow: var(--sh-3), inset 0 0 0 1px rgba(12,122,93,.09);
 }
-.addon__label { font-size: .78rem; letter-spacing: .16em; font-weight: 600; }
-/* Вторая часть отделена волосяной линией, а не воздухом: блок один. */
-.addon__part {
-  margin-top: clamp(1.5rem, 3vw, 2.2rem);
-  padding-top: clamp(1.5rem, 3vw, 2.2rem);
-  border-top: 1px solid rgba(12,122,93,.16);
-}
 .care__when { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--green); margin-bottom: .5rem; }
 .addon .care__h { font-size: clamp(1.3rem, 2.1vw, 1.65rem); }
 .addon .care__lead { font-size: .95rem; }
 .addon .care__item { border-bottom-color: rgba(12,122,93,.18); }
 .addon .care__name { color: var(--ink); font-size: .92rem; }
-.addon .care__from span { font-size: 1.7rem; }
 .care__h { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; margin-top: .45rem; }
 .care__lead { color: var(--ink-soft); font-size: .88rem; line-height: 1.5; margin-top: .5rem; max-width: 49ch; }
 .care__list { display: grid; gap: .6rem; align-content: center; }
@@ -1676,9 +1667,6 @@ ul { list-style: none; padding: 0; }
 .care__name { color: var(--ink-soft); font-size: .88rem; }
 .care__price { font-family: var(--f-display); font-weight: 600; font-size: 1.15rem; white-space: nowrap; }
 .care__price i { font-style: normal; font-size: .8rem; font-weight: 400; color: var(--ink-mute); }
-.care__from { display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem; margin-top: .75rem; color: var(--ink-mute); font-size: .85rem; }
-.care__from span { font-family: var(--f-display); font-weight: 600; font-size: 1.5rem; color: var(--ink); }
-.care__from i { font-style: normal; font-size: .8rem; }
 .pricing__footer { display: grid; gap: 1.1rem; padding: clamp(1.4rem, 3vw, 2.2rem); border-radius: var(--r-xl); background: var(--green-dark); color: #C8DDD4; font-size: .82rem; line-height: 1.6; }
 .pricing__footer strong { display: block; margin-bottom: .35rem; color: #fff; font-size: .92rem; font-weight: 500; }
 @media (min-width: 1000px) {
@@ -1689,7 +1677,7 @@ ul { list-style: none; padding: 0; }
   .plan__for { min-height: 4.5em; }
   .plan__price { height: 3.3rem; align-items: baseline; }
   .care { grid-template-columns: 1fr 1fr; align-items: center; gap: 3rem; }
-  .pricing__footer { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .pricing__footer { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; }
 }
 
 /* ============================================================
