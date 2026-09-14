@@ -1817,8 +1817,10 @@ ul { list-style: none; padding: 0; }
   letter-spacing: .11em; text-transform: uppercase; font-weight: 500;
   color: rgba(230,241,236,.64); margin-bottom: .95rem;
 }
-.footer__list { display: grid; gap: .55rem; font-size: .95rem; }
-.footer__list a { transition: color .25s; }
+.footer__list { display: grid; font-size: .95rem; }
+/* Промежуток списка переехал в отступ ссылки: расстояние между строками
+   то же, а зона нажатия выросла с 19 до 32 px. */
+.footer__list a { display: inline-block; padding-block: .4rem; transition: color .25s; }
 .footer__list a:hover { color: #fff; }
 .footer__bottom {
   grid-column: 1 / -1;
@@ -1846,6 +1848,25 @@ ul { list-style: none; padding: 0; }
    засчитывал главный элемент экрана (LCP) только после этого. */
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } }
 .rise { animation: rise .7s var(--ease) both; animation-delay: calc(var(--i, 0) * 60ms); }
+
+/* ---------- Зоны нажатия и мелкий текст на телефоне ----------
+   Мелкие текстовые ссылки остаются мелкими, но палец попадает в
+   невидимую площадку вокруг них: было 20–24 px в высоту, минимум
+   по WCAG 2.5.8 — 24 px, удобно — от 36. */
+.work__link, .review__src, .sol__note a { position: relative; }
+.work__link::after, .review__src::after, .sol__note a::after {
+  content: ""; position: absolute; inset: -.5rem -.35rem;
+}
+/* На телефоне смысловой мелкий текст был 11–12.8 px. Подписи-метки
+   капсом (label, «Инфопродукт», DIGITAL SYSTEMS) не трогаем. */
+@media (max-width: 599px) {
+  .sol__card .sol__how { font-size: .8rem; }
+  .work__link { font-size: .8rem; }
+  .work__count { font-size: .74rem; }
+  .plan__kind { font-size: .76rem; }
+  .pricing__terms, .tiers__terms { font-size: .86rem; }
+  .pricing__footer { font-size: .88rem; }
+}
 
 /* ============================================================
    BREAKPOINTS
