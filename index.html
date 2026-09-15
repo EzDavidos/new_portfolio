@@ -47,8 +47,8 @@
     </a>
 
     <nav class="nav" aria-label="Основная навигация">
+      <a href="#solutions" class="nav__link">Системы</a>
       <a href="#work" class="nav__link">Проекты</a>
-      <a href="#solutions" class="nav__link">Решения</a>
       <a href="#process" class="nav__link">Процесс</a>
       <a href="#pricing" class="nav__link">Цены</a>
       <a href="#contact" class="nav__link">Контакт</a>
@@ -68,8 +68,8 @@
 
 <div class="sheet" id="sheet" hidden>
   <nav class="sheet__nav" aria-label="Мобильная навигация">
+    <a href="#solutions">Системы</a>
     <a href="#work">Проекты</a>
-    <a href="#solutions">Решения</a>
     <a href="#process">Процесс</a>
     <a href="#pricing">Цены</a>
     <a href="#contact">Контакт</a>
@@ -174,7 +174,50 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 03 — FLAGSHIP
+     BLOCK 03 — СИСТЕМЫ
+     ============================================================ -->
+<section class="solutions" id="solutions">
+  <div class="wrap">
+    <div class="solutions__panel">
+      <canvas class="water water--accent solutions__water" data-flow="basin" aria-hidden="true"></canvas>
+      <header class="solutions__head reveal">
+        <h2 class="h2">Решение под задачи вашего бизнеса</h2>
+        <p class="solutions__intro">Начинаем с того, где теряются заявки, время или данные. Под эту задачу собираем нужный инструмент.</p>
+        <a href="https://t.me/davidnaumenko" class="solutions__link" target="_blank" rel="noopener">Разобрать мою задачу <span aria-hidden="true">↗</span></a>
+      </header>
+      <div class="sol">
+        <article class="sol__card reveal">
+          <h3 class="sol__h">CRM и учёт</h3>
+          <p class="sol__problem">Заявки теряются в переписке</p>
+          <p>Собираю клиентов, статусы, записи и деньги в одном месте. Команда видит, кому ответить и что делать дальше.</p>
+          <p class="sol__how">Веб-CRM&nbsp;· роли&nbsp;и&nbsp;доступы&nbsp;· уведомления</p>
+        </article>
+        <article class="sol__card reveal">
+          <h3 class="sol__h">Боты и Mini Apps</h3>
+          <p class="sol__problem">Клиентам неудобно записываться</p>
+          <p>Запись, заказ или покупка прямо в Telegram. Клиент выбирает сам, а вы получаете готовую заявку.</p>
+          <p class="sol__how">Telegram-бот&nbsp;· Mini&nbsp;App&nbsp;· приём&nbsp;оплаты</p>
+        </article>
+        <article class="sol__card reveal">
+          <h3 class="sol__h">Сайты и лендинги</h3>
+          <p class="sol__problem">Сайт не приносит заявок</p>
+          <p>Сайт за минуту объясняет ваше предложение и доводит посетителя до заявки. Заявка приходит вам или в CRM.</p>
+          <p class="sol__how">Лендинг&nbsp;· сайт&nbsp;· форма&nbsp;заявки</p>
+        </article>
+        <article class="sol__card reveal">
+          <h3 class="sol__h">Автоматизация</h3>
+          <p class="sol__problem">Рутина съедает рабочий день</p>
+          <p>Связываю сервисы: данные передаются, отчёты собираются, напоминания приходят без ручных действий.</p>
+          <p class="sol__how">Напоминания&nbsp;· отчёты&nbsp;· связка&nbsp;сервисов</p>
+        </article>
+      </div>
+      <p class="sol__note reveal">Инструменты можно объединить в одну систему: сайт принимает заявку, CRM сохраняет клиента, бот отправляет уведомление. <a href="#pricing">Посмотреть стоимость <span aria-hidden="true">↗</span></a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOCK 04 — FLAGSHIP
      ============================================================ -->
 <section class="flagship" id="work">
   <div class="wrap">
@@ -423,49 +466,6 @@
       </div>
     </template>
 
-  </div>
-</section>
-
-<!-- ============================================================
-     BLOCK 04 — SOLUTIONS
-     ============================================================ -->
-<section class="solutions" id="solutions">
-  <div class="wrap">
-    <div class="solutions__panel">
-      <canvas class="water water--accent solutions__water" data-flow="basin" aria-hidden="true"></canvas>
-      <header class="solutions__head reveal">
-        <h2 class="h2">Решение под задачи вашего бизнеса</h2>
-        <p class="solutions__intro">Начинаем с того, где теряются заявки, время или данные. Под эту задачу собираем нужный инструмент.</p>
-        <a href="https://t.me/davidnaumenko" class="solutions__link" target="_blank" rel="noopener">Разобрать мою задачу <span aria-hidden="true">↗</span></a>
-      </header>
-      <div class="sol">
-        <article class="sol__card reveal">
-          <h3 class="sol__h">CRM и учёт</h3>
-          <p class="sol__problem">Заявки теряются в переписке</p>
-          <p>Собираю клиентов, статусы, записи и деньги в одном месте. Команда видит, кому ответить и что делать дальше.</p>
-          <p class="sol__how">Веб-CRM&nbsp;· роли&nbsp;и&nbsp;доступы&nbsp;· уведомления</p>
-        </article>
-        <article class="sol__card reveal">
-          <h3 class="sol__h">Боты и Mini Apps</h3>
-          <p class="sol__problem">Клиентам неудобно записываться</p>
-          <p>Запись, заказ или покупка прямо в Telegram. Клиент выбирает сам, а вы получаете готовую заявку.</p>
-          <p class="sol__how">Telegram-бот&nbsp;· Mini&nbsp;App&nbsp;· приём&nbsp;оплаты</p>
-        </article>
-        <article class="sol__card reveal">
-          <h3 class="sol__h">Сайты и лендинги</h3>
-          <p class="sol__problem">Сайт не приносит заявок</p>
-          <p>Сайт за минуту объясняет ваше предложение и доводит посетителя до заявки. Заявка приходит вам или в CRM.</p>
-          <p class="sol__how">Лендинг&nbsp;· сайт&nbsp;· форма&nbsp;заявки</p>
-        </article>
-        <article class="sol__card reveal">
-          <h3 class="sol__h">Автоматизация</h3>
-          <p class="sol__problem">Рутина съедает рабочий день</p>
-          <p>Связываю сервисы: данные передаются, отчёты собираются, напоминания приходят без ручных действий.</p>
-          <p class="sol__how">Напоминания&nbsp;· отчёты&nbsp;· связка&nbsp;сервисов</p>
-        </article>
-      </div>
-      <p class="sol__note reveal">Инструменты можно объединить в одну систему: сайт принимает заявку, CRM сохраняет клиента, бот отправляет уведомление. <a href="#pricing">Посмотреть стоимость <span aria-hidden="true">↗</span></a></p>
-    </div>
   </div>
 </section>
 
@@ -1387,8 +1387,8 @@
     <nav class="footer__col" aria-label="Навигация в футере">
       <p class="footer__col-h">Разделы</p>
       <ul class="footer__list" role="list">
+        <li><a href="#solutions">Системы</a></li>
         <li><a href="#work">Проекты</a></li>
-        <li><a href="#solutions">Решения</a></li>
         <li><a href="#process">Процесс</a></li>
         <li><a href="#pricing">Цены</a></li>
       </ul>
