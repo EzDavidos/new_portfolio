@@ -1,0 +1,17 @@
+# Приём заявок с формы на сайте → сообщение в Telegram.
+# Деплой из этой папки: npx wrangler@4 deploy
+# Секреты задаются в панели Cloudflare (Worker → Settings → Variables and Secrets)
+# или командой npx wrangler@4 secret put <ИМЯ>, в репозиторий не попадают:
+#   TG_BOT_TOKEN — токен бота от @BotFather
+#   TG_CHAT_ID   — id чата, куда слать заявки (личка Давида с ботом)
+
+name = "lead-form"
+main = "src/index.js"
+compatibility_date = "2026-05-01"
+
+# Поддомен Cloudflare заводит сам: DNS-запись и сертификат появятся при деплое.
+routes = [{ pattern = "form.davidnaumenko.com", custom_domain = true }]
+
+[vars]
+# С каких страниц принимать заявки. Для локальной проверки — .dev.vars (в .gitignore).
+ALLOWED_ORIGINS = "https://davidnaumenko.com,https://www.davidnaumenko.com"

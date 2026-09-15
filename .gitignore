@@ -7,6 +7,10 @@ photo_video/
 .agents/
 skills-lock.json
 
+# Worker формы: локальные секреты и кэш wrangler
+worker/.dev.vars
+worker/.wrangler/
+
 # Артефакты WSL
 *:Zone.Identifier
 
