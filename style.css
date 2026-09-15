@@ -1009,6 +1009,39 @@ ul { list-style: none; padding: 0; }
 }
 
 /* ============================================================
+   СТРАНИЦА ДОКУМЕНТА — privacy.html
+   ============================================================ */
+.doc-top { padding-block: clamp(1rem, 2.5vw, 1.6rem); }
+/* страница — одна колонка по центру, верхняя строка по её ширине */
+.doc-top .wrap, .doc .wrap { max-width: calc(46rem + 2 * var(--pad-x)); }
+.doc-top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.doc-back { display: inline-flex; align-items: center; gap: .45rem; padding-block: .4rem; font-size: .95rem; font-weight: 500; color: var(--green); }
+.doc { padding-block: clamp(.5rem, 2vw, 1.5rem) var(--sec-y); }
+.doc__body {
+  background: rgba(255,255,255,.96);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-2);
+  padding: clamp(1.4rem, 5vw, 3.25rem);
+}
+.doc h1 { font-family: var(--f-display); font-size: var(--fs-h2); font-weight: 600; line-height: 1.12; letter-spacing: -.008em; text-wrap: balance; }
+.doc__date { margin-top: .6rem; font-size: .9rem; color: var(--ink-mute); }
+.doc h2 { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 600; line-height: 1.3; margin-top: 2.2rem; text-wrap: balance; scroll-margin-top: 1.5rem; }
+.doc p, .doc ul { margin-top: .75rem; color: var(--ink-soft); }
+.doc ul { padding-left: 1.2rem; list-style: disc; }
+.doc li + li { margin-top: .35rem; }
+.doc strong { font-weight: 600; color: var(--ink); }
+.doc a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+.doc .btn { color: var(--ink); text-decoration: none; }
+.doc__table { margin-top: 1rem; overflow-x: auto; }
+.doc table { width: 100%; min-width: 34rem; border-collapse: collapse; font-size: .92rem; }
+.doc th, .doc td { text-align: left; vertical-align: top; padding: .65rem 1rem .65rem 0; border-bottom: 1px solid var(--line); }
+.doc th { font-family: var(--f-mono); font-size: var(--fs-mono); letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: var(--ink-mute); }
+.doc td { color: var(--ink-soft); }
+.doc code { font-family: var(--f-mono); font-size: .86rem; color: var(--ink); }
+.doc__cta { margin-top: 1.1rem; }
+
+/* ============================================================
    BLOCK 05 — СОБСТВЕННЫЙ ПРОДУКТ «100ЛОВАЯ»
    Карточка-герой по макету photo_video/100lovaya_card. Меряется он
    так же, как макет FlyGuru: это скриншот той же страницы, карточка
