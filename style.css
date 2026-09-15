@@ -1261,7 +1261,7 @@ label.cc__opt { cursor: pointer; }
    в кейсе FlyGuru: разделители стоят на 251.5 / 393.5 / 547.5 px, ровно
    посреди просветов между колонками. */
 .p100__nums {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(.9rem, 2.2vw, 1.4rem);
   margin-top: clamp(1rem, 2.1vw, 1.31rem);
   padding-top: clamp(.8rem, 1.6vw, 1.2rem);
@@ -1378,7 +1378,8 @@ label.cc__opt { cursor: pointer; }
 .work__case:hover { color: var(--green); border-bottom-color: var(--green); }
 .work__case:hover svg { transform: translateX(3px); }
 .work__case svg { transition: transform .35s var(--ease); }
-/* обложка тоже открывает кейс; плашка сразу говорит, что внутри есть экраны */
+/* обложка тоже открывает кейс; плашка на ней — из чего собран проект.
+   Держать её в одну строку: на 600–700 px длинная плашка уже переносилась */
 .work__cover { position: absolute; inset: 0; z-index: 1; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .work__count {
   position: absolute; left: .8rem; bottom: .8rem;
