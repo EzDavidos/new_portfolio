@@ -656,7 +656,14 @@
         return;
       }
 
-      var payload = { website: request.elements.website.value, ref: document.referrer };
+      // Откуда пришёл человек — едет в заявку. Страница одна, переходы по
+      // ней меняют только хэш, так что UTM-метки весь визит лежат в адресе.
+      var q = new URLSearchParams(location.search), utm = {};
+      ['source', 'medium', 'campaign'].forEach(function (k) {
+        if (q.get('utm_' + k)) utm[k] = q.get('utm_' + k);
+      });
+      var ref = document.referrer.indexOf(location.origin) === 0 ? '' : document.referrer;
+      var payload = { website: request.elements.website.value, ref: ref, utm: utm };
       reqFields.forEach(function (f) { payload[f.name] = f.value.trim(); });
 
       var btnText = reqBtn.textContent;
