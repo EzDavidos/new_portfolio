@@ -1936,7 +1936,6 @@ label.cc__opt { cursor: pointer; }
    ============================================================ */
 .trust { padding-block: var(--sec-pad); }
 .trust__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
-.trust .lead { margin-top: 1rem; }
 .qa-list { display: grid; }
 .qa { border-top: 1px solid var(--line); }
 .qa:last-of-type { border-bottom: 1px solid var(--line); }
@@ -1968,6 +1967,7 @@ label.cc__opt { cursor: pointer; }
 .qa__a { padding-bottom: clamp(1rem, 2.2vw, 1.4rem); color: var(--ink-soft); max-width: 76ch; }
 .qa__a a { color: var(--green-deep); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(12,122,93,.35); }
 .qa__a a:hover { text-decoration-color: currentColor; }
+.qa__a .qa__note { margin-top: .5rem; font-size: .86rem; color: var(--ink-mute); }
 
 /* ============================================================
    BLOCK 12 — ФУТЕР
@@ -2156,7 +2156,6 @@ label.cc__opt { cursor: pointer; }
   .fgh__stat + .fgh__stat { border-left: 1px solid var(--case-hair); }
 
 
-  .process__grid { grid-template-columns: minmax(0, .72fr) minmax(0, 2.28fr); }
   .steps { grid-template-columns: repeat(4, 1fr); }
   /* соединители между шагами — порядок здесь реально что-то значит.
      Пунктир и кольцо на нём: связь читается как последовательность,
@@ -2216,6 +2215,13 @@ label.cc__opt { cursor: pointer; }
 /* На узком десктопе колонка текста FlyGuru всего ~320px, и ряд из
    «140+ · 170+ · 18 · 8» с макетными отступами в неё не влезает:
    последняя подпись вылезала за линию над цифрами. */
+/* Заголовок «Как я работаю» сбоку от шагов — только с 1280 px. Уже этого
+   колонки шагов выходили по 130–170 px, и длинные слова вроде «промежуточным»
+   вылезали из карточек; ниже 1280 заголовок стоит над шагами. */
+@media (min-width: 1280px) {
+  .process__grid { grid-template-columns: minmax(0, .72fr) minmax(0, 2.28fr); }
+}
+
 @media (min-width: 860px) and (max-width: 1279px) {
   .fgh__stat { padding-inline: clamp(.4rem, .9vw, 1rem); }
 }
