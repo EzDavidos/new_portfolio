@@ -570,6 +570,14 @@ ul { list-style: none; padding: 0; }
 .rail__item { display: inline-flex; align-items: center; gap: .45rem; }
 .rail__val { color: var(--ink); }
 .rail__clock { font-variant-numeric: tabular-nums; }
+/* названия проектов открывают окна кейсов: пунктир снизу показывает, что
+   это ссылка, и не спорит с капслоком так, как сплошное подчёркивание */
+.rail__link {
+  color: inherit; text-decoration: underline dotted; text-decoration-thickness: 1px;
+  text-underline-offset: .35em; text-decoration-color: var(--line-2);
+  transition: color .2s, text-decoration-color .2s;
+}
+.rail__link:hover { color: var(--green); text-decoration-color: currentColor; }
 /* часы прижаты к правому краю и не сжимаются: список проектов растёт,
    а время остаётся видимым без разделителя перед ним */
 .rail__time { margin-left: auto; padding-left: clamp(.7rem, 1.5vw, 1.05rem); flex: none; }
@@ -884,7 +892,6 @@ ul { list-style: none; padding: 0; }
 }
 .sol__h { font-family: var(--f-display); color: var(--green-deep); font-size: clamp(1.35rem, 1.8vw, 1.6rem); font-weight: 600; line-height: 1.2; margin-bottom: 1rem; text-wrap: balance; }
 .sol__card p { color: var(--ink-soft); font-size: .92rem; line-height: 1.6; }
-.sol__card .sol__problem { color: var(--ink); font-weight: 500; margin-bottom: .35rem; }
 /* «Чем реализовано» — форматы, а не стек: блок не должен читаться каталогом. */
 .sol__card .sol__how { margin-top: 1rem; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .02em; line-height: 1.55; color: var(--green-deep); }
 .sol__note {
@@ -2140,7 +2147,9 @@ label.cc__opt { cursor: pointer; }
      стоят волосяные разделители посреди отступа. Поэтому не сетка, а флекс
      с симметричным padding-inline — граница тогда сама встаёт по центру. */
   .fgh__nums { display: flex; flex-wrap: nowrap; gap: 0; }
-  .fgh__stat { padding-inline: clamp(.85rem, 2.3vw, 2.1rem); }
+  /* padding ужат с 2.3vw/2.1rem: с подписями «дней до запуска» и «страниц + CRM»
+     ряд с прежними отступами не влезал в колонку и цифры наезжали на разделители */
+  .fgh__stat { padding-inline: clamp(.85rem, 1.4vw, 1.5rem); }
   .fgh__stat:first-child { padding-left: 0; }
   .fgh__stat:last-child  { padding-right: 0; }
   .fgh__stat + .fgh__stat { border-left: 1px solid var(--case-hair); }
@@ -2204,10 +2213,10 @@ label.cc__opt { cursor: pointer; }
 }
 
 /* На узком десктопе колонка текста FlyGuru всего ~320px, и ряд из
-   «170+ · 140+ · 18 · 4» с макетными отступами в неё не влезает:
+   «140+ · 170+ · 18 · 8» с макетными отступами в неё не влезает:
    последняя подпись вылезала за линию над цифрами. */
 @media (min-width: 860px) and (max-width: 1279px) {
-  .fgh__stat { padding-inline: clamp(.5rem, 1.1vw, 2.1rem); }
+  .fgh__stat { padding-inline: clamp(.4rem, .9vw, 1rem); }
 }
 
 @media (min-width: 1120px) {
