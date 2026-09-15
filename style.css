@@ -453,6 +453,32 @@ ul { list-style: none; padding: 0; }
 .header__actions { display: flex; align-items: center; gap: .6rem; }
 .header__actions .btn--primary { display: none; }
 
+/* Переключатель темы: дорожка с бегунком, в бегунке — значок текущей
+   темы. Положение берётся с атрибута <html>, а не с aria-pressed: тему
+   ставит скрипт в <head>, и до script.js бегунок уже стоит на месте. */
+.scheme {
+  position: relative; flex: none;
+  width: 52px; height: 30px; border-radius: 100px;
+  background: rgba(23,33,30,.05);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background .3s var(--ease), box-shadow .3s var(--ease);
+}
+.scheme::after { content: ""; position: absolute; inset: -7px -4px; }   /* зона нажатия 44 px */
+.scheme:hover { box-shadow: inset 0 0 0 1px var(--green); }
+.scheme__knob {
+  position: absolute; top: 3px; left: 3px;
+  width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #fff; color: var(--ink);
+  box-shadow: 0 1px 3px rgba(23,33,30,.22);
+  transition: transform .4s var(--ease), background .3s, color .3s;
+}
+.scheme__knob svg { grid-area: 1 / 1; width: 14px; height: 14px; transition: opacity .25s, transform .4s var(--ease); }
+.scheme__moon { opacity: 0; transform: rotate(-60deg) scale(.5); }
+[data-scheme="dark"] .scheme__knob { transform: translateX(22px); }
+[data-scheme="dark"] .scheme__sun { opacity: 0; transform: rotate(60deg) scale(.5); }
+[data-scheme="dark"] .scheme__moon { opacity: 1; transform: none; }
+
 .burger { width: 40px; height: 40px; display: grid; place-content: center; gap: 6px; }
 .burger span { display: block; width: 20px; height: 1.5px; background: var(--ink); transition: transform .3s var(--ease); }
 .burger[aria-expanded="true"] span:first-child { transform: translateY(3.75px) rotate(45deg); }
@@ -2386,3 +2412,224 @@ label.cc__opt { cursor: pointer; }
   .reveal { opacity: 1; transform: none; }
   .rise { animation: none; }
 }
+
+/* ============================================================
+   ТЁМНАЯ ТЕМА
+   Палитра снята замером с photo_video/ref_dark_theme.png: фон #1E2334,
+   плашки #212537, кнопка #B49BFD, текст #A9AEC1. Включается атрибутом
+   data-scheme="dark" на <html> (ставит скрипт в <head>, переключает
+   script.js). Всё светлое выше не тронуто — здесь только переопределения.
+
+   Токены с именами «зелёного» в тёмной теме несут лавандовый акцент:
+   --green — сам акцент (кнопки, линии, значки), --green-deep — его
+   текстовый вариант. «Глубже» в светлой теме значит контрастнее, а на
+   тёмном фоне контрастнее — светлее, поэтому --green-deep тут светлее.
+
+   Блоки продуктов (FlyGuru, 100ловая, обложки проектов, окна кейсов)
+   одеты в цвета самих продуктов и тему не меняют.
+   ============================================================ */
+:root[data-scheme="dark"] {
+  color-scheme: dark;
+
+  --paper:    #1E2334;
+  --paper-2:  #252A3D;
+  --card:     #272C41;
+  --tint:     #242940;
+
+  --ink:      #F4F5FA;
+  --ink-soft: #A9AEC1;
+  --ink-mute: #9A9EB3;
+  --ink-faint:#80859B;
+
+  --line:     #2E344A;
+  --line-2:   #373E57;
+
+  --green:      #B49BFD;
+  --green-deep: #C7B6FF;
+  --green-dark: #161927;
+  --green-soft: rgba(180,155,253,.10);
+
+  --glass:   rgba(38,43,63,.40);
+  --glass-2: rgba(36,41,60,.64);
+  --glass-3: rgba(33,37,55,.96);
+  --sheen: linear-gradient(158deg, rgba(255,255,255,.07), rgba(255,255,255,0) 48%);
+  --rim: linear-gradient(148deg,
+           rgba(255,255,255,.26) 0%,
+           rgba(255,255,255,.08) 26%,
+           rgba(255,255,255,0)   52%,
+           rgba(255,255,255,.04) 74%,
+           rgba(255,255,255,.12) 100%);
+  --rim-pill: linear-gradient(172deg,
+           rgba(255,255,255,.30) 0%,
+           rgba(255,255,255,.10) 38%,
+           rgba(255,255,255,.02) 62%,
+           rgba(255,255,255,.12) 100%);
+
+  --sh-1: 0 1px 2px rgba(6,8,18,.20), 0 3px 10px rgba(6,8,18,.18);
+  --sh-2: 0 2px 6px rgba(6,8,18,.22), 0 16px 38px rgba(6,8,18,.30);
+  --sh-3: 0 6px 14px rgba(6,8,18,.24), 0 32px 74px rgba(6,8,18,.38);
+
+  /* свои цвета тёмной темы, в светлой их нет */
+  --plate:   linear-gradient(152deg, #262B40 0%, #222739 46%, #1F2335 100%);
+  --hair:    rgba(255,255,255,.07);
+  --on-accent: #1A1830;   /* текст на лавандовой заливке */
+}
+
+/* смена темы — плавным перетеканием снимков, где браузер это умеет */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .45s; }
+
+[data-scheme="dark"] body { background-image: url("assets/img/grid-relief-dark.svg"); }
+[data-scheme="dark"] ::selection { background: rgba(180,155,253,.30); }
+[data-scheme="dark"] .skip { color: var(--paper); }
+
+/* ---------- стекло и кнопки ---------- */
+[data-scheme="dark"] .glass--plate {
+  background: linear-gradient(145deg, rgba(40,45,66,.90), rgba(31,35,52,.82));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), inset 0 0 0 1px var(--hair), var(--sh-2);
+}
+[data-scheme="dark"] .glass--plate::before { opacity: .5; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  [data-scheme="dark"] .glass { background: rgba(36,41,60,.92); }
+  [data-scheme="dark"] .glass--solid { background: rgba(36,41,60,.96); }
+}
+
+/* Главная кнопка в рефе — лавандовая пилюля с тёмной подписью. */
+[data-scheme="dark"] .btn--primary,
+[data-scheme="dark"] .btn--light {
+  background: var(--green); color: var(--on-accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 6px 20px rgba(140,110,250,.22);
+}
+[data-scheme="dark"] .btn--primary:hover,
+[data-scheme="dark"] .btn--light:hover {
+  background: var(--green-deep);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 10px 28px rgba(140,110,250,.32);
+}
+[data-scheme="dark"] .btn--ghost {
+  background: linear-gradient(158deg,
+                rgba(255,255,255,.10) 0%,
+                rgba(255,255,255,.03) 46%,
+                rgba(255,255,255,.06) 100%);
+  box-shadow: 0 1px 2px rgba(6,8,18,.2), 0 8px 22px rgba(6,8,18,.24);
+}
+[data-scheme="dark"] .btn--ghost:hover {
+  background: linear-gradient(158deg,
+                rgba(255,255,255,.16) 0%,
+                rgba(255,255,255,.06) 46%,
+                rgba(255,255,255,.10) 100%);
+}
+[data-scheme="dark"] .btn--soft { background: var(--card); box-shadow: inset 0 0 0 1px var(--line-2), var(--sh-1); }
+[data-scheme="dark"] .btn--soft:hover { box-shadow: inset 0 0 0 1px var(--green), var(--sh-2); }
+[data-scheme="dark"] .chip { background: rgba(255,255,255,.04); }
+
+/* ---------- шапка, меню, переключатель ---------- */
+[data-scheme="dark"] .header.is-stuck .header__inner { background: var(--sheen), rgba(36,41,60,.84); }
+[data-scheme="dark"] .sheet { background: rgba(30,35,52,.94); }
+[data-scheme="dark"] .scheme { background: rgba(255,255,255,.05); }
+[data-scheme="dark"] .scheme__knob {
+  background: var(--green); color: var(--on-accent);
+  box-shadow: 0 1px 3px rgba(6,8,18,.4), 0 0 12px rgba(180,155,253,.35);
+}
+
+/* ---------- первый экран ---------- */
+/* точка свободных слотов в рефе остаётся зелёной — это светофор, а не акцент */
+[data-scheme="dark"] .pill { --slot: #13D085; --slot-halo: rgba(19,208,133,.5); }
+[data-scheme="dark"] .rail::after { background: linear-gradient(90deg, rgba(30,35,52,0), rgba(30,35,52,.8)); }
+/* светящаяся вода под рейлом ярче дневной — вуаль плотнее */
+[data-scheme="dark"] .rail__inner { background: var(--sheen), rgba(36,41,60,.82); }
+[data-scheme="dark"] .rail__dot { box-shadow: 0 0 0 0 rgba(180,155,253,.5); }
+/* галочки в рефе глуше кнопки — #8877C5, белый знак */
+[data-scheme="dark"] .tick { background: #8877C5; color: #fff; box-shadow: 0 2px 8px rgba(136,119,197,.35); }
+[data-scheme="dark"] .no-webgl .water--hero {
+  background:
+    radial-gradient(85% 55% at 78% 26%, rgba(124,92,236,.42), transparent 62%),
+    radial-gradient(90% 55% at 52% 52%, rgba(98,74,196,.30), transparent 66%),
+    radial-gradient(70% 45% at 18% 72%, rgba(98,74,196,.20), transparent 62%),
+    radial-gradient(60% 40% at 99% 40%, rgba(160,130,252,.26), transparent 60%);
+}
+
+/* ---------- заглушки кадров ---------- */
+[data-scheme="dark"] .shot {
+  background:
+    linear-gradient(135deg, var(--green-soft), rgba(124,92,236,.08)),
+    repeating-linear-gradient(45deg, var(--paper-2) 0 12px, #2A2F44 12px 24px);
+}
+[data-scheme="dark"] .shot__tag,
+[data-scheme="dark"] .work__count { background: rgba(30,35,52,.88); box-shadow: inset 0 0 0 1px var(--line-2), var(--sh-1); }
+[data-scheme="dark"] .work__count { color: var(--ink); }
+
+/* ---------- системы ---------- */
+[data-scheme="dark"] .solutions__panel { border-color: var(--hair); }
+[data-scheme="dark"] .no-webgl .solutions__water { background: linear-gradient(0deg, #6A50D0, #3B3170 60%, transparent 80%); }
+[data-scheme="dark"] .solutions__link { border-bottom-color: rgba(180,155,253,.35); }
+/* Стекло плотное до строки «чем реализовано»: светящаяся вода под ней
+   гасила бы мелкий моноширинный текст, а у дневной плёнки этой беды нет. */
+[data-scheme="dark"] .sol__card {
+  border-top-color: var(--hair);
+  background: linear-gradient(to bottom,
+    rgba(36,41,60,.80) 0%,
+    rgba(36,41,60,.80) 86%,
+    rgba(36,41,60,.30) 96%,
+    rgba(36,41,60,.10) 100%);
+}
+[data-scheme="dark"] .sol__note { background: rgba(33,37,55,.88); }
+
+/* ---------- процесс ---------- */
+[data-scheme="dark"] .step--on {
+  background: linear-gradient(158deg, #2C2C4E, #262A45 62%, #2B2A52);
+  box-shadow: inset 0 0 0 1px rgba(180,155,253,.28), var(--sh-2);
+}
+
+/* ---------- отзыв и проекты ---------- */
+[data-scheme="dark"] .review__src,
+[data-scheme="dark"] .work__link { border-bottom-color: rgba(180,155,253,.35); }
+[data-scheme="dark"] .work__link:hover, [data-scheme="dark"] .review__src:hover { border-bottom-color: var(--green); }
+[data-scheme="dark"] .work__case { border-bottom-color: var(--ink); }
+
+/* ---------- цены ---------- */
+[data-scheme="dark"] .pricing__panel,
+[data-scheme="dark"] .addon {
+  border-color: var(--hair);
+  background: var(--plate);
+}
+[data-scheme="dark"] .addon { box-shadow: var(--sh-3), inset 0 0 0 1px rgba(180,155,253,.06); }
+/* в рефе заголовок цен белый, акцент остаётся на воде под ним */
+[data-scheme="dark"] .pricing__title { color: var(--ink); }
+[data-scheme="dark"] .no-webgl .pricing__water { background: linear-gradient(155deg, transparent 42%, #3B3170 62%, #6A50D0 85%, #2E2A55); }
+[data-scheme="dark"] .plan--on { background: linear-gradient(145deg, rgba(255,255,255,.02), rgba(124,92,236,.10)); }
+[data-scheme="dark"] .drum__win {
+  box-shadow: inset 0 0 0 1px var(--line-2), inset 0 10px 14px -12px rgba(0,0,0,.6), inset 0 -10px 14px -12px rgba(0,0,0,.6);
+}
+[data-scheme="dark"] .drum.is-hot .drum__win { background: #33243A; }
+[data-scheme="dark"] .kit__chip[aria-pressed="true"],
+[data-scheme="dark"] .swipe-tabs__tab[aria-current="true"] { background: var(--green); color: var(--on-accent); }
+[data-scheme="dark"] .kit__chip.is-fire[aria-pressed="true"] { color: #fff; }
+[data-scheme="dark"] .plan__alert { background: rgba(180,155,253,.08); box-shadow: inset 0 0 0 1px rgba(180,155,253,.22); }
+[data-scheme="dark"] .tiers,
+[data-scheme="dark"] .tier + .tier,
+[data-scheme="dark"] .tiers__terms { border-color: var(--line-2); }
+/* Лендинг и редизайн закрывают блок цен тёмными плашками — на тёмной
+   странице они уходят в глубокий фиолетовый, иначе не отличались бы от фона */
+[data-scheme="dark"] .extra {
+  background: linear-gradient(145deg, #2C2658, #221E45);
+  box-shadow: inset 0 0 0 1px rgba(180,155,253,.14);
+  color: #BDB6DA;
+}
+
+/* ---------- вопросы ---------- */
+[data-scheme="dark"] .qa[open] .qa__ico::before,
+[data-scheme="dark"] .qa[open] .qa__ico::after { background: var(--on-accent); }
+[data-scheme="dark"] .qa__a a { text-decoration-color: rgba(180,155,253,.4); }
+
+/* ---------- финальный блок и футер ---------- */
+[data-scheme="dark"] .final__inner { box-shadow: inset 0 0 0 1px var(--hair); }
+[data-scheme="dark"] .no-webgl .water--dark { background: linear-gradient(135deg, #1B1636, #3A2E78 55%, #1E1A3C); }
+[data-scheme="dark"] .footer { color: rgba(222,226,240,.72); box-shadow: inset 0 1px 0 var(--hair); }
+[data-scheme="dark"] .footer .brand__role,
+[data-scheme="dark"] .footer__col-h { color: rgba(222,226,240,.62); }
+[data-scheme="dark"] .footer__bottom { color: rgba(222,226,240,.6); }
+[data-scheme="dark"] .footer__legal a,
+[data-scheme="dark"] .footer__legal button { text-decoration-color: rgba(222,226,240,.3); }
+
+/* ---------- cookie-баннер и страница политики ---------- */
+[data-scheme="dark"] .cc__switch::after { box-shadow: 0 1px 3px rgba(0,0,0,.4); }
+[data-scheme="dark"] .doc__body { background: rgba(33,37,55,.96); }
