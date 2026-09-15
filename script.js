@@ -769,6 +769,140 @@
     });
   }
 
+  /* ---------- барабан цен ----------
+     Счётчик в карточках тарифов: у каждой цифры свой ролик 0–9 в три круга.
+     Значения и названия комплектаций — из кнопок .kit__chip, стартовое —
+     у кнопки с aria-pressed="true". Когда карточка появляется на экране,
+     барабан один раз раскручивается и встаёт на стартовую цену; дальше —
+     стрелки, свайп вбок, кнопки комплектаций или клавиши. data-hot на
+     .drum — на какой цене гореть, data-old — зачёркнутая старая цена. */
+  var FIRE = '<svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6.4.6c.3 2-1.6 2.7-1.6 4.4 0 .8.5 1.3 1 1.3.7 0 1-.6.9-1.6 1.4.9 2.3 2.2 2.3 3.6C9 10.2 7.7 11.4 6 11.4S3 10.2 3 8.5C3 5.8 5.6 4.3 6.4.6z"/></svg>';
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-drum]'), function (box) {
+    var plan = box.closest('.plan');
+    var win = box.querySelector('.drum__win');
+    var arrows = box.querySelectorAll('.drum__arrow');
+    var chips = Array.prototype.slice.call(plan.querySelectorAll('.kit__chip'));
+    var lists = Array.prototype.slice.call(plan.querySelectorAll('.kit__list'));
+    var vals = chips.map(function (c) { return Number(c.dataset.v); });
+    var hot = Number(box.dataset.hot) || null;
+    var i = 0, busy = false, normT;
+    chips.forEach(function (c, k) { if (c.getAttribute('aria-pressed') === 'true') i = k; });
+
+    // окно: «$» + ролики под самую длинную цену + пламя
+    var len = String(Math.max.apply(null, vals)).length, strip = '', r;
+    for (r = 0; r < 30; r++) strip += '<span>' + (r % 10) + '</span>';
+    var cols = '';
+    for (r = 0; r < len; r++) cols += '<span class="drum__col"><span class="drum__strip">' + strip + '</span></span>';
+    win.innerHTML = '<span class="drum__cur" aria-hidden="true">$</span><span class="drum__cols" aria-hidden="true">' + cols + '</span>' +
+      '<span class="drum__flame" aria-hidden="true"><i></i><i></i><i></i></span>' +
+      (hot ? '<span class="drum__embers" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' : '');
+    if (hot) {
+      var off = box.dataset.old ? Math.round((1 - hot / Number(box.dataset.old)) * 100) : 0;
+      box.insertAdjacentHTML('beforeend', '<span class="drum__hot" aria-hidden="true">' +
+        (box.dataset.old ? '<span class="drum__old">$' + box.dataset.old + '</span>' : '') +
+        '<span class="drum__badge">' + FIRE + 'Горячая цена' + (off ? ' −' + off + '%' : '') + '</span></span>');
+    }
+    var colEls = Array.prototype.slice.call(win.querySelectorAll('.drum__col'));
+    var pos = colEls.map(function () { return 10; });
+    win.setAttribute('aria-valuemin', vals[0]);
+    win.setAttribute('aria-valuemax', vals[vals.length - 1]);
+
+    // позиция в em — не зависит от того, загрузился ли уже шрифт
+    var setCol = function (k, p, dur, ease) {
+      var st = colEls[k].firstChild.style;
+      st.transition = dur ? 'transform ' + dur + 's ' + ease : 'none';
+      st.transform = 'translateY(' + (-p * 1.2) + 'em)';
+      pos[k] = p;
+    };
+    var digits = function (n) {
+      var t = String(vals[n]);
+      while (t.length < len) t = ' ' + t;
+      return t.split('');
+    };
+    // после движения ролики возвращаются в средний круг, чтобы было куда ехать
+    var normalize = function (delay) {
+      clearTimeout(normT);
+      normT = setTimeout(function () { pos.forEach(function (p, k) { setCol(k, 10 + p % 10); }); }, delay);
+    };
+    // dir: 1 — дороже, цифры катятся вверх; −1 — дешевле, вниз
+    var roll = function (n, dir, mode) {
+      digits(n).forEach(function (ch, k) {
+        colEls[k].classList.toggle('is-off', ch === ' ');
+        if (ch === ' ') return;
+        var d = Number(ch), cur = pos[k] % 10;
+        if (mode === 'instant') { setCol(k, 10 + d); return; }
+        if (mode === 'spin') {
+          setCol(k, cur);
+          colEls[k].offsetHeight;
+          setCol(k, 20 + d, 1.1 + k * .28, 'cubic-bezier(.12,.62,.2,1.02)');
+          return;
+        }
+        if (pos[k] < 10 || pos[k] >= 20) { setCol(k, 10 + cur); colEls[k].offsetHeight; }
+        if (d === cur) return;
+        setCol(k, dir > 0 ? (d > cur ? 10 + d : 20 + d) : (d < cur ? 10 + d : d), .55 + k * .06, 'cubic-bezier(.3,1.3,.5,1)');
+      });
+      normalize(mode === 'spin' ? 1300 + len * 280 : 800);
+    };
+    var sync = function () {
+      box.classList.toggle('is-hot', !busy && vals[i] === hot);
+      lists.forEach(function (l) { l.classList.toggle('is-on', Number(l.dataset.v) === vals[i]); });
+      chips.forEach(function (c, k) {
+        c.setAttribute('aria-pressed', String(k === i));
+        c.classList.toggle('is-fire', vals[k] === hot);
+      });
+      arrows[0].disabled = i === 0;
+      arrows[1].disabled = i === vals.length - 1;
+      win.setAttribute('aria-valuenow', vals[i]);
+      win.setAttribute('aria-valuetext', '$' + vals[i] + ', ' + chips[i].textContent +
+        (vals[i] === hot && box.dataset.old ? ', горячая цена, было $' + box.dataset.old : ''));
+    };
+    var go = function (n) {
+      if (n < 0 || n >= vals.length || n === i || busy) return;
+      var dir = n > i ? 1 : -1;
+      i = n;
+      roll(i, dir, 'step');
+      sync();
+    };
+
+    roll(i, 1, 'instant');
+    sync();
+
+    Array.prototype.forEach.call(arrows, function (a) {
+      a.addEventListener('click', function () { go(i + Number(a.dataset.step)); });
+    });
+    chips.forEach(function (c, k) { c.addEventListener('click', function () { go(k); }); });
+    win.addEventListener('keydown', function (e) {
+      var n = { ArrowRight: i + 1, ArrowUp: i + 1, ArrowLeft: i - 1, ArrowDown: i - 1, Home: 0, End: vals.length - 1 }[e.key];
+      if (n === undefined) return;
+      e.preventDefault();
+      go(Math.max(0, Math.min(vals.length - 1, n)));
+    });
+    // свайп влево — дороже, как листание дальше по списку
+    var sx = null;
+    win.addEventListener('pointerdown', function (e) { sx = e.clientX; win.setPointerCapture(e.pointerId); });
+    win.addEventListener('pointerup', function (e) {
+      if (sx === null) return;
+      var dx = e.clientX - sx;
+      sx = null;
+      if (Math.abs(dx) >= 22) go(i + (dx < 0 ? 1 : -1));
+    });
+    win.addEventListener('pointercancel', function () { sx = null; });
+
+    // раскрутка — один раз, когда карточка видна; в ленте тарифов на
+    // телефоне соседняя карточка раскрутится, когда её долистают
+    if (reduced || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      io.disconnect();
+      busy = true;
+      sync();
+      roll(i, 1, 'spin');
+      setTimeout(function () { busy = false; sync(); }, 1100 + (len - 1) * 280 + 120);
+    }, { threshold: .6 });
+    io.observe(win);
+  });
+
   /* ---------- активный пункт навигации ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
   var targets = links

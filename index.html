@@ -1071,48 +1071,91 @@
       <button type="button" class="swipe-tabs__tab" aria-controls="plan-auto" aria-current="false">Автоматизации</button>
     </div>
     <div class="plans">
+      <!-- Цена — барабан-счётчик (script.js, «барабан цен»): значения и названия
+           комплектаций берутся из кнопок .kit__chip, стартовое — у кнопки с
+           aria-pressed="true". Горячая цена: data-hot — на какой цене гореть,
+           data-old — зачёркнутая старая цена. Убрать скидку = удалить оба атрибута. -->
       <article class="plan reveal" id="plan-bot">
-        <p class="plan__kind mono">Продажи в Telegram</p>
+        <p class="plan__kind mono">Системы в Telegram (и&nbsp;не&nbsp;только)</p>
         <h3 class="plan__h">Бот или Mini App</h3>
-        <p class="plan__for">Для заказов, записи и заявок, которые сейчас приходится разбирать в переписке.</p>
-        <p class="plan__price">от <span>$400</span></p>
-        <p class="plan__scope">Базовая комплектация</p>
-        <ul class="plan__list" role="list">
-          <li>Витрина, запись или приём заявок</li>
-          <li>Уведомления вам в Telegram</li>
-          <li>Клиенту не нужно отдельное приложение</li>
-        </ul>
-        <details class="plan__details">
-          <summary>Комплектации и сроки</summary>
-          <div class="plan__expanded">
-            <p><strong>Starter · от $400</strong>Витрина, запись или заявка и уведомления в чат.</p>
-            <p><strong>Business · от $900</strong>Дополнительно: админка, товары и цены, база клиентов, статистика и рассылки. Визуальный стиль уже в стоимости.</p>
-            <p><strong>MAX · от $1500</strong>Логика под ваш процесс, роли, приём оплаты и интеграции. Визуальный стиль уже в стоимости.</p>
-            <p>Ориентир: бот — около недели, Mini App — около двух недель. Срок зависит от объёма.</p>
+        <p class="plan__for">Автоматизация заказов, записи и заявок. Меньше ручной работы — больше времени на развитие.</p>
+        <div class="plan__price drum" data-drum data-hot="900" data-old="1100">
+          <span class="drum__label">Цена:</span>
+          <button type="button" class="drum__arrow" data-step="-1" aria-label="Дешевле"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="drum__win" role="slider" tabindex="0" aria-label="Цена: бот или Mini App">$900</div>
+          <button type="button" class="drum__arrow" data-step="1" aria-label="Дороже"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="kit">
+          <div class="kit__top">
+            <span class="kit__label">Комплектация</span>
+            <div class="kit__chips">
+              <button type="button" class="kit__chip" data-v="400" aria-pressed="false">Starter</button>
+              <button type="button" class="kit__chip" data-v="900" aria-pressed="true">Business</button>
+              <button type="button" class="kit__chip" data-v="1500" aria-pressed="false">MAX</button>
+            </div>
           </div>
-        </details>
+          <div class="kit__lists">
+            <ul class="plan__list kit__list" data-v="400" role="list">
+              <li>Витрина товара</li>
+              <li>Запись и приём заявок</li>
+              <li>Стандартная админ-панель</li>
+            </ul>
+            <ul class="plan__list kit__list is-on" data-v="900" role="list">
+              <li><b>Всё из Starter</b></li>
+              <li>База клиентов</li>
+              <li>Статистика и рассылки</li>
+              <li><span>Индивидуальный визуальный стиль<small>иконки, иллюстрации, общий дизайн</small></span></li>
+            </ul>
+            <ul class="plan__list kit__list" data-v="1500" role="list">
+              <li><b>Всё из Starter и Business</b></li>
+              <li>Индивидуальная логика</li>
+              <li>Роли</li>
+              <li>Интеграция платёжных систем</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan__terms">
+          <p><strong>Сроки</strong>Бот — около 7&nbsp;дней · Mini App — около 14&nbsp;дней</p>
+          <p class="plan__small">Сроки зависят от объёма.</p>
+        </div>
         <a href="https://t.me/davidnaumenko" class="btn btn--soft btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
       </article>
 
       <article class="plan plan--on reveal" id="plan-crm">
-        <p class="plan__kind mono">Сайт + внутренняя система</p>
+        <p class="plan__kind mono">Многостраничный сайт + админ-панель</p>
         <h3 class="plan__h">Сайт и CRM</h3>
-        <p class="plan__for">Для бизнеса, которому нужно получать заявки с сайта и вести клиентов в одном месте.</p>
-        <p class="plan__price">от <span>$500</span></p>
-        <p class="plan__scope">Базовая комплектация</p>
-        <ul class="plan__list" role="list">
-          <li>Сайт и стандартная CRM</li>
-          <li>Заявки, клиенты, статусы и деньги</li>
-          <li>Доступы для команды и обучение</li>
-        </ul>
-        <details class="plan__details">
-          <summary>Комплектации и сроки</summary>
-          <div class="plan__expanded">
-            <p><strong>Стандартная · от $500</strong>Сайт и CRM для работы с заявками и клиентами.</p>
-            <p><strong>Индивидуальная · от $1000</strong>Сайт, кастомная CRM и визуальная концепция. Своя логика и визуальный стиль — уже в стоимости комплектации.</p>
-            <p>Сложные конфигурации оцениваю после разбора процессов. Сайт или CRM — от месяца, в зависимости от задачи.</p>
+        <p class="plan__for">Сайт — это лицо вашей компании в интернете. Качество сайта отражает подход к делу.</p>
+        <div class="plan__price drum" data-drum>
+          <span class="drum__label">Цена:</span>
+          <button type="button" class="drum__arrow" data-step="-1" aria-label="Дешевле"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="drum__win" role="slider" tabindex="0" aria-label="Цена: сайт и CRM">$500</div>
+          <button type="button" class="drum__arrow" data-step="1" aria-label="Дороже"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="kit">
+          <div class="kit__top">
+            <span class="kit__label">Комплектация</span>
+            <div class="kit__chips">
+              <button type="button" class="kit__chip" data-v="500" aria-pressed="true">Стандартная</button>
+              <button type="button" class="kit__chip" data-v="1200" aria-pressed="false">Индивидуальная</button>
+            </div>
           </div>
-        </details>
+          <div class="kit__lists">
+            <ul class="plan__list kit__list is-on" data-v="500" role="list">
+              <li>Сайт</li>
+              <li>CRM для работы с заявками и клиентами</li>
+            </ul>
+            <ul class="plan__list kit__list" data-v="1200" role="list">
+              <li>Сайт</li>
+              <li>Кастомная CRM</li>
+              <li>Индивидуальная логика</li>
+              <li><span>Индивидуальный визуальный стиль<small>иконки, иллюстрации, общий дизайн</small></span></li>
+            </ul>
+          </div>
+        </div>
+        <p class="plan__alert"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.8v3.8M8 10.9v.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Сложные конфигурации оцениваются отдельно</p>
+        <div class="plan__terms">
+          <p><strong>Сроки</strong>От 30 дней — в зависимости от задачи</p>
+        </div>
         <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
       </article>
 

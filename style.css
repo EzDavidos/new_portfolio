@@ -1860,7 +1860,7 @@ label.cc__opt { cursor: pointer; }
 .plan__for { color: var(--ink-soft); font-size: .9rem; line-height: 1.5; margin-top: .65rem; }
 .plan__price {
   display: flex; align-items: baseline; gap: .4rem;
-  margin-top: 1.7rem; font-family: var(--f-display);
+  margin-top: 2.7rem; font-family: var(--f-display);   /* над барабаном — строка горячей цены */
   font-size: .95rem; color: var(--ink-mute);
 }
 .plan__price span { font-size: clamp(2.3rem, 3.4vw, 3rem); line-height: 1.1; font-weight: 600; color: var(--ink); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
@@ -1881,6 +1881,132 @@ label.cc__opt { cursor: pointer; }
 .plan__expanded p + p { margin-top: .9rem; }
 .plan__expanded strong { display: block; color: var(--ink); margin-bottom: .2rem; font-weight: 600; }
 .plan .btn { margin-top: .5rem; }
+
+/* ---------- барабан цены ----------
+   Счётчик: у каждой цифры свой ролик 0–9 (три круга, чтобы было куда
+   раскрутиться). Ролики, «$», плашку горячей цены и искры строит script.js;
+   без скрипта в окне остаётся простая цена из разметки. */
+.drum { position: relative; align-items: center; gap: .45rem; }
+/* общее .plan__price span — кегль цены тарифа; внутри барабана кегль
+   задаёт само окно, а подпись и плашка живут своим */
+.drum span { font-size: inherit; line-height: inherit; font-weight: inherit; letter-spacing: inherit; color: inherit; }
+.drum .drum__label { flex: none; margin-right: .2rem; font-size: .95rem; color: var(--ink-mute); }
+.drum__arrow {
+  flex: none; display: grid; place-items: center;
+  width: 34px; height: 34px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--card); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--ink);
+  transition: box-shadow .2s, color .2s, opacity .2s;
+}
+.drum__arrow:hover:not(:disabled) { box-shadow: inset 0 0 0 1px var(--green); color: var(--green); }
+.drum__arrow:disabled { opacity: .35; cursor: default; }
+.drum__arrow svg { width: 14px; height: 14px; }
+/* ширина окна постоянная (под четыре цифры), иначе стрелки ездили бы
+   вслед за ценой; короткая цена центрируется сама */
+.drum__win {
+  position: relative; flex: none; width: 3.9em; height: 1.5em;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 16px; background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--line-2), inset 0 10px 14px -12px rgba(23,33,30,.25), inset 0 -10px 14px -12px rgba(23,33,30,.25);
+  font-size: clamp(1.9rem, 2.6vw, 2.45rem); font-weight: 600; line-height: 1;
+  letter-spacing: -.03em; color: var(--ink); font-variant-numeric: tabular-nums;
+  cursor: grab; user-select: none; -webkit-user-select: none;
+  touch-action: pan-y;   /* свайп вбок крутит барабан, а не ленту тарифов */
+  transition: background .4s;
+}
+.drum__win:active { cursor: grabbing; }
+.drum__cols { display: flex; height: 1.2em; overflow: hidden; }
+.drum__col { width: .6em; overflow: hidden; transition: width .45s var(--ease); }
+.drum__col.is-off { width: 0; }
+.drum__strip { display: block; will-change: transform; }
+.drum__strip span { display: block; height: 1.2em; line-height: 1.2em; text-align: center; }
+
+/* горячая цена: окно светится, цифры горят, под ними языки пламени */
+.drum.is-hot .drum__win { background: #FFF5EF; animation: drum-glow 1.8s ease-in-out infinite; }
+@keyframes drum-glow {
+  0%, 100% { box-shadow: inset 0 0 0 1.5px #FF3B1F, 0 0 18px rgba(255,59,31,.30), 0 0 0 4px rgba(255,59,31,.08); }
+  50%      { box-shadow: inset 0 0 0 1.5px #FF7A1A, 0 0 30px rgba(255,90,30,.45), 0 0 0 6px rgba(255,90,30,.10); }
+}
+.drum.is-hot .drum__cur, .drum.is-hot .drum__strip span {
+  background: linear-gradient(0deg, #D9230C 0%, #FF3B1F 30%, #FF7A1A 62%, #FFC247 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.drum__flame { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .4s; }
+.drum.is-hot .drum__flame { opacity: 1; }
+.drum__flame i {
+  position: absolute; bottom: -30%; width: 34%; height: 80%; border-radius: 50% 50% 40% 40%;
+  background: radial-gradient(ellipse at 50% 90%, rgba(255,122,26,.55), rgba(255,194,71,.18) 55%, transparent 72%);
+  filter: blur(6px); animation: drum-lick 1.3s ease-in-out infinite;
+}
+.drum__flame i:nth-child(1) { left: 6%;  animation-delay: -.2s; }
+.drum__flame i:nth-child(2) { left: 33%; animation-delay: -.7s; height: 95%; }
+.drum__flame i:nth-child(3) { left: 60%; animation-delay: -1s; }
+@keyframes drum-lick { 0%, 100% { transform: scaleY(.85) translateY(6%); opacity: .75; } 50% { transform: scaleY(1.1) translateY(-4%); opacity: 1; } }
+.drum__embers { position: absolute; left: 0; right: 0; bottom: 70%; height: 3.2rem; pointer-events: none; opacity: 0; transition: opacity .4s; }
+.drum.is-hot .drum__embers { opacity: 1; }
+.drum__embers i { position: absolute; bottom: 0; width: 4px; height: 4px; border-radius: 50%; background: #FFC247; box-shadow: 0 0 6px #FF7A1A; opacity: 0; animation: drum-rise 2.2s linear infinite; }
+.drum__embers i:nth-child(1) { left: 18%; }
+.drum__embers i:nth-child(2) { left: 42%; animation-delay: .7s; width: 3px; height: 3px; }
+.drum__embers i:nth-child(3) { left: 66%; animation-delay: 1.3s; }
+.drum__embers i:nth-child(4) { left: 84%; animation-delay: 1.8s; width: 3px; height: 3px; }
+@keyframes drum-rise { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(6px, -3rem); opacity: 0; } }
+/* старая цена и плашка — строкой над барабаном, справа */
+.drum__hot {
+  position: absolute; right: 0; bottom: calc(100% + .3rem);
+  display: flex; align-items: center; gap: .5rem; pointer-events: none;
+  opacity: 0; transform: translateY(6px) scale(.85); transform-origin: 90% 100%;
+  transition: opacity .25s, transform .45s cubic-bezier(.3,1.6,.5,1);
+}
+.drum.is-hot .drum__hot { opacity: 1; transform: none; }
+.drum .drum__old { font-size: .95rem; letter-spacing: 0; color: var(--ink-faint); text-decoration: line-through; text-decoration-color: #FF3B1F; text-decoration-thickness: 2px; }
+.drum .drum__badge {
+  display: inline-flex; line-height: 1.2; letter-spacing: 0; align-items: center; gap: .3rem; white-space: nowrap;
+  padding: .3rem .62rem .3rem .5rem; border-radius: 100px;
+  font-family: var(--f-text); font-size: .72rem; font-weight: 600; color: #fff;
+  background: linear-gradient(100deg, #E8321A, #F2650F);
+  box-shadow: 0 6px 18px rgba(255,59,31,.35);
+}
+.drum__badge svg { width: 12px; height: 12px; }
+
+/* комплектация меняется вместе с барабаном; списки лежат в одной клетке,
+   поэтому высота карточки — по самому длинному и ничего не прыгает */
+.kit { margin-top: 1.6rem; padding-top: 1.3rem; border-top: 1px solid var(--line-2); }
+/* подпись всегда отдельной строкой: у CRM названия длиннее, и в строку
+   с подписью кнопки влезали только у бота — карточки выглядели по-разному */
+.kit__top { display: grid; justify-items: start; gap: .5rem; }
+.kit__label { color: var(--ink-mute); font-size: .78rem; }
+.kit__chips { display: flex; flex-wrap: wrap; gap: .3rem; }
+.kit__chip {
+  border: 0; cursor: pointer; padding: .34rem .72rem; border-radius: 100px;
+  font: inherit; font-size: .78rem; font-weight: 500;
+  background: transparent; box-shadow: inset 0 0 0 1px var(--line-2); color: var(--ink-soft);
+  transition: background .25s, color .25s, box-shadow .25s;
+}
+.kit__chip:hover { color: var(--green-deep); box-shadow: inset 0 0 0 1px var(--green); }
+.kit__chip[aria-pressed="true"] { background: var(--green-deep); color: #fff; box-shadow: none; }
+.kit__chip.is-fire[aria-pressed="true"] { background: linear-gradient(100deg, #E8321A, #F2650F); }
+.kit__lists { display: grid; margin-top: 1rem; }
+.kit__list {
+  grid-area: 1 / 1; align-content: start; margin: 0; visibility: hidden; opacity: 0; transform: translateY(6px);
+  transition: opacity .3s, transform .35s var(--ease), visibility 0s .35s;
+}
+.kit__list.is-on { visibility: visible; opacity: 1; transform: none; transition: opacity .3s .05s, transform .35s var(--ease) .05s, visibility 0s; }
+.kit__list b { color: var(--ink); font-weight: 600; }
+.kit__list small { display: block; font-size: .8rem; color: var(--ink-mute); }
+.plan__alert {
+  display: flex; align-items: flex-start; gap: .55rem; margin-top: 1.3rem;
+  padding: .75rem .9rem; border-radius: 12px;
+  background: var(--tint); box-shadow: inset 0 0 0 1px rgba(12,122,93,.18);
+  font-size: .86rem; font-weight: 600; line-height: 1.45; color: var(--green-deep);
+}
+.plan__alert svg { width: 16px; height: 16px; flex: none; margin-top: .1rem; }
+.plan__terms { margin: 1.3rem 0 1.4rem; padding-top: 1.1rem; border-top: 1px solid var(--line-2); font-size: .86rem; line-height: 1.5; color: var(--ink-soft); }
+.plan__terms strong { display: block; margin-bottom: .2rem; font-size: .78rem; font-weight: 500; color: var(--ink-mute); }
+.plan__terms .plan__small { margin-top: .2rem; font-size: .8rem; color: var(--ink-mute); }
+.plan__terms + .btn { margin-top: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .drum.is-hot .drum__win, .drum__flame i { animation: none; }
+  .drum__embers { display: none; }
+}
 /* Поддержка — не тариф, а надстройка сверх запуска: своя плашка,
    подсвеченная зелёным, чтобы блок не читался четвёртым тарифом. */
 .addon {
@@ -1937,7 +2063,10 @@ label.cc__opt { cursor: pointer; }
   .plans { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .plan + .plan { border-top: 0; border-left: 1px solid var(--line-2); }
   .plan__for { min-height: 4.5em; }
-  .plan__price { height: 3.3rem; align-items: baseline; }
+  .plan__price { height: 3.4rem; align-items: center; }
+  /* у фразы «Цена: обсуждается отдельно» два кегля — держим общую базовую
+     линию, а сама строка стоит по центру ряда, как барабаны соседей */
+  .plan__price--calc { flex-wrap: wrap; align-items: baseline; align-content: center; }
 }
 
 /* ============================================================
