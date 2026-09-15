@@ -2093,8 +2093,11 @@ ul { list-style: none; padding: 0; }
   .trust__grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
   .footer__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, .55fr) minmax(0, .55fr); }
 
-  .final__inner { grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); padding-left: 32%; }
+  /* правая колонка по ширине кнопки: долей (.6fr) она на 860–1000 px выходила
+     уже кнопки, и та наезжала на заголовок */
+  .final__inner { grid-template-columns: minmax(0, 1fr) auto; padding-left: 32%; }
   .final__side { align-items: flex-end; text-align: right; }
+  .final__note { max-width: 14rem; }
 }
 
 @media (min-width: 1280px) {
