@@ -69,6 +69,9 @@
     'uniform vec2  uRes;',
     'uniform float uTime;',
     'uniform float uDark;',
+    // Тёмная тема сайта (0/1): материал светится на тёмном фоне, а не
+    // поглощает свет на бумаге. Форма и течение от неё не зависят.
+    'uniform float uNight;',
     // 0 — Hero и тёмная секция, 1 — бассейн в плашке, 2 — поток в шапке цен.
     // Плашки делят с Hero ВЕСЬ материал и меняют только композицию.
     'uniform float uFlow;',
@@ -616,6 +619,10 @@
     // около rgb(0.44, 0.65, 0.55), то есть примерно #69B8A7. Глубже материал
     // не уходит НИКОГДА, поэтому крупных тёмных областей в кадре появиться не
     // может по построению, а не по удачному подбору.
+    // Ночной материал берёт толщу ДО потолка: светлой воде потолок не даёт
+    // уйти в тёмный teal, а ночной нужна вся глубина — самые плотные места
+    // рефа горят почти белым.
+    '  float thickN = thick;',
     '  thick = thick / (1.0 + thick / 0.400);',
 
     // Тон привязан к фирменному зелёному #0C7A5D (164°), а не к воде рефа.
@@ -682,6 +689,9 @@
     // растушёвкой и крупная форма в кадре не читается вовсе.
     '  float sEdge = smoothstep(0.05, 0.24, shape) * (1.0 - smoothstep(0.24, 0.56, shape));',
     '  hi += sEdge * 0.13 * comp;',
+    // Потолок блика — правило бумаги (ярче листа стекло быть не может).
+    // На тёмном фоне правило обратное, ночь берёт блик без потолка.
+    '  float hiN = hi;',
     '  hi = min(hi, 0.18);',
 
     '  vec3 tr = exp(-ABSORB * thick * DISP);',
@@ -693,18 +703,51 @@
     '  vec3 HILIGHT = vec3(0.969, 0.988, 0.980);',
     '  vec3 lc = PAPER * tr * lit + SCATTER * (1.0 - tr) + hi * HILIGHT;',
 
+    /* ---------- ночь: свечение вместо поглощения ---------- */
+    // Замер воды рефа тёмной темы (photo_video/ref_dark_theme.png) по
+    // квантилям яркости ложится на закон «экрана»: -ln((1 - цвет)/(1 - фон))
+    // растёт по каналам в пропорции r/b = 0.30, g/b = 0.19 на всей глубине,
+    // от q25 до q98. То есть это тот же Бугер, только вывернутый: толща не
+    // гасит бумагу, а зажигает фон — густая вода уходит в лаванду и почти
+    // белый, тонкая сходится к фону и пропадает. Зелёный в шейдере ниже
+    // замера (0.13): фон и так несёт зелёного больше красного, и на 0.19
+    // середина воды садилась в серо-синий.
+    // NBG — --paper тёмной темы (#1E2334); при его смене обновить.
+    '  vec3 NBG = vec3(0.118, 0.137, 0.204);',
+    '  vec3 GLOW = vec3(0.30, 0.13, 1.00);',
+    '  float eN = thickN * 7.5 + 0.16 * dens;',
+    // Светящаяся вода под текстом Hero съедает контраст подписи, которую
+    // бледная дневная плёнка не трогала. Ночью зона текста на десктопе
+    // гасится сильнее: в рефе вода и начинается там, где кончается текст.
+    '  eN *= 1.0 - 0.78 * comp * step(uFlow, 0.5) * smoothstep(0.8, 1.1, asp)',
+    '             * smoothstep(0.62, 0.40, uv.x) * smoothstep(0.34, 0.50, uv.y);',
+    '  eN = eN / (1.0 + eN / 9.0);',
+    '  vec3 nc = 1.0 - (1.0 - NBG) * exp(-GLOW * eN * DISP);',
+    // Блик на тёмном — главный носитель «шёлка» рефа: светлые нити по
+    // гребням складок. Цвет из верхнего конца замера (#EBD6FE).
+    '  vec3 NHI = vec3(0.890, 0.810, 1.000);',
+    '  float nh = hiN * 2.2 + crest * crest * 0.9 + caus * 0.5;',
+    '  nc = mix(nc, NHI, clamp(nh * 2.6 * smoothstep(0.15, 1.2, eN), 0.0, 0.94));',
+
 
     '  vec3 d1 = vec3(0.031, 0.122, 0.098);',
     '  vec3 d2 = vec3(0.051, 0.212, 0.173);',
     '  vec3 d3 = vec3(0.090, 0.373, 0.306);',
     '  vec3 d4 = vec3(0.325, 0.663, 0.573);',
+    // Та же лестница ночью — в фиолет. Нижняя ступень равна фону блока
+    // (--green-dark тёмной темы, #161927), иначе край маски был бы виден.
+    '  d1 = mix(d1, vec3(0.086, 0.098, 0.153), uNight);',
+    '  d2 = mix(d2, vec3(0.165, 0.137, 0.345), uNight);',
+    '  d3 = mix(d3, vec3(0.345, 0.255, 0.700), uNight);',
+    '  d4 = mix(d4, vec3(0.720, 0.620, 0.990), uNight);',
     '  vec3 dc = mix(d1, d2, smoothstep(0.02, 0.38, dens));',
     '  dc = mix(dc, d3, smoothstep(0.34, 0.74, dens));',
     '  dc = mix(dc, d4, smoothstep(0.68, 1.00, dens) * 0.68);',
     '  dc *= 0.80 + 0.36 * diff;',
-    '  dc += spec * 0.20 + spec2 * 0.34 + edge * 0.08;',
+    // Белый блик по тёмному ночью читался серыми пятнами — там он в тон воде.
+    '  dc += (spec * 0.20 + spec2 * 0.34 + edge * 0.08) * mix(vec3(1.0), vec3(0.80, 0.70, 1.00), uNight);',
 
-    '  vec3 col = mix(lc, dc, uDark);',
+    '  vec3 col = mix(mix(lc, nc, uNight), dc, uDark);',
 
     // Прозрачность ведёт композиция, а не градиент по углу экрана: тело
     // волны плотное, вокруг него лёгкая дымка, слева за заголовком почти
@@ -721,6 +764,15 @@
     // в lvl ослаблен до 0.62 и силуэт от него не зависит.
     '  float alpha = mix(pow(clamp(shape, 0.0, 1.0), 1.05)',
     '                    * smoothstep(0.0, 0.12, dens) * fade, 1.0, uDark);',
+
+    // Буфер копит альфу квадратом (SRC_ALPHA по пустому буферу даёт a*a),
+    // поэтому страница ложится под воду с весом 1 - a*a, а не 1 - a. На
+    // светлой бумаге это невидимо, на тёмном фоне кромка воды светлела
+    // ореолом. Ночи лишний фон вычитается здесь, светлая ветка не тронута.
+    // Сама ночная масса гуще: полупрозрачная кромка светящейся воды на
+    // тёмном читается дымкой, у рефа её почти нет.
+    '  alpha = mix(alpha, pow(alpha, 0.65), uNight * (1.0 - uDark));',
+    '  col -= NBG * (1.0 - alpha) * uNight;',
 
     // Дизеринг: на пологих светлых градиентах 8 бит дают видимые ступени.
     '  float dth = (hash(gl_FragCoord.xy + fract(uTime)) - 0.5) / 255.0;',
@@ -871,6 +923,11 @@
     var uSpan = gl.getUniformLocation(prog, 'uSpan');
     gl.uniform1f(gl.getUniformLocation(prog, 'uDark'), dark);
     gl.uniform1f(gl.getUniformLocation(prog, 'uFlow'), flow);
+    // Тема сайта — атрибут data-scheme на <html>: его ставит скрипт в
+    // <head> и меняет переключатель. Вода подхватывает смену сама.
+    var uNight = gl.getUniformLocation(prog, 'uNight');
+    var isNight = function () { return document.documentElement.getAttribute('data-scheme') === 'dark' ? 1 : 0; };
+    gl.uniform1f(uNight, isNight());
     gl.uniform1i(gl.getUniformLocation(prog, 'uTrail'), 0);
     gl.uniform2f(gl.getUniformLocation(prog, 'uTrailShape'), TRAIL_HEAD, TRAIL_LIFT);
 
@@ -1111,12 +1168,20 @@
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
 
+    // Неподвижной воде смена темы перерисовывает кадр; живая возьмёт
+    // новое значение со следующего кадра сама.
+    var drawStill = function () {
+      resize();
+      drawWater(12.0);
+    };
+    new MutationObserver(function () {
+      gl.useProgram(prog);
+      gl.uniform1f(uNight, isNight());
+      if (reduced) drawStill();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-scheme'] });
+
     if (reduced) {
       // Спокойные акценты и reduced motion: один кадр, повтор только при resize.
-      function drawStill() {
-        resize();
-        drawWater(12.0);
-      }
       drawStill();
       window.addEventListener('resize', drawStill, { passive: true });
       if ('ResizeObserver' in window) new ResizeObserver(drawStill).observe(canvas);
