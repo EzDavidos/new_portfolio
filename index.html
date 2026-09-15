@@ -1354,6 +1354,7 @@
           <button class="btn btn--on-dark" type="submit">Отправить заявку</button>
           <p class="request__status" role="status" aria-live="polite"></p>
         </div>
+        <p class="request__legal">Отправляя заявку, вы соглашаетесь с <a href="privacy.html">политикой конфиденциальности</a>.</p>
       </form>
 
       <div class="request__done" tabindex="-1" hidden>
@@ -1404,6 +1405,10 @@
 
     <div class="footer__bottom">
       <span>© 2026 David Naumenko</span>
+      <span class="footer__legal">
+        <a href="privacy.html">Политика конфиденциальности</a>
+        <button type="button" data-cookie-settings>Настройки cookies</button>
+      </span>
       <span class="footer__place">
         Нячанг, Вьетнам
         <span class="footer__clock" data-clock>—</span>
@@ -1434,6 +1439,30 @@
     </button>
   </div>
 </dialog>
+
+<!-- Согласие на cookies. Пока выбора нет, аналитика не грузится вовсе
+     (script.js, блок «аналитика GA4 + согласие»). Без JS баннер не
+     показывается, и аналитика тоже не работает. -->
+<aside class="cc" id="cookies" aria-labelledby="cc-title" hidden>
+  <p class="cc__title" id="cc-title">Cookies на этом сайте</p>
+  <p class="cc__text">Я смотрю в Google Analytics, какие разделы полезны, а какие нет. Он ставит cookies — включу их, только если вы согласитесь. <a href="privacy.html#cookies">Подробнее</a></p>
+  <div class="cc__prefs" id="cc-prefs" hidden>
+    <div class="cc__opt">
+      <span class="cc__opt-text"><b>Необходимые</b>Запоминают ваш выбор в этом окне.</span>
+      <span class="cc__always">Всегда включены</span>
+    </div>
+    <label class="cc__opt" for="cc-analytics">
+      <span class="cc__opt-text"><b>Аналитика</b>Google Analytics: какие разделы смотрят и откуда приходят. Без имени и контактов.</span>
+      <input class="cc__switch" type="checkbox" id="cc-analytics" role="switch">
+    </label>
+  </div>
+  <div class="cc__actions">
+    <button type="button" class="btn btn--primary btn--sm" data-cc="accept">Принять</button>
+    <button type="button" class="btn btn--soft btn--sm" data-cc="reject">Отклонить</button>
+    <button type="button" class="cc__more" data-cc="prefs" aria-expanded="false" aria-controls="cc-prefs">Настроить</button>
+    <button type="button" class="btn btn--primary btn--sm" data-cc="save" hidden>Сохранить выбор</button>
+  </div>
+</aside>
 
 <script src="water.js"></script>
 <script src="script.js"></script>

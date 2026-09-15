@@ -8,27 +8,81 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- аналитика GA4 ----------
-     События копятся в dataLayer сразу, а сам gtag.js грузится после
-     отрисовки страницы, когда браузер свободен, — чтобы не тормозить
-     первый экран. Всё, что случилось до загрузки, он отправит сам. */
+  /* ---------- аналитика GA4 + согласие на cookies ----------
+     Пока человек не выбрал, gtag.js не грузится вовсе и cookies нет:
+     события ждут в pending. «Принять» — накопленное уходит, gtag.js
+     грузится после отрисовки, когда браузер свободен; «Отклонить» —
+     накопленное выбрасывается. Выбор живёт в localStorage 12 месяцев,
+     потом баннер спросит снова. Рекламные сигналы запрещены всегда. */
   var GA_ID = 'G-2BSQFHXPFP';
+  var CONSENT_KEY = 'dn_consent';
+  var CONSENT_TTL = 365 * 864e5;
+  var analytics = null;   // null — ещё не выбрал
+  var gaOn = false;
+  var pending = [];
+
   window.dataLayer = window.dataLayer || [];
   var gtag = function () { window.dataLayer.push(arguments); };
-  gtag('js', new Date());
-  gtag('config', GA_ID);
-  var track = function (name, params) { gtag('event', name, params || {}); };
 
-  window.addEventListener('load', function () {
+  var gaStart = function () {
+    window['ga-disable-' + GA_ID] = false;
+    if (gaOn) { gtag('consent', 'update', { analytics_storage: 'granted' }); return; }
+    gaOn = true;
+    gtag('consent', 'default', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+    pending.forEach(function (e) { gtag('event', e[0], e[1]); });
+    pending = [];
     var add = function () {
       var s = document.createElement('script');
       s.async = true;
       s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
       document.head.appendChild(s);
     };
-    if ('requestIdleCallback' in window) requestIdleCallback(add, { timeout: 3000 });
-    else setTimeout(add, 1500);
-  });
+    var idle = function () {
+      if ('requestIdleCallback' in window) requestIdleCallback(add, { timeout: 3000 });
+      else setTimeout(add, 1500);
+    };
+    if (document.readyState === 'complete') idle();
+    else window.addEventListener('load', idle);
+  };
+
+  // отзыв согласия: GA замолкает, его cookies стираются
+  var gaStop = function () {
+    pending = [];
+    if (gaOn) {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      window['ga-disable-' + GA_ID] = true;
+    }
+    var host = location.hostname.replace(/^www\./, '');
+    document.cookie.split(';').forEach(function (c) {
+      var name = c.split('=')[0].trim();
+      if (!/^_ga(_|$)/.test(name)) return;
+      ['', '; domain=' + host, '; domain=.' + host].forEach(function (d) {
+        document.cookie = name + '=; Max-Age=0; path=/' + d;
+      });
+    });
+  };
+
+  var setAnalytics = function (on) {
+    analytics = on;
+    try { localStorage.setItem(CONSENT_KEY, JSON.stringify({ analytics: on, at: Date.now() })); } catch (e) {}
+    if (on) gaStart(); else gaStop();
+  };
+
+  try {
+    var saved = JSON.parse(localStorage.getItem(CONSENT_KEY));
+    if (saved && Date.now() - saved.at < CONSENT_TTL) analytics = !!saved.analytics;
+  } catch (e) {}
+  if (analytics) gaStart();
+
+  var track = function (name, params) {
+    if (analytics) gtag('event', name, params || {});
+    else if (analytics === null && pending.length < 50) pending.push([name, params || {}]);
+  };
 
   // Нажатия на Telegram — с местом, откуда нажали. В окне кейса место — id кейса.
   document.addEventListener('click', function (e) {
@@ -54,6 +108,52 @@
     if (!depth.length) window.removeEventListener('scroll', onDepth);
   };
   window.addEventListener('scroll', onDepth, { passive: true });
+
+  /* ---------- cookie-баннер ----------
+     Сам всплывает, пока выбора нет. Из футера («Настройки cookies») и по
+     ссылке /#cookies со страницы политики открывается сразу с настройками —
+     там же согласие можно отозвать. */
+  var cc = document.getElementById('cookies');
+  if (cc) {
+    var ccPrefs = document.getElementById('cc-prefs');
+    var ccBox = document.getElementById('cc-analytics');
+    var ccBtn = function (k) { return cc.querySelector('[data-cc="' + k + '"]'); };
+    var ccFrom = null;   // откуда открыли — туда вернуть фокус
+
+    var ccMode = function (prefs) {
+      ccPrefs.hidden = !prefs;
+      ccBtn('accept').hidden = ccBtn('reject').hidden = ccBtn('prefs').hidden = prefs;
+      ccBtn('save').hidden = !prefs;
+      ccBtn('prefs').setAttribute('aria-expanded', String(prefs));
+    };
+    var ccOpen = function (prefs) {
+      ccBox.checked = analytics === true;
+      ccMode(prefs);
+      cc.hidden = false;
+      if (prefs) ccBox.focus();
+    };
+
+    cc.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-cc]');
+      if (!b) return;
+      if (b.dataset.cc === 'prefs') { ccMode(true); ccBox.focus(); return; }
+      setAnalytics(b.dataset.cc === 'accept' || b.dataset.cc === 'save' && ccBox.checked);
+      cc.hidden = true;
+      if (ccFrom) { ccFrom.focus(); ccFrom = null; }
+    });
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-cookie-settings]');
+      if (!t) return;
+      e.preventDefault();
+      ccFrom = t;
+      ccOpen(true);
+    });
+
+    if (location.hash === '#cookies') {
+      history.replaceState(null, '', location.pathname + location.search);
+      ccOpen(true);
+    } else if (analytics === null) ccOpen(false);
+  }
 
   /* ---------- шапка ---------- */
   var header = document.getElementById('header');

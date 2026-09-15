@@ -1007,6 +1007,99 @@ ul { list-style: none; padding: 0; }
   .request__grid { grid-template-columns: 1fr 1fr; }
   .request__field--wide { grid-column: 1 / -1; }
 }
+.final .request__legal { margin-top: .9rem; max-width: none; font-size: .82rem; color: rgba(234,243,239,.65); }
+.request__legal a { color: rgba(234,243,239,.9); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ============================================================
+   COOKIE-БАННЕР
+   Плашка на бумаге, но фон сплошной: баннер лежит поверх текста и
+   кнопок, и даже 3 % прозрачности давали читаемую кашу под ним. На телефоне — полоса по ширине
+   экрана, с 600 px — карточка в левом нижнем углу. Ниже мобильного
+   меню (99), чтобы не лечь поверх него.
+   ============================================================ */
+.cc {
+  position: fixed; z-index: 90;
+  left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  display: grid; gap: .65rem;
+  padding: 1.1rem 1.15rem 1.15rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-3);
+  color: var(--ink);
+  animation: cc-in .45s var(--ease) both;
+}
+.cc[hidden], .cc [hidden] { display: none; }
+.cc:focus { outline: none; }
+.cc__title { font-family: var(--f-display); font-weight: 600; font-size: 1.04rem; line-height: 1.3; }
+.cc__text { font-size: .92rem; line-height: 1.5; color: var(--ink-soft); }
+.cc__text a, .cc__more { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+.cc__prefs { display: grid; border-top: 1px solid var(--line); }
+.cc__opt { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .75rem; border-bottom: 1px solid var(--line); }
+label.cc__opt { cursor: pointer; }
+.cc__opt-text { display: grid; gap: .1rem; font-size: .86rem; line-height: 1.45; color: var(--ink-soft); }
+.cc__opt-text b { font-size: .92rem; font-weight: 600; color: var(--ink); }
+.cc__always { flex: none; font-size: .8rem; font-weight: 500; color: var(--green); }
+.cc__switch {
+  -webkit-appearance: none; appearance: none; flex: none; position: relative; margin: 0;
+  width: 44px; height: 26px; border-radius: 99px;
+  background: var(--ink-faint); cursor: pointer; transition: background-color .2s;
+}
+.cc__switch::after {
+  content: ""; position: absolute; top: 3px; left: 3px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(23,33,30,.25);
+  transition: transform .2s var(--ease);
+}
+.cc__switch:checked { background: var(--green); }
+.cc__switch:checked::after { transform: translateX(18px); }
+.cc__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; margin-top: .15rem; }
+.cc__more { font-size: .92rem; padding: .45rem .35rem; }
+@keyframes cc-in { from { opacity: 0; transform: translateY(14px); } }
+@media (max-width: 599px) {
+  /* «Принять» и «Отклонить» одной ширины: отказ не должен выглядеть мельче */
+  .cc__actions .btn { flex: 1 1 0; }
+}
+@media (min-width: 600px) {
+  .cc {
+    left: 20px; right: auto; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    width: min(26rem, calc(100% - 40px));
+    padding: 1.3rem 1.4rem 1.35rem;
+  }
+}
+
+/* ============================================================
+   СТРАНИЦА ДОКУМЕНТА — privacy.html
+   ============================================================ */
+.doc-top { padding-block: clamp(1rem, 2.5vw, 1.6rem); }
+/* страница — одна колонка по центру, верхняя строка по её ширине */
+.doc-top .wrap, .doc .wrap { max-width: calc(46rem + 2 * var(--pad-x)); }
+.doc-top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.doc-back { display: inline-flex; align-items: center; gap: .45rem; padding-block: .4rem; font-size: .95rem; font-weight: 500; color: var(--green); }
+.doc { padding-block: clamp(.5rem, 2vw, 1.5rem) var(--sec-y); }
+.doc__body {
+  background: rgba(255,255,255,.96);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-2);
+  padding: clamp(1.4rem, 5vw, 3.25rem);
+}
+.doc h1 { font-family: var(--f-display); font-size: var(--fs-h2); font-weight: 600; line-height: 1.12; letter-spacing: -.008em; text-wrap: balance; }
+.doc__date { margin-top: .6rem; font-size: .9rem; color: var(--ink-mute); }
+.doc h2 { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 600; line-height: 1.3; margin-top: 2.2rem; text-wrap: balance; scroll-margin-top: 1.5rem; }
+.doc p, .doc ul { margin-top: .75rem; color: var(--ink-soft); }
+.doc ul { padding-left: 1.2rem; list-style: disc; }
+.doc li + li { margin-top: .35rem; }
+.doc strong { font-weight: 600; color: var(--ink); }
+.doc a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+.doc .btn { color: var(--ink); text-decoration: none; }
+.doc__table { margin-top: 1rem; overflow-x: auto; }
+.doc table { width: 100%; min-width: 34rem; border-collapse: collapse; font-size: .92rem; }
+.doc th, .doc td { text-align: left; vertical-align: top; padding: .65rem 1rem .65rem 0; border-bottom: 1px solid var(--line); }
+.doc th { font-family: var(--f-mono); font-size: var(--fs-mono); letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: var(--ink-mute); }
+.doc td { color: var(--ink-soft); }
+.doc code { font-family: var(--f-mono); font-size: .86rem; color: var(--ink); }
+.doc__cta { margin-top: 1.1rem; }
 
 /* ============================================================
    BLOCK 05 — СОБСТВЕННЫЙ ПРОДУКТ «100ЛОВАЯ»
@@ -1906,6 +1999,12 @@ ul { list-style: none; padding: 0; }
   letter-spacing: .11em; text-transform: uppercase; font-weight: 500;
 }
 .footer__clock { color: #fff; font-variant-numeric: tabular-nums; }
+.footer__legal { display: inline-flex; flex-wrap: wrap; gap: 0 1.25rem; }
+.footer__legal a, .footer__legal button {
+  padding: .4rem 0; color: inherit; transition: color .25s;
+  text-decoration: underline; text-decoration-color: rgba(230,241,236,.3); text-underline-offset: 3px;
+}
+.footer__legal a:hover, .footer__legal button:hover { color: #fff; }
 
 /* ============================================================
    SCROLL REVEAL
