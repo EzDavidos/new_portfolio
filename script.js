@@ -8,6 +8,53 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- аналитика GA4 ----------
+     События копятся в dataLayer сразу, а сам gtag.js грузится после
+     отрисовки страницы, когда браузер свободен, — чтобы не тормозить
+     первый экран. Всё, что случилось до загрузки, он отправит сам. */
+  var GA_ID = 'G-2BSQFHXPFP';
+  window.dataLayer = window.dataLayer || [];
+  var gtag = function () { window.dataLayer.push(arguments); };
+  gtag('js', new Date());
+  gtag('config', GA_ID);
+  var track = function (name, params) { gtag('event', name, params || {}); };
+
+  window.addEventListener('load', function () {
+    var add = function () {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+    };
+    if ('requestIdleCallback' in window) requestIdleCallback(add, { timeout: 3000 });
+    else setTimeout(add, 1500);
+  });
+
+  // Нажатия на Telegram — с местом, откуда нажали. В окне кейса место — id кейса.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="https://t.me/davidnaumenko"]');
+    if (!a) return;
+    var where;
+    if (a.closest('#case')) where = document.getElementById('case').dataset.case || 'case';
+    else if (a.closest('.request, .request__done')) where = 'form';
+    else if (a.closest('.plan')) where = a.closest('.plan').id;
+    else if (a.closest('footer')) where = 'footer';
+    else {
+      var box = a.closest('#header, #sheet, section[id]');
+      where = box ? ({ header: 'header', sheet: 'menu', top: 'hero', contact: 'final' })[box.id] || box.id : 'other';
+    }
+    track('tg_click', { location: where });
+  });
+
+  // глубина прокрутки: по разу за визит
+  var depth = [50, 90];
+  var onDepth = function () {
+    var seen = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+    while (depth.length && seen >= depth[0]) track('scroll_' + depth.shift());
+    if (!depth.length) window.removeEventListener('scroll', onDepth);
+  };
+  window.addEventListener('scroll', onDepth, { passive: true });
+
   /* ---------- шапка ---------- */
   var header = document.getElementById('header');
   var onScroll = function () { header.classList.toggle('is-stuck', window.scrollY > 12); };
@@ -401,6 +448,7 @@
       cvZoom.hidden = false;
       cvZoom.scrollLeft = 0;
       cvZoom.querySelector('button').focus();
+      track('gallery_open', { case_id: cvCur });
     };
     var cvZoomClose = function () { cvZoom.hidden = true; };
     cvZoom.addEventListener('click', cvZoomClose);
@@ -419,6 +467,7 @@
       var title = cvId.querySelector('.cv__title');
       if (title) cv.setAttribute('aria-labelledby', title.id);
       cv.dataset.theme = tpl.dataset.theme || id;
+      cv.dataset.case = id;
       cvCur = id;
       if (cv.open) cvBuild();
       return true;
@@ -435,6 +484,7 @@
       if (sbw > 0) document.body.style.paddingRight = sbw + 'px';
 
       cv.showModal();
+      track('case_open', { case_id: id });
       // фокус на само окно, а не на первую кнопку: иначе после первой же
       // стрелки на «Обсудить проект» загорается рамка фокуса
       cv.focus();
@@ -606,7 +656,14 @@
         return;
       }
 
-      var payload = { website: request.elements.website.value, ref: document.referrer };
+      // Откуда пришёл человек — едет в заявку. Страница одна, переходы по
+      // ней меняют только хэш, так что UTM-метки весь визит лежат в адресе.
+      var q = new URLSearchParams(location.search), utm = {};
+      ['source', 'medium', 'campaign'].forEach(function (k) {
+        if (q.get('utm_' + k)) utm[k] = q.get('utm_' + k);
+      });
+      var ref = document.referrer.indexOf(location.origin) === 0 ? '' : document.referrer;
+      var payload = { website: request.elements.website.value, ref: ref, utm: utm };
       reqFields.forEach(function (f) { payload[f.name] = f.value.trim(); });
 
       var btnText = reqBtn.textContent;
@@ -625,6 +682,7 @@
       })
         .then(function (res) { if (!res.ok) throw new Error(res.status); })
         .then(function () {
+          track('generate_lead');
           request.hidden = true;
           reqDone.hidden = false;
           reqDone.focus();
