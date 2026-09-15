@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>David Naumenko — цифровые продукты и системы для бизнеса</title>
-<meta name="description" content="Нахожу, где бизнес теряет время, заявки и деньги, и собираю систему, которая это исправляет: сайты, CRM, Telegram-боты, Mini Apps и автоматизации.">
+<title>David Naumenko — цифровые продукты и системы под ваши задачи</title>
+<meta name="description" content="Помогаю найти, где вы теряете время, заявки или деньги, и собираю индивидуальную систему: сайт, CRM, Telegram-бот, Mini App или автоматизацию.">
 
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon-192.png">
@@ -19,8 +19,8 @@
 <meta property="og:site_name" content="David Naumenko">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://davidnaumenko.com/">
-<meta property="og:title" content="David Naumenko — цифровые продукты и системы для бизнеса">
-<meta property="og:description" content="Нахожу, где бизнес теряет время, заявки и деньги, и собираю систему, которая это исправляет: сайты, CRM, Telegram-боты, Mini Apps и автоматизации.">
+<meta property="og:title" content="David Naumenko — цифровые продукты и системы под ваши задачи">
+<meta property="og:description" content="Помогаю найти, где вы теряете время, заявки или деньги, и собираю индивидуальную систему: сайт, CRM, Telegram-бот, Mini App или автоматизацию.">
 <meta property="og:image" content="https://davidnaumenko.com/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -47,8 +47,8 @@
     </a>
 
     <nav class="nav" aria-label="Основная навигация">
+      <a href="#solutions" class="nav__link">Системы</a>
       <a href="#work" class="nav__link">Проекты</a>
-      <a href="#solutions" class="nav__link">Решения</a>
       <a href="#process" class="nav__link">Процесс</a>
       <a href="#pricing" class="nav__link">Цены</a>
       <a href="#contact" class="nav__link">Контакт</a>
@@ -68,8 +68,8 @@
 
 <div class="sheet" id="sheet" hidden>
   <nav class="sheet__nav" aria-label="Мобильная навигация">
+    <a href="#solutions">Системы</a>
     <a href="#work">Проекты</a>
-    <a href="#solutions">Решения</a>
     <a href="#process">Процесс</a>
     <a href="#pricing">Цены</a>
     <a href="#contact">Контакт</a>
@@ -98,14 +98,14 @@
       </div>
 
       <!-- заголовок — проблема клиента, подзаголовок — чем решаю (master-plan, 1.1).
-           Утверждён Давидом 11.09.2026; при смене текста поправить meta и og:description. -->
+           Текст Давида от 15.09.2026; при смене текста поправить meta и og:description. -->
       <h1 class="hero__title rise" style="--i:1">
-        Нахожу, где<br>бизнес теряет <em>время, заявки и&nbsp;деньги.</em>
+        Помогаю найти, где вы теряете <em>время, заявки или&nbsp;деньги</em>
       </h1>
 
       <p class="hero__lead measure rise" style="--i:2">
-        И собираю систему, которая это исправляет: сайты, CRM, Telegram-боты,
-        Mini Apps и автоматизации — от разбора задачи до запуска.
+        И собираю индивидуальную систему: сайт, CRM, бот, Mini App
+        или автоматизацию. Подхожу к задаче максимально ответственно.
       </p>
 
       <div class="hero__cta rise" style="--i:3">
@@ -122,24 +122,24 @@
     </div>
 
     <!-- статус-рейл: список работающих сейчас проектов и живые часы Нячанга.
-         data-since остаётся на рейле — от него скрипт считает число дней
-         в проде для блока «100ловая», хотя в самом рейле счётчика больше нет. -->
+         Название проекта открывает окно его кейса (data-case), href — запасной
+         путь без скрипта. -->
     <div class="rail rise" style="--i:4">
-      <div class="rail__inner glass" data-since="2026-04-25">
+      <div class="rail__inner glass">
         <span class="rail__live">
           <span class="rail__dot" aria-hidden="true"></span>
           Активные проекты
         </span>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <span class="rail__item rail__val">100ловая Mini App</span>
+        <a class="rail__item rail__val rail__link" href="#case-100lovaya" data-case="100lovaya">100ловая Mini App</a>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <span class="rail__item rail__val">flyguru.pro</span>
+        <a class="rail__item rail__val rail__link" href="#case-flyguru" data-case="flyguru">flyguru.pro</a>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <span class="rail__item rail__val">AgentBoy — DJ Press Kit</span>
+        <a class="rail__item rail__val rail__link" href="#case-agentboy" data-case="agentboy">AgentBoy — DJ Press Kit</a>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <span class="rail__item rail__val">MoodBot</span>
+        <a class="rail__item rail__val rail__link" href="#case-mood" data-case="mood">MoodBot</a>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <span class="rail__item">и другие…</span>
+        <a class="rail__item rail__link" href="#works">и другие…</a>
         <span class="rail__item rail__time">Нячанг<span class="rail__val rail__clock" data-clock>—</span></span>
       </div>
     </div>
@@ -161,12 +161,12 @@
              width="1080" height="810" loading="lazy" decoding="async">
       </div>
       <div class="author__text">
-        <p class="label mono">Кто делает</p>
-        <h2 class="h2 h2--sm author__h">Я Давид. Сам разбираю задачу и сам веду разработку.</h2>
+        <p class="label mono">Кто я</p>
+        <h2 class="h2 h2--sm author__h">Меня зовут Давид. Я&nbsp;лично разбираю задачу и&nbsp;веду разработку.</h2>
         <ul class="author__list" role="list">
-          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Общаетесь напрямую со мной — без менеджеров и пересказа задачи.</li>
-          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Одновременно веду не больше трёх проектов, поэтому слотов мало.</li>
-          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Отвечаю в Telegram в течение 40&nbsp;минут, с&nbsp;8:00 до&nbsp;22:00 (UTC+7).</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Общаюсь напрямую — без менеджеров и ботов.</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Одновременно могу вести не более трёх проектов.</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Отвечаю в течение 40&nbsp;минут, с&nbsp;8:00 до&nbsp;22:00 (UTC+7).</li>
         </ul>
       </div>
     </div>
@@ -174,7 +174,46 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 03 — FLAGSHIP
+     BLOCK 03 — СИСТЕМЫ
+     ============================================================ -->
+<section class="solutions" id="solutions">
+  <div class="wrap">
+    <div class="solutions__panel">
+      <canvas class="water water--accent solutions__water" data-flow="basin" aria-hidden="true"></canvas>
+      <header class="solutions__head reveal">
+        <h2 class="h2">Системы под ваши задачи</h2>
+        <p class="solutions__intro">Определяем, где вы тратите больше всего времени на ручную работу. Исходя из этого — собираю удобный инструмент.</p>
+        <a href="https://t.me/davidnaumenko" class="solutions__link" target="_blank" rel="noopener">Разобрать мою задачу <span aria-hidden="true">↗</span></a>
+      </header>
+      <div class="sol">
+        <article class="sol__card reveal">
+          <h3 class="sol__h">Сайт или лендинг</h3>
+          <p>Сайт с нуля, без конструкторов. Всегда с индивидуальным дизайном, форма заявки уже встроена.</p>
+          <p class="sol__how">Сайт&nbsp;· лендинг&nbsp;· форма&nbsp;заявки</p>
+        </article>
+        <article class="sol__card reveal">
+          <h3 class="sol__h">CRM-система</h3>
+          <p>Собираю клиентов, статусы, заявки и статистику в одном месте. Настраиваю нужные интеграции и стараюсь максимально всё упростить.</p>
+          <p class="sol__how">Веб-CRM&nbsp;· индивидуальная&nbsp;адаптация&nbsp;· роли&nbsp;и&nbsp;доступы</p>
+        </article>
+        <article class="sol__card reveal">
+          <h3 class="sol__h">Боты и Mini App</h3>
+          <p>Запись, заказ или покупка прямо в Telegram. Клиент вас выбирает, а вы получаете готовую заявку.</p>
+          <p class="sol__how">Telegram-бот&nbsp;· Mini&nbsp;App&nbsp;· приём&nbsp;оплаты</p>
+        </article>
+        <article class="sol__card reveal">
+          <h3 class="sol__h">Автоматизация</h3>
+          <p>Связываю сервисы между собой. Не знаете, что именно автоматизировать, — помогу найти.</p>
+          <p class="sol__how">Напоминания&nbsp;· отчёты&nbsp;· связка&nbsp;сервисов</p>
+        </article>
+      </div>
+      <p class="sol__note reveal">Инструменты можно объединить в одну систему: сайт принимает заявку, CRM сохраняет клиента, бот отправляет уведомление. <a href="#pricing">Посмотреть стоимость <span aria-hidden="true">↗</span></a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOCK 04 — FLAGSHIP
      ============================================================ -->
 <section class="flagship" id="work">
   <div class="wrap">
@@ -196,17 +235,20 @@
         <h2 class="fgh__title">FlyGuru</h2>
         <p class="fgh__sub">Сайт и система управления <br>для <em>школы электрофойлов</em></p>
         <p class="fgh__lead">
-          Публичный сайт приводит заявки,<br>
-          а внутренняя система ведёт клиентов,<br>
-          занятия, абонементы и выплаты.
+          Публичный сайт собирает заявки — все они приходят во внутреннюю
+          CRM-систему. Клиенты, занятия, абонементы, статистика, сессии,
+          расчёт зарплат — всё в одном месте.
         </p>
 
-        <!-- цифры из боевой базы школы (Supabase), а не из презентации -->
+        <!-- клиенты и занятия — из боевой базы школы (Supabase); 18 дней — от первой
+             строки кода до работы в бою; 8 страниц сайта — со слов Давида.
+             Подписи из двух слов переносятся вручную: иначе ширина колонки
+             считается по всей строке и на 1024 цифры жмутся к разделителям -->
         <ul class="fgh__nums" role="list">
           <li class="fgh__stat"><span class="fgh__num">140+</span><span class="fgh__cap">клиентов</span></li>
           <li class="fgh__stat"><span class="fgh__num">170+</span><span class="fgh__cap">занятий</span></li>
-          <li class="fgh__stat"><span class="fgh__num">18</span><span class="fgh__cap">дней</span></li>
-          <li class="fgh__stat"><span class="fgh__num">4</span><span class="fgh__cap">кабинета</span></li>
+          <li class="fgh__stat"><span class="fgh__num">18</span><span class="fgh__cap">дней до <br>запуска</span></li>
+          <li class="fgh__stat"><span class="fgh__num">8</span><span class="fgh__cap">страниц <br>+&nbsp;CRM</span></li>
         </ul>
 
         <!-- «Смотреть кейс» открывает окно кейса (шаблон ниже), «Нужна такая
@@ -216,7 +258,7 @@
             Смотреть кейс
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <a href="https://www.flyguru.pro" class="btn btn--on-dark" target="_blank" rel="noopener">Открыть flyguru.pro</a>
+          <a href="https://www.flyguru.pro" class="btn btn--on-dark" target="_blank" rel="noopener">Открыть сайт</a>
         </div>
       </div>
 
@@ -415,7 +457,7 @@
 
       <div class="cv__end">
         <div class="cv__endin">
-          <p>Нужна такая же система для вашего бизнеса?</p>
+          <p>Нужна такая же система?</p>
           <div class="cv__endacts">
             <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
@@ -423,49 +465,6 @@
       </div>
     </template>
 
-  </div>
-</section>
-
-<!-- ============================================================
-     BLOCK 04 — SOLUTIONS
-     ============================================================ -->
-<section class="solutions" id="solutions">
-  <div class="wrap">
-    <div class="solutions__panel">
-      <canvas class="water water--accent solutions__water" data-flow="basin" aria-hidden="true"></canvas>
-      <header class="solutions__head reveal">
-        <h2 class="h2">Решение под задачи вашего бизнеса</h2>
-        <p class="solutions__intro">Начинаем с того, где теряются заявки, время или данные. Под эту задачу собираем нужный инструмент.</p>
-        <a href="https://t.me/davidnaumenko" class="solutions__link" target="_blank" rel="noopener">Разобрать мою задачу <span aria-hidden="true">↗</span></a>
-      </header>
-      <div class="sol">
-        <article class="sol__card reveal">
-          <h3 class="sol__h">CRM и учёт</h3>
-          <p class="sol__problem">Заявки теряются в переписке</p>
-          <p>Собираю клиентов, статусы, записи и деньги в одном месте. Команда видит, кому ответить и что делать дальше.</p>
-          <p class="sol__how">Веб-CRM&nbsp;· роли&nbsp;и&nbsp;доступы&nbsp;· уведомления</p>
-        </article>
-        <article class="sol__card reveal">
-          <h3 class="sol__h">Боты и Mini Apps</h3>
-          <p class="sol__problem">Клиентам неудобно записываться</p>
-          <p>Запись, заказ или покупка прямо в Telegram. Клиент выбирает сам, а вы получаете готовую заявку.</p>
-          <p class="sol__how">Telegram-бот&nbsp;· Mini&nbsp;App&nbsp;· приём&nbsp;оплаты</p>
-        </article>
-        <article class="sol__card reveal">
-          <h3 class="sol__h">Сайты и лендинги</h3>
-          <p class="sol__problem">Сайт не приносит заявок</p>
-          <p>Сайт за минуту объясняет ваше предложение и доводит посетителя до заявки. Заявка приходит вам или в CRM.</p>
-          <p class="sol__how">Лендинг&nbsp;· сайт&nbsp;· форма&nbsp;заявки</p>
-        </article>
-        <article class="sol__card reveal">
-          <h3 class="sol__h">Автоматизация</h3>
-          <p class="sol__problem">Рутина съедает рабочий день</p>
-          <p>Связываю сервисы: данные передаются, отчёты собираются, напоминания приходят без ручных действий.</p>
-          <p class="sol__how">Напоминания&nbsp;· отчёты&nbsp;· связка&nbsp;сервисов</p>
-        </article>
-      </div>
-      <p class="sol__note reveal">Инструменты можно объединить в одну систему: сайт принимает заявку, CRM сохраняет клиента, бот отправляет уведомление. <a href="#pricing">Посмотреть стоимость <span aria-hidden="true">↗</span></a></p>
-    </div>
   </div>
 </section>
 
@@ -489,28 +488,28 @@
       <div class="p100__plate" aria-hidden="true"></div>
 
       <div class="p100__text">
-        <p class="label mono">Проект для клиента</p>
+        <p class="label mono">Первый реальный проект</p>
 
         <h2 class="p100__h">
           <span class="p100__logo"><span class="p100__logo-num">100</span>ловая</span>
-          <span class="p100__hl">Магазин, который <br>живёт в Telegram</span>
+          <span class="p100__hl">Магазин <br>внутри Telegram</span>
         </h2>
 
         <p class="p100__lead">
-          Меню, корзина, оплата и повторный заказ работают внутри Telegram.
-          Товары, клиенты, статистика и рассылки — в админке того же приложения.
+          Меню, корзина, оплата и повторный заказ — со стороны клиента.
+          Админ-панель с товарами, клиентами, статистикой и рассылкой.
+          Всё в одном приложении.
         </p>
 
-        <!-- цифры из боевой базы продукта: первый живой заказ 25 апреля 2026,
-             день считает script.js, чтобы строка не устаревала -->
+        <!-- цифры из боевой базы продукта; первый живой заказ — 25 апреля 2026.
+             Счётчик дней в проде убран по просьбе Давида 15.09.2026 -->
         <ul class="p100__nums" role="list">
           <li class="p100__stat"><span class="p100__num">580+</span><span class="p100__cap">заказов</span></li>
           <li class="p100__stat"><span class="p100__num">150+</span><span class="p100__cap">клиентов</span></li>
           <li class="p100__stat"><span class="p100__num">44%</span><span class="p100__cap">вернулись</span></li>
-          <li class="p100__stat"><span class="p100__num" data-days-num>—</span><span class="p100__cap">дней</span></li>
         </ul>
         <!-- перенесено из верхнего proof-бара (master-plan, 1.3) -->
-        <p class="p100__more">90+ заказов у самого активного клиента <br>Около 4&nbsp;заказов в&nbsp;день <br>9 дней от первого коммита до первого&nbsp;заказа</p>
+        <p class="p100__more">90+ заказов у самого активного клиента <br>В среднем 4&nbsp;заказа в&nbsp;день <br>9 дней от утверждения до первого&nbsp;заказа</p>
 
         <!-- «Хочу такой же продукт» переехала в окно кейса, как и у FlyGuru -->
         <div class="p100__acts">
@@ -633,7 +632,7 @@
             <p class="cv__lead">Заказы собирались перепиской в мессенджере. Нужен был магазин прямо в Telegram — без сайта и без приложения, которое надо скачивать.</p>
             <p>А владельцу — управление с телефона: блюда и цены, заказы, база клиентов и выручка, без бумажек.</p>
             <h3 class="cv__h mono">Нестандартная часть</h3>
-            <p>Весь магазин и вся админка — один HTML-файл без фреймворков и сборки, который работает внутри Telegram. Отдельного сайта и отдельной CRM у бизнеса нет вообще.</p>
+            <p>Весь магазин и вся админка — один HTML-файл без фреймворков и сборки, который работает внутри Telegram. Отдельного сайта и отдельной CRM у заведения нет вообще.</p>
           </div>
 
           <div>
@@ -690,8 +689,8 @@
 <section class="works" id="works">
   <div class="wrap">
     <header class="sec-head measure">
-      <p class="label mono reveal">Ещё проекты</p>
-      <h2 class="h2 h2--sm reveal">Что ещё я собирал</h2>
+      <p class="label mono reveal">Другие проекты</p>
+      <h2 class="h2 h2--sm reveal">Что я ещё собирал</h2>
     </header>
 
     <div class="works__grid">
@@ -700,14 +699,14 @@
           <img class="shot__media" src="assets/img/moodbot-cover.webp"
                alt="Обложка курса «Перезавантаження настрою»"
                width="1100" height="688" loading="lazy" decoding="async">
-          <button type="button" class="work__cover" data-case="mood" tabindex="-1" aria-hidden="true"><span class="work__count mono">10 экранов</span></button>
+          <button type="button" class="work__cover" data-case="mood" tabindex="-1" aria-hidden="true"><span class="work__count mono">Лендинг + бот + оплата</span></button>
         </div>
         <div class="work__body">
           <span class="work__kind mono">Инфопродукт</span>
           <h3 class="work__h">MoodBot — курс «Перезавантаження настрою»</h3>
-          <p>Оплата картой в боте или на лендинге — доступ к семи урокам открывается
-          сам, без участия автора. Следующий урок не откроется, пока не отмечен
-          предыдущий, а пропал на два дня — бот сам напомнит.</p>
+          <p>Оплата картой в боте или на лендинге. Доступ открывается автоматически
+          после оплаты — вообще без участия автора. Следующий урок не откроется,
+          если не отмечен предыдущий. При пропуске бот сам напомнит.</p>
           <!-- демо-бот, а не рабочий: рабочий платный, в демо можно пройти курс самому -->
           <div class="work__acts">
             <button type="button" class="work__link work__case mono" data-case="mood">
@@ -715,7 +714,7 @@
               <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <a class="work__link mono" href="https://t.me/demomoodbot" target="_blank" rel="noopener">
-              Открыть @demomoodbot
+              Открыть бота
               <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
@@ -732,15 +731,15 @@
           <img class="shot__media" src="assets/img/agentboy-cover.webp"
                alt="Первый экран пресс-кита AGENTBOY"
                width="1100" height="688" loading="lazy" decoding="async">
-          <button type="button" class="work__cover" data-case="agentboy" tabindex="-1" aria-hidden="true"><span class="work__count mono">4 экрана</span></button>
+          <button type="button" class="work__cover" data-case="agentboy" tabindex="-1" aria-hidden="true"><span class="work__count mono">Лендинг</span></button>
         </div>
         <div class="work__body">
           <span class="work__kind mono">Музыка</span>
           <h3 class="work__h">AGENTBOY — пресс-кит диджея</h3>
-          <p>Одна ссылка вместо десятка файлов, пересланных промоутеру: биография,
-          двенадцать видео с сетами, площадки пяти стран и пресс-пак на скачивание.
-          Переключатель EN/RU запоминает выбор и подставляется в ссылку — русскую
-          версию можно отправить сразу нужной.</p>
+          <p>Одна страница со всей нужной информацией: анонсы, релизы, ссылки
+          на сеты и площадки с музыкой. Это как портфолио, только в мире музыки.
+          Удобно, чтобы быстро рассказать о себе или отправить потенциальному
+          партнёру.</p>
           <div class="work__acts">
             <button type="button" class="work__link work__case mono" data-case="agentboy">
               Смотреть кейс
@@ -1012,7 +1011,7 @@
     <header class="reveal">
       <p class="label mono">Процесс</p>
       <h2 class="h2">Как<br>я работаю</h2>
-      <p class="lead">Сначала согласуем задачу, объём и цену. Затем вы следите за сборкой и проверяете промежуточные версии.</p>
+      <p class="lead">Для начала обсуждаем задачу, функционал и утверждаем цену. Далее я приступаю к разработке и периодически высылаю бета-версии продукта.</p>
     </header>
 
     <div>
@@ -1027,22 +1026,22 @@
       <article class="step glass glass--plate reveal" id="step-1">
         <span class="step__n">01</span>
         <h3 class="step__h">Обсуждение задачи</h3>
-        <p>В переписке или на созвоне разбираем задачу и процессы, находим, где теряются время и деньги.</p>
+        <p>В переписке или на созвоне разбираем ваш вопрос. Рассматриваем задачу с разных сторон и вместе подбираем лучшее решение.</p>
       </article>
       <article class="step glass glass--plate reveal" id="step-2">
         <span class="step__n">02</span>
         <h3 class="step__h">План и фиксация цены</h3>
-        <p>Фиксируем функционал, объём, цену и сроки до старта. Дополнительные задачи согласуем отдельно.</p>
+        <p>Определяем объём и специфику функций. Утверждаем стоимость и длительность разработки — после чего я приступаю к работе.</p>
       </article>
       <article class="step glass glass--plate step--on reveal" id="step-3">
         <span class="step__n">03</span>
         <h3 class="step__h">Сборка</h3>
-        <p>Доступ к промежуточным версиям — тестируете и говорите, что поменять.</p>
+        <p>В процессе сборки даю вам доступ к промежуточным версиям, чтобы вы могли самостоятельно всё посмотреть и сказать, что поменять.</p>
       </article>
       <article class="step glass glass--plate reveal" id="step-4">
         <span class="step__n">04</span>
         <h3 class="step__h">Запуск и поддержка</h3>
-        <p>Первую неделю активно слежу за работой. Свои ошибки исправляю бесплатно в течение года после запуска.</p>
+        <p>После запуска внимательно слежу за качеством работы. Бесплатно исправляю свои ошибки в течение года.</p>
       </article>
     </div>
     </div>
@@ -1060,10 +1059,7 @@
     <div class="pricing__panel">
     <header class="pricing__head reveal">
       <canvas class="water water--accent pricing__water" data-flow="rising" aria-hidden="true"></canvas>
-      <div>
-        <h2 class="h2 pricing__title">Стоимость разработки</h2>
-        <p class="pricing__intro">Выберите, с чего начать. Точный объём, сроки и цену согласуем после бесплатного обсуждения задачи.</p>
-      </div>
+      <h2 class="h2 pricing__title">Стоимость разработки</h2>
       <p class="pricing__terms"><strong>50% до старта · 50% после запуска</strong><span>Для крупных проектов — оплата по этапам</span></p>
     </header>
 
@@ -1075,57 +1071,100 @@
       <button type="button" class="swipe-tabs__tab" aria-controls="plan-auto" aria-current="false">Автоматизации</button>
     </div>
     <div class="plans">
+      <!-- Цена — барабан-счётчик (script.js, «барабан цен»): значения и названия
+           комплектаций берутся из кнопок .kit__chip, стартовое — у кнопки с
+           aria-pressed="true". Горячая цена: data-hot — на какой цене гореть,
+           data-old — зачёркнутая старая цена. Убрать скидку = удалить оба атрибута. -->
       <article class="plan reveal" id="plan-bot">
-        <p class="plan__kind mono">Продажи в Telegram</p>
+        <p class="plan__kind mono">Системы в Telegram (и&nbsp;не&nbsp;только)</p>
         <h3 class="plan__h">Бот или Mini App</h3>
-        <p class="plan__for">Для заказов, записи и заявок, которые сейчас приходится разбирать в переписке.</p>
-        <p class="plan__price">от <span>$400</span></p>
-        <p class="plan__scope">Базовая комплектация</p>
-        <ul class="plan__list" role="list">
-          <li>Витрина, запись или приём заявок</li>
-          <li>Уведомления вам в Telegram</li>
-          <li>Клиенту не нужно отдельное приложение</li>
-        </ul>
-        <details class="plan__details">
-          <summary>Комплектации и сроки</summary>
-          <div class="plan__expanded">
-            <p><strong>Starter · от $400</strong>Витрина, запись или заявка и уведомления в чат.</p>
-            <p><strong>Business · от $900</strong>Дополнительно: админка, товары и цены, база клиентов, статистика и рассылки. Визуальный стиль уже в стоимости.</p>
-            <p><strong>MAX · от $1500</strong>Логика под ваш процесс, роли, приём оплаты и интеграции. Визуальный стиль уже в стоимости.</p>
-            <p>Ориентир: бот — около недели, Mini App — около двух недель. Срок зависит от объёма.</p>
+        <p class="plan__for">Автоматизация заказов, записи и заявок. Меньше ручной работы — больше времени на развитие.</p>
+        <div class="plan__price drum" data-drum data-hot="900" data-old="1100">
+          <span class="drum__label">Цена:</span>
+          <button type="button" class="drum__arrow" data-step="-1" aria-label="Дешевле"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="drum__win" role="slider" tabindex="0" aria-label="Цена: бот или Mini App">$900</div>
+          <button type="button" class="drum__arrow" data-step="1" aria-label="Дороже"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="kit">
+          <div class="kit__top">
+            <span class="kit__label">Комплектация</span>
+            <div class="kit__chips">
+              <button type="button" class="kit__chip" data-v="400" aria-pressed="false">Starter</button>
+              <button type="button" class="kit__chip" data-v="900" aria-pressed="true">Business</button>
+              <button type="button" class="kit__chip" data-v="1500" aria-pressed="false">MAX</button>
+            </div>
           </div>
-        </details>
+          <div class="kit__lists">
+            <ul class="plan__list kit__list" data-v="400" role="list">
+              <li>Витрина товара</li>
+              <li>Запись и приём заявок</li>
+              <li>Стандартная админ-панель</li>
+            </ul>
+            <ul class="plan__list kit__list is-on" data-v="900" role="list">
+              <li><b>Всё из Starter</b></li>
+              <li>База клиентов</li>
+              <li>Статистика и рассылки</li>
+              <li><span>Индивидуальный визуальный стиль<small>иконки, иллюстрации, общий дизайн</small></span></li>
+            </ul>
+            <ul class="plan__list kit__list" data-v="1500" role="list">
+              <li><b>Всё из Starter и Business</b></li>
+              <li>Индивидуальная логика</li>
+              <li>Роли</li>
+              <li>Интеграция платёжных систем</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan__terms">
+          <p><strong>Сроки</strong>Бот — около 7&nbsp;дней · Mini App — около 14&nbsp;дней</p>
+          <p class="plan__small">Сроки зависят от объёма.</p>
+        </div>
         <a href="https://t.me/davidnaumenko" class="btn btn--soft btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
       </article>
 
       <article class="plan plan--on reveal" id="plan-crm">
-        <p class="plan__kind mono">Сайт + внутренняя система</p>
+        <p class="plan__kind mono">Многостраничный сайт + админ-панель</p>
         <h3 class="plan__h">Сайт и CRM</h3>
-        <p class="plan__for">Для бизнеса, которому нужно получать заявки с сайта и вести клиентов в одном месте.</p>
-        <p class="plan__price">от <span>$500</span></p>
-        <p class="plan__scope">Базовая комплектация</p>
-        <ul class="plan__list" role="list">
-          <li>Сайт и стандартная CRM</li>
-          <li>Заявки, клиенты, статусы и деньги</li>
-          <li>Доступы для команды и обучение</li>
-        </ul>
-        <details class="plan__details">
-          <summary>Комплектации и сроки</summary>
-          <div class="plan__expanded">
-            <p><strong>Стандартная · от $500</strong>Сайт и CRM для работы с заявками и клиентами.</p>
-            <p><strong>Индивидуальная · от $1000</strong>Сайт, кастомная CRM и визуальная концепция. Своя логика и визуальный стиль — уже в стоимости комплектации.</p>
-            <p>Сложные конфигурации оцениваю после разбора процессов. Сайт или CRM — от месяца, в зависимости от задачи.</p>
+        <p class="plan__for">Сайт — это лицо вашей компании в интернете. Качество сайта отражает подход к делу.</p>
+        <div class="plan__price drum" data-drum>
+          <span class="drum__label">Цена:</span>
+          <button type="button" class="drum__arrow" data-step="-1" aria-label="Дешевле"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="drum__win" role="slider" tabindex="0" aria-label="Цена: сайт и CRM">$500</div>
+          <button type="button" class="drum__arrow" data-step="1" aria-label="Дороже"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="kit">
+          <div class="kit__top">
+            <span class="kit__label">Комплектация</span>
+            <div class="kit__chips">
+              <button type="button" class="kit__chip" data-v="500" aria-pressed="true">Стандартная</button>
+              <button type="button" class="kit__chip" data-v="1200" aria-pressed="false">Индивидуальная</button>
+            </div>
           </div>
-        </details>
+          <div class="kit__lists">
+            <ul class="plan__list kit__list is-on" data-v="500" role="list">
+              <li>Сайт</li>
+              <li>CRM для работы с заявками и клиентами</li>
+            </ul>
+            <ul class="plan__list kit__list" data-v="1200" role="list">
+              <li>Сайт</li>
+              <li>Кастомная CRM</li>
+              <li>Индивидуальная логика</li>
+              <li><span>Индивидуальный визуальный стиль<small>иконки, иллюстрации, общий дизайн</small></span></li>
+            </ul>
+          </div>
+        </div>
+        <p class="plan__alert"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.8v3.8M8 10.9v.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Сложные конфигурации оцениваются отдельно</p>
+        <div class="plan__terms">
+          <p><strong>Сроки</strong>От 30 дней — в зависимости от задачи</p>
+        </div>
         <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
       </article>
 
       <article class="plan reveal" id="plan-auto">
-        <p class="plan__kind mono">Меньше ручной работы</p>
+        <p class="plan__kind mono">Устраняем рутину и ручную работу</p>
         <h3 class="plan__h">Автоматизации</h3>
-        <p class="plan__for">Для повторяющихся задач и сервисов, между которыми вы переносите данные вручную.</p>
-        <p class="plan__price plan__price--calc"><span>По задаче</span></p>
-        <p class="plan__scope">Возможные сценарии</p>
+        <p class="plan__for">Рутинные процессы, перенос данных, сбор заявок и&nbsp;т.&nbsp;д.</p>
+        <p class="plan__price plan__price--calc">Цена: <span>обсуждается отдельно</span></p>
+        <p class="plan__scope">Для чего</p>
         <ul class="plan__list" role="list">
           <li>Напоминания и уведомления</li>
           <li>Автоматические отчёты и выгрузки</li>
@@ -1135,7 +1174,7 @@
           <summary>Как считаются цена и срок</summary>
           <div class="plan__expanded">
             <p>Разбираем ваш сценарий: какие сервисы участвуют, сколько шагов нужно автоматизировать и что уже настроено.</p>
-            <p>После обсуждения фиксируем объём, стоимость и сроки до начала работы.</p>
+            <p>После обсуждения фиксируем объём, стоимость и сроки.</p>
           </div>
         </details>
         <a href="https://t.me/davidnaumenko" class="btn btn--soft btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
@@ -1144,166 +1183,141 @@
 
     </div>
 
-    <!-- Плашка 2 — поддержка после запуска. Визуальная концепция отсюда
-         ушла: в дорогих комплектациях она уже включена, а для готового
-         продукта стоит одной строкой в условиях ниже, не тарифом. -->
+    <!-- Плашка 2 — поддержка после запуска. Состав уровней — по тексту Давида
+         от 15.09.2026, списки видны сразу, без раскрывашек. Уровни вкладываются
+         друг в друга; правки, доработки и небольшие функции берутся из часов. -->
     <div class="addon reveal">
       <div class="care__head">
         <p class="care__when mono">После запуска</p>
         <h3 class="care__h">Ежемесячная поддержка</h3>
-        <p class="care__lead">Гарантия чинит мои ошибки, когда вы о них сообщите. Поддержка — это когда я сам слежу за продуктом и развиваю его.</p>
+        <p class="care__lead">Это не обязательно. Я в любом случае даю гарантию на год — при условии, что это моя ошибка. Поддержка — это когда я слежу за продуктом и развиваю его.</p>
       </div>
-      <!-- Состав уровней — по таблице Давида от 14.09.2026. Уровни вкладываются
-           друг в друга; правки, доработки и небольшие функции берутся из часов. -->
       <div class="swipe-tabs tiers__nav" aria-label="Уровни поддержки" hidden>
-        <button type="button" class="swipe-tabs__tab" aria-controls="tier-base" aria-current="true" aria-label="Базовый, $90 в месяц">$90</button>
-        <button type="button" class="swipe-tabs__tab" aria-controls="tier-ext" aria-current="false" aria-label="Расширенный, $280 в месяц">$280</button>
-        <button type="button" class="swipe-tabs__tab" aria-controls="tier-partner" aria-current="false" aria-label="Партнёрский, $600 в месяц">$600</button>
+        <button type="button" class="swipe-tabs__tab" aria-controls="tier-base" aria-current="true" aria-label="Стандартная, $90 в месяц">$90</button>
+        <button type="button" class="swipe-tabs__tab" aria-controls="tier-ext" aria-current="false" aria-label="Расширенная, $280 в месяц">$280</button>
+        <button type="button" class="swipe-tabs__tab" aria-controls="tier-partner" aria-current="false" aria-label="Партнёрская, $600 в месяц">$600</button>
       </div>
       <div class="tiers">
         <article class="tier" id="tier-base">
           <div class="tier__top">
-            <h4 class="tier__h">Базовый</h4>
+            <h4 class="tier__h">Стандартная</h4>
             <p class="tier__price">$90<i>/мес</i></p>
           </div>
-          <p class="tier__for">Продукт работает, и нужно, чтобы так и оставалось.</p>
+          <p class="tier__label mono">Что входит</p>
           <ul class="tier__list" role="list">
-            <li>Регулярно проверяю код и работу сервисов</li>
-            <li>Администрирую, чтобы продукт не падал</li>
+            <li>Проверка работы 2 раза в месяц</li>
+            <li>Мониторинг: сразу узнаю о падении</li>
+            <li>Ежедневные бэкапы базы</li>
+            <li>Слежу за доменом и SSL, ставлю срочные обновления безопасности</li>
+            <li>Реакция на поломку — до 24 часов</li>
+            <li>2 часа на правки и доработки</li>
+            <li>Письменный отчёт раз в месяц</li>
           </ul>
-          <details class="plan__details tier__details">
-            <summary>Что входит</summary>
-            <div class="plan__expanded">
-              <ul class="tier__full" role="list">
-                <li>Проверка работы 2 раза в месяц</li>
-                <li>Мониторинг: о падении узнаю сразу</li>
-                <li>Ежедневные бэкапы базы</li>
-                <li>Слежу за доменом и SSL, ставлю срочные обновления безопасности</li>
-                <li>Реакция на поломку — до 24 часов</li>
-                <li>2 часа на правки и доработки</li>
-                <li>Письменный отчёт раз в месяц</li>
-              </ul>
-            </div>
-          </details>
         </article>
         <article class="tier" id="tier-ext">
           <div class="tier__top">
-            <h4 class="tier__h">Расширенный</h4>
+            <h4 class="tier__h">Расширенная</h4>
             <p class="tier__price">$280<i>/мес</i></p>
           </div>
-          <p class="tier__for">Продукт работает, и время от времени нужны правки.</p>
+          <p class="tier__label mono">Что входит</p>
           <ul class="tier__list" role="list">
-            <li>Всё из Базового</li>
-            <li>Правки и небольшие доработки по запросу</li>
+            <li class="tier__inc">Всё из Стандартной</li>
+            <li>Проверка работы 4 раза в месяц</li>
+            <li>Мониторинг и ежедневные бэкапы</li>
+            <li>Домен, SSL и плановое обновление библиотек раз в месяц</li>
+            <li>Реакция на поломку — до 6 часов</li>
+            <li>12 часов на правки, доработки и небольшие функции</li>
+            <li>Созвон раз в две недели</li>
           </ul>
-          <details class="plan__details tier__details">
-            <summary>Что входит</summary>
-            <div class="plan__expanded">
-              <ul class="tier__full" role="list">
-                <li>Проверка работы 4 раза в месяц</li>
-                <li>Мониторинг и ежедневные бэкапы</li>
-                <li>Домен, SSL и плановое обновление библиотек раз в месяц</li>
-                <li>Реакция на поломку — до 12 часов</li>
-                <li>12 часов на правки, доработки и небольшие функции</li>
-                <li>Созвон раз в две недели</li>
-              </ul>
-            </div>
-          </details>
         </article>
         <article class="tier" id="tier-partner">
           <div class="tier__top">
-            <h4 class="tier__h">Партнёрский</h4>
+            <h4 class="tier__h">Партнёрская</h4>
             <p class="tier__price">$600<i>/мес</i></p>
           </div>
-          <p class="tier__for">Продукт постоянно развивается.</p>
+          <p class="tier__label mono">Что входит</p>
           <ul class="tier__list" role="list">
-            <li>Всё из Расширенного</li>
-            <li>Постоянная работа над проектом: сказали&nbsp;— сделал</li>
-            <li>Всегда на связи</li>
+            <li class="tier__inc">Всё из Расширенной</li>
+            <li>Постоянный контроль, мониторинг и ежедневные бэкапы</li>
+            <li>Домен, SSL и обновления библиотек</li>
+            <li>Веду тарифы хостинга и масштабирую под нагрузку</li>
+            <li>Реакция на поломку — до 3 часов</li>
+            <li>30 часов на доработки и новые функции</li>
+            <li>Мелкие правки без ограничений, вне часов</li>
+            <li>Созвон каждую неделю (при необходимости)</li>
           </ul>
-          <details class="plan__details tier__details">
-            <summary>Что входит</summary>
-            <div class="plan__expanded">
-              <ul class="tier__full" role="list">
-                <li>Постоянный контроль, мониторинг и ежедневные бэкапы</li>
-                <li>Домен, SSL и обновления библиотек</li>
-                <li>Веду тарифы хостинга и масштабирую под нагрузку</li>
-                <li>Реакция на поломку — до 3 часов</li>
-                <li>30 часов на доработки и новые функции</li>
-                <li>Мелкие правки без ограничений, вне часов</li>
-                <li>Созвон каждую неделю</li>
-              </ul>
-            </div>
-          </details>
         </article>
       </div>
       <div class="tiers__terms">
-        <p>Время реакции считаю в рабочие часы: 8:00–22:00 (UTC+7). Неиспользованные часы не переносятся. Крупные новые функции оцениваем отдельно. Хостинг и сервисы оплачиваются с вашего аккаунта.</p>
-        <p>Минимальный срок — месяц, отменить можно в любой месяц. Проект, сделанный не мной, беру на поддержку после проверки кода.</p>
+        <p>Рабочие часы: 8:00–22:00 (UTC+7). Неиспользованные часы не переносятся. Крупные новые функции оцениваем отдельно. Хостинг и сервисы оплачиваете вы.</p>
+        <p>Минимальный срок — месяц, дальше отменить подписку можно в любой момент. Беру на поддержку чужие проекты — только после проверки кода.</p>
       </div>
     </div>
 
-    <!-- Условия стоят под всеми плашками: они про работу целиком, а не про
-         конкретное предложение. -->
-    <div class="pricing__footer reveal">
-      <p><strong>Год гарантии на мой код</strong>Свои ошибки исправляю бесплатно. Новые функции и изменения исходной задачи оцениваем отдельно.</p>
-      <p><strong>Нужен только лендинг?</strong>Одна страница без системы за ней — от $150. Объём и сроки обсуждаем до старта.</p>
-      <p><strong>Нужен редизайн?</strong>Новая визуальная концепция для уже работающего сайта, Mini App или CRM — от $400.</p>
+    <!-- Отдельные предложения — две самостоятельные плашки, а не общая полоса
+         условий: гарантия теперь сказана в поддержке и в FAQ. -->
+    <div class="extras">
+      <article class="extra reveal">
+        <div class="extra__top">
+          <h3 class="extra__h">Лендинг</h3>
+          <p class="extra__price">Цена: <span>$150</span></p>
+        </div>
+        <p class="extra__text">Одна страница.</p>
+      </article>
+      <article class="extra reveal">
+        <div class="extra__top">
+          <h3 class="extra__h">Редизайн</h3>
+          <p class="extra__price">Цена: <span>от $400</span></p>
+        </div>
+        <p class="extra__text">Новая визуальная концепция для уже работающего продукта: сайта, CRM, Mini App и&nbsp;т.&nbsp;д.</p>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     BLOCK 09 — ВОПРОСЫ И РИСКИ
+     BLOCK 09 — FAQ
      «Что будет, если что-то пойдёт не так» и FAQ повторяли друг друга —
-     собраны в один блок из 7 вопросов (master-plan, 4.1). Нативный
-     <details>: аккордеон работает и без JS.
+     собраны в один блок (master-plan, 4.1). Вопросы и порядок — по тексту
+     Давида от 15.09.2026. Нативный <details>: аккордеон работает и без JS.
      ============================================================ -->
 <section class="trust" id="faq">
   <div class="wrap trust__grid">
     <header class="reveal">
-      <p class="label mono">Вопросы</p>
-      <h2 class="h2">Что важно знать до&nbsp;старта</h2>
-      <p class="lead">
-        До начала работы договариваемся об объёме, цене и сроках.
-        Доступы остаются у вас, а мои ошибки после запуска покрывает гарантия.
-      </p>
+      <p class="label mono">FAQ</p>
+      <h2 class="h2">Популярные вопросы</h2>
     </header>
 
     <div class="qa-list">
       <details class="qa reveal">
+        <summary class="qa__q">Сколько времени займёт разработка?<span class="qa__ico" aria-hidden="true"></span></summary>
+        <!-- сроки те же, что в карточках цен: поменялись там — поменять и здесь -->
+        <div class="qa__a"><p>Ориентиры: Telegram-бот — около 7&nbsp;дней, Mini App — около 14&nbsp;дней, сайт и CRM — от 30&nbsp;дней.</p><p class="qa__note">Сроки зависят от объёма задачи.</p></div>
+      </details>
+
+      <details class="qa reveal">
         <summary class="qa__q">С чего начинается работа?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>С бесплатного обсуждения в переписке или созвона на 30–40 минут — как вам удобнее. Разбираем задачу, я предлагаю решение, цену и сроки. Разбираться в технологиях не нужно: объясняю на языке задач, а не стека. Если у вас уже есть сайт или система, сначала изучаю код и честно говорю, стоит ли её дорабатывать.</p></div>
+        <div class="qa__a"><p>Обсуждаем вашу задачу в переписке или на созвоне. Рассматриваем вопрос с разных сторон — дальше я предлагаю решение, называю цену и сроки. Также могу изучить уже готовый продукт: возможно, его достаточно просто доработать.</p></div>
       </details>
 
       <details class="qa reveal">
-        <summary class="qa__q">Сколько времени это займёт?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>Ориентиры: Telegram-бот — около недели, Mini App — около двух недель, сайт или CRM — от месяца. Точный срок называю до старта. По ходу работы вы видите промежуточные версии и можете проверить, как всё устроено.</p></div>
+        <summary class="qa__q">Как происходит оплата и может ли вырасти цена?<span class="qa__ico" aria-hidden="true"></span></summary>
+        <div class="qa__a"><p>Работаю по предоплате: 50% перед началом работы и 50% после запуска. Если проект крупный, порядок оплаты обсуждаем отдельно. Согласованная цена не меняется, если работа идёт в рамках согласованного объёма. Новые функции и изменения после старта оплачиваются отдельно.</p></div>
       </details>
 
       <details class="qa reveal">
-        <summary class="qa__q">Как проходит оплата и может ли вырасти цена?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>50% перед началом работы, 50% после запуска, крупные проекты — по этапам. Цена согласованного объёма не меняется. Новые функции и изменения уже согласованного оцениваем отдельно, и за них я берусь только после вашего согласия.</p></div>
+        <summary class="qa__q">Кому будут принадлежать код, домен и база?<span class="qa__ico" aria-hidden="true"></span></summary>
+        <div class="qa__a"><p>Вам. Аккаунты с самого начала заводим на вас: репозиторий, хостинг, домен и база остаются под вашим контролем.</p></div>
       </details>
 
       <details class="qa reveal">
-        <summary class="qa__q">Кому принадлежат код, домен и база?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>Вам. Аккаунты с самого начала заводим на вас: репозиторий, хостинг, домен и база остаются под вашим контролем. Захотите продолжить с другим разработчиком — просто дадите ему доступ.</p></div>
+        <summary class="qa__q">Что делать после запуска продукта?<span class="qa__ico" aria-hidden="true"></span></summary>
+        <div class="qa__a"><p>Первую неделю я внимательно слежу за работой. Дальше год действует гарантия на мой код. Если нужно, чтобы я и дальше следил за продуктом и дорабатывал его, для этого есть <a href="#pricing">ежемесячная поддержка</a>.</p></div>
       </details>
 
       <details class="qa reveal">
-        <summary class="qa__q">Что считается ошибкой, а что — новой задачей?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>Ошибка — это когда согласованная функция работает не так, как договорились. Такие ошибки в своём коде исправляю бесплатно в течение года после запуска. Новая функция или изменение исходной задачи — это новая работа, её оцениваем отдельно.</p></div>
-      </details>
-
-      <details class="qa reveal">
-        <summary class="qa__q">Что происходит после запуска?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>Первую неделю сам внимательно слежу за работой. Дальше год действует гарантия на мой код. Если нужно, чтобы я и дальше следил за продуктом и дорабатывал его, для этого есть <a href="#pricing">ежемесячная поддержка</a>.</p></div>
-      </details>
-
-      <details class="qa reveal">
-        <summary class="qa__q">Как мы работаем по времени?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>Я на связи с 8:00 до 22:00 (UTC+7) и отвечаю в течение 40 минут. Большую часть работы удобно вести в переписке, а время созвона согласуем заранее.</p></div>
+        <summary class="qa__q">Часы работы?<span class="qa__ico" aria-hidden="true"></span></summary>
+        <div class="qa__a"><p>Я на связи с 8:00 до 22:00 (UTC+7) и стараюсь отвечать в течение 40&nbsp;минут.</p></div>
       </details>
     </div>
   </div>
@@ -1379,16 +1393,16 @@
         <span class="brand__role">digital systems</span>
       </a>
       <p class="footer__tag">
-        Собираю сайты, CRM, Telegram-боты и автоматизации под конкретные
-        процессы бизнеса — от разбора задачи до запуска и поддержки.
+        Собираю сайты, CRM, Telegram-боты и автоматизации под ваши
+        процессы — от разбора задачи до запуска и поддержки.
       </p>
     </div>
 
     <nav class="footer__col" aria-label="Навигация в футере">
       <p class="footer__col-h">Разделы</p>
       <ul class="footer__list" role="list">
+        <li><a href="#solutions">Системы</a></li>
         <li><a href="#work">Проекты</a></li>
-        <li><a href="#solutions">Решения</a></li>
         <li><a href="#process">Процесс</a></li>
         <li><a href="#pricing">Цены</a></li>
       </ul>

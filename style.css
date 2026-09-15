@@ -570,6 +570,14 @@ ul { list-style: none; padding: 0; }
 .rail__item { display: inline-flex; align-items: center; gap: .45rem; }
 .rail__val { color: var(--ink); }
 .rail__clock { font-variant-numeric: tabular-nums; }
+/* названия проектов открывают окна кейсов: пунктир снизу показывает, что
+   это ссылка, и не спорит с капслоком так, как сплошное подчёркивание */
+.rail__link {
+  color: inherit; text-decoration: underline dotted; text-decoration-thickness: 1px;
+  text-underline-offset: .35em; text-decoration-color: var(--line-2);
+  transition: color .2s, text-decoration-color .2s;
+}
+.rail__link:hover { color: var(--green); text-decoration-color: currentColor; }
 /* часы прижаты к правому краю и не сжимаются: список проектов растёт,
    а время остаётся видимым без разделителя перед ним */
 .rail__time { margin-left: auto; padding-left: clamp(.7rem, 1.5vw, 1.05rem); flex: none; }
@@ -884,7 +892,6 @@ ul { list-style: none; padding: 0; }
 }
 .sol__h { font-family: var(--f-display); color: var(--green-deep); font-size: clamp(1.35rem, 1.8vw, 1.6rem); font-weight: 600; line-height: 1.2; margin-bottom: 1rem; text-wrap: balance; }
 .sol__card p { color: var(--ink-soft); font-size: .92rem; line-height: 1.6; }
-.sol__card .sol__problem { color: var(--ink); font-weight: 500; margin-bottom: .35rem; }
 /* «Чем реализовано» — форматы, а не стек: блок не должен читаться каталогом. */
 .sol__card .sol__how { margin-top: 1rem; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .02em; line-height: 1.55; color: var(--green-deep); }
 .sol__note {
@@ -1254,7 +1261,7 @@ label.cc__opt { cursor: pointer; }
    в кейсе FlyGuru: разделители стоят на 251.5 / 393.5 / 547.5 px, ровно
    посреди просветов между колонками. */
 .p100__nums {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(.9rem, 2.2vw, 1.4rem);
   margin-top: clamp(1rem, 2.1vw, 1.31rem);
   padding-top: clamp(.8rem, 1.6vw, 1.2rem);
@@ -1269,6 +1276,11 @@ label.cc__opt { cursor: pointer; }
   color: var(--p100-accent);
 }
 .p100__cap { font-size: .95rem; line-height: 1.3; color: var(--p100-mute); }
+/* три цифры в ряд на самых узких экранах: «вернулись» шире колонки на 320–350 px */
+@media (max-width: 359px) {
+  .p100__nums { column-gap: .6rem; }
+  .p100__cap { font-size: .85rem; }
+}
 .p100__more { margin-top: clamp(.8rem, 1.6vw, 1rem); max-width: 26rem; font-size: .9rem; line-height: 1.45; color: var(--p100-mute); }
 
 .p100__acts {
@@ -1371,7 +1383,8 @@ label.cc__opt { cursor: pointer; }
 .work__case:hover { color: var(--green); border-bottom-color: var(--green); }
 .work__case:hover svg { transform: translateX(3px); }
 .work__case svg { transition: transform .35s var(--ease); }
-/* обложка тоже открывает кейс; плашка сразу говорит, что внутри есть экраны */
+/* обложка тоже открывает кейс; плашка на ней — из чего собран проект.
+   Держать её в одну строку: на 600–700 px длинная плашка уже переносилась */
 .work__cover { position: absolute; inset: 0; z-index: 1; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .work__count {
   position: absolute; left: .8rem; bottom: .8rem;
@@ -1803,18 +1816,18 @@ label.cc__opt { cursor: pointer; }
   background: linear-gradient(152deg, #FFFFFF 0%, #F1F8F5 40%, #DCEDE6 100%);
   box-shadow: var(--sh-3);
 }
+/* Заголовок по центру плашки, условия оплаты — строкой под ним. */
 .pricing__head {
   position: relative; isolation: isolate; overflow: hidden;
-  display: grid; gap: 1.5rem;
-  padding: clamp(1.4rem, 4vw, 3rem);
+  display: grid; gap: .9rem; justify-items: center; text-align: center;
+  padding: clamp(1.6rem, 4vw, 3rem) clamp(1.4rem, 4vw, 3rem);
   border-bottom: 1px solid var(--line-2);
 }
 .pricing__water { inset: 0; width: 100%; height: 100%; z-index: -1; }
 /* Заголовок секции — сам зелёный: отдельной подписи над ним больше нет. */
 .pricing__title { color: var(--green); }
-.pricing__intro { max-width: 48ch; margin-top: .8rem; color: var(--ink-soft); font-size: .98rem; }
 .pricing__terms { color: var(--ink-soft); font-size: .8rem; }
-.pricing__terms strong { display: block; color: var(--green-deep); font-weight: 500; margin-bottom: .35rem; }
+.pricing__terms strong { display: block; color: var(--green-deep); font-weight: 500; margin-bottom: .2rem; }
 .plans { display: grid; align-items: stretch; }
 /* До 1000 px тарифы листаются вбок, край следующего виден — стопка из трёх
    карточек занимала на телефоне ~2400 px. Вкладки — общие .swipe-tabs. */
@@ -1852,11 +1865,13 @@ label.cc__opt { cursor: pointer; }
 .plan__for { color: var(--ink-soft); font-size: .9rem; line-height: 1.5; margin-top: .65rem; }
 .plan__price {
   display: flex; align-items: baseline; gap: .4rem;
-  margin-top: 1.7rem; font-family: var(--f-display);
+  margin-top: 2.7rem; font-family: var(--f-display);   /* над барабаном — строка горячей цены */
   font-size: .95rem; color: var(--ink-mute);
 }
 .plan__price span { font-size: clamp(2.3rem, 3.4vw, 3rem); line-height: 1.1; font-weight: 600; color: var(--ink); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
-.plan__price--calc span { font-size: 2rem; letter-spacing: -.025em; }
+/* «обсуждается отдельно» — фраза, а не число: кегль ниже, чтобы строка
+   влезала в одну линию и держала высоту ряда цен соседних карточек */
+.plan__price--calc span { font-size: clamp(1.15rem, 1.6vw, 1.35rem); letter-spacing: -.015em; }
 .plan__scope { margin-top: 1.6rem; padding-top: 1.3rem; border-top: 1px solid var(--line-2); color: var(--ink-mute); font-size: .78rem; }
 .plan__list { display: grid; gap: .7rem; margin: 1rem 0 1.5rem; color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
 .plan__list li { display: flex; gap: .65rem; align-items: flex-start; }
@@ -1871,6 +1886,132 @@ label.cc__opt { cursor: pointer; }
 .plan__expanded p + p { margin-top: .9rem; }
 .plan__expanded strong { display: block; color: var(--ink); margin-bottom: .2rem; font-weight: 600; }
 .plan .btn { margin-top: .5rem; }
+
+/* ---------- барабан цены ----------
+   Счётчик: у каждой цифры свой ролик 0–9 (три круга, чтобы было куда
+   раскрутиться). Ролики, «$», плашку горячей цены и искры строит script.js;
+   без скрипта в окне остаётся простая цена из разметки. */
+.drum { position: relative; align-items: center; gap: .45rem; }
+/* общее .plan__price span — кегль цены тарифа; внутри барабана кегль
+   задаёт само окно, а подпись и плашка живут своим */
+.drum span { font-size: inherit; line-height: inherit; font-weight: inherit; letter-spacing: inherit; color: inherit; }
+.drum .drum__label { flex: none; margin-right: .2rem; font-size: .95rem; color: var(--ink-mute); }
+.drum__arrow {
+  flex: none; display: grid; place-items: center;
+  width: 34px; height: 34px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--card); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--ink);
+  transition: box-shadow .2s, color .2s, opacity .2s;
+}
+.drum__arrow:hover:not(:disabled) { box-shadow: inset 0 0 0 1px var(--green); color: var(--green); }
+.drum__arrow:disabled { opacity: .35; cursor: default; }
+.drum__arrow svg { width: 14px; height: 14px; }
+/* ширина окна постоянная (под четыре цифры), иначе стрелки ездили бы
+   вслед за ценой; короткая цена центрируется сама */
+.drum__win {
+  position: relative; flex: none; width: 3.9em; height: 1.5em;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 16px; background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--line-2), inset 0 10px 14px -12px rgba(23,33,30,.25), inset 0 -10px 14px -12px rgba(23,33,30,.25);
+  font-size: clamp(1.9rem, 2.6vw, 2.45rem); font-weight: 600; line-height: 1;
+  letter-spacing: -.03em; color: var(--ink); font-variant-numeric: tabular-nums;
+  cursor: grab; user-select: none; -webkit-user-select: none;
+  touch-action: pan-y;   /* свайп вбок крутит барабан, а не ленту тарифов */
+  transition: background .4s;
+}
+.drum__win:active { cursor: grabbing; }
+.drum__cols { display: flex; height: 1.2em; overflow: hidden; }
+.drum__col { width: .6em; overflow: hidden; transition: width .45s var(--ease); }
+.drum__col.is-off { width: 0; }
+.drum__strip { display: block; will-change: transform; }
+.drum__strip span { display: block; height: 1.2em; line-height: 1.2em; text-align: center; }
+
+/* горячая цена: окно светится, цифры горят, под ними языки пламени */
+.drum.is-hot .drum__win { background: #FFF5EF; animation: drum-glow 1.8s ease-in-out infinite; }
+@keyframes drum-glow {
+  0%, 100% { box-shadow: inset 0 0 0 1.5px #FF3B1F, 0 0 18px rgba(255,59,31,.30), 0 0 0 4px rgba(255,59,31,.08); }
+  50%      { box-shadow: inset 0 0 0 1.5px #FF7A1A, 0 0 30px rgba(255,90,30,.45), 0 0 0 6px rgba(255,90,30,.10); }
+}
+.drum.is-hot .drum__cur, .drum.is-hot .drum__strip span {
+  background: linear-gradient(0deg, #D9230C 0%, #FF3B1F 30%, #FF7A1A 62%, #FFC247 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.drum__flame { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .4s; }
+.drum.is-hot .drum__flame { opacity: 1; }
+.drum__flame i {
+  position: absolute; bottom: -30%; width: 34%; height: 80%; border-radius: 50% 50% 40% 40%;
+  background: radial-gradient(ellipse at 50% 90%, rgba(255,122,26,.55), rgba(255,194,71,.18) 55%, transparent 72%);
+  filter: blur(6px); animation: drum-lick 1.3s ease-in-out infinite;
+}
+.drum__flame i:nth-child(1) { left: 6%;  animation-delay: -.2s; }
+.drum__flame i:nth-child(2) { left: 33%; animation-delay: -.7s; height: 95%; }
+.drum__flame i:nth-child(3) { left: 60%; animation-delay: -1s; }
+@keyframes drum-lick { 0%, 100% { transform: scaleY(.85) translateY(6%); opacity: .75; } 50% { transform: scaleY(1.1) translateY(-4%); opacity: 1; } }
+.drum__embers { position: absolute; left: 0; right: 0; bottom: 70%; height: 3.2rem; pointer-events: none; opacity: 0; transition: opacity .4s; }
+.drum.is-hot .drum__embers { opacity: 1; }
+.drum__embers i { position: absolute; bottom: 0; width: 4px; height: 4px; border-radius: 50%; background: #FFC247; box-shadow: 0 0 6px #FF7A1A; opacity: 0; animation: drum-rise 2.2s linear infinite; }
+.drum__embers i:nth-child(1) { left: 18%; }
+.drum__embers i:nth-child(2) { left: 42%; animation-delay: .7s; width: 3px; height: 3px; }
+.drum__embers i:nth-child(3) { left: 66%; animation-delay: 1.3s; }
+.drum__embers i:nth-child(4) { left: 84%; animation-delay: 1.8s; width: 3px; height: 3px; }
+@keyframes drum-rise { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(6px, -3rem); opacity: 0; } }
+/* старая цена и плашка — строкой над барабаном, справа */
+.drum__hot {
+  position: absolute; right: 0; bottom: calc(100% + .3rem);
+  display: flex; align-items: center; gap: .5rem; pointer-events: none;
+  opacity: 0; transform: translateY(6px) scale(.85); transform-origin: 90% 100%;
+  transition: opacity .25s, transform .45s cubic-bezier(.3,1.6,.5,1);
+}
+.drum.is-hot .drum__hot { opacity: 1; transform: none; }
+.drum .drum__old { font-size: .95rem; letter-spacing: 0; color: var(--ink-faint); text-decoration: line-through; text-decoration-color: #FF3B1F; text-decoration-thickness: 2px; }
+.drum .drum__badge {
+  display: inline-flex; line-height: 1.2; letter-spacing: 0; align-items: center; gap: .3rem; white-space: nowrap;
+  padding: .3rem .62rem .3rem .5rem; border-radius: 100px;
+  font-family: var(--f-text); font-size: .72rem; font-weight: 600; color: #fff;
+  background: linear-gradient(100deg, #E8321A, #F2650F);
+  box-shadow: 0 6px 18px rgba(255,59,31,.35);
+}
+.drum__badge svg { width: 12px; height: 12px; }
+
+/* комплектация меняется вместе с барабаном; списки лежат в одной клетке,
+   поэтому высота карточки — по самому длинному и ничего не прыгает */
+.kit { margin-top: 1.6rem; padding-top: 1.3rem; border-top: 1px solid var(--line-2); }
+/* подпись всегда отдельной строкой: у CRM названия длиннее, и в строку
+   с подписью кнопки влезали только у бота — карточки выглядели по-разному */
+.kit__top { display: grid; justify-items: start; gap: .5rem; }
+.kit__label { color: var(--ink-mute); font-size: .78rem; }
+.kit__chips { display: flex; flex-wrap: wrap; gap: .3rem; }
+.kit__chip {
+  border: 0; cursor: pointer; padding: .34rem .72rem; border-radius: 100px;
+  font: inherit; font-size: .78rem; font-weight: 500;
+  background: transparent; box-shadow: inset 0 0 0 1px var(--line-2); color: var(--ink-soft);
+  transition: background .25s, color .25s, box-shadow .25s;
+}
+.kit__chip:hover { color: var(--green-deep); box-shadow: inset 0 0 0 1px var(--green); }
+.kit__chip[aria-pressed="true"] { background: var(--green-deep); color: #fff; box-shadow: none; }
+.kit__chip.is-fire[aria-pressed="true"] { background: linear-gradient(100deg, #E8321A, #F2650F); }
+.kit__lists { display: grid; margin-top: 1rem; }
+.kit__list {
+  grid-area: 1 / 1; align-content: start; margin: 0; visibility: hidden; opacity: 0; transform: translateY(6px);
+  transition: opacity .3s, transform .35s var(--ease), visibility 0s .35s;
+}
+.kit__list.is-on { visibility: visible; opacity: 1; transform: none; transition: opacity .3s .05s, transform .35s var(--ease) .05s, visibility 0s; }
+.kit__list b { color: var(--ink); font-weight: 600; }
+.kit__list small { display: block; font-size: .8rem; color: var(--ink-mute); }
+.plan__alert {
+  display: flex; align-items: flex-start; gap: .55rem; margin-top: 1.3rem;
+  padding: .75rem .9rem; border-radius: 12px;
+  background: var(--tint); box-shadow: inset 0 0 0 1px rgba(12,122,93,.18);
+  font-size: .86rem; font-weight: 600; line-height: 1.45; color: var(--green-deep);
+}
+.plan__alert svg { width: 16px; height: 16px; flex: none; margin-top: .1rem; }
+.plan__terms { margin: 1.3rem 0 1.4rem; padding-top: 1.1rem; border-top: 1px solid var(--line-2); font-size: .86rem; line-height: 1.5; color: var(--ink-soft); }
+.plan__terms strong { display: block; margin-bottom: .2rem; font-size: .78rem; font-weight: 500; color: var(--ink-mute); }
+.plan__terms .plan__small { margin-top: .2rem; font-size: .8rem; color: var(--ink-mute); }
+.plan__terms + .btn { margin-top: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .drum.is-hot .drum__win, .drum__flame i { animation: none; }
+  .drum__embers { display: none; }
+}
 /* Поддержка — не тариф, а надстройка сверх запуска: своя плашка,
    подсвеченная зелёным, чтобы блок не читался четвёртым тарифом. */
 .addon {
@@ -1883,8 +2024,8 @@ label.cc__opt { cursor: pointer; }
 .care__when { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--green); margin-bottom: .5rem; }
 .care__h { font-family: var(--f-display); font-size: clamp(1.3rem, 2.1vw, 1.65rem); font-weight: 600; margin-top: .45rem; }
 .care__lead { color: var(--ink-soft); font-size: .95rem; line-height: 1.5; margin-top: .5rem; max-width: 60ch; text-wrap: pretty; }
-/* Уровни поддержки: цена мельче тарифной, а главное в колонке — фраза
-   «для кого»: по ней видно, за что разница между $90 и $600. */
+/* Уровни поддержки: цена мельче тарифной, состав виден сразу. Первый пункт
+   «Всё из …» выделен — с него понятно, что уровни вкладываются друг в друга. */
 .tiers { display: grid; margin-top: clamp(1.4rem, 3vw, 2rem); border-top: 1px solid rgba(12,122,93,.16); }
 .tier { display: flex; flex-direction: column; gap: .7rem; padding-block: 1.4rem; }
 .tier + .tier { border-top: 1px solid rgba(12,122,93,.16); }
@@ -1892,34 +2033,45 @@ label.cc__opt { cursor: pointer; }
 .tier__h { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; }
 .tier__price { font-family: var(--f-display); font-weight: 600; font-size: 1.45rem; letter-spacing: -.02em; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .tier__price i { font-style: normal; font-size: .8rem; font-weight: 400; letter-spacing: 0; color: var(--ink-mute); }
-.tier__for { color: var(--ink); font-size: .92rem; line-height: 1.5; }
+.tier__label { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); }
 .tier__list { display: grid; align-content: start; gap: .5rem; color: var(--ink-soft); font-size: .86rem; line-height: 1.5; }
 .tier__list li { display: flex; gap: .6rem; align-items: flex-start; }
 .tier__list li::before { content: "✓"; color: var(--green); flex: none; }
-.tier__details { margin-top: 0; border-top-color: rgba(12,122,93,.16); }
-.tier__full { display: grid; gap: .45rem; }
-.tier__full li { display: flex; gap: .55rem; align-items: flex-start; }
-.tier__full li::before { content: "—"; color: var(--green); flex: none; }
+.tier__list .tier__inc { color: var(--ink); font-weight: 600; }
 .tiers__terms { display: grid; gap: .35rem; padding-top: 1.1rem; border-top: 1px solid rgba(12,122,93,.16); color: var(--ink-mute); font-size: .8rem; line-height: 1.55; }
 @media (min-width: 860px) {
-  /* Строки общие на все три колонки (subgrid): «Что входит» стоит на одной
-     линии, и раскрытие одной колонки не двигает соседние. */
-  .tiers { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); grid-auto-flow: column; }
-  .tier { display: grid; grid-row: span 4; grid-template-rows: subgrid; align-content: start; padding: 1.6rem clamp(1.2rem, 2.4vw, 2rem); }
+  /* Строки общие на все три колонки (subgrid): «Что входит» и начало
+     списков стоят на одной линии. */
+  .tiers { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, auto); grid-auto-flow: column; }
+  .tier { display: grid; grid-row: span 3; grid-template-rows: subgrid; align-content: start; padding: 1.6rem clamp(1.2rem, 2.4vw, 2rem); }
   .tier:first-child { padding-left: 0; }
   .tier:last-child { padding-right: 0; }
   .tier + .tier { border-top: 0; border-left: 1px solid rgba(12,122,93,.16); }
 }
-.pricing__footer { display: grid; gap: 1.1rem; padding: clamp(1.4rem, 3vw, 2.2rem); border-radius: var(--r-xl); background: var(--green-dark); color: #C8DDD4; font-size: .82rem; line-height: 1.6; }
-.pricing__footer strong { display: block; margin-bottom: .35rem; color: #fff; font-size: .92rem; font-weight: 500; }
+/* Лендинг и редизайн — отдельные предложения, две тёмные плашки в конце
+   стопки: тёмный тон закрывает блок цен, как раньше полоса условий. */
+.extras { display: grid; gap: clamp(1rem, 2.2vw, 1.6rem); }
+.extra {
+  display: grid; align-content: start; gap: .6rem;
+  padding: clamp(1.4rem, 3vw, 2.2rem); border-radius: var(--r-xl);
+  background: var(--green-dark); color: #C8DDD4;
+}
+.extra__top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .3rem 1rem; }
+.extra__h { font-family: var(--f-display); font-size: clamp(1.2rem, 1.9vw, 1.45rem); font-weight: 600; color: #fff; }
+.extra__price { font-size: .86rem; white-space: nowrap; }
+.extra__price span { font-family: var(--f-display); font-size: clamp(1.3rem, 2vw, 1.55rem); font-weight: 600; letter-spacing: -.02em; color: #fff; }
+.extra__text { font-size: .9rem; line-height: 1.6; max-width: 46ch; }
+@media (min-width: 600px) {
+  .extras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (min-width: 1000px) {
-  .pricing__head { grid-template-columns: 1fr auto; align-items: end; }
-  .pricing__terms { text-align: right; }
   .plans { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .plan + .plan { border-top: 0; border-left: 1px solid var(--line-2); }
   .plan__for { min-height: 4.5em; }
-  .plan__price { height: 3.3rem; align-items: baseline; }
-  .pricing__footer { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; }
+  .plan__price { height: 3.4rem; align-items: center; }
+  /* у фразы «Цена: обсуждается отдельно» два кегля — держим общую базовую
+     линию, а сама строка стоит по центру ряда, как барабаны соседей */
+  .plan__price--calc { flex-wrap: wrap; align-items: baseline; align-content: center; }
 }
 
 /* ============================================================
@@ -1928,7 +2080,6 @@ label.cc__opt { cursor: pointer; }
    ============================================================ */
 .trust { padding-block: var(--sec-pad); }
 .trust__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
-.trust .lead { margin-top: 1rem; }
 .qa-list { display: grid; }
 .qa { border-top: 1px solid var(--line); }
 .qa:last-of-type { border-bottom: 1px solid var(--line); }
@@ -1960,6 +2111,7 @@ label.cc__opt { cursor: pointer; }
 .qa__a { padding-bottom: clamp(1rem, 2.2vw, 1.4rem); color: var(--ink-soft); max-width: 76ch; }
 .qa__a a { color: var(--green-deep); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(12,122,93,.35); }
 .qa__a a:hover { text-decoration-color: currentColor; }
+.qa__a .qa__note { margin-top: .5rem; font-size: .86rem; color: var(--ink-mute); }
 
 /* ============================================================
    BLOCK 12 — ФУТЕР
@@ -2090,7 +2242,6 @@ label.cc__opt { cursor: pointer; }
   .work__count { font-size: .74rem; }
   .plan__kind { font-size: .76rem; }
   .pricing__terms, .tiers__terms { font-size: .86rem; }
-  .pricing__footer { font-size: .88rem; }
 }
 
 /* ============================================================
@@ -2140,13 +2291,14 @@ label.cc__opt { cursor: pointer; }
      стоят волосяные разделители посреди отступа. Поэтому не сетка, а флекс
      с симметричным padding-inline — граница тогда сама встаёт по центру. */
   .fgh__nums { display: flex; flex-wrap: nowrap; gap: 0; }
-  .fgh__stat { padding-inline: clamp(.85rem, 2.3vw, 2.1rem); }
+  /* padding ужат с 2.3vw/2.1rem: с подписями «дней до запуска» и «страниц + CRM»
+     ряд с прежними отступами не влезал в колонку и цифры наезжали на разделители */
+  .fgh__stat { padding-inline: clamp(.85rem, 1.4vw, 1.5rem); }
   .fgh__stat:first-child { padding-left: 0; }
   .fgh__stat:last-child  { padding-right: 0; }
   .fgh__stat + .fgh__stat { border-left: 1px solid var(--case-hair); }
 
 
-  .process__grid { grid-template-columns: minmax(0, .72fr) minmax(0, 2.28fr); }
   .steps { grid-template-columns: repeat(4, 1fr); }
   /* соединители между шагами — порядок здесь реально что-то значит.
      Пунктир и кольцо на нём: связь читается как последовательность,
@@ -2204,10 +2356,17 @@ label.cc__opt { cursor: pointer; }
 }
 
 /* На узком десктопе колонка текста FlyGuru всего ~320px, и ряд из
-   «170+ · 140+ · 18 · 4» с макетными отступами в неё не влезает:
+   «140+ · 170+ · 18 · 8» с макетными отступами в неё не влезает:
    последняя подпись вылезала за линию над цифрами. */
+/* Заголовок «Как я работаю» сбоку от шагов — только с 1280 px. Уже этого
+   колонки шагов выходили по 130–170 px, и длинные слова вроде «промежуточным»
+   вылезали из карточек; ниже 1280 заголовок стоит над шагами. */
+@media (min-width: 1280px) {
+  .process__grid { grid-template-columns: minmax(0, .72fr) minmax(0, 2.28fr); }
+}
+
 @media (min-width: 860px) and (max-width: 1279px) {
-  .fgh__stat { padding-inline: clamp(.5rem, 1.1vw, 2.1rem); }
+  .fgh__stat { padding-inline: clamp(.4rem, .9vw, 1rem); }
 }
 
 @media (min-width: 1120px) {
