@@ -576,6 +576,70 @@
     nav.hidden = false;
   });
 
+  /* ---------- форма заявки ----------
+     Шлёт JSON в Worker (worker/src/index.js), тот пересылает в Telegram.
+     При ошибке введённое остаётся на месте, рядом — путь в Telegram. */
+  var request = document.querySelector('.request');
+  if (request) {
+    var reqDone = document.querySelector('.request__done');
+    var reqStatus = request.querySelector('.request__status');
+    var reqBtn = request.querySelector('[type="submit"]');
+    var reqFields = ['name', 'contact', 'task'].map(function (n) { return request.elements[n]; });
+    var tgLink = '<a href="https://t.me/davidnaumenko" target="_blank" rel="noopener">напишите в Telegram</a>';
+
+    var setStatus = function (html, isError) {
+      reqStatus.innerHTML = html;
+      reqStatus.classList.toggle('is-error', !!isError);
+    };
+
+    request.addEventListener('input', function (e) { e.target.removeAttribute('aria-invalid'); });
+
+    request.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (request.getAttribute('aria-busy') === 'true') return;
+
+      var empty = reqFields.filter(function (f) { return !f.value.trim(); });
+      if (empty.length) {
+        empty.forEach(function (f) { f.setAttribute('aria-invalid', 'true'); });
+        setStatus('Заполните все три поля — так я пойму, с чем помочь и куда ответить.', true);
+        empty[0].focus();
+        return;
+      }
+
+      var payload = { website: request.elements.website.value, ref: document.referrer };
+      reqFields.forEach(function (f) { payload[f.name] = f.value.trim(); });
+
+      var btnText = reqBtn.textContent;
+      request.setAttribute('aria-busy', 'true');
+      reqBtn.textContent = 'Отправляю…';
+      setStatus('');
+
+      var ctrl = 'AbortController' in window ? new AbortController() : null;
+      var timer = ctrl && setTimeout(function () { ctrl.abort(); }, 15000);
+
+      fetch(request.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: ctrl && ctrl.signal
+      })
+        .then(function (res) { if (!res.ok) throw new Error(res.status); })
+        .then(function () {
+          request.hidden = true;
+          reqDone.hidden = false;
+          reqDone.focus();
+        })
+        .catch(function () {
+          setStatus('Не получилось отправить. Текст на месте — попробуйте ещё раз или ' + tgLink + '.', true);
+        })
+        .then(function () {
+          clearTimeout(timer);
+          request.removeAttribute('aria-busy');
+          reqBtn.textContent = btnText;
+        });
+    });
+  }
+
   /* ---------- активный пункт навигации ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
   var targets = links

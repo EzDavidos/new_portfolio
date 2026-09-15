@@ -1326,6 +1326,39 @@
         </a>
         <span class="final__note">Отвечаю в течение 40 минут · 8:00–22:00 (UTC+7, Нячанг)</span>
       </div>
+
+      <!-- Форма: заявку принимает Cloudflare Worker (папка worker/) и шлёт
+           в Telegram. Telegram-кнопка выше остаётся главным путём. -->
+      <form class="request" action="https://form.davidnaumenko.com/" method="post" novalidate>
+        <p class="request__title">Не хотите писать сейчас? Оставьте задачу — свяжусь сам.</p>
+        <div class="request__grid">
+          <label class="request__field">
+            <span>Имя</span>
+            <input name="name" type="text" autocomplete="name" maxlength="80" required>
+          </label>
+          <label class="request__field">
+            <span>Как с вами связаться</span>
+            <input name="contact" type="text" maxlength="120" required placeholder="@ник, почта или телефон">
+          </label>
+          <label class="request__field request__field--wide">
+            <span>Что нужно сделать</span>
+            <textarea name="task" rows="4" maxlength="2000" required placeholder="Например: запись клиентов идёт через переписку, хочу, чтобы люди записывались сами"></textarea>
+          </label>
+          <!-- ловушка для ботов: человек это поле не видит -->
+          <label class="request__trap" aria-hidden="true">
+            Сайт <input name="website" type="text" tabindex="-1" autocomplete="off">
+          </label>
+        </div>
+        <div class="request__foot">
+          <button class="btn btn--on-dark" type="submit">Отправить заявку</button>
+          <p class="request__status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <div class="request__done" tabindex="-1" hidden>
+        <p class="request__title">Заявка у меня. Отвечу в рабочие часы туда, куда вы указали.</p>
+        <p class="request__alt">Если срочно — <a href="https://t.me/davidnaumenko" target="_blank" rel="noopener">напишите в Telegram</a>.</p>
+      </div>
     </div>
   </div>
 </section>
