@@ -11,6 +11,16 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta name="theme-color" content="#0C7A5D">
+<!-- тема — тот же скрипт, что в index.html -->
+<script>
+(function () {
+  var s = null;
+  try { s = localStorage.getItem('dn_scheme'); } catch (e) {}
+  if (s !== 'light' && s !== 'dark') s = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-scheme', s);
+  if (s === 'dark') document.querySelector('meta[name="theme-color"]').content = '#1E2334';
+})();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,6 +80,7 @@
           </thead>
           <tbody>
             <tr><td><code>dn_consent</code></td><td>Этот сайт</td><td>Запоминает ваш выбор в окне про cookies. Хранится в браузере, на сервер не отправляется</td><td>12 месяцев</td></tr>
+            <tr><td><code>dn_scheme</code></td><td>Этот сайт</td><td>Запоминает выбранную тему — светлую или тёмную. Хранится в браузере, на сервер не отправляется</td><td>Пока вы не очистите данные сайта</td></tr>
             <tr><td><code>_ga</code></td><td>Google Analytics</td><td>Отличает одного посетителя от другого. Только после согласия</td><td>2 года</td></tr>
             <tr><td><code>_ga_2BSQFHXPFP</code></td><td>Google Analytics</td><td>Хранит состояние текущего визита. Только после согласия</td><td>2 года</td></tr>
           </tbody>
