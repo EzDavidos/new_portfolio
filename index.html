@@ -1059,10 +1059,7 @@
     <div class="pricing__panel">
     <header class="pricing__head reveal">
       <canvas class="water water--accent pricing__water" data-flow="rising" aria-hidden="true"></canvas>
-      <div>
-        <h2 class="h2 pricing__title">Стоимость разработки</h2>
-        <p class="pricing__intro">Выберите, с чего начать. Точный объём, сроки и цену согласуем после бесплатного обсуждения задачи.</p>
-      </div>
+      <h2 class="h2 pricing__title">Стоимость разработки</h2>
       <p class="pricing__terms"><strong>50% до старта · 50% после запуска</strong><span>Для крупных проектов — оплата по этапам</span></p>
     </header>
 
@@ -1120,11 +1117,11 @@
       </article>
 
       <article class="plan reveal" id="plan-auto">
-        <p class="plan__kind mono">Меньше ручной работы</p>
+        <p class="plan__kind mono">Устраняем рутину и ручную работу</p>
         <h3 class="plan__h">Автоматизации</h3>
-        <p class="plan__for">Для повторяющихся задач и сервисов, между которыми вы переносите данные вручную.</p>
-        <p class="plan__price plan__price--calc"><span>По задаче</span></p>
-        <p class="plan__scope">Возможные сценарии</p>
+        <p class="plan__for">Рутинные процессы, перенос данных, сбор заявок и&nbsp;т.&nbsp;д.</p>
+        <p class="plan__price plan__price--calc">Цена: <span>обсуждается отдельно</span></p>
+        <p class="plan__scope">Для чего</p>
         <ul class="plan__list" role="list">
           <li>Напоминания и уведомления</li>
           <li>Автоматические отчёты и выгрузки</li>
@@ -1134,7 +1131,7 @@
           <summary>Как считаются цена и срок</summary>
           <div class="plan__expanded">
             <p>Разбираем ваш сценарий: какие сервисы участвуют, сколько шагов нужно автоматизировать и что уже настроено.</p>
-            <p>После обсуждения фиксируем объём, стоимость и сроки до начала работы.</p>
+            <p>После обсуждения фиксируем объём, стоимость и сроки.</p>
           </div>
         </details>
         <a href="https://t.me/davidnaumenko" class="btn btn--soft btn--block" target="_blank" rel="noopener">Обсудить задачу</a>
@@ -1143,111 +1140,94 @@
 
     </div>
 
-    <!-- Плашка 2 — поддержка после запуска. Визуальная концепция отсюда
-         ушла: в дорогих комплектациях она уже включена, а для готового
-         продукта стоит одной строкой в условиях ниже, не тарифом. -->
+    <!-- Плашка 2 — поддержка после запуска. Состав уровней — по тексту Давида
+         от 15.09.2026, списки видны сразу, без раскрывашек. Уровни вкладываются
+         друг в друга; правки, доработки и небольшие функции берутся из часов. -->
     <div class="addon reveal">
       <div class="care__head">
         <p class="care__when mono">После запуска</p>
         <h3 class="care__h">Ежемесячная поддержка</h3>
-        <p class="care__lead">Гарантия чинит мои ошибки, когда вы о них сообщите. Поддержка — это когда я сам слежу за продуктом и развиваю его.</p>
+        <p class="care__lead">Это не обязательно. Я в любом случае даю гарантию на год — при условии, что это моя ошибка. Поддержка — это когда я слежу за продуктом и развиваю его.</p>
       </div>
-      <!-- Состав уровней — по таблице Давида от 14.09.2026. Уровни вкладываются
-           друг в друга; правки, доработки и небольшие функции берутся из часов. -->
       <div class="swipe-tabs tiers__nav" aria-label="Уровни поддержки" hidden>
-        <button type="button" class="swipe-tabs__tab" aria-controls="tier-base" aria-current="true" aria-label="Базовый, $90 в месяц">$90</button>
-        <button type="button" class="swipe-tabs__tab" aria-controls="tier-ext" aria-current="false" aria-label="Расширенный, $280 в месяц">$280</button>
-        <button type="button" class="swipe-tabs__tab" aria-controls="tier-partner" aria-current="false" aria-label="Партнёрский, $600 в месяц">$600</button>
+        <button type="button" class="swipe-tabs__tab" aria-controls="tier-base" aria-current="true" aria-label="Стандартная, $90 в месяц">$90</button>
+        <button type="button" class="swipe-tabs__tab" aria-controls="tier-ext" aria-current="false" aria-label="Расширенная, $280 в месяц">$280</button>
+        <button type="button" class="swipe-tabs__tab" aria-controls="tier-partner" aria-current="false" aria-label="Партнёрская, $600 в месяц">$600</button>
       </div>
       <div class="tiers">
         <article class="tier" id="tier-base">
           <div class="tier__top">
-            <h4 class="tier__h">Базовый</h4>
+            <h4 class="tier__h">Стандартная</h4>
             <p class="tier__price">$90<i>/мес</i></p>
           </div>
-          <p class="tier__for">Продукт работает, и нужно, чтобы так и оставалось.</p>
+          <p class="tier__label mono">Что входит</p>
           <ul class="tier__list" role="list">
-            <li>Регулярно проверяю код и работу сервисов</li>
-            <li>Администрирую, чтобы продукт не падал</li>
+            <li>Проверка работы 2 раза в месяц</li>
+            <li>Мониторинг: сразу узнаю о падении</li>
+            <li>Ежедневные бэкапы базы</li>
+            <li>Слежу за доменом и SSL, ставлю срочные обновления безопасности</li>
+            <li>Реакция на поломку — до 24 часов</li>
+            <li>2 часа на правки и доработки</li>
+            <li>Письменный отчёт раз в месяц</li>
           </ul>
-          <details class="plan__details tier__details">
-            <summary>Что входит</summary>
-            <div class="plan__expanded">
-              <ul class="tier__full" role="list">
-                <li>Проверка работы 2 раза в месяц</li>
-                <li>Мониторинг: о падении узнаю сразу</li>
-                <li>Ежедневные бэкапы базы</li>
-                <li>Слежу за доменом и SSL, ставлю срочные обновления безопасности</li>
-                <li>Реакция на поломку — до 24 часов</li>
-                <li>2 часа на правки и доработки</li>
-                <li>Письменный отчёт раз в месяц</li>
-              </ul>
-            </div>
-          </details>
         </article>
         <article class="tier" id="tier-ext">
           <div class="tier__top">
-            <h4 class="tier__h">Расширенный</h4>
+            <h4 class="tier__h">Расширенная</h4>
             <p class="tier__price">$280<i>/мес</i></p>
           </div>
-          <p class="tier__for">Продукт работает, и время от времени нужны правки.</p>
+          <p class="tier__label mono">Что входит</p>
           <ul class="tier__list" role="list">
-            <li>Всё из Базового</li>
-            <li>Правки и небольшие доработки по запросу</li>
+            <li class="tier__inc">Всё из Стандартной</li>
+            <li>Проверка работы 4 раза в месяц</li>
+            <li>Мониторинг и ежедневные бэкапы</li>
+            <li>Домен, SSL и плановое обновление библиотек раз в месяц</li>
+            <li>Реакция на поломку — до 6 часов</li>
+            <li>12 часов на правки, доработки и небольшие функции</li>
+            <li>Созвон раз в две недели</li>
           </ul>
-          <details class="plan__details tier__details">
-            <summary>Что входит</summary>
-            <div class="plan__expanded">
-              <ul class="tier__full" role="list">
-                <li>Проверка работы 4 раза в месяц</li>
-                <li>Мониторинг и ежедневные бэкапы</li>
-                <li>Домен, SSL и плановое обновление библиотек раз в месяц</li>
-                <li>Реакция на поломку — до 12 часов</li>
-                <li>12 часов на правки, доработки и небольшие функции</li>
-                <li>Созвон раз в две недели</li>
-              </ul>
-            </div>
-          </details>
         </article>
         <article class="tier" id="tier-partner">
           <div class="tier__top">
-            <h4 class="tier__h">Партнёрский</h4>
+            <h4 class="tier__h">Партнёрская</h4>
             <p class="tier__price">$600<i>/мес</i></p>
           </div>
-          <p class="tier__for">Продукт постоянно развивается.</p>
+          <p class="tier__label mono">Что входит</p>
           <ul class="tier__list" role="list">
-            <li>Всё из Расширенного</li>
-            <li>Постоянная работа над проектом: сказали&nbsp;— сделал</li>
-            <li>Всегда на связи</li>
+            <li class="tier__inc">Всё из Расширенной</li>
+            <li>Постоянный контроль, мониторинг и ежедневные бэкапы</li>
+            <li>Домен, SSL и обновления библиотек</li>
+            <li>Веду тарифы хостинга и масштабирую под нагрузку</li>
+            <li>Реакция на поломку — до 3 часов</li>
+            <li>30 часов на доработки и новые функции</li>
+            <li>Мелкие правки без ограничений, вне часов</li>
+            <li>Созвон каждую неделю (при необходимости)</li>
           </ul>
-          <details class="plan__details tier__details">
-            <summary>Что входит</summary>
-            <div class="plan__expanded">
-              <ul class="tier__full" role="list">
-                <li>Постоянный контроль, мониторинг и ежедневные бэкапы</li>
-                <li>Домен, SSL и обновления библиотек</li>
-                <li>Веду тарифы хостинга и масштабирую под нагрузку</li>
-                <li>Реакция на поломку — до 3 часов</li>
-                <li>30 часов на доработки и новые функции</li>
-                <li>Мелкие правки без ограничений, вне часов</li>
-                <li>Созвон каждую неделю</li>
-              </ul>
-            </div>
-          </details>
         </article>
       </div>
       <div class="tiers__terms">
-        <p>Время реакции считаю в рабочие часы: 8:00–22:00 (UTC+7). Неиспользованные часы не переносятся. Крупные новые функции оцениваем отдельно. Хостинг и сервисы оплачиваются с вашего аккаунта.</p>
-        <p>Минимальный срок — месяц, отменить можно в любой месяц. Проект, сделанный не мной, беру на поддержку после проверки кода.</p>
+        <p>Рабочие часы: 8:00–22:00 (UTC+7). Неиспользованные часы не переносятся. Крупные новые функции оцениваем отдельно. Хостинг и сервисы оплачиваете вы.</p>
+        <p>Минимальный срок — месяц, дальше отменить подписку можно в любой момент. Беру на поддержку чужие проекты — только после проверки кода.</p>
       </div>
     </div>
 
-    <!-- Условия стоят под всеми плашками: они про работу целиком, а не про
-         конкретное предложение. -->
-    <div class="pricing__footer reveal">
-      <p><strong>Год гарантии на мой код</strong>Свои ошибки исправляю бесплатно. Новые функции и изменения исходной задачи оцениваем отдельно.</p>
-      <p><strong>Нужен только лендинг?</strong>Одна страница без системы за ней — от $150. Объём и сроки обсуждаем до старта.</p>
-      <p><strong>Нужен редизайн?</strong>Новая визуальная концепция для уже работающего сайта, Mini App или CRM — от $400.</p>
+    <!-- Отдельные предложения — две самостоятельные плашки, а не общая полоса
+         условий: гарантия теперь сказана в поддержке и в FAQ. -->
+    <div class="extras">
+      <article class="extra reveal">
+        <div class="extra__top">
+          <h3 class="extra__h">Лендинг</h3>
+          <p class="extra__price">Цена: <span>$150</span></p>
+        </div>
+        <p class="extra__text">Одна страница.</p>
+      </article>
+      <article class="extra reveal">
+        <div class="extra__top">
+          <h3 class="extra__h">Редизайн</h3>
+          <p class="extra__price">Цена: <span>от $400</span></p>
+        </div>
+        <p class="extra__text">Новая визуальная концепция для уже работающего продукта: сайта, CRM, Mini App и&nbsp;т.&nbsp;д.</p>
+      </article>
     </div>
   </div>
 </section>
