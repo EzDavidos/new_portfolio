@@ -916,11 +916,13 @@
       </div>
     </template>
 
-    <!-- Окно кейса AGENTBOY. Тексты — по documents/projects/agentboy.md. -->
+    <!-- Окно кейса AGENTBOY. Тексты — documents/текст под кейсы.txt (16.09.2026).
+         Ссылку на код не даём (решение Давида 16.09); сам репозиторий остаётся
+         публичным, пока agentboy.org живёт на GitHub Pages. -->
     <template id="case-agentboy" data-theme="agentboy">
       <div class="cv__id">
         <h2 class="cv__title" id="cv-title-agentboy">AGENT<span>BOY</span></h2>
-        <p class="cv__sub">Пресс-кит диджея: одна ссылка вместо десятка файлов для промоутера</p>
+        <p class="cv__sub">Пресс-кит диджея — онлайн-портфолио для промоутеров</p>
       </div>
 
       <section class="cv__gal" aria-label="Экраны проекта">
@@ -929,32 +931,31 @@
         <picture>
           <img src="assets/img/cases/agentboy/hero-pc.webp" width="1891" height="857" alt="Первый экран пресс-кита на компьютере" loading="lazy" decoding="async">
         </picture>
-        <figcaption><b>Первый экран</b>Карточка артиста: роли, BPM-диапазон, жанры и две кнопки — букинг и послушать.</figcaption>
+        <figcaption><b>Первый экран</b></figcaption>
       </figure>
       <figure class="cv__slide" data-chapter="Компьютер">
         <picture>
           <img src="assets/img/cases/agentboy/music-pc.webp" width="1890" height="857" alt="Раздел музыки на компьютере" loading="lazy" decoding="async">
         </picture>
-        <figcaption><b>Музыка</b>Все площадки одной сеткой и живые сеты с YouTube во встроенном плеере.</figcaption>
+        <figcaption><b>Музыка</b></figcaption>
       </figure>
       <figure class="cv__slide" data-chapter="Телефон">
         <picture>
           <img src="assets/img/cases/agentboy/hero-phone.webp" width="900" height="1957" alt="Первый экран пресс-кита на телефоне" loading="lazy" decoding="async">
         </picture>
-        <figcaption><b>Первый экран на телефоне</b>Та же карточка, собранная под узкий экран, и переключатель EN/RU в шапке.</figcaption>
+        <figcaption><b>Первый экран на телефоне</b>Переключатель EN/RU в шапке.</figcaption>
       </figure>
       <figure class="cv__slide" data-chapter="Телефон">
         <picture>
           <img src="assets/img/cases/agentboy/links-phone.webp" width="900" height="1957" alt="Ссылки на музыкальные площадки на телефоне" loading="lazy" decoding="async">
         </picture>
-        <figcaption><b>Площадки</b>Spotify, Apple Music, Beatport, YouTube, Instagram, SoundCloud — каждая строка нажимается целиком.</figcaption>
+        <figcaption><b>Площадки</b></figcaption>
       </figure>
         </div>
       </section>
 
       <nav class="cv__go" aria-label="Проект вживую">
         <a class="cv__golink cv__golink--main" href="https://agentboy.org/?lang=en#hero" target="_blank" rel="noopener">Открыть agentboy.org <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="cv__golink" href="https://github.com/EzDavidos/agentboy-presskit" target="_blank" rel="noopener">Код на GitHub <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </nav>
 
       <section class="cv__info" aria-label="О проекте">
@@ -968,10 +969,8 @@
         <div class="cv__grid">
           <div>
             <h3 class="cv__h mono">Задача</h3>
-            <p class="cv__lead">Артисту нужна была одна ссылка, которую можно отправить промоутеру вместо разрозненных сообщений с фото, видео и биографией.</p>
+            <p class="cv__lead">Артисту нужно было онлайн-портфолио, которое можно отправить промоутеру вместо разрозненных сообщений с фото, видео и биографией.</p>
             <p>Сайт на двух языках — с запасом под французский, немецкий, испанский и греческий.</p>
-            <h3 class="cv__h mono">Нестандартная часть</h3>
-            <p>Переводы подключаются обычными скриптами, а не загрузкой по сети, поэтому сайт целиком работает даже с флешки без интернета — артист может показать его прямо на площадке.</p>
           </div>
 
           <div>
@@ -979,12 +978,10 @@
             <ul class="cv__list" role="list">
               <li>Карточка-герой: фото, роли, BPM-диапазон, кнопки Book now и Listen</li>
               <li>Переключатель EN/RU: выбор запоминается и попадает в ссылку — можно сразу отправить русскую версию</li>
-              <li>12 видео во всплывающем плеере, на телефоне листаются пальцем</li>
-              <li>Площадки по странам: Греция, Вьетнам, Таиланд, Австрия, Чехия</li>
+              <li>12 видео во всплывающем плеере</li>
               <li>Форматы и букинг, короткая биография с кнопкой «Скопировать»</li>
               <li>Пресс-пак ZIP на скачивание: фото, логотип и биография на двух языках</li>
               <li>Галерея с полноэкранным просмотром и свайпом</li>
-              <li>Карточка превью, когда ссылку отправляют в мессенджер</li>
             </ul>
           </div>
 
@@ -995,6 +992,7 @@
                 <li><time datetime="2026-06-25">25 июня 2026</time>первая демо-версия</li>
                 <li><time datetime="2026-08-13">13 августа 2026</time>опубликован с контентом артиста</li>
               </ol>
+              <p class="cv__timenote">Сайт был готов за 3 дня, дальше ждали фото и тексты артиста</p>
             </div>
             <div>
               <h3 class="cv__h mono">Стек</h3>
@@ -1008,7 +1006,7 @@
 
       <div class="cv__end">
         <div class="cv__endin">
-          <p>Нужна одна ссылка, в которой есть всё о вас?</p>
+          <p>Хотите своё портфолио?</p>
           <div class="cv__endacts">
             <a href="https://t.me/davidnaumenko" class="btn cv__talk" target="_blank" rel="noopener">Обсудить проект <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11m0 0L9 3.5M13.5 8L9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
