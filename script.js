@@ -334,7 +334,6 @@
     var cvBody = cv.querySelector('[data-cv-body]');
     var cvZoom = cv.querySelector('.cv__zoom');
     var cvSheet = cv.querySelector('.cv__sheet');
-    var cvHead = cv.querySelector('.cv__head');
     var cvPhone = window.matchMedia('(max-width: 859px)');
     var cvPushed = false;
     var cvCur = null;   // id открытого кейса
@@ -561,10 +560,9 @@
       cvZoom.querySelector('button').focus();
       track('gallery_open', { case_id: cvCur });
     };
-    // На ПК лист стоит под шапкой сайта и шириной с неё. Шапка остаётся
-    // на странице под затемнением, поэтому поверх кладётся её копия ровно
-    // на то же место: размеры снимаются с настоящей, а не считаются в CSS,
-    // потому что при открытии страница получает отступ под скроллбар.
+    // На ПК лист шириной с шапку сайта и наезжает на неё сверху. Размеры
+    // снимаются с настоящей шапки, а не считаются в CSS: при открытии
+    // страница получает отступ под скроллбар и шапка сдвигается.
     var cvPlace = function () {
       var hdr = document.getElementById('header');
       var inner = hdr && hdr.querySelector('.header__inner');
@@ -572,11 +570,7 @@
       var r = inner.getBoundingClientRect();
       cv.style.setProperty('--cv-x', r.left + 'px');
       cv.style.setProperty('--cv-w', r.width + 'px');
-      cv.style.setProperty('--cv-ht', r.top + 'px');
-      cv.style.setProperty('--cv-top', Math.round(r.bottom + 12) + 'px');
-      cvHead.className = hdr.className + ' cv__head';
-      cvHead.textContent = '';
-      cvHead.appendChild(inner.cloneNode(true));
+      cv.style.setProperty('--cv-top', Math.round(r.top) + 'px');
     };
     var cvZoomClose = function () { cvZoom.hidden = true; };
     cvZoom.addEventListener('click', cvZoomClose);
@@ -608,7 +602,7 @@
       // страница под окном не прокручивается; ширину скроллбара возвращаем
       // отступом, иначе страница под листом дёргается вбок. Запирается
       // <html>, а не <body>: body с overflow: hidden становится контейнером
-      // прокрутки, и липкая шапка уезжает из-под своей копии
+      // прокрутки, и липкая шапка уезжает из-под листа
       var sbw = window.innerWidth - document.documentElement.clientWidth;
       document.documentElement.style.overflow = 'hidden';
       if (sbw > 0) document.body.style.paddingRight = sbw + 'px';
@@ -668,7 +662,7 @@
       e.preventDefault();
       if (!cvZoom.hidden) cvZoomClose(); else cvClose();
     });
-    // клик мимо листа — по затемнению или копии шапки — закрывает окно
+    // клик мимо листа закрывает окно
     cv.addEventListener('click', function (e) { if (e.target === cv) cvClose(); });
     // стрелки слушаем на документе, а не на окне: при открытии по ссылке
     // браузер после загрузки уводит фокус на body, мимо окна
