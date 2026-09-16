@@ -1435,7 +1435,10 @@ label.cc__opt { cursor: pointer; }
    Окно одето в гамму самого продукта, чтобы человек как будто зашёл
    в него: FlyGuru — светлый сайт с тиловой шапкой, 100ловая — кремовый
    мини-апп с кирпичом, MoodBot — лендинг с синим и жёлтым, AGENTBOY —
-   чёрный с красным. Лист полупрозрачный: под ним размытая страница.
+   чёрный с красным. Лист полупрозрачный и сам размывает то, что под
+   ним: окно читается продолжением лендинга, а не новой страницей.
+   Сам <dialog> — прозрачный слой на весь экран, в нём лист и копия
+   шапки сайта (на ПК лист стоит под шапкой, шириной с неё).
    ============================================================ */
 .cv {
   /* нейтральная тема — палитра сайта */
@@ -1456,42 +1459,73 @@ label.cc__opt { cursor: pointer; }
 
   --cv-gut:   clamp(1rem, 3.2vw, 2.25rem);
   --cv-gap:   clamp(14px, 1.8vw, 26px);
-  /* высота кадра: всё, что остаётся от экрана после шапки, строки глав,
-     подписи, ссылок и превью. Кадр не мельче 300px и не выше 760. */
-  --cv-stage: clamp(300px, calc(100svh - 25.5rem), 760px);
-  --cv-slide-max: min(1400px, calc(100vw - 2 * var(--cv-gut) - 8.5rem));
+  /* место листа на ПК — script.js снимает его с шапки сайта:
+     --cv-x/--cv-w левый край и ширина, --cv-top верх листа, --cv-ht верх шапки */
+  --cv-w:     100vw;
+  --cv-top:   14px;
+  /* плотность листа: сквозь него видна размытая страница */
+  --cv-sheet: 78%;
+  /* высота кадра: всё, что остаётся от экрана после отступа сверху, шапки
+     окна, строки глав, подписи, ссылок и превью. Не мельче 300px и не выше 760 */
+  --cv-stage: clamp(300px, calc(100svh - var(--cv-top) - 23.75rem), 760px);
+  --cv-slide-max: min(1400px, calc(var(--cv-w) - 2 * var(--cv-gut) - 8.5rem));
 
   position: fixed; inset: 0;
   width: 100%; height: 100%; max-width: none; max-height: none;
   margin: 0; padding: 0; border: 0;
-  overflow-y: auto; overscroll-behavior: contain;
+  /* clip, а не только hidden: слой с hidden всё равно прокручивается
+     скриптом — фокус на выезжающий лист сдвигал его вместе с шапкой */
+  overflow: hidden; overflow: clip;
+  background: transparent;
   color: var(--cv-ink);
-  /* лист полупрозрачный, размытие даёт ::backdrop: блюр на самом окне
-     сделал бы его контейнером для fixed-потомков, и увеличенный кадр
-     уезжал бы вместе с прокруткой */
-  background:
-    radial-gradient(80% 45% at 50% 0%, color-mix(in srgb, var(--cv-accent) 9%, transparent), transparent 70%),
-    color-mix(in srgb, var(--cv-bg) 86%, transparent);
-  box-shadow: 0 -1px 0 rgba(255,255,255,.5) inset, 0 30px 90px rgba(10,20,24,.28);
   font-size: 1rem;
   -webkit-tap-highlight-color: transparent;
-  /* полоса прокрутки окна не нужна: на Windows это серая квадратная
+}
+/* затемнение лёгкое: страница вокруг листа узнаётся, но не спорит с ним */
+.cv::backdrop {
+  background: rgba(12,24,26,.18);
+  backdrop-filter: blur(10px) saturate(1.1); -webkit-backdrop-filter: blur(10px) saturate(1.1);
+}
+.cv__sheet {
+  position: absolute; inset: max(14px, env(safe-area-inset-top)) 0 0;
+  border-radius: 22px 22px 0 0;
+  overflow-y: auto; overscroll-behavior: contain;
+  background:
+    radial-gradient(80% 45% at 50% 0%, color-mix(in srgb, var(--cv-accent) 9%, transparent), transparent 70%),
+    color-mix(in srgb, var(--cv-bg) var(--cv-sheet), transparent);
+  /* блюр на листе, а не только в ::backdrop: так страница под ним
+     остаётся мягким цветом, а не читаемыми строками. Увеличенный кадр
+     лежит вне листа, поэтому fixed-потомков у него нет */
+  backdrop-filter: blur(26px) saturate(1.25); -webkit-backdrop-filter: blur(26px) saturate(1.25);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 -12px 60px rgba(10,20,24,.18);
+  /* полоса прокрутки листа не нужна: на Windows это серая квадратная
      колея поверх скруглённого листа. Колесо, тачпад, свайп и клавиши
      прокручивают как прежде, а ниже видно, что лист продолжается */
   scrollbar-width: none;
 }
-.cv::-webkit-scrollbar { display: none; }
-.cv::backdrop {
-  background: rgba(12,24,26,.26);
-  backdrop-filter: blur(22px) saturate(1.2); -webkit-backdrop-filter: blur(22px) saturate(1.2);
+.cv__sheet::-webkit-scrollbar { display: none; }
+.cv__sheet:focus { outline: none; }
+/* копия шапки сайта: только на ПК, ровно на месте настоящей; клики
+   проходят насквозь в затемнение и закрывают окно */
+.cv .cv__head {
+  display: none; position: absolute; z-index: 1;
+  top: var(--cv-ht, 0px); left: var(--cv-x, 0px); width: var(--cv-w);
+  padding: 0; pointer-events: none;
+  color: var(--ink);
 }
-/* всплывает и уплывает плавно; закрытие доигрывает script.js */
-.cv[open] { animation: cv-in .5s cubic-bezier(.22,1,.36,1); }
-.cv[open]::backdrop { animation: cv-fade .4s ease-out; }
-.cv.is-closing { animation: cv-out .26s ease-in forwards; }
-.cv.is-closing::backdrop { animation: cv-fade .26s ease-in reverse forwards; }
-@keyframes cv-in  { from { opacity: 0; transform: translateY(48px); } }
-@keyframes cv-out { to   { opacity: 0; transform: translateY(48px); } }
+
+/* Лист выезжает снизу и проявляется из размытия: края мягкие, пока он
+   в пути, и собираются в чёткие к концу. Закрытие доигрывает script.js */
+.cv[open] .cv__sheet { animation: cv-in .72s cubic-bezier(.16,1,.3,1) both; }
+.cv[open]::backdrop { animation: cv-fade .5s ease-out; }
+.cv.is-closing .cv__sheet { animation: cv-out .34s cubic-bezier(.5,0,.75,0) forwards; }
+.cv.is-closing::backdrop { animation: cv-fade .34s ease-in reverse forwards; }
+@keyframes cv-in {
+  from { opacity: 0; transform: translateY(min(26vh, 220px)); filter: blur(14px); }
+  55%  { filter: blur(0); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+@keyframes cv-out { to { opacity: 0; transform: translateY(min(18vh, 150px)); filter: blur(10px); } }
 @keyframes cv-fade { from { opacity: 0; } }
 
 /* FlyGuru: светлый фон и тиловая шапка сайта, оранжевая кнопка записи.
@@ -1542,7 +1576,7 @@ label.cc__opt { cursor: pointer; }
   --cv-go-ink:  #0C0809;
   --cv-shot-sh: 0 0 0 1px rgba(255,255,255,.10), 0 24px 60px rgba(0,0,0,.45);
 }
-.cv[data-theme="agentboy"] { background: radial-gradient(80% 45% at 50% 0%, rgba(255,31,61,.14), transparent 70%), rgba(12,8,9,.9); }
+.cv[data-theme="agentboy"] .cv__sheet { background: radial-gradient(80% 45% at 50% 0%, rgba(255,31,61,.14), transparent 70%), rgba(12,8,9,.8); }
 .cv__title span { color: var(--cv-accent); }
 .cv__bar .cv__title span { color: inherit; }
 .cv[data-theme="100lovaya"] .cv__bar .cv__title span,
@@ -1560,7 +1594,6 @@ label.cc__opt { cursor: pointer; }
   box-shadow: 0 1px 0 var(--cv-hair);
 }
 .cv__id { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 1rem; }
-.cv:focus { outline: none; }
 .cv__title {
   font-family: var(--f-display); font-weight: 700;
   font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.1; letter-spacing: -.01em;
@@ -1785,8 +1818,6 @@ label.cc__opt { cursor: pointer; }
   .cv {
     --cv-stage: clamp(280px, calc(100svh - 21rem), 740px);
     --cv-slide-max: calc(100vw - 2 * var(--cv-gut));
-    inset: max(14px, env(safe-area-inset-top)) 0 0; height: auto;
-    border-radius: 22px 22px 0 0;
   }
   .cv__talk span { display: none; }
   .cv__talk { padding: .62rem .9rem; }
@@ -1800,8 +1831,13 @@ label.cc__opt { cursor: pointer; }
 }
 
 @media (min-width: 860px) {
-  /* на десктопе окно — лист поверх страницы, по краям видна сама страница */
-  .cv { inset: 14px; width: auto; height: auto; border-radius: var(--r-xl); }
+  /* на десктопе лист шириной с шапку сайта стоит под ней и уходит в низ
+     экрана; по бокам и над ним видна размытая страница */
+  .cv__sheet {
+    inset: var(--cv-top) auto 0 var(--cv-x, 0px); width: var(--cv-w);
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+  }
+  .cv .cv__head { display: block; }
   .cv__sub { display: block; }
   .cv__arrow { display: grid; }
   .cv__thumbs { display: flex; }
@@ -1809,7 +1845,7 @@ label.cc__opt { cursor: pointer; }
   .cv__slide { position: relative; }
   .cv__slide figcaption {
     position: absolute; top: calc(100% + .1rem); left: 50%; transform: translateX(-50%);
-    width: max(100%, 34rem); max-width: calc(100vw - 4rem);
+    width: max(100%, 34rem); max-width: calc(var(--cv-w) - 4rem);
     /* под широким ПК-кадром строка не длиннее 44rem */
     padding-inline: max(0px, calc((100% - 44rem) / 2));
     text-align: center; text-wrap: balance;
@@ -1827,7 +1863,7 @@ label.cc__opt { cursor: pointer; }
 /* низкий ноутбук: превью уступают высоту кадру — навигацию держат
    стрелки, главы и соседние кадры */
 @media (min-width: 860px) and (max-height: 799px) {
-  .cv { --cv-stage: clamp(300px, calc(100svh - 21.5rem), 760px); }
+  .cv { --cv-stage: clamp(300px, calc(100svh - var(--cv-top) - 19.75rem), 760px); }
   .cv__thumbs { display: none; }
 }
 }
@@ -2638,3 +2674,8 @@ label.cc__opt { cursor: pointer; }
 /* ---------- cookie-баннер и страница политики ---------- */
 [data-scheme="dark"] .cc__switch::after { box-shadow: 0 1px 3px rgba(0,0,0,.4); }
 [data-scheme="dark"] .doc__body { background: rgba(33,37,55,.96); }
+
+/* ---------- окно кейса ---------- */
+/* гамму продуктов не трогаем, но светлый лист на тёмной странице плотнее:
+   при 78% сквозь него проступает ночной фон, и лист сереет */
+[data-scheme="dark"] .cv { --cv-sheet: 90%; }
