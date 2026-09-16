@@ -333,6 +333,8 @@
     var cvId = cv.querySelector('[data-cv-id]');
     var cvBody = cv.querySelector('[data-cv-body]');
     var cvZoom = cv.querySelector('.cv__zoom');
+    var cvSheet = cv.querySelector('.cv__sheet');
+    var cvHead = cv.querySelector('.cv__head');
     var cvPhone = window.matchMedia('(max-width: 859px)');
     var cvPushed = false;
     var cvCur = null;   // id открытого кейса
@@ -348,6 +350,7 @@
     // одного экрана разная. Размеры берутся из атрибутов width/height,
     // поэтому раскладка готова до загрузки картинок и не прыгает.
     var cvLayout = function () {
+      cvPlace();
       if (!g) return;
       var H = g.probe.offsetHeight, MW = g.probe.offsetWidth, phone = cvPhone.matches;
       g.slides.forEach(function (s) {
@@ -558,6 +561,23 @@
       cvZoom.querySelector('button').focus();
       track('gallery_open', { case_id: cvCur });
     };
+    // На ПК лист стоит под шапкой сайта и шириной с неё. Шапка остаётся
+    // на странице под затемнением, поэтому поверх кладётся её копия ровно
+    // на то же место: размеры снимаются с настоящей, а не считаются в CSS,
+    // потому что при открытии страница получает отступ под скроллбар.
+    var cvPlace = function () {
+      var hdr = document.getElementById('header');
+      var inner = hdr && hdr.querySelector('.header__inner');
+      if (!inner || cvPhone.matches) return;
+      var r = inner.getBoundingClientRect();
+      cv.style.setProperty('--cv-x', r.left + 'px');
+      cv.style.setProperty('--cv-w', r.width + 'px');
+      cv.style.setProperty('--cv-ht', r.top + 'px');
+      cv.style.setProperty('--cv-top', Math.round(r.bottom + 12) + 'px');
+      cvHead.className = hdr.className + ' cv__head';
+      cvHead.textContent = '';
+      cvHead.appendChild(inner.cloneNode(true));
+    };
     var cvZoomClose = function () { cvZoom.hidden = true; };
     cvZoom.addEventListener('click', cvZoomClose);
 
@@ -586,17 +606,21 @@
       if (!cvFill(id)) return false;
 
       // страница под окном не прокручивается; ширину скроллбара возвращаем
-      // отступом, иначе страница под листом дёргается вбок
+      // отступом, иначе страница под листом дёргается вбок. Запирается
+      // <html>, а не <body>: body с overflow: hidden становится контейнером
+      // прокрутки, и липкая шапка уезжает из-под своей копии
       var sbw = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
       if (sbw > 0) document.body.style.paddingRight = sbw + 'px';
 
+      cvPlace();
       cv.showModal();
       track('case_open', { case_id: id });
-      // фокус на само окно, а не на первую кнопку: иначе после первой же
-      // стрелки на «Обсудить проект» загорается рамка фокуса
-      cv.focus();
-      cv.scrollTop = 0;
+      // фокус на сам лист, а не на первую кнопку: иначе после первой же
+      // стрелки на «Обсудить проект» загорается рамка фокуса. Лист же
+      // и прокручивается — клавиши листают подробности
+      cvSheet.focus({ preventScroll: true });
+      cvSheet.scrollTop = 0;
       cvBuild();
       return true;
     };
@@ -614,9 +638,9 @@
       cvZoomClose();
       if (cv.open && !reduced) {
         cv.classList.add('is-closing');
-        cvClosing = setTimeout(cvDone, 260);
+        cvClosing = setTimeout(cvDone, 340);
       } else cvDone();
-      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       document.body.style.paddingRight = '';
       cvPushed = false;
       cvCur = null;
@@ -644,12 +668,8 @@
       e.preventDefault();
       if (!cvZoom.hidden) cvZoomClose(); else cvClose();
     });
-    // клик по затемнению вокруг листа (на десктопе лист не во весь экран)
-    cv.addEventListener('click', function (e) {
-      if (e.target !== cv) return;
-      var r = cv.getBoundingClientRect();
-      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) cvClose();
-    });
+    // клик мимо листа — по затемнению или копии шапки — закрывает окно
+    cv.addEventListener('click', function (e) { if (e.target === cv) cvClose(); });
     // стрелки слушаем на документе, а не на окне: при открытии по ссылке
     // браузер после загрузки уводит фокус на body, мимо окна
     document.addEventListener('keydown', function (e) {
@@ -668,7 +688,7 @@
     cvPhone.addEventListener('change', function () {
       if (!cv.open || cvClosing) return;
       cvFill(cvCur);
-      cv.scrollTop = 0;
+      cvSheet.scrollTop = 0;
     });
 
     // открыли сайт по ссылке на кейс: сначала шаг без хэша, чтобы «Назад»
@@ -678,7 +698,7 @@
       history.replaceState(null, '', location.pathname + location.search);
       cvOpen(m0[1]);
       window.addEventListener('load', function () {
-        if (cv.open && !cv.contains(document.activeElement)) cv.focus();
+        if (cv.open && !cv.contains(document.activeElement)) cvSheet.focus({ preventScroll: true });
       });
     }
   }
