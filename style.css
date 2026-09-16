@@ -1724,6 +1724,8 @@ label.cc__opt { cursor: pointer; }
   border-bottom: 1px solid var(--cv-hair);
 }
 .cv__nums li { display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
+/* нечётная последняя цифра (у MoodBot их три) — на всю строку, без дыры справа */
+.cv__nums li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .cv__nums b {
   font-family: var(--f-display); font-weight: 700;
   font-size: clamp(1.8rem, 3.4vw, 2.5rem); line-height: 1; letter-spacing: -.02em;
@@ -1754,6 +1756,7 @@ label.cc__opt { cursor: pointer; }
 .cv__time { list-style: none; padding: 0; display: grid; gap: .55rem; }
 .cv__time li { display: grid; grid-template-columns: 7.2rem 1fr; gap: .6rem; font-size: .94rem; line-height: 1.45; color: var(--cv-mute); }
 .cv__time time { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .03em; color: var(--cv-ink); padding-top: .12rem; }
+.cv__timenote { margin-top: .7rem; font-size: .88rem; line-height: 1.45; color: var(--cv-mute); }
 .cv__stack { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
 .cv__stack li {
   padding: .32rem .7rem; border-radius: 100px;
@@ -1811,7 +1814,9 @@ label.cc__opt { cursor: pointer; }
     padding-inline: max(0px, calc((100% - 44rem) / 2));
     text-align: center; text-wrap: balance;
   }
-  .cv__nums { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  /* колонок столько, сколько цифр: 3 или 4 в один ряд */
+  .cv__nums { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none; }
+  .cv__nums li:last-child:nth-child(odd) { grid-column: auto; }
   .cv__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
   .cv__facts { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
 }
