@@ -1439,7 +1439,7 @@ label.cc__opt { cursor: pointer; }
    под ним не трогается, а сквозь лист видна размытой, и окно читается
    продолжением лендинга, а не новой страницей.
    Сам <dialog> — прозрачный слой на весь экран, в нём шапка окна и лист.
-   На ПК шапка окна — отдельная плашка ровно поверх шапки сайта, того же
+   Шапка окна — отдельная плашка ровно поверх шапки сайта, того же
    размера и формы, а лист той же ширины начинается под ней.
    ============================================================ */
 .cv {
@@ -1461,9 +1461,8 @@ label.cc__opt { cursor: pointer; }
 
   --cv-gut:   clamp(1rem, 3.2vw, 2.25rem);
   --cv-gap:   clamp(14px, 1.8vw, 26px);
-  /* место окна на ПК — script.js снимает его с шапки сайта:
-     --cv-x/--cv-w левый край и ширина, --cv-top верх, --cv-hh высота;
-     --cv-bar-h — высота шапки окна, под неё лист на телефоне даёт отступ */
+  /* место окна — script.js снимает его с шапки сайта:
+     --cv-x/--cv-w левый край и ширина, --cv-top верх, --cv-hh высота */
   --cv-w:     100vw;
   --cv-top:   14px;
   --cv-hh:    70px;
@@ -1487,10 +1486,11 @@ label.cc__opt { cursor: pointer; }
 }
 /* страница вокруг листа остаётся как есть: без затемнения и размытия */
 .cv::backdrop { background: transparent; }
+/* лист шириной с шапку сайта — под ней с зазором и до низа экрана */
 .cv__sheet {
-  position: absolute; inset: max(14px, env(safe-area-inset-top)) 0 0;
-  padding-top: var(--cv-bar-h, 4.6rem);
-  border-radius: 22px 22px 0 0;
+  position: absolute;
+  inset: calc(var(--cv-top) + var(--cv-hh) + 12px) auto 0 var(--cv-x, 0px); width: var(--cv-w);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
   overflow-y: auto; overscroll-behavior: contain;
   /* стекло шапки сайта: блик, тонкая подкраска цветом продукта и тот же
      блюр с насыщенностью. Увеличенный кадр лежит вне листа, поэтому
@@ -1575,21 +1575,25 @@ label.cc__opt { cursor: pointer; }
 .cv[data-theme="100lovaya"] .cv__bar .cv__title span,
 .cv[data-theme="agentboy"] .cv__bar .cv__title span { color: var(--cv-accent); }
 
-/* шапка окна лежит вне листа и не прокручивается: название и кнопка связи
-   всегда на месте, а подробности уходят под неё */
+/* Шапка окна — плашка ровно поверх шапки сайта: та же форма, размер
+   и тень. Она на пиксель больше со всех сторон и плотная, иначе по
+   сглаженному краю и сквозь цвет проступает шапка сайта. Лежит вне
+   листа и не прокручивается: название и кнопка связи всегда на месте */
 .cv__bar {
   position: absolute; z-index: 3;
-  top: max(14px, env(safe-area-inset-top)); left: 0; right: 0;
-  border-radius: 22px 22px 0 0;
+  top: calc(var(--cv-top) - 1px); left: calc(var(--cv-x, 0px) - 1px);
+  width: calc(var(--cv-w) + 2px); height: calc(var(--cv-hh) + 2px);
+  border-radius: calc(var(--r-lg) + 1px);
   display: flex; align-items: center; gap: .75rem;
-  padding: clamp(.8rem, 1.6vw, 1.1rem) var(--cv-gut);
+  padding: 0 clamp(.9rem, 2vw, 1.6rem);
   color: var(--cv-bar-ink);
-  background: color-mix(in srgb, var(--cv-bar) 92%, transparent);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 var(--cv-hair);
+  background: var(--cv-bar);
+  box-shadow: inset 0 0 0 1px var(--cv-hair), var(--sh-2);
 }
 .cv__id { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 1rem; }
+/* плашка низкая, как шапка сайта: название в одну строку */
 .cv__title {
+  flex: none; white-space: nowrap;
   font-family: var(--f-display); font-weight: 700;
   font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.1; letter-spacing: -.01em;
 }
@@ -1807,12 +1811,11 @@ label.cc__opt { cursor: pointer; }
 .cv__endacts { display: flex; flex-wrap: wrap; gap: .6rem; }
 .cv__endacts .cv__talk { padding: .85rem 1.4rem; font-size: 1rem; }
 
-/* телефон: лист выезжает снизу, сверху виден краешек страницы;
-   один кадр на всю ширину, листается пальцем */
+/* телефон: один кадр на всю ширину листа, листается пальцем */
 @media (max-width: 859px) {
   .cv {
     --cv-stage: clamp(280px, calc(100svh - 21rem), 740px);
-    --cv-slide-max: calc(100vw - 2 * var(--cv-gut));
+    --cv-slide-max: calc(var(--cv-w) - 2 * var(--cv-gut));
   }
   .cv__talk span { display: none; }
   .cv__talk { padding: .62rem .9rem; }
@@ -1826,27 +1829,9 @@ label.cc__opt { cursor: pointer; }
 }
 
 @media (min-width: 860px) {
-  /* На десктопе шапка окна — плашка ровно поверх шапки сайта: та же
-     форма, размер и тень. Она на пиксель шире со всех сторон и плотная,
-     иначе по сглаженному краю и сквозь цвет проступает шапка сайта.
-     Лист той же ширины — под ней с зазором и до низа экрана */
-  .cv__bar {
-    top: calc(var(--cv-top) - 1px); left: calc(var(--cv-x, 0px) - 1px); right: auto;
-    width: calc(var(--cv-w) + 2px); height: calc(var(--cv-hh) + 2px);
-    padding-block: 0; padding-inline: clamp(.9rem, 2vw, 1.6rem);
-    border-radius: calc(var(--r-lg) + 1px);
-    background: var(--cv-bar);
-    box-shadow: inset 0 0 0 1px var(--cv-hair), var(--sh-2);
-  }
-  .cv__sheet {
-    inset: calc(var(--cv-top) + var(--cv-hh) + 12px) auto 0 var(--cv-x, 0px); width: var(--cv-w);
-    padding-top: 0;
-    border-radius: var(--r-xl) var(--r-xl) 0 0;
-  }
-  /* плашка низкая, как шапка сайта: подпись в одну строку, на узком
-     экране обрезается многоточием, а не ломает высоту */
+  /* подпись в одну строку, на узком экране обрезается многоточием,
+     а не ломает высоту плашки */
   .cv__id { flex-wrap: nowrap; }
-  .cv__title { flex: none; }
   .cv__sub { display: block; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .cv__arrow { display: grid; }
   .cv__thumbs { display: flex; }
