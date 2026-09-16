@@ -632,8 +632,10 @@
     var cvClose = function () { if (cvPushed) history.back(); else cvHide(); };
 
     document.addEventListener('click', function (e) {
+      // у самого окна тоже есть data-case (для аналитики) — клики внутри него
+      // не перехватываем, иначе ссылки в окне не открываются
       var t = e.target.closest('[data-case]');
-      if (!t) return;
+      if (!t || t === cv) return;
       e.preventDefault();
       cvOpen(t.dataset.case);
     });
