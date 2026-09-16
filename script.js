@@ -546,8 +546,12 @@
       track.addEventListener('scroll', cvScroll, { passive: true });
       track.addEventListener('scrollend', cvUnlock);
 
+      // На ПК лента может начинаться не с первого кадра (data-start): узкие
+      // телефонные кадры иначе стоят с пустой половиной ленты слева.
+      // На телефоне кадр один на экран, там начинаем с первого
+      var start = phone ? 0 : Math.max(0, slides.findIndex(function (s) { return s.hasAttribute('data-start'); }));
       g = { track: track, slides: slides, probe: probe, prev: prev, next: next,
-            count: count, thumbs: thumbs, chapters: chapters, on: 0, lock: null, lockT: 0 };
+            count: count, thumbs: thumbs, chapters: chapters, on: start, lock: null, lockT: 0 };
       cvLayout();
     };
 

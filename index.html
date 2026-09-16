@@ -573,7 +573,9 @@
 
     <!-- Окно кейса 100ловой. Тексты — documents/текст под кейсы.txt (16.09.2026),
          цифры — экран «Статистика» 12.09.2026 (586 заказов) и база 23.08.
-         Подписи к скринам — по тому же правилу, что у FlyGuru. -->
+         Подписи к скринам — по тому же правилу, что у FlyGuru.
+         data-start на «Панели владельца»: на ПК лента открывается с неё,
+         чтобы слева от кадра стоял магазин, а не пустота. -->
     <template id="case-100lovaya" data-theme="100lovaya">
       <div class="cv__id">
         <h2 class="cv__title" id="cv-title-100lovaya"><span>100</span>ловая</h2>
@@ -600,7 +602,7 @@
         </picture>
         <figcaption><b>Корзина и оформление</b>Контакт и адрес запоминаются для следующего заказа.</figcaption>
       </figure>
-      <figure class="cv__slide" data-chapter="Админка">
+      <figure class="cv__slide" data-chapter="Админка" data-start>
         <picture>
           <img src="assets/img/cases/100lovaya/admin.webp" width="900" height="1957" alt="Панель владельца" loading="lazy" decoding="async">
         </picture>
