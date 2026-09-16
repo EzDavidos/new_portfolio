@@ -1435,10 +1435,11 @@ label.cc__opt { cursor: pointer; }
    Окно одето в гамму самого продукта, чтобы человек как будто зашёл
    в него: FlyGuru — светлый сайт с тиловой шапкой, 100ловая — кремовый
    мини-апп с кирпичом, MoodBot — лендинг с синим и жёлтым, AGENTBOY —
-   чёрный с красным. Лист полупрозрачный и сам размывает то, что под
-   ним: окно читается продолжением лендинга, а не новой страницей.
-   Сам <dialog> — прозрачный слой на весь экран, в нём лист и копия
-   шапки сайта (на ПК лист стоит под шапкой, шириной с неё).
+   чёрный с красным. Лист — жидкое стекло, как шапка сайта: страница
+   под ним не трогается, а сквозь лист видна размытой, и окно читается
+   продолжением лендинга, а не новой страницей.
+   Сам <dialog> — прозрачный слой на весь экран, в нём лист (на ПК
+   шириной с шапку сайта и поверх неё).
    ============================================================ */
 .cv {
   /* нейтральная тема — палитра сайта */
@@ -1460,11 +1461,11 @@ label.cc__opt { cursor: pointer; }
   --cv-gut:   clamp(1rem, 3.2vw, 2.25rem);
   --cv-gap:   clamp(14px, 1.8vw, 26px);
   /* место листа на ПК — script.js снимает его с шапки сайта:
-     --cv-x/--cv-w левый край и ширина, --cv-top верх листа, --cv-ht верх шапки */
+     --cv-x/--cv-w левый край и ширина, --cv-top верх шапки */
   --cv-w:     100vw;
   --cv-top:   14px;
-  /* плотность листа: сквозь него видна размытая страница */
-  --cv-sheet: 78%;
+  /* плотность стекла: сколько цвета продукта в листе */
+  --cv-sheet: 40%;
   /* высота кадра: всё, что остаётся от экрана после отступа сверху, шапки
      окна, строки глав, подписи, ссылок и превью. Не мельче 300px и не выше 760 */
   --cv-stage: clamp(300px, calc(100svh - var(--cv-top) - 23.75rem), 760px);
@@ -1481,23 +1482,21 @@ label.cc__opt { cursor: pointer; }
   font-size: 1rem;
   -webkit-tap-highlight-color: transparent;
 }
-/* затемнение лёгкое: страница вокруг листа узнаётся, но не спорит с ним */
-.cv::backdrop {
-  background: rgba(12,24,26,.18);
-  backdrop-filter: blur(10px) saturate(1.1); -webkit-backdrop-filter: blur(10px) saturate(1.1);
-}
+/* страница вокруг листа остаётся как есть: без затемнения и размытия */
+.cv::backdrop { background: transparent; }
 .cv__sheet {
   position: absolute; inset: max(14px, env(safe-area-inset-top)) 0 0;
   border-radius: 22px 22px 0 0;
   overflow-y: auto; overscroll-behavior: contain;
+  /* стекло шапки сайта: блик, тонкая подкраска цветом продукта и тот же
+     блюр с насыщенностью. Увеличенный кадр лежит вне листа, поэтому
+     fixed-потомков, которых сломал бы backdrop-filter, у листа нет */
   background:
+    var(--sheen),
     radial-gradient(80% 45% at 50% 0%, color-mix(in srgb, var(--cv-accent) 9%, transparent), transparent 70%),
     color-mix(in srgb, var(--cv-bg) var(--cv-sheet), transparent);
-  /* блюр на листе, а не только в ::backdrop: так страница под ним
-     остаётся мягким цветом, а не читаемыми строками. Увеличенный кадр
-     лежит вне листа, поэтому fixed-потомков у него нет */
-  backdrop-filter: blur(26px) saturate(1.25); -webkit-backdrop-filter: blur(26px) saturate(1.25);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 -12px 60px rgba(10,20,24,.18);
+  backdrop-filter: blur(var(--blur)) saturate(1.7); -webkit-backdrop-filter: blur(var(--blur)) saturate(1.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 0 0 1px rgba(255,255,255,.28), 0 24px 70px rgba(10,20,24,.22);
   /* полоса прокрутки листа не нужна: на Windows это серая квадратная
      колея поверх скруглённого листа. Колесо, тачпад, свайп и клавиши
      прокручивают как прежде, а ниже видно, что лист продолжается */
@@ -1505,28 +1504,17 @@ label.cc__opt { cursor: pointer; }
 }
 .cv__sheet::-webkit-scrollbar { display: none; }
 .cv__sheet:focus { outline: none; }
-/* копия шапки сайта: только на ПК, ровно на месте настоящей; клики
-   проходят насквозь в затемнение и закрывают окно */
-.cv .cv__head {
-  display: none; position: absolute; z-index: 1;
-  top: var(--cv-ht, 0px); left: var(--cv-x, 0px); width: var(--cv-w);
-  padding: 0; pointer-events: none;
-  color: var(--ink);
-}
 
 /* Лист выезжает снизу и проявляется из размытия: края мягкие, пока он
    в пути, и собираются в чёткие к концу. Закрытие доигрывает script.js */
 .cv[open] .cv__sheet { animation: cv-in .72s cubic-bezier(.16,1,.3,1) both; }
-.cv[open]::backdrop { animation: cv-fade .5s ease-out; }
 .cv.is-closing .cv__sheet { animation: cv-out .34s cubic-bezier(.5,0,.75,0) forwards; }
-.cv.is-closing::backdrop { animation: cv-fade .34s ease-in reverse forwards; }
 @keyframes cv-in {
   from { opacity: 0; transform: translateY(min(26vh, 220px)); filter: blur(14px); }
   55%  { filter: blur(0); }
   to   { opacity: 1; transform: none; filter: none; }
 }
 @keyframes cv-out { to { opacity: 0; transform: translateY(min(18vh, 150px)); filter: blur(10px); } }
-@keyframes cv-fade { from { opacity: 0; } }
 
 /* FlyGuru: светлый фон и тиловая шапка сайта, оранжевая кнопка записи.
    Шапка на тон глубже сайтовой #0C8498: белый на ней даёт 4.9, а не 4.4 */
@@ -1576,7 +1564,7 @@ label.cc__opt { cursor: pointer; }
   --cv-go-ink:  #0C0809;
   --cv-shot-sh: 0 0 0 1px rgba(255,255,255,.10), 0 24px 60px rgba(0,0,0,.45);
 }
-.cv[data-theme="agentboy"] .cv__sheet { background: radial-gradient(80% 45% at 50% 0%, rgba(255,31,61,.14), transparent 70%), rgba(12,8,9,.8); }
+.cv[data-theme="agentboy"] .cv__sheet { background: radial-gradient(80% 45% at 50% 0%, rgba(255,31,61,.14), transparent 70%), rgba(12,8,9,var(--cv-ab-sheet, .8)); }
 .cv__title span { color: var(--cv-accent); }
 .cv__bar .cv__title span { color: inherit; }
 .cv[data-theme="100lovaya"] .cv__bar .cv__title span,
@@ -1831,13 +1819,12 @@ label.cc__opt { cursor: pointer; }
 }
 
 @media (min-width: 860px) {
-  /* на десктопе лист шириной с шапку сайта стоит под ней и уходит в низ
-     экрана; по бокам и над ним видна размытая страница */
+  /* на десктопе лист шириной с шапку сайта наезжает на неё и уходит
+     в низ экрана; по бокам видна страница */
   .cv__sheet {
     inset: var(--cv-top) auto 0 var(--cv-x, 0px); width: var(--cv-w);
     border-radius: var(--r-xl) var(--r-xl) 0 0;
   }
-  .cv .cv__head { display: block; }
   .cv__sub { display: block; }
   .cv__arrow { display: grid; }
   .cv__thumbs { display: flex; }
@@ -2677,5 +2664,9 @@ label.cc__opt { cursor: pointer; }
 
 /* ---------- окно кейса ---------- */
 /* гамму продуктов не трогаем, но светлый лист на тёмной странице плотнее:
-   при 78% сквозь него проступает ночной фон, и лист сереет */
-[data-scheme="dark"] .cv { --cv-sheet: 90%; }
+   при дневной плотности сквозь него проступает ночной фон, лист сереет
+   и тёмный текст на нём теряется */
+[data-scheme="dark"] .cv { --cv-sheet: 80%; }
+/* тёмный лист AGENTBOY наоборот: на тёмной странице может быть прозрачнее,
+   а на светлой при такой плотности серел бы */
+[data-scheme="dark"] .cv { --cv-ab-sheet: .6; }
