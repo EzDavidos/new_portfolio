@@ -334,7 +334,6 @@
     var cvBody = cv.querySelector('[data-cv-body]');
     var cvZoom = cv.querySelector('.cv__zoom');
     var cvSheet = cv.querySelector('.cv__sheet');
-    var cvBar = cv.querySelector('.cv__bar');
     var cvPhone = window.matchMedia('(max-width: 859px)');
     var cvPushed = false;
     var cvCur = null;   // id открытого кейса
@@ -561,26 +560,19 @@
       cvZoom.querySelector('button').focus();
       track('gallery_open', { case_id: cvCur });
     };
-    // На ПК шапка окна ложится ровно на шапку сайта, лист — под ней той же
+    // Шапка окна ложится ровно на шапку сайта, лист — под ней той же
     // ширины. Размеры снимаются с настоящей шапки, а не считаются в CSS:
     // при открытии страница получает отступ под скроллбар и шапка сдвигается.
     var cvPlace = function () {
       var hdr = document.getElementById('header');
       var inner = hdr && hdr.querySelector('.header__inner');
-      if (!inner || cvPhone.matches) return;
+      if (!inner) return;
       var r = inner.getBoundingClientRect();
       cv.style.setProperty('--cv-x', r.left + 'px');
       cv.style.setProperty('--cv-w', r.width + 'px');
       cv.style.setProperty('--cv-top', r.top + 'px');
       cv.style.setProperty('--cv-hh', r.height + 'px');
     };
-    // на телефоне шапка окна лежит поверх листа, и лист отступает на её
-    // высоту; высота зависит от длины названия и шрифта, поэтому следим
-    if (window.ResizeObserver) {
-      new ResizeObserver(function () {
-        if (cvBar.offsetHeight) cv.style.setProperty('--cv-bar-h', cvBar.offsetHeight + 'px');
-      }).observe(cvBar);
-    }
     var cvZoomClose = function () { cvZoom.hidden = true; };
     cvZoom.addEventListener('click', cvZoomClose);
 
