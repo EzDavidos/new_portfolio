@@ -1156,6 +1156,9 @@ label.cc__opt { cursor: pointer; }
   font-family: var(--f-display); font-size: clamp(1.02rem, 1.5vw, 1.2rem);
   line-height: 1.55; color: var(--ink); max-width: 70ch; text-wrap: pretty;
 }
+/* Абзацы цитаты: глобальный reset снимает margin, а два куска отзыва
+   должны читаться как два куска. */
+.review__text p + p { margin-top: .75em; }
 /* Кавычка — из антиквы: в гротеске заголовков она выглядит прямым штрихом. */
 .review__text::before {
   content: "“"; position: absolute; left: 0; top: -.12em;
