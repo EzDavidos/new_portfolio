@@ -26,6 +26,18 @@
       hotPrice: 'Горячая цена',
       hotWas: ', горячая цена, было ${old}'
     },
+    en: {
+      prevShot: 'Previous screen',
+      nextShot: 'Next screen',
+      shotNo: 'Screen {n}: ',
+      zoomHint: 'Tap to zoom',
+      tgLink: 'message me on Telegram',
+      formEmpty: 'Fill in all three fields — that way I will know what to help with and where to reply.',
+      formSending: 'Sending…',
+      formFail: 'Could not send. Your text is still here — try again or {tg}.',
+      hotPrice: 'Hot price',
+      hotWas: ', hot price, was ${old}'
+    },
     uk: {
       prevShot: 'Попередній екран',
       nextShot: 'Наступний екран',
