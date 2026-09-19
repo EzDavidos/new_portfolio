@@ -479,6 +479,56 @@ ul { list-style: none; padding: 0; }
 [data-scheme="dark"] .scheme__sun { opacity: 0; transform: rotate(60deg) scale(.5); }
 [data-scheme="dark"] .scheme__moon { opacity: 1; transform: none; }
 
+/* Переключатель языка. Капсула ровно по высоте переключателя темы, внутри —
+   код текущего языка. Список — нативный <details>, поэтому раскрывается и
+   без JS; script.js («язык») только закрывает его по Esc и клику мимо и
+   доносит текущий якорь до соседней версии. */
+.lang { position: relative; flex: none; }
+.lang__sum {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; gap: .34rem;
+  height: 30px; padding: 0 .5rem;
+  border-radius: 100px;
+  background: rgba(23,33,30,.05);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  color: var(--ink-soft);
+  font-family: var(--f-mono); font-size: .72rem; letter-spacing: .06em;
+  transition: box-shadow .3s var(--ease), color .3s;
+}
+.lang__sum::-webkit-details-marker { display: none; }
+.lang__sum::marker { content: ""; }
+.lang__sum:hover, .lang[open] .lang__sum { box-shadow: inset 0 0 0 1px var(--green); color: var(--ink); }
+.lang__globe { width: 14px; height: 14px; flex: none; }
+
+.lang__menu {
+  position: absolute; z-index: 5;
+  top: calc(100% + .55rem); right: 0;
+  min-width: 11.5rem; padding: .3rem;
+  border-radius: var(--r);
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--line-2), var(--sh-3);
+  animation: langIn .22s var(--ease);
+}
+@keyframes langIn { from { opacity: 0; transform: translateY(-6px); } }
+.lang__item {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .5rem .6rem;
+  border-radius: var(--r-sm);
+  font-size: .93rem; color: var(--ink-soft);
+  transition: background .2s, color .2s;
+}
+.lang__item b { font-family: var(--f-mono); font-size: .68rem; font-weight: 500; letter-spacing: .08em; color: var(--ink-faint); }
+.lang__item:hover { background: var(--tint); color: var(--ink); }
+/* текущий язык — отмечен цветом, а не только галочкой */
+.lang__item[aria-current] { color: var(--green); }
+.lang__item[aria-current] b { color: var(--green); }
+
+/* на узком экране глобус уходит: в шапке рядом ещё бургер и тема */
+@media (max-width: 599px) {
+  .lang__globe { display: none; }
+  .lang__sum { padding: 0 .55rem; }
+}
+
 .burger { width: 40px; height: 40px; display: grid; place-content: center; gap: 6px; }
 .burger span { display: block; width: 20px; height: 1.5px; background: var(--ink); transition: transform .3s var(--ease); }
 .burger[aria-expanded="true"] span:first-child { transform: translateY(3.75px) rotate(45deg); }

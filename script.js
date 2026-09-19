@@ -8,6 +8,39 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- строки интерфейса ----------
+     Тексты, которые рисует сам скрипт. Страница каждого языка своя
+     (/uk/, /en/), а script.js один на всех — поэтому язык берём с
+     <html lang>, а переводы держим здесь. Новый язык — новый ключ с
+     тем же набором строк; {n}, {tg} и {old} подставляются на месте. */
+  var STR = {
+    ru: {
+      prevShot: 'Предыдущий экран',
+      nextShot: 'Следующий экран',
+      shotNo: 'Экран {n}: ',
+      zoomHint: 'Нажмите, чтобы увеличить',
+      tgLink: 'напишите в Telegram',
+      formEmpty: 'Заполните все три поля — так я пойму, с чем помочь и куда ответить.',
+      formSending: 'Отправляю…',
+      formFail: 'Не получилось отправить. Текст на месте — попробуйте ещё раз или {tg}.',
+      hotPrice: 'Горячая цена',
+      hotWas: ', горячая цена, было ${old}'
+    },
+    uk: {
+      prevShot: 'Попередній екран',
+      nextShot: 'Наступний екран',
+      shotNo: 'Екран {n}: ',
+      zoomHint: 'Натисніть, щоб збільшити',
+      tgLink: 'напишіть у Telegram',
+      formEmpty: 'Заповніть усі три поля — так я зрозумію, з чим допомогти і куди відповісти.',
+      formSending: 'Надсилаю…',
+      formFail: 'Не вдалося надіслати. Текст на місці — спробуйте ще раз або {tg}.',
+      hotPrice: 'Гаряча ціна',
+      hotWas: ', гаряча ціна, було ${old}'
+    }
+  };
+  var T = STR[document.documentElement.lang] || STR.ru;
+
   /* ---------- аналитика GA4 + согласие на cookies ----------
      Пока человек не выбрал, gtag.js не грузится вовсе и cookies нет:
      события ждут в pending. «Принять» — накопленное уходит, gtag.js
@@ -197,6 +230,27 @@
     try { saved = localStorage.getItem(SCHEME_KEY); } catch (err) {}
     if (saved !== 'light' && saved !== 'dark') setScheme(e.matches ? 'dark' : 'light', true);
   });
+
+  /* ---------- язык ----------
+     Список языков — нативный <details>, он раскрывается и без скрипта.
+     Здесь только три мелочи: закрыть по клику мимо и по Esc и дотащить
+     открытый раздел (якорь) до выбранной версии страницы. */
+  var langBox = document.querySelector('[data-lang]');
+  if (langBox) {
+    document.addEventListener('click', function (e) {
+      if (langBox.open && !langBox.contains(e.target)) langBox.open = false;
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && langBox.open) {
+        langBox.open = false;
+        langBox.querySelector('summary').focus();
+      }
+    });
+    langBox.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-lang-to]');
+      if (a && location.hash) a.hash = location.hash.slice(1);
+    });
+  }
 
   /* ---------- мобильное меню ---------- */
   var burger = document.querySelector('.burger');
@@ -471,8 +525,8 @@
       prev.type = next.type = 'button';
       prev.className = 'cv__arrow cv__arrow--prev';
       next.className = 'cv__arrow cv__arrow--next';
-      prev.setAttribute('aria-label', 'Предыдущий экран');
-      next.setAttribute('aria-label', 'Следующий экран');
+      prev.setAttribute('aria-label', T.prevShot);
+      next.setAttribute('aria-label', T.nextShot);
       prev.innerHTML = arrowSvg('M12.5 4.5 7 10l5.5 5.5');
       next.innerHTML = arrowSvg('M7.5 4.5 13 10l-5.5 5.5');
       stage.appendChild(prev);
@@ -517,7 +571,7 @@
         var img = s.querySelector('img'), b = document.createElement('button');
         b.type = 'button';
         b.className = 'cv__thumb';
-        b.setAttribute('aria-label', 'Экран ' + (k + 1) + ': ' + (s.querySelector('b') || {}).textContent);
+        b.setAttribute('aria-label', T.shotNo.replace('{n}', k + 1) + (s.querySelector('b') || {}).textContent);
         var ti = document.createElement('img');
         ti.alt = '';
         ti.loading = 'lazy';
@@ -533,7 +587,7 @@
       slides.forEach(function (s, k) {
         var hint = document.createElement('span');
         hint.className = 'cv__zoomhint';
-        hint.textContent = 'Нажмите, чтобы увеличить';
+        hint.textContent = T.zoomHint;
         s.appendChild(hint);
         s.addEventListener('click', function () {
           if (k !== g.on) { cvGo(k); return; }
@@ -764,7 +818,7 @@
     var reqStatus = request.querySelector('.request__status');
     var reqBtn = request.querySelector('[type="submit"]');
     var reqFields = ['name', 'contact', 'task'].map(function (n) { return request.elements[n]; });
-    var tgLink = '<a href="https://t.me/davidnaumenko" target="_blank" rel="noopener">напишите в Telegram</a>';
+    var tgLink = '<a href="https://t.me/davidnaumenko" target="_blank" rel="noopener">' + T.tgLink + '</a>';
 
     var setStatus = function (html, isError) {
       reqStatus.innerHTML = html;
@@ -780,7 +834,7 @@
       var empty = reqFields.filter(function (f) { return !f.value.trim(); });
       if (empty.length) {
         empty.forEach(function (f) { f.setAttribute('aria-invalid', 'true'); });
-        setStatus('Заполните все три поля — так я пойму, с чем помочь и куда ответить.', true);
+        setStatus(T.formEmpty, true);
         empty[0].focus();
         return;
       }
@@ -797,7 +851,7 @@
 
       var btnText = reqBtn.textContent;
       request.setAttribute('aria-busy', 'true');
-      reqBtn.textContent = 'Отправляю…';
+      reqBtn.textContent = T.formSending;
       setStatus('');
 
       var ctrl = 'AbortController' in window ? new AbortController() : null;
@@ -817,7 +871,7 @@
           reqDone.focus();
         })
         .catch(function () {
-          setStatus('Не получилось отправить. Текст на месте — попробуйте ещё раз или ' + tgLink + '.', true);
+          setStatus(T.formFail.replace('{tg}', tgLink), true);
         })
         .then(function () {
           clearTimeout(timer);
@@ -859,7 +913,7 @@
       var off = box.dataset.old ? Math.round((1 - hot / Number(box.dataset.old)) * 100) : 0;
       box.insertAdjacentHTML('beforeend', '<span class="drum__hot" aria-hidden="true">' +
         (box.dataset.old ? '<span class="drum__old">$' + box.dataset.old + '</span>' : '') +
-        '<span class="drum__badge">' + FIRE + 'Горячая цена' + (off ? ' −' + off + '%' : '') + '</span></span>');
+        '<span class="drum__badge">' + FIRE + T.hotPrice + (off ? ' −' + off + '%' : '') + '</span></span>');
     }
     var colEls = Array.prototype.slice.call(win.querySelectorAll('.drum__col'));
     var pos = colEls.map(function () { return 10; });
@@ -913,7 +967,7 @@
       arrows[1].disabled = i === vals.length - 1;
       win.setAttribute('aria-valuenow', vals[i]);
       win.setAttribute('aria-valuetext', '$' + vals[i] + ', ' + chips[i].textContent +
-        (vals[i] === hot && box.dataset.old ? ', горячая цена, было $' + box.dataset.old : ''));
+        (vals[i] === hot && box.dataset.old ? T.hotWas.replace('{old}', box.dataset.old) : ''));
     };
     var go = function (n) {
       if (n < 0 || n >= vals.length || n === i || busy) return;

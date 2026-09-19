@@ -27,6 +27,14 @@
      Исходник картинки — documents/og/og-final.html (локально). Telegram
      кэширует превью — после замены картинки сбросить его через @WebpageBot. -->
 <link rel="canonical" href="https://davidnaumenko.com/">
+<!-- Версии страницы на других языках. Блок между метками i18n:alts
+     собирает build.js по i18n/config.js; x-default ведёт на русскую. -->
+<!-- i18n:alts -->
+<link rel="alternate" hreflang="ru" href="https://davidnaumenko.com/">
+<link rel="alternate" hreflang="uk" href="https://davidnaumenko.com/uk/">
+<link rel="alternate" hreflang="x-default" href="https://davidnaumenko.com/">
+<meta property="og:locale:alternate" content="uk_UA">
+<!-- /i18n:alts -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="David Naumenko">
 <meta property="og:locale" content="ru_RU">
@@ -67,6 +75,22 @@
     </nav>
 
     <div class="header__actions">
+      <!-- Язык сайта. Каждый язык — отдельная страница (/uk/, /en/), поэтому
+           здесь обычные ссылки: переключатель работает и без JS. Список между
+           метками i18n:langs собирает build.js по i18n/config.js — руками его
+           не правят: добавьте язык в конфиг и прогоните `node build.js`. -->
+      <details class="lang" data-lang>
+        <summary class="lang__sum" aria-label="Язык сайта">
+          <svg class="lang__globe" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.1" stroke="currentColor" stroke-width="1.4"/><path d="M8 1.9c1.6 1.7 2.5 3.8 2.5 6.1S9.6 12.4 8 14.1C6.4 12.4 5.5 10.3 5.5 8S6.4 3.6 8 1.9Z" stroke="currentColor" stroke-width="1.4"/><path d="M2.3 6.4h11.4M2.3 9.6h11.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span class="lang__cur" data-lang-cur>RU</span>
+        </summary>
+        <ul class="lang__menu" role="list">
+          <!-- i18n:langs -->
+          <li><a class="lang__item" href="/" hreflang="ru" data-lang-to="ru" aria-current="true"><b>RU</b>Русский</a></li>
+          <li><a class="lang__item" href="/uk/" hreflang="uk" data-lang-to="uk"><b>UK</b>Українська</a></li>
+          <!-- /i18n:langs -->
+        </ul>
+      </details>
       <!-- Переключатель темы (script.js, «тема»): aria-pressed="true" — тёмная. -->
       <button class="scheme" type="button" aria-label="Тёмная тема" aria-pressed="false">
         <span class="scheme__knob" aria-hidden="true">
