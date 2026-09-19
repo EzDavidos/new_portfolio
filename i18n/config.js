@@ -10,6 +10,9 @@
              держать только на русском и английском: юридический текст на
              шести языках — лишний риск, ошибка в формулировке хуже, чем
              ссылка на понятную версию.
+   draft   — перевод ещё не вычитан носителем: страница собирается и
+             доступна из переключателя, но в hreflang не попадает и
+             закрыта от индексации. Снять флаг после вычитки.
    privacy — куда ведёт ссылка на политику с этого языка.
    name    — самоназвание, оно никогда не переводится. */
 module.exports = {
@@ -23,6 +26,9 @@ module.exports = {
       privacy: '/en/privacy.html', pages: ['index.html'] },
 
     { code: 'en', dir: 'en', label: 'EN', name: 'English',    locale: 'en_US',
-      privacy: '/en/privacy.html', pages: ['index.html', 'privacy.html'] }
+      privacy: '/en/privacy.html', pages: ['index.html', 'privacy.html'] },
+
+    { code: 'vi', dir: 'vi', label: 'VI', name: 'Tiếng Việt', locale: 'vi_VN',
+      privacy: '/en/privacy.html', pages: ['index.html'], draft: true }
   ]
 };

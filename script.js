@@ -26,6 +26,18 @@
       hotPrice: 'Горячая цена',
       hotWas: ', горячая цена, было ${old}'
     },
+    vi: {
+      prevShot: 'Màn hình trước',
+      nextShot: 'Màn hình sau',
+      shotNo: 'Màn hình {n}: ',
+      zoomHint: 'Chạm để phóng to',
+      tgLink: 'nhắn cho mình qua Telegram',
+      formEmpty: 'Hãy điền cả ba ô — để mình hiểu cần giúp gì và trả lời vào đâu.',
+      formSending: 'Đang gửi…',
+      formFail: 'Gửi không thành công. Nội dung vẫn còn đây — hãy thử lại hoặc {tg}.',
+      hotPrice: 'Giá ưu đãi',
+      hotWas: ', giá ưu đãi, trước đây là ${old}'
+    },
     en: {
       prevShot: 'Previous screen',
       nextShot: 'Next screen',

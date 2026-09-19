@@ -36,6 +36,10 @@ var abs = function (l, page) { return cfg.site + rel(l, page); };
 /* Кто ещё есть на этой странице: политика живёт не на всех языках. */
 var on = function (page) { return cfg.langs.filter(function (l) { return l.pages.indexOf(page) >= 0; }); };
 
+/* В hreflang идут только вычитанные языки: черновик не должен уводить
+   туда людей из поиска, но в переключателе он есть. */
+var indexed = function (page) { return on(page).filter(function (l) { return !l.draft; }); };
+
 /* Блок «языки» в шапке: один и тот же список, меняется только отметка. */
 function langsBlock(cur, page) {
   return on(page).map(function (l) {
@@ -50,7 +54,7 @@ function langsBlock(cur, page) {
    og:locale:alternate ставим только там, где есть сам og:locale: на
    странице политики Open Graph нет вовсе. */
 function altsBlock(cur, page, og) {
-  var langs = on(page);
+  var langs = indexed(page);
   var out = langs.map(function (l) {
     return '<link rel="alternate" hreflang="' + l.code + '" href="' + abs(l, page) + '">';
   });
@@ -164,6 +168,9 @@ cfg.langs.filter(function (l) { return !l.source; }).forEach(function (l) {
     html = attr(html, /(<meta property="og:url" content=")[^"]*(")/, abs(l, page));
     html = attr(html, /(<meta property="og:locale" content=")[^"]*(")/, l.locale);
     html = attr(html, /(<span class="lang__cur" data-lang-cur>)[^<]*(<\/span>)/, l.label);
+    if (l.draft) html = html.replace(/(<link rel="canonical"[^>]*>\n)/,
+      '$1<!-- Перевод ещё не вычитан носителем: страницу не индексируем и\n     не ставим в hreflang. Снять вместе с draft в i18n/config.js. -->\n' +
+      '<meta name="robots" content="noindex, follow">\n');
     html = region(html, 'langs', langsBlock(l, page));
     html = region(html, 'alts', altsBlock(l, page, /og:locale"/.test(html)));
 
