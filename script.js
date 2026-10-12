@@ -1,5 +1,5 @@
 /* ============================================================
-   David Naumenko — landing
+   David Naumenko – landing
    Состояние шапки, мобильное меню, scroll reveal, активный пункт
    навигации и живые значения статус-рейла.
    ============================================================ */
@@ -10,8 +10,8 @@
 
   /* ---------- строки интерфейса ----------
      Тексты, которые рисует сам скрипт. Страница каждого языка своя
-     (/uk/, /en/), а script.js один на всех — поэтому язык берём с
-     <html lang>, а переводы держим здесь. Новый язык — новый ключ с
+     (/uk/, /en/), а script.js один на всех – поэтому язык берём с
+     <html lang>, а переводы держим здесь. Новый язык – новый ключ с
      тем же набором строк; {n}, {tg} и {old} подставляются на месте. */
   var STR = {
     ru: {
@@ -20,9 +20,9 @@
       shotNo: 'Экран {n}: ',
       zoomHint: 'Нажмите, чтобы увеличить',
       tgLink: 'напишите в Telegram',
-      formEmpty: 'Заполните все три поля — так я пойму, с чем помочь и куда ответить.',
+      formEmpty: 'Заполните все три поля – так я пойму, с чем помочь и куда ответить.',
       formSending: 'Отправляю…',
-      formFail: 'Не получилось отправить. Текст на месте — попробуйте ещё раз или {tg}.',
+      formFail: 'Не получилось отправить. Текст на месте – попробуйте ещё раз или {tg}.',
       hotPrice: 'Горячая цена',
       hotWas: ', горячая цена, было ${old}'
     },
@@ -32,9 +32,9 @@
       shotNo: 'Màn hình {n}: ',
       zoomHint: 'Chạm để phóng to',
       tgLink: 'nhắn cho mình qua Telegram',
-      formEmpty: 'Hãy điền cả ba ô — để mình hiểu cần giúp gì và trả lời vào đâu.',
+      formEmpty: 'Hãy điền cả ba ô – để mình hiểu cần giúp gì và trả lời vào đâu.',
       formSending: 'Đang gửi…',
-      formFail: 'Gửi không thành công. Nội dung vẫn còn đây — hãy thử lại hoặc {tg}.',
+      formFail: 'Gửi không thành công. Nội dung vẫn còn đây – hãy thử lại hoặc {tg}.',
       hotPrice: 'Giá ưu đãi',
       hotWas: ', giá ưu đãi, trước đây là ${old}'
     },
@@ -44,9 +44,9 @@
       shotNo: 'Screen {n}: ',
       zoomHint: 'Tap to zoom',
       tgLink: 'message me on Telegram',
-      formEmpty: 'Fill in all three fields — that way I will know what to help with and where to reply.',
+      formEmpty: 'Fill in all three fields – that way I will know what to help with and where to reply.',
       formSending: 'Sending…',
-      formFail: 'Could not send. Your text is still here — try again or {tg}.',
+      formFail: 'Could not send. Your text is still here – try again or {tg}.',
       hotPrice: 'Hot price',
       hotWas: ', hot price, was ${old}'
     },
@@ -56,9 +56,9 @@
       shotNo: 'Екран {n}: ',
       zoomHint: 'Натисніть, щоб збільшити',
       tgLink: 'напишіть у Telegram',
-      formEmpty: 'Заповніть усі три поля — так я зрозумію, з чим допомогти і куди відповісти.',
+      formEmpty: 'Заповніть усі три поля – так я зрозумію, з чим допомогти і куди відповісти.',
       formSending: 'Надсилаю…',
-      formFail: 'Не вдалося надіслати. Текст на місці — спробуйте ще раз або {tg}.',
+      formFail: 'Не вдалося надіслати. Текст на місці – спробуйте ще раз або {tg}.',
       hotPrice: 'Гаряча ціна',
       hotWas: ', гаряча ціна, було ${old}'
     }
@@ -67,14 +67,14 @@
 
   /* ---------- аналитика GA4 + согласие на cookies ----------
      Пока человек не выбрал, gtag.js не грузится вовсе и cookies нет:
-     события ждут в pending. «Принять» — накопленное уходит, gtag.js
-     грузится после отрисовки, когда браузер свободен; «Отклонить» —
+     события ждут в pending. «Принять» – накопленное уходит, gtag.js
+     грузится после отрисовки, когда браузер свободен; «Отклонить» –
      накопленное выбрасывается. Выбор живёт в localStorage 12 месяцев,
      потом баннер спросит снова. Рекламные сигналы запрещены всегда. */
   var GA_ID = 'G-2BSQFHXPFP';
   var CONSENT_KEY = 'dn_consent';
   var CONSENT_TTL = 365 * 864e5;
-  var analytics = null;   // null — ещё не выбрал
+  var analytics = null;   // null – ещё не выбрал
   var gaOn = false;
   var pending = [];
 
@@ -141,7 +141,7 @@
     else if (analytics === null && pending.length < 50) pending.push([name, params || {}]);
   };
 
-  // Нажатия на Telegram — с местом, откуда нажали. В окне кейса место — id кейса.
+  // Нажатия на Telegram – с местом, откуда нажали. В окне кейса место – id кейса.
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="https://t.me/davidnaumenko"]');
     if (!a) return;
@@ -168,14 +168,14 @@
 
   /* ---------- cookie-баннер ----------
      Сам всплывает, пока выбора нет. Из футера («Настройки cookies») и по
-     ссылке /#cookies со страницы политики открывается сразу с настройками —
+     ссылке /#cookies со страницы политики открывается сразу с настройками –
      там же согласие можно отозвать. */
   var cc = document.getElementById('cookies');
   if (cc) {
     var ccPrefs = document.getElementById('cc-prefs');
     var ccBox = document.getElementById('cc-analytics');
     var ccBtn = function (k) { return cc.querySelector('[data-cc="' + k + '"]'); };
-    var ccFrom = null;   // откуда открыли — туда вернуть фокус
+    var ccFrom = null;   // откуда открыли – туда вернуть фокус
 
     var ccMode = function (prefs) {
       ccPrefs.hidden = !prefs;
@@ -221,7 +221,7 @@
   /* ---------- тема ----------
      Стартовую тему ставит скрипт в <head> (до отрисовки). Здесь только
      переключатель: нажатие запоминает выбор, и дальше сайт держит его.
-     Пока выбора нет, тема идёт за системой — в том числе если её
+     Пока выбора нет, тема идёт за системой – в том числе если её
      переключили при открытой странице. Вода в water.js смотрит на
      атрибут data-scheme сама. */
   var SCHEME_KEY = 'dn_scheme';
@@ -236,7 +236,7 @@
       if (schemeMeta) schemeMeta.content = s === 'dark' ? '#1E2334' : '#0C7A5D';
       if (schemeBtn) schemeBtn.setAttribute('aria-pressed', String(s === 'dark'));
     };
-    // плавная смена — снимком страницы, там где браузер это умеет
+    // плавная смена – снимком страницы, там где браузер это умеет
     if (smooth && !reduced && document.startViewTransition) document.startViewTransition(go);
     else go();
   }
@@ -256,7 +256,7 @@
   });
 
   /* ---------- язык ----------
-     Список языков — нативный <details>, он раскрывается и без скрипта.
+     Список языков – нативный <details>, он раскрывается и без скрипта.
      Здесь только три мелочи: закрыть по клику мимо и по Esc и дотащить
      открытый раздел (якорь) до выбранной версии страницы. */
   var langBox = document.querySelector('[data-lang]');
@@ -296,12 +296,12 @@
   });
 
   /* ============================================================
-     СТАТУС-РЕЙЛ — живые значения
+     СТАТУС-РЕЙЛ – живые значения
      Показываем только то, что действительно правда: местное время
      Нячанга. Ничего не выдумываем; если JS не отработал, в разметке
      остаётся прочерк, а не ложные данные.
      ============================================================ */
-  // часы Нячанга — реальное местное время, а не эмуляция.
+  // часы Нячанга – реальное местное время, а не эмуляция.
   // Их два: в статус-рейле и в футере.
   var clocks = document.querySelectorAll('[data-clock]');
   if (clocks.length) {
@@ -342,7 +342,7 @@
     });
 
     // Первая проверка наблюдателя проходит до загрузки веб-шрифтов.
-    // Шрифты приходят, вёрстка съезжает — и элемент, уже стоящий на
+    // Шрифты приходят, вёрстка съезжает – и элемент, уже стоящий на
     // экране, остаётся с opacity:0 навсегда, потому что скроллить
     // нечего. Поэтому досматриваем видимое вручную после load и шрифтов.
     var showVisible = function () {
@@ -361,7 +361,7 @@
 
   /* ---------- видео-демо: не крутим его без нужды ----------
      autoplay стоит в разметке, но с prefers-reduced-motion ролик
-     останавливаем на постере, а за экраном — ставим на паузу,
+     останавливаем на постере, а за экраном – ставим на паузу,
      чтобы не жечь батарею на телефоне. */
   Array.prototype.forEach.call(document.querySelectorAll('.shot--video'), function (v) {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -402,7 +402,7 @@
      ОКНО КЕЙСА
      Наполнение лежит в <template id="case-<id>"> рядом с карточкой:
      пока окно не открыто, его картинки не грузятся вовсе. Открыть
-     можно кнопкой с data-case="<id>" или ссылкой #case-<id> — такую
+     можно кнопкой с data-case="<id>" или ссылкой #case-<id> – такую
      удобно сразу скинуть клиенту. «Назад» на телефоне закрывает окно,
      а не уводит с сайта: при открытии в историю кладётся шаг с хэшем.
      ============================================================ */
@@ -469,7 +469,7 @@
       i = Math.max(0, Math.min(g.slides.length - 1, i));
       var s = g.slides[i];
       // пока лента плавно едет к кадру, промежуточные кадры не считаются
-      // активными — иначе быстрые нажатия стрелки теряются по дороге
+      // активными – иначе быстрые нажатия стрелки теряются по дороге
       g.lock = i;
       clearTimeout(g.lockT);
       g.lockT = setTimeout(cvUnlock, 1500);
@@ -480,7 +480,7 @@
       cvSet(i);
     };
 
-    // снимается по scrollend; таймер — запасной путь для Safari, где этого события нет
+    // снимается по scrollend; таймер – запасной путь для Safari, где этого события нет
     var cvUnlock = function () {
       if (!g || g.lock === null) return;
       clearTimeout(g.lockT);
@@ -488,7 +488,7 @@
       cvScroll();
     };
 
-    // активный кадр — тот, чей центр ближе к центру ленты
+    // активный кадр – тот, чей центр ближе к центру ленты
     var cvTick = false;
     var cvScroll = function () {
       if (cvTick) return;
@@ -511,13 +511,13 @@
       if (!track) { g = null; return; }
       var slides = Array.prototype.slice.call(track.querySelectorAll('.cv__slide'));
 
-      // Первыми идут кадры под текущий экран: на телефоне — телефонные,
-      // на десктопе — ПК. Широкий кадр на телефоне — полоса с пустотой
+      // Первыми идут кадры под текущий экран: на телефоне – телефонные,
+      // на десктопе – ПК. Широкий кадр на телефоне – полоса с пустотой
       // под ней, а на десктопе открывать кейс с узкого телефона незачем.
       // Порядок меняется внутри главы, чтобы главы не перемешались; главы,
       // где такие кадры есть, идут первыми. Какой кадр телефонный, решает
       // то, что он покажет сейчас: у пары <source> на телефоне это
-      // телефонная версия, на десктопе — ПК.
+      // телефонная версия, на десктопе – ПК.
       var phone = cvPhone.matches;
       var fits = function (s) {
         var src = s.querySelector('source'), img = s.querySelector('img');
@@ -588,7 +588,7 @@
       row.appendChild(count);
       stage.parentNode.insertBefore(row, stage);
 
-      // превью — уменьшенные копии рядом с кадром: <имя>-t.webp
+      // превью – уменьшенные копии рядом с кадром: <имя>-t.webp
       var thumbBox = document.createElement('div');
       thumbBox.className = 'cv__thumbs';
       var thumbs = slides.map(function (s, k) {
@@ -642,7 +642,7 @@
       cvZoom.querySelector('button').focus();
       track('gallery_open', { case_id: cvCur });
     };
-    // Шапка окна ложится ровно на шапку сайта, лист — под ней той же
+    // Шапка окна ложится ровно на шапку сайта, лист – под ней той же
     // ширины. Размеры снимаются с настоящей шапки, а не считаются в CSS:
     // при открытии страница получает отступ под скроллбар и шапка сдвигается.
     var cvPlace = function () {
@@ -695,7 +695,7 @@
       track('case_open', { case_id: id });
       // фокус на сам лист, а не на первую кнопку: иначе после первой же
       // стрелки на «Обсудить проект» загорается рамка фокуса. Лист же
-      // и прокручивается — клавиши листают подробности
+      // и прокручивается – клавиши листают подробности
       cvSheet.focus({ preventScroll: true });
       cvSheet.scrollTop = 0;
       cvBuild();
@@ -733,7 +733,7 @@
     var cvClose = function () { if (cvPushed) history.back(); else cvHide(); };
 
     document.addEventListener('click', function (e) {
-      // у самого окна тоже есть data-case (для аналитики) — клики внутри него
+      // у самого окна тоже есть data-case (для аналитики) – клики внутри него
       // не перехватываем, иначе ссылки в окне не открываются
       var t = e.target.closest('[data-case]');
       if (!t || t === cv) return;
@@ -781,9 +781,9 @@
   }
 
   /* ---------- ленты со вкладками: тарифы, поддержка, шаги ---------- */
-  // Сами ленты — чистый CSS (scroll-snap); скрипт включает вкладки над ними,
+  // Сами ленты – чистый CSS (scroll-snap); скрипт включает вкладки над ними,
   // подсвечивает пункт, который сейчас в ленте, и перелистывает по нажатию.
-  // Лента — общий родитель карточек, на которые указывают aria-controls.
+  // Лента – общий родитель карточек, на которые указывают aria-controls.
   Array.prototype.forEach.call(document.querySelectorAll('.swipe-tabs'), function (nav) {
     var tabs = Array.prototype.slice.call(nav.querySelectorAll('[aria-controls]'));
     var items = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
@@ -810,7 +810,7 @@
       });
     });
 
-    // Текущий — тот, что стоит у левого края ленты; в самом конце ленты —
+    // Текущий – тот, что стоит у левого края ленты; в самом конце ленты –
     // последний: на планшете видно две карточки, и до края он не доедет.
     var tick = false;
     var sync = function () {
@@ -835,7 +835,7 @@
 
   /* ---------- форма заявки ----------
      Шлёт JSON в Worker (worker/src/index.js), тот пересылает в Telegram.
-     При ошибке введённое остаётся на месте, рядом — путь в Telegram. */
+     При ошибке введённое остаётся на месте, рядом – путь в Telegram. */
   var request = document.querySelector('.request');
   if (request) {
     var reqDone = document.querySelector('.request__done');
@@ -863,7 +863,7 @@
         return;
       }
 
-      // Откуда пришёл человек — едет в заявку. Страница одна, переходы по
+      // Откуда пришёл человек – едет в заявку. Страница одна, переходы по
       // ней меняют только хэш, так что UTM-метки весь визит лежат в адресе.
       var q = new URLSearchParams(location.search), utm = {};
       ['source', 'medium', 'campaign'].forEach(function (k) {
@@ -907,11 +907,11 @@
 
   /* ---------- барабан цен ----------
      Счётчик в карточках тарифов: у каждой цифры свой ролик 0–9 в три круга.
-     Значения и названия комплектаций — из кнопок .kit__chip, стартовое —
+     Значения и названия комплектаций – из кнопок .kit__chip, стартовое –
      у кнопки с aria-pressed="true". Когда карточка появляется на экране,
-     барабан один раз раскручивается и встаёт на стартовую цену; дальше —
+     барабан один раз раскручивается и встаёт на стартовую цену; дальше –
      стрелки, свайп вбок, кнопки комплектаций или клавиши. data-hot на
-     .drum — на какой цене гореть, data-old — зачёркнутая старая цена. */
+     .drum – на какой цене гореть, data-old – зачёркнутая старая цена. */
   var FIRE = '<svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6.4.6c.3 2-1.6 2.7-1.6 4.4 0 .8.5 1.3 1 1.3.7 0 1-.6.9-1.6 1.4.9 2.3 2.2 2.3 3.6C9 10.2 7.7 11.4 6 11.4S3 10.2 3 8.5C3 5.8 5.6 4.3 6.4.6z"/></svg>';
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-drum]'), function (box) {
@@ -944,7 +944,7 @@
     win.setAttribute('aria-valuemin', vals[0]);
     win.setAttribute('aria-valuemax', vals[vals.length - 1]);
 
-    // позиция в em — не зависит от того, загрузился ли уже шрифт
+    // позиция в em – не зависит от того, загрузился ли уже шрифт
     var setCol = function (k, p, dur, ease) {
       var st = colEls[k].firstChild.style;
       st.transition = dur ? 'transform ' + dur + 's ' + ease : 'none';
@@ -961,7 +961,7 @@
       clearTimeout(normT);
       normT = setTimeout(function () { pos.forEach(function (p, k) { setCol(k, 10 + p % 10); }); }, delay);
     };
-    // dir: 1 — дороже, цифры катятся вверх; −1 — дешевле, вниз
+    // dir: 1 – дороже, цифры катятся вверх; −1 – дешевле, вниз
     var roll = function (n, dir, mode) {
       digits(n).forEach(function (ch, k) {
         colEls[k].classList.toggle('is-off', ch === ' ');
@@ -1014,7 +1014,7 @@
       e.preventDefault();
       go(Math.max(0, Math.min(vals.length - 1, n)));
     });
-    // свайп влево — дороже, как листание дальше по списку
+    // свайп влево – дороже, как листание дальше по списку
     var sx = null;
     win.addEventListener('pointerdown', function (e) { sx = e.clientX; win.setPointerCapture(e.pointerId); });
     win.addEventListener('pointerup', function (e) {
@@ -1025,7 +1025,7 @@
     });
     win.addEventListener('pointercancel', function () { sx = null; });
 
-    // раскрутка — один раз, когда карточка видна; в ленте тарифов на
+    // раскрутка – один раз, когда карточка видна; в ленте тарифов на
     // телефоне соседняя карточка раскрутится, когда её долистают
     if (reduced || !('IntersectionObserver' in window)) return;
     var io = new IntersectionObserver(function (entries) {

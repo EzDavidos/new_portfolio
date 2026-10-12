@@ -1,12 +1,12 @@
 <!doctype html>
 <!-- Страница собрана автоматически: node build.js.
      Править надо index.html (вёрстка и русский текст) и i18n/en.json (перевод),
-     а не этот файл — следующая сборка перезапишет его. -->
+     а не этот файл – следующая сборка перезапишет его. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>David Naumenko — digital products and systems built around your work</title>
+<title>David Naumenko – digital products and systems built around your work</title>
 <meta name="description" content="I find where you lose time, leads or money, and build a system around it: a website, CRM, Telegram bot, Mini App or automation.">
 
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <meta name="theme-color" content="#0C7A5D">
 <!-- Тема ставится до первой отрисовки: выбор переключателя, если он был,
-     иначе настройка системы. Позже — уже вспышка светлой страницы.
+     иначе настройка системы. Позже – уже вспышка светлой страницы.
      Тот же скрипт стоит в privacy.html. -->
 <script>
 (function () {
@@ -27,8 +27,8 @@
 </script>
 
 <!-- превью ссылки в Telegram и соцсетях. Адреса обязаны быть абсолютными.
-     Исходник картинки — documents/og/og-final.html (локально). Telegram
-     кэширует превью — после замены картинки сбросить его через @WebpageBot. -->
+     Исходник картинки – documents/og/og-final.html (локально). Telegram
+     кэширует превью – после замены картинки сбросить его через @WebpageBot. -->
 <link rel="canonical" href="https://davidnaumenko.com/en/">
 <!-- Версии страницы на других языках. Блок между метками i18n:alts
      собирает build.js по i18n/config.js; x-default ведёт на русскую. -->
@@ -44,12 +44,12 @@
 <meta property="og:site_name" content="David Naumenko">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://davidnaumenko.com/en/">
-<meta property="og:title" content="David Naumenko — digital products and systems built around your work">
+<meta property="og:title" content="David Naumenko – digital products and systems built around your work">
 <meta property="og:description" content="I find where you lose time, leads or money, and build a system around it: a website, CRM, Telegram bot, Mini App or automation.">
 <meta property="og:image" content="https://davidnaumenko.com/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="David Naumenko — custom solutions for your processes: screens of the FlyGuru CRM and the 100ловая Mini App">
+<meta property="og:image:alt" content="David Naumenko – custom solutions for your processes: screens of the FlyGuru CRM and the 100ловая Mini App">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,9 +80,9 @@
     </nav>
 
     <div class="header__actions">
-      <!-- Язык сайта. Каждый язык — отдельная страница (/uk/, /en/), поэтому
+      <!-- Язык сайта. Каждый язык – отдельная страница (/uk/, /en/), поэтому
            здесь обычные ссылки: переключатель работает и без JS. Список между
-           метками i18n:langs собирает build.js по i18n/config.js — руками его
+           метками i18n:langs собирает build.js по i18n/config.js – руками его
            не правят: добавьте язык в конфиг и прогоните `node build.js`. -->
       <details class="lang" data-lang>
         <summary class="lang__sum" aria-label="Site language">
@@ -98,7 +98,7 @@
           <!-- /i18n:langs -->
         </ul>
       </details>
-      <!-- Переключатель темы (script.js, «тема»): aria-pressed="true" — тёмная. -->
+      <!-- Переключатель темы (script.js, «тема»): aria-pressed="true" – тёмная. -->
       <button class="scheme" type="button" aria-label="Dark theme" aria-pressed="false">
         <span class="scheme__knob" aria-hidden="true">
           <svg class="scheme__sun" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -130,7 +130,7 @@
 <main id="main">
 
 <!-- ============================================================
-     BLOCK 01 — HERO
+     BLOCK 01 – HERO
      ============================================================ -->
 <section class="hero" id="top">
   <div class="wrap hero__grid">
@@ -139,7 +139,7 @@
       <div class="hero__status rise" style="--i:0">
         <!-- Свободные слоты. Обновляйте data-slots (3/2/1/0) и текст подписи.
              Атрибут задаёт цвет цифры и точки:
-             3–2 — зелёный, 1 — оранжевый, 0 — красный. -->
+             3–2 – зелёный, 1 – оранжевый, 0 – красный. -->
         <span class="pill glass" data-slots="1">
           <img class="pill__ava" src="/assets/img/david-portrait.jpg" alt="David Naumenko" width="34" height="34" loading="eager">
           <span>Open slots: <b>1</b> of 3</span>
@@ -147,7 +147,7 @@
         </span>
       </div>
 
-      <!-- заголовок — проблема клиента, подзаголовок — чем решаю (master-plan, 1.1).
+      <!-- заголовок – проблема клиента, подзаголовок – чем решаю (master-plan, 1.1).
            Текст Давида от 15.09.2026; при смене текста поправить meta и og:description. -->
       <h1 class="hero__title rise" style="--i:1">
         I find where you are losing <em>time, leads or&nbsp;money</em>
@@ -171,7 +171,7 @@
     </div>
 
     <!-- статус-рейл: список работающих сейчас проектов и живые часы Нячанга.
-         Название проекта открывает окно его кейса (data-case), href — запасной
+         Название проекта открывает окно его кейса (data-case), href – запасной
          путь без скрипта. -->
     <div class="rail rise" style="--i:4">
       <div class="rail__inner glass">
@@ -184,12 +184,12 @@
         <span class="rail__sep" aria-hidden="true">/</span>
         <a class="rail__item rail__val rail__link" href="#case-flyguru" data-case="flyguru">flyguru.pro</a>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <a class="rail__item rail__val rail__link" href="#case-agentboy" data-case="agentboy">AgentBoy — DJ Press Kit</a>
+        <a class="rail__item rail__val rail__link" href="#case-agentboy" data-case="agentboy">AgentBoy – DJ Press Kit</a>
         <span class="rail__sep" aria-hidden="true">/</span>
         <a class="rail__item rail__val rail__link" href="#case-mood" data-case="mood">MoodBot</a>
         <span class="rail__sep" aria-hidden="true">/</span>
         <a class="rail__item rail__link" href="#works">and more…</a>
-        <span class="rail__item rail__time">Nha Trang<span class="rail__val rail__clock" data-clock>—</span></span>
+        <span class="rail__item rail__time">Nha Trang<span class="rail__val rail__clock" data-clock>–</span></span>
       </div>
     </div>
 
@@ -197,9 +197,9 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 02 — КТО ДЕЛАЕТ
+     BLOCK 02 – КТО ДЕЛАЕТ
      Короткий блок доверия между hero и первым кейсом: кто ведёт
-     проект и почему слотов мало. Не биография — читается за 5–10 секунд.
+     проект и почему слотов мало. Не биография – читается за 5–10 секунд.
      ============================================================ -->
 <section class="author">
   <div class="wrap">
@@ -213,7 +213,7 @@
         <p class="label mono">Who I am</p>
         <h2 class="h2 h2--sm author__h">My name is David. I&nbsp;go through the task myself and&nbsp;do the development myself.</h2>
         <ul class="author__list" role="list">
-          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>You talk to me directly — no account managers, no bots.</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>You talk to me directly – no account managers, no bots.</li>
           <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>I take on no more than three projects at a time.</li>
           <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>I reply within 40&nbsp;minutes, from&nbsp;8:00 to&nbsp;22:00 (UTC+7).</li>
         </ul>
@@ -223,7 +223,7 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 03 — СИСТЕМЫ
+     BLOCK 03 – СИСТЕМЫ
      ============================================================ -->
 <section class="solutions" id="solutions">
   <div class="wrap">
@@ -252,7 +252,7 @@
         </article>
         <article class="sol__card reveal">
           <h3 class="sol__h">Automation</h3>
-          <p>I connect your services to each other. Not sure what to automate — I will help you find it.</p>
+          <p>I connect your services to each other. Not sure what to automate – I will help you find it.</p>
           <p class="sol__how">Reminders&nbsp;· reports&nbsp;· service&nbsp;integrations</p>
         </article>
       </div>
@@ -262,18 +262,18 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 04 — FLAGSHIP
+     BLOCK 04 – FLAGSHIP
      ============================================================ -->
 <section class="flagship" id="work">
   <div class="wrap">
 
     <!-- Кейс одной карточкой-героем: фото воды клиента на фон, 3D-мокап
-         телефона справа. Мокап — PNG с ДЫРКОЙ в альфе на месте экрана,
+         телефона справа. Мокап – PNG с ДЫРКОЙ в альфе на месте экрана,
          поэтому видео лежит под ним и видно в вырезе; так же сделан
          плоский мокап в блоке 100ловой.
          Вырез не прямоугольник: телефон повёрнут по Y примерно на 29°,
          правая грань выше левой на 2.5%. Поэтому видео ставится не
-         процентами, а гомографией — см. .fgh__screen в style.css. -->
+         процентами, а гомографией – см. .fgh__screen в style.css. -->
     <article class="fgh case--flyguru reveal">
       <img class="fgh__bg" src="/assets/img/flyguru-hero-bg.webp" alt=""
            aria-hidden="true" width="1672" height="941" loading="lazy" decoding="async">
@@ -284,11 +284,11 @@
         <h2 class="fgh__title">FlyGuru</h2>
         <p class="fgh__sub">Website and management system <br>for an <em>efoil school</em></p>
         <p class="fgh__lead">
-          The public website collects requests — all of them land in the internal CRM. Clients, lessons, passes, stats, shifts and payroll — all in one place.
+          The public website collects requests – all of them land in the internal CRM. Clients, lessons, passes, stats, shifts and payroll – all in one place.
         </p>
 
-        <!-- клиенты и занятия — из боевой базы школы (Supabase); 26 дней — от первой
-             строки кода (6 июля) до полного перехода школы на CRM (1 августа); 8 страниц сайта — со слов Давида.
+        <!-- клиенты и занятия – из боевой базы школы (Supabase); 26 дней – от первой
+             строки кода (6 июля) до полного перехода школы на CRM (1 августа); 8 страниц сайта – со слов Давида.
              Подписи из двух слов переносятся вручную: иначе ширина колонки
              считается по всей строке и на 1024 цифры жмутся к разделителям -->
         <ul class="fgh__nums" role="list">
@@ -299,7 +299,7 @@
         </ul>
 
         <!-- «Смотреть кейс» открывает окно кейса (шаблон ниже), «Нужна такая
-             же система» переехала в само окно — туда, где интерес выше всего -->
+             же система» переехала в само окно – туда, где интерес выше всего -->
         <div class="fgh__acts">
           <button type="button" class="btn btn--brand" data-case="flyguru">
             See the case
@@ -327,7 +327,7 @@
       </div>
     </article>
 
-    <!-- ОТЗЫВ FLYGURU — ждём от Давида (имя, роль, 1–3 предложения дословно,
+    <!-- ОТЗЫВ FLYGURU – ждём от Давида (имя, роль, 1–3 предложения дословно,
          скрин в assets/img/reviews/flyguru-review.webp). Не выдумывать текст.
          Разметка та же, что у отзыва 100ловой:
     <figure class="review glass glass--plate reveal">
@@ -339,9 +339,9 @@
     </figure>
     -->
 
-    <!-- Окно кейса FlyGuru. Тексты — documents/текст под кейсы.txt (16.09.2026), цифры
+    <!-- Окно кейса FlyGuru. Тексты – documents/текст под кейсы.txt (16.09.2026), цифры
          12.09.2026: около 174 занятий (со слов Давида) и 143 клиента на скрине CRM.
-         Подписи к скринам: название экрана всегда, описание — только если оно
+         Подписи к скринам: название экрана всегда, описание – только если оно
          про важную функцию, а не пересказ того, что и так видно на кадре. -->
     <template id="case-flyguru" data-theme="flyguru">
       <div class="cv__id">
@@ -392,7 +392,7 @@
         <picture>
           <img src="/assets/img/cases/flyguru/menu-phone.webp" width="900" height="1957" alt="The CRM section menu on a phone" loading="lazy" decoding="async">
         </picture>
-        <figcaption><b>Sections of the system</b>Requests, clients, calendar, passes, certificates, stats, payroll and expenses — in one menu.</figcaption>
+        <figcaption><b>Sections of the system</b>Requests, clients, calendar, passes, certificates, stats, payroll and expenses – in one menu.</figcaption>
       </figure>
       <figure class="cv__slide" data-chapter="CRM">
         <picture>
@@ -432,7 +432,7 @@
         <picture>
           <img src="/assets/img/cases/flyguru/payouts-phone.webp" width="900" height="1957" alt="Payout history on a phone" loading="lazy" decoding="async">
         </picture>
-        <figcaption><b>Payout history</b>Who was paid, how much and when — instead of a separate notebook.</figcaption>
+        <figcaption><b>Payout history</b>Who was paid, how much and when – instead of a separate notebook.</figcaption>
       </figure>
       <figure class="cv__slide" data-chapter="CRM">
         <picture>
@@ -516,13 +516,13 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 05 — КЕЙС «100ЛОВАЯ»
-     Проект для клиента: магазин кафе «Столовая» в Нячанге (под блоком —
-     отзыв владельца). Цифры — из боевой базы продукта. Блок тёмный
-     и крупный — это самое сильное доказательство на странице.
+     BLOCK 05 – КЕЙС «100ЛОВАЯ»
+     Проект для клиента: магазин кафе «Столовая» в Нячанге (под блоком –
+     отзыв владельца). Цифры – из боевой базы продукта. Блок тёмный
+     и крупный – это самое сильное доказательство на странице.
 
      Собран той же карточкой-героем, что и кейс FlyGuru, но по своему
-     макету: фон — предметная съёмка кухни, тёмная слева под текст и
+     макету: фон – предметная съёмка кухни, тёмная слева под текст и
      светлая справа под телефон, плоский мокап стоит на бледной плите.
      ============================================================ -->
 <section class="product" id="product">
@@ -543,10 +543,10 @@
         </h2>
 
         <p class="p100__lead">
-          Menu, cart, payment and reordering — on the customer’s side. An admin panel with products, customers, statistics and broadcasts. All in one app.
+          Menu, cart, payment and reordering – on the customer’s side. An admin panel with products, customers, statistics and broadcasts. All in one app.
         </p>
 
-        <!-- цифры из боевой базы продукта; первый живой заказ — 25 апреля 2026.
+        <!-- цифры из боевой базы продукта; первый живой заказ – 25 апреля 2026.
              Счётчик дней в проде убран по просьбе Давида 15.09.2026 -->
         <ul class="p100__nums" role="list">
           <li class="p100__stat"><span class="p100__num">580+</span><span class="p100__cap">orders</span></li>
@@ -567,10 +567,10 @@
       </div>
 
       <div class="p100__phone">
-        <!-- корпус — PNG с прозрачным экраном, запись лежит под ним и видна
+        <!-- корпус – PNG с прозрачным экраном, запись лежит под ним и видна
              ровно в вырезе. Порядок в разметке обратный слоям: видео сначала,
              корпус поверх. Запись без звука, сама себя крутит, в поток страницы
-             не лезет — playsinline держит её в рамке на iOS. -->
+             не лезет – playsinline держит её в рамке на iOS. -->
         <figure class="mock">
           <video class="mock__screen shot--video"
                  src="/assets/video/100lovaya.mp4"
@@ -584,12 +584,12 @@
       </div>
     </article>
 
-    <!-- Отзыв владельца — дословная выдержка из письменного отзыва
-         (исходник photo_video/100lovaya_отзыв_1.png, целиком — по ссылке).
+    <!-- Отзыв владельца – дословная выдержка из письменного отзыва
+         (исходник photo_video/100lovaya_отзыв_1.png, целиком – по ссылке).
          Второй скрин переписки не публикуем: там «заказов пока мало». -->
     <figure class="review glass glass--plate reveal">
       <blockquote class="review__text">
-        <p>The bot runs reliably, everything is thought through to the smallest detail, and the interface is clear and easy even for new users. I especially want to mention David’s responsibility, speed and involvement — he genuinely cares about the result and suggests good solutions instead of just “doing the task”.</p>
+        <p>The bot runs reliably, everything is thought through to the smallest detail, and the interface is clear and easy even for new users. I especially want to mention David’s responsibility, speed and involvement – he genuinely cares about the result and suggests good solutions instead of just “doing the task”.</p>
       </blockquote>
       <figcaption class="review__who">
         <span><strong>Alina</strong>, owner of 100ловая, Nha Trang</span>
@@ -597,9 +597,9 @@
       </figcaption>
     </figure>
 
-    <!-- Окно кейса 100ловой. Тексты — documents/текст под кейсы.txt (16.09.2026),
-         цифры — экран «Статистика» 12.09.2026 (586 заказов) и база 23.08.
-         Подписи к скринам — по тому же правилу, что у FlyGuru.
+    <!-- Окно кейса 100ловой. Тексты – documents/текст под кейсы.txt (16.09.2026),
+         цифры – экран «Статистика» 12.09.2026 (586 заказов) и база 23.08.
+         Подписи к скринам – по тому же правилу, что у FlyGuru.
          data-start на «Панели владельца»: на ПК лента открывается с неё,
          чтобы слева от кадра стоял магазин, а не пустота. -->
     <template id="case-100lovaya" data-theme="100lovaya">
@@ -727,7 +727,7 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 06 — ДРУГИЕ ПРОЕКТЫ
+     BLOCK 06 – ДРУГИЕ ПРОЕКТЫ
      Намеренно мельче блоков 03 и 05: иерархия кейсов должна
      читаться с первого взгляда, а не из подписей.
      ============================================================ -->
@@ -748,8 +748,8 @@
         </div>
         <div class="work__body">
           <span class="work__kind mono">Online course</span>
-          <h3 class="work__h">MoodBot — the course “Перезавантаження настрою”</h3>
-          <p>Card payment inside the bot or on the landing page. Access opens automatically after payment — with no involvement from the author at all. The next lesson stays locked until the previous one is done. If someone drops off, the bot reminds them itself.</p>
+          <h3 class="work__h">MoodBot – the course “Перезавантаження настрою”</h3>
+          <p>Card payment inside the bot or on the landing page. Access opens automatically after payment – with no involvement from the author at all. The next lesson stays locked until the previous one is done. If someone drops off, the bot reminds them itself.</p>
           <!-- демо-бот, а не рабочий: рабочий платный, в демо можно пройти курс самому -->
           <div class="work__acts">
             <button type="button" class="work__link work__case mono" data-case="mood">
@@ -778,7 +778,7 @@
         </div>
         <div class="work__body">
           <span class="work__kind mono">Music</span>
-          <h3 class="work__h">AGENTBOY — a DJ press kit</h3>
+          <h3 class="work__h">AGENTBOY – a DJ press kit</h3>
           <p>One page with everything that matters: announcements, releases, links to sets and streaming platforms. It is a portfolio, only for music. Handy for introducing yourself quickly or sending it to a potential partner.</p>
           <div class="work__acts">
             <button type="button" class="work__link work__case mono" data-case="agentboy">
@@ -800,8 +800,8 @@
 
     </div>
 
-    <!-- Отзыв артиста AGENTBOY — дословная выдержка из письменного отзыва
-         (исходник photo_video/agentboy_отзыв.png, целиком — по ссылке).
+    <!-- Отзыв артиста AGENTBOY – дословная выдержка из письменного отзыва
+         (исходник photo_video/agentboy_отзыв.png, целиком – по ссылке).
          Два абзаца = два куска оригинала, склеивать их в один нельзя. -->
     <figure class="review glass glass--plate reveal">
       <blockquote class="review__text">
@@ -814,7 +814,7 @@
       </figcaption>
     </figure>
 
-    <!-- Окно кейса MoodBot. Тексты — documents/текст под кейсы.txt (16.09.2026); продаж не называем: боевой базы нет.
+    <!-- Окно кейса MoodBot. Тексты – documents/текст под кейсы.txt (16.09.2026); продаж не называем: боевой базы нет.
          Ссылку на код не даём: репозиторий не для копирования (решение Давида 16.09). -->
     <template id="case-mood" data-theme="mood">
       <div class="cv__id">
@@ -893,7 +893,7 @@
         <a class="cv__golink cv__golink--main" href="https://t.me/demomoodbot" target="_blank" rel="noopener">Try the demo bot <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a class="cv__golink" href="https://t.me/coursemood_bot" target="_blank" rel="noopener">Live bot <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a class="cv__golink" href="https://5i80g.weblium.site/" target="_blank" rel="noopener">Course landing page <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <p class="cv__gonote">The live bot is paid — in the demo you can walk through the course yourself</p>
+        <p class="cv__gonote">The live bot is paid – in the demo you can walk through the course yourself</p>
       </nav>
 
       <section class="cv__info" aria-label="About the project">
@@ -906,14 +906,14 @@
         <div class="cv__grid">
           <div>
             <h3 class="cv__h mono">The task</h3>
-            <p class="cv__lead">Build a bot that checks the payment itself and opens access in Telegram. Most importantly — with no involvement from the author.</p>
+            <p class="cv__lead">Build a bot that checks the payment itself and opens access in Telegram. Most importantly – with no involvement from the author.</p>
             <p>The secondary task is to get the student to the end of the course. The bot sends reminders, keeps progress and does not let anyone skip a lesson.</p>
           </div>
 
           <div>
             <h3 class="cv__h mono">What was built</h3>
             <ul class="cv__list" role="list">
-              <li>Card payment right inside the bot through WayForPay — access opens by itself</li>
+              <li>Card payment right inside the bot through WayForPay – access opens by itself</li>
               <li>Payment on the landing page: an email with a personal “Open the course in Telegram” button</li>
               <li>Access codes for friends, bloggers and refunds</li>
               <li>Seven video lessons in four versions: Ukrainian and Russian, with music and without</li>
@@ -953,13 +953,13 @@
       </div>
     </template>
 
-    <!-- Окно кейса AGENTBOY. Тексты — documents/текст под кейсы.txt (16.09.2026).
+    <!-- Окно кейса AGENTBOY. Тексты – documents/текст под кейсы.txt (16.09.2026).
          Ссылку на код не даём (решение Давида 16.09); сам репозиторий остаётся
          публичным, пока agentboy.org живёт на GitHub Pages. -->
     <template id="case-agentboy" data-theme="agentboy">
       <div class="cv__id">
         <h2 class="cv__title" id="cv-title-agentboy">AGENT<span>BOY</span></h2>
-        <p class="cv__sub">A DJ press kit — an online portfolio for promoters</p>
+        <p class="cv__sub">A DJ press kit – an online portfolio for promoters</p>
       </div>
 
       <section class="cv__gal" aria-label="Project screens">
@@ -1007,7 +1007,7 @@
           <div>
             <h3 class="cv__h mono">The task</h3>
             <p class="cv__lead">The artist needed an online portfolio he could send to a promoter instead of scattered messages with photos, videos and a bio.</p>
-            <p>A site in two languages — with room for French, German, Spanish and Greek.</p>
+            <p>A site in two languages – with room for French, German, Spanish and Greek.</p>
           </div>
 
           <div>
@@ -1054,7 +1054,7 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 07 — PROCESS
+     BLOCK 07 – PROCESS
      ============================================================ -->
 <section class="process" id="process">
   <div class="wrap process__grid">
@@ -1065,7 +1065,7 @@
     </header>
 
     <div>
-    <!-- На телефоне шаги листаются вбок; номера над лентой — навигация. -->
+    <!-- На телефоне шаги листаются вбок; номера над лентой – навигация. -->
     <div class="swipe-tabs steps__nav" aria-label="Steps of the work" hidden>
       <button type="button" class="swipe-tabs__tab" aria-controls="step-1" aria-current="true" aria-label="Step 1: discussing the task">01</button>
       <button type="button" class="swipe-tabs__tab" aria-controls="step-2" aria-current="false" aria-label="Step 2: plan and fixed price">02</button>
@@ -1081,7 +1081,7 @@
       <article class="step glass glass--plate reveal" id="step-2">
         <span class="step__n">02</span>
         <h3 class="step__h">Plan and fixed price</h3>
-        <p>We define the scope and how the features should work. We agree on the price and the timeline — and then I start.</p>
+        <p>We define the scope and how the features should work. We agree on the price and the timeline – and then I start.</p>
       </article>
       <article class="step glass glass--plate step--on reveal" id="step-3">
         <span class="step__n">03</span>
@@ -1099,11 +1099,11 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 08 — ЦЕНЫ
+     BLOCK 08 – ЦЕНЫ
      ============================================================ -->
 <section class="pricing" id="pricing">
   <div class="wrap pricing__stack">
-    <!-- Плашка 1 — закрытая: стоимость разработки и три направления.
+    <!-- Плашка 1 – закрытая: стоимость разработки и три направления.
          Всё, что дальше, это отдельные предложения, и они стоят своими
          плашками: в одной коробке они читались бы четвёртым тарифом. -->
     <div class="pricing__panel">
@@ -1121,10 +1121,10 @@
       <button type="button" class="swipe-tabs__tab" aria-controls="plan-auto" aria-current="false">Automations</button>
     </div>
     <div class="plans">
-      <!-- Цена — барабан-счётчик (script.js, «барабан цен»): значения и названия
-           комплектаций берутся из кнопок .kit__chip, стартовое — у кнопки с
-           aria-pressed="true". Горячая цена: data-hot — на какой цене гореть,
-           data-old — зачёркнутая старая цена. Убрать скидку = удалить оба атрибута. -->
+      <!-- Цена – барабан-счётчик (script.js, «барабан цен»): значения и названия
+           комплектаций берутся из кнопок .kit__chip, стартовое – у кнопки с
+           aria-pressed="true". Горячая цена: data-hot – на какой цене гореть,
+           data-old – зачёркнутая старая цена. Убрать скидку = удалить оба атрибута. -->
       <article class="plan reveal" id="plan-bot">
         <p class="plan__kind mono">Systems inside Telegram (and&nbsp;beyond)</p>
         <h3 class="plan__h">Bot or Mini App</h3>
@@ -1165,7 +1165,7 @@
           </div>
         </div>
         <div class="plan__terms">
-          <p><strong>Timeline</strong>Bot — about 7&nbsp;days · Mini App — about 14&nbsp;days</p>
+          <p><strong>Timeline</strong>Bot – about 7&nbsp;days · Mini App – about 14&nbsp;days</p>
           <p class="plan__small">Timelines depend on the scope.</p>
         </div>
         <a href="https://t.me/davidnaumenko" class="btn btn--soft btn--block" target="_blank" rel="noopener">Discuss your task</a>
@@ -1204,7 +1204,7 @@
         </div>
         <p class="plan__alert"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.8v3.8M8 10.9v.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Complex setups are quoted separately</p>
         <div class="plan__terms">
-          <p><strong>Timeline</strong>From 30 days — depending on the task</p>
+          <p><strong>Timeline</strong>From 30 days – depending on the task</p>
         </div>
         <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--block" target="_blank" rel="noopener">Discuss your task</a>
       </article>
@@ -1233,7 +1233,7 @@
 
     </div>
 
-    <!-- Плашка 2 — поддержка после запуска. Состав уровней — по тексту Давида
+    <!-- Плашка 2 – поддержка после запуска. Состав уровней – по тексту Давида
          от 15.09.2026, списки видны сразу, без раскрывашек. Уровни вкладываются
          друг в друга; правки, доработки и небольшие функции берутся из часов. -->
     <div class="addon reveal">
@@ -1259,7 +1259,7 @@
             <li>Monitoring: I know right away if it goes down</li>
             <li>Daily database backups</li>
             <li>I watch the domain and SSL and install urgent security updates</li>
-            <li>Response to a breakage — within 24 hours</li>
+            <li>Response to a breakage – within 24 hours</li>
             <li>2 hours for edits and small changes</li>
             <li>A written report once a month</li>
           </ul>
@@ -1275,7 +1275,7 @@
             <li>A check-up four times a month</li>
             <li>Monitoring and daily backups</li>
             <li>Domain, SSL and a scheduled library update once a month</li>
-            <li>Response to a breakage — within 6 hours</li>
+            <li>Response to a breakage – within 6 hours</li>
             <li>12 hours for edits, changes and small features</li>
             <li>A call every two weeks</li>
           </ul>
@@ -1291,7 +1291,7 @@
             <li>Constant oversight, monitoring and daily backups</li>
             <li>Domain, SSL and library updates</li>
             <li>I manage hosting plans and scale for load</li>
-            <li>Response to a breakage — within 3 hours</li>
+            <li>Response to a breakage – within 3 hours</li>
             <li>30 hours for changes and new features</li>
             <li>Small edits without limits, outside the hours</li>
             <li>A weekly call (if needed)</li>
@@ -1300,11 +1300,11 @@
       </div>
       <div class="tiers__terms">
         <p>Working hours: 8:00–22:00 (UTC+7). Unused hours do not roll over. Large new features are quoted separately. Hosting and third-party services are paid by you.</p>
-        <p>The minimum term is one month; after that you can cancel any time. I do take over other people’s projects — but only after reviewing the code.</p>
+        <p>The minimum term is one month; after that you can cancel any time. I do take over other people’s projects – but only after reviewing the code.</p>
       </div>
     </div>
 
-    <!-- Отдельные предложения — две самостоятельные плашки, а не общая полоса
+    <!-- Отдельные предложения – две самостоятельные плашки, а не общая полоса
          условий: гарантия теперь сказана в поддержке и в FAQ. -->
     <div class="extras">
       <article class="extra reveal">
@@ -1326,9 +1326,9 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 09 — FAQ
-     «Что будет, если что-то пойдёт не так» и FAQ повторяли друг друга —
-     собраны в один блок (master-plan, 4.1). Вопросы и порядок — по тексту
+     BLOCK 09 – FAQ
+     «Что будет, если что-то пойдёт не так» и FAQ повторяли друг друга –
+     собраны в один блок (master-plan, 4.1). Вопросы и порядок – по тексту
      Давида от 15.09.2026. Нативный <details>: аккордеон работает и без JS.
      ============================================================ -->
 <section class="trust" id="faq">
@@ -1341,8 +1341,8 @@
     <div class="qa-list">
       <details class="qa reveal">
         <summary class="qa__q">How long will the development take?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <!-- сроки те же, что в карточках цен: поменялись там — поменять и здесь -->
-        <div class="qa__a"><p>Rough guide: a Telegram bot — about 7&nbsp;days, a Mini App — about 14&nbsp;days, a website with CRM — from 30&nbsp;days.</p><p class="qa__note">Timelines depend on the scope of the task.</p></div>
+        <!-- сроки те же, что в карточках цен: поменялись там – поменять и здесь -->
+        <div class="qa__a"><p>Rough guide: a Telegram bot – about 7&nbsp;days, a Mini App – about 14&nbsp;days, a website with CRM – from 30&nbsp;days.</p><p class="qa__note">Timelines depend on the scope of the task.</p></div>
       </details>
 
       <details class="qa reveal">
@@ -1374,7 +1374,7 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 11 — FINAL CTA
+     BLOCK 11 – FINAL CTA
      ============================================================ -->
 <section class="final" id="contact">
   <div class="wrap">
@@ -1423,7 +1423,7 @@
 
       <div class="request__done" tabindex="-1" hidden>
         <p class="request__title">I have your request. I will reply during working hours, to the contact you gave.</p>
-        <p class="request__alt">If it is urgent — <a href="https://t.me/davidnaumenko" target="_blank" rel="noopener">message me on Telegram</a>.</p>
+        <p class="request__alt">If it is urgent – <a href="https://t.me/davidnaumenko" target="_blank" rel="noopener">message me on Telegram</a>.</p>
       </div>
     </div>
   </div>
@@ -1432,7 +1432,7 @@
 </main>
 
 <!-- ============================================================
-     BLOCK 12 — ФУТЕР
+     BLOCK 12 – ФУТЕР
      ============================================================ -->
 <footer class="footer">
   <div class="wrap footer__grid">
@@ -1443,7 +1443,7 @@
         <span class="brand__role">digital systems</span>
       </a>
       <p class="footer__tag">
-        I build websites, CRMs, Telegram bots and automations around your processes — from working through the task to launch and support.
+        I build websites, CRMs, Telegram bots and automations around your processes – from working through the task to launch and support.
       </p>
     </div>
 
@@ -1474,15 +1474,15 @@
       </span>
       <span class="footer__place">
         Nha Trang, Vietnam
-        <span class="footer__clock" data-clock>—</span>
+        <span class="footer__clock" data-clock>–</span>
       </span>
     </div>
 
   </div>
 </footer>
 
-<!-- Окно кейса: одно на все проекты, наполнение — из <template id="case-…">
-     рядом с карточкой. Логика — script.js, «ОКНО КЕЙСА». -->
+<!-- Окно кейса: одно на все проекты, наполнение – из <template id="case-…">
+     рядом с карточкой. Логика – script.js, «ОКНО КЕЙСА». -->
 <dialog class="cv" id="case">
   <div class="cv__bar">
     <div class="cv__id" data-cv-id></div>
@@ -1510,7 +1510,7 @@
      показывается, и аналитика тоже не работает. -->
 <aside class="cc" id="cookies" aria-labelledby="cc-title" hidden>
   <p class="cc__title" id="cc-title">Cookies on this site</p>
-  <p class="cc__text">I use Google Analytics to see which sections are useful and which are not. It sets cookies — I will only turn them on if you agree. <a href="/en/privacy.html#cookies">Learn more</a></p>
+  <p class="cc__text">I use Google Analytics to see which sections are useful and which are not. It sets cookies – I will only turn them on if you agree. <a href="/en/privacy.html#cookies">Learn more</a></p>
   <div class="cc__prefs" id="cc-prefs" hidden>
     <div class="cc__opt">
       <span class="cc__opt-text"><b>Essential</b>They remember your choice in this window.</span>

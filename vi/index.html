@@ -1,12 +1,12 @@
 <!doctype html>
 <!-- Страница собрана автоматически: node build.js.
      Править надо index.html (вёрстка и русский текст) и i18n/vi.json (перевод),
-     а не этот файл — следующая сборка перезапишет его. -->
+     а не этот файл – следующая сборка перезапишет его. -->
 <html lang="vi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>David Naumenko — sản phẩm số và hệ thống làm riêng cho công việc của bạn</title>
+<title>David Naumenko – sản phẩm số và hệ thống làm riêng cho công việc của bạn</title>
 <meta name="description" content="Mình tìm ra nơi bạn đang mất thời gian, khách hàng hoặc tiền, rồi xây một hệ thống riêng: website, CRM, bot Telegram, Mini App hoặc tự động hoá.">
 
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <meta name="theme-color" content="#0C7A5D">
 <!-- Тема ставится до первой отрисовки: выбор переключателя, если он был,
-     иначе настройка системы. Позже — уже вспышка светлой страницы.
+     иначе настройка системы. Позже – уже вспышка светлой страницы.
      Тот же скрипт стоит в privacy.html. -->
 <script>
 (function () {
@@ -27,8 +27,8 @@
 </script>
 
 <!-- превью ссылки в Telegram и соцсетях. Адреса обязаны быть абсолютными.
-     Исходник картинки — documents/og/og-final.html (локально). Telegram
-     кэширует превью — после замены картинки сбросить его через @WebpageBot. -->
+     Исходник картинки – documents/og/og-final.html (локально). Telegram
+     кэширует превью – после замены картинки сбросить его через @WebpageBot. -->
 <link rel="canonical" href="https://davidnaumenko.com/vi/">
 <!-- Перевод ещё не вычитан носителем: страницу не индексируем и
      не ставим в hreflang. Снять вместе с draft в i18n/config.js. -->
@@ -48,12 +48,12 @@
 <meta property="og:site_name" content="David Naumenko">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:url" content="https://davidnaumenko.com/vi/">
-<meta property="og:title" content="David Naumenko — sản phẩm số và hệ thống làm riêng cho công việc của bạn">
+<meta property="og:title" content="David Naumenko – sản phẩm số và hệ thống làm riêng cho công việc của bạn">
 <meta property="og:description" content="Mình tìm ra nơi bạn đang mất thời gian, khách hàng hoặc tiền, rồi xây một hệ thống riêng: website, CRM, bot Telegram, Mini App hoặc tự động hoá.">
 <meta property="og:image" content="https://davidnaumenko.com/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="David Naumenko — giải pháp riêng cho quy trình của bạn: màn hình CRM FlyGuru và Mini App 100ловая">
+<meta property="og:image:alt" content="David Naumenko – giải pháp riêng cho quy trình của bạn: màn hình CRM FlyGuru và Mini App 100ловая">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,9 +84,9 @@
     </nav>
 
     <div class="header__actions">
-      <!-- Язык сайта. Каждый язык — отдельная страница (/uk/, /en/), поэтому
+      <!-- Язык сайта. Каждый язык – отдельная страница (/uk/, /en/), поэтому
            здесь обычные ссылки: переключатель работает и без JS. Список между
-           метками i18n:langs собирает build.js по i18n/config.js — руками его
+           метками i18n:langs собирает build.js по i18n/config.js – руками его
            не правят: добавьте язык в конфиг и прогоните `node build.js`. -->
       <details class="lang" data-lang>
         <summary class="lang__sum" aria-label="Ngôn ngữ trang web">
@@ -102,7 +102,7 @@
           <!-- /i18n:langs -->
         </ul>
       </details>
-      <!-- Переключатель темы (script.js, «тема»): aria-pressed="true" — тёмная. -->
+      <!-- Переключатель темы (script.js, «тема»): aria-pressed="true" – тёмная. -->
       <button class="scheme" type="button" aria-label="Giao diện tối" aria-pressed="false">
         <span class="scheme__knob" aria-hidden="true">
           <svg class="scheme__sun" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -134,7 +134,7 @@
 <main id="main">
 
 <!-- ============================================================
-     BLOCK 01 — HERO
+     BLOCK 01 – HERO
      ============================================================ -->
 <section class="hero" id="top">
   <div class="wrap hero__grid">
@@ -143,7 +143,7 @@
       <div class="hero__status rise" style="--i:0">
         <!-- Свободные слоты. Обновляйте data-slots (3/2/1/0) и текст подписи.
              Атрибут задаёт цвет цифры и точки:
-             3–2 — зелёный, 1 — оранжевый, 0 — красный. -->
+             3–2 – зелёный, 1 – оранжевый, 0 – красный. -->
         <span class="pill glass" data-slots="1">
           <img class="pill__ava" src="/assets/img/david-portrait.jpg" alt="David Naumenko" width="34" height="34" loading="eager">
           <span>Còn trống: <b>1</b> trên 3 suất</span>
@@ -151,7 +151,7 @@
         </span>
       </div>
 
-      <!-- заголовок — проблема клиента, подзаголовок — чем решаю (master-plan, 1.1).
+      <!-- заголовок – проблема клиента, подзаголовок – чем решаю (master-plan, 1.1).
            Текст Давида от 15.09.2026; при смене текста поправить meta и og:description. -->
       <h1 class="hero__title rise" style="--i:1">
         Mình tìm ra nơi bạn đang mất <em>thời gian, khách hàng hoặc&nbsp;tiền</em>
@@ -175,7 +175,7 @@
     </div>
 
     <!-- статус-рейл: список работающих сейчас проектов и живые часы Нячанга.
-         Название проекта открывает окно его кейса (data-case), href — запасной
+         Название проекта открывает окно его кейса (data-case), href – запасной
          путь без скрипта. -->
     <div class="rail rise" style="--i:4">
       <div class="rail__inner glass">
@@ -188,12 +188,12 @@
         <span class="rail__sep" aria-hidden="true">/</span>
         <a class="rail__item rail__val rail__link" href="#case-flyguru" data-case="flyguru">flyguru.pro</a>
         <span class="rail__sep" aria-hidden="true">/</span>
-        <a class="rail__item rail__val rail__link" href="#case-agentboy" data-case="agentboy">AgentBoy — DJ Press Kit</a>
+        <a class="rail__item rail__val rail__link" href="#case-agentboy" data-case="agentboy">AgentBoy – DJ Press Kit</a>
         <span class="rail__sep" aria-hidden="true">/</span>
         <a class="rail__item rail__val rail__link" href="#case-mood" data-case="mood">MoodBot</a>
         <span class="rail__sep" aria-hidden="true">/</span>
         <a class="rail__item rail__link" href="#works">và nhiều hơn nữa…</a>
-        <span class="rail__item rail__time">Nha Trang<span class="rail__val rail__clock" data-clock>—</span></span>
+        <span class="rail__item rail__time">Nha Trang<span class="rail__val rail__clock" data-clock>–</span></span>
       </div>
     </div>
 
@@ -201,9 +201,9 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 02 — КТО ДЕЛАЕТ
+     BLOCK 02 – КТО ДЕЛАЕТ
      Короткий блок доверия между hero и первым кейсом: кто ведёт
-     проект и почему слотов мало. Не биография — читается за 5–10 секунд.
+     проект и почему слотов мало. Не биография – читается за 5–10 секунд.
      ============================================================ -->
 <section class="author">
   <div class="wrap">
@@ -217,7 +217,7 @@
         <p class="label mono">Mình là ai</p>
         <h2 class="h2 h2--sm author__h">Mình tên là David. Mình&nbsp;trực tiếp tìm hiểu công việc và&nbsp;tự mình lập trình.</h2>
         <ul class="author__list" role="list">
-          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Bạn làm việc thẳng với mình — không qua quản lý, không qua bot.</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Bạn làm việc thẳng với mình – không qua quản lý, không qua bot.</li>
           <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Mình chỉ nhận tối đa ba dự án cùng lúc.</li>
           <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Mình trả lời trong vòng 40&nbsp;phút, từ&nbsp;8:00 đến&nbsp;22:00 (UTC+7).</li>
         </ul>
@@ -227,7 +227,7 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 03 — СИСТЕМЫ
+     BLOCK 03 – СИСТЕМЫ
      ============================================================ -->
 <section class="solutions" id="solutions">
   <div class="wrap">
@@ -256,7 +256,7 @@
         </article>
         <article class="sol__card reveal">
           <h3 class="sol__h">Tự động hoá</h3>
-          <p>Mình kết nối các dịch vụ của bạn với nhau. Chưa biết nên tự động hoá phần nào — mình sẽ giúp bạn tìm ra.</p>
+          <p>Mình kết nối các dịch vụ của bạn với nhau. Chưa biết nên tự động hoá phần nào – mình sẽ giúp bạn tìm ra.</p>
           <p class="sol__how">Nhắc&nbsp;việc&nbsp;· báo&nbsp;cáo&nbsp;· kết&nbsp;nối&nbsp;dịch&nbsp;vụ</p>
         </article>
       </div>
@@ -266,18 +266,18 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 04 — FLAGSHIP
+     BLOCK 04 – FLAGSHIP
      ============================================================ -->
 <section class="flagship" id="work">
   <div class="wrap">
 
     <!-- Кейс одной карточкой-героем: фото воды клиента на фон, 3D-мокап
-         телефона справа. Мокап — PNG с ДЫРКОЙ в альфе на месте экрана,
+         телефона справа. Мокап – PNG с ДЫРКОЙ в альфе на месте экрана,
          поэтому видео лежит под ним и видно в вырезе; так же сделан
          плоский мокап в блоке 100ловой.
          Вырез не прямоугольник: телефон повёрнут по Y примерно на 29°,
          правая грань выше левой на 2.5%. Поэтому видео ставится не
-         процентами, а гомографией — см. .fgh__screen в style.css. -->
+         процентами, а гомографией – см. .fgh__screen в style.css. -->
     <article class="fgh case--flyguru reveal">
       <img class="fgh__bg" src="/assets/img/flyguru-hero-bg.webp" alt=""
            aria-hidden="true" width="1672" height="941" loading="lazy" decoding="async">
@@ -288,11 +288,11 @@
         <h2 class="fgh__title">FlyGuru</h2>
         <p class="fgh__sub">Website và hệ thống quản lý <br>cho <em>trường dạy efoil</em></p>
         <p class="fgh__lead">
-          Website công khai thu yêu cầu — tất cả đổ về hệ thống CRM nội bộ. Khách hàng, buổi học, gói tập, thống kê, ca làm và tính lương — tất cả ở một chỗ.
+          Website công khai thu yêu cầu – tất cả đổ về hệ thống CRM nội bộ. Khách hàng, buổi học, gói tập, thống kê, ca làm và tính lương – tất cả ở một chỗ.
         </p>
 
-        <!-- клиенты и занятия — из боевой базы школы (Supabase); 26 дней — от первой
-             строки кода (6 июля) до полного перехода школы на CRM (1 августа); 8 страниц сайта — со слов Давида.
+        <!-- клиенты и занятия – из боевой базы школы (Supabase); 26 дней – от первой
+             строки кода (6 июля) до полного перехода школы на CRM (1 августа); 8 страниц сайта – со слов Давида.
              Подписи из двух слов переносятся вручную: иначе ширина колонки
              считается по всей строке и на 1024 цифры жмутся к разделителям -->
         <ul class="fgh__nums" role="list">
@@ -303,7 +303,7 @@
         </ul>
 
         <!-- «Смотреть кейс» открывает окно кейса (шаблон ниже), «Нужна такая
-             же система» переехала в само окно — туда, где интерес выше всего -->
+             же система» переехала в само окно – туда, где интерес выше всего -->
         <div class="fgh__acts">
           <button type="button" class="btn btn--brand" data-case="flyguru">
             Xem dự án
@@ -331,7 +331,7 @@
       </div>
     </article>
 
-    <!-- ОТЗЫВ FLYGURU — ждём от Давида (имя, роль, 1–3 предложения дословно,
+    <!-- ОТЗЫВ FLYGURU – ждём от Давида (имя, роль, 1–3 предложения дословно,
          скрин в assets/img/reviews/flyguru-review.webp). Не выдумывать текст.
          Разметка та же, что у отзыва 100ловой:
     <figure class="review glass glass--plate reveal">
@@ -343,9 +343,9 @@
     </figure>
     -->
 
-    <!-- Окно кейса FlyGuru. Тексты — documents/текст под кейсы.txt (16.09.2026), цифры
+    <!-- Окно кейса FlyGuru. Тексты – documents/текст под кейсы.txt (16.09.2026), цифры
          12.09.2026: около 174 занятий (со слов Давида) и 143 клиента на скрине CRM.
-         Подписи к скринам: название экрана всегда, описание — только если оно
+         Подписи к скринам: название экрана всегда, описание – только если оно
          про важную функцию, а не пересказ того, что и так видно на кадре. -->
     <template id="case-flyguru" data-theme="flyguru">
       <div class="cv__id">
@@ -396,7 +396,7 @@
         <picture>
           <img src="/assets/img/cases/flyguru/menu-phone.webp" width="900" height="1957" alt="Menu các mục của CRM trên điện thoại" loading="lazy" decoding="async">
         </picture>
-        <figcaption><b>Các mục của hệ thống</b>Yêu cầu, khách hàng, lịch, gói tập, thẻ quà tặng, thống kê, lương và chi phí — trong cùng một menu.</figcaption>
+        <figcaption><b>Các mục của hệ thống</b>Yêu cầu, khách hàng, lịch, gói tập, thẻ quà tặng, thống kê, lương và chi phí – trong cùng một menu.</figcaption>
       </figure>
       <figure class="cv__slide" data-chapter="CRM">
         <picture>
@@ -436,7 +436,7 @@
         <picture>
           <img src="/assets/img/cases/flyguru/payouts-phone.webp" width="900" height="1957" alt="Lịch sử chi trả trên điện thoại" loading="lazy" decoding="async">
         </picture>
-        <figcaption><b>Lịch sử chi trả</b>Ai đã nhận, bao nhiêu và khi nào — thay cho một cuốn sổ riêng.</figcaption>
+        <figcaption><b>Lịch sử chi trả</b>Ai đã nhận, bao nhiêu và khi nào – thay cho một cuốn sổ riêng.</figcaption>
       </figure>
       <figure class="cv__slide" data-chapter="CRM">
         <picture>
@@ -520,13 +520,13 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 05 — КЕЙС «100ЛОВАЯ»
-     Проект для клиента: магазин кафе «Столовая» в Нячанге (под блоком —
-     отзыв владельца). Цифры — из боевой базы продукта. Блок тёмный
-     и крупный — это самое сильное доказательство на странице.
+     BLOCK 05 – КЕЙС «100ЛОВАЯ»
+     Проект для клиента: магазин кафе «Столовая» в Нячанге (под блоком –
+     отзыв владельца). Цифры – из боевой базы продукта. Блок тёмный
+     и крупный – это самое сильное доказательство на странице.
 
      Собран той же карточкой-героем, что и кейс FlyGuru, но по своему
-     макету: фон — предметная съёмка кухни, тёмная слева под текст и
+     макету: фон – предметная съёмка кухни, тёмная слева под текст и
      светлая справа под телефон, плоский мокап стоит на бледной плите.
      ============================================================ -->
 <section class="product" id="product">
@@ -547,10 +547,10 @@
         </h2>
 
         <p class="p100__lead">
-          Thực đơn, giỏ hàng, thanh toán và đặt lại — về phía khách. Bảng quản trị có sản phẩm, khách hàng, thống kê và gửi tin hàng loạt. Tất cả trong một ứng dụng.
+          Thực đơn, giỏ hàng, thanh toán và đặt lại – về phía khách. Bảng quản trị có sản phẩm, khách hàng, thống kê và gửi tin hàng loạt. Tất cả trong một ứng dụng.
         </p>
 
-        <!-- цифры из боевой базы продукта; первый живой заказ — 25 апреля 2026.
+        <!-- цифры из боевой базы продукта; первый живой заказ – 25 апреля 2026.
              Счётчик дней в проде убран по просьбе Давида 15.09.2026 -->
         <ul class="p100__nums" role="list">
           <li class="p100__stat"><span class="p100__num">580+</span><span class="p100__cap">đơn hàng</span></li>
@@ -571,10 +571,10 @@
       </div>
 
       <div class="p100__phone">
-        <!-- корпус — PNG с прозрачным экраном, запись лежит под ним и видна
+        <!-- корпус – PNG с прозрачным экраном, запись лежит под ним и видна
              ровно в вырезе. Порядок в разметке обратный слоям: видео сначала,
              корпус поверх. Запись без звука, сама себя крутит, в поток страницы
-             не лезет — playsinline держит её в рамке на iOS. -->
+             не лезет – playsinline держит её в рамке на iOS. -->
         <figure class="mock">
           <video class="mock__screen shot--video"
                  src="/assets/video/100lovaya.mp4"
@@ -588,12 +588,12 @@
       </div>
     </article>
 
-    <!-- Отзыв владельца — дословная выдержка из письменного отзыва
-         (исходник photo_video/100lovaya_отзыв_1.png, целиком — по ссылке).
+    <!-- Отзыв владельца – дословная выдержка из письменного отзыва
+         (исходник photo_video/100lovaya_отзыв_1.png, целиком – по ссылке).
          Второй скрин переписки не публикуем: там «заказов пока мало». -->
     <figure class="review glass glass--plate reveal">
       <blockquote class="review__text">
-        <p>Bot chạy ổn định, mọi thứ được tính đến từng chi tiết nhỏ, giao diện rõ ràng và dễ dùng ngay cả với người mới. Mình đặc biệt muốn nói đến tinh thần trách nhiệm, tốc độ làm việc và sự tận tâm của David — bạn ấy thật sự quan tâm đến kết quả và đưa ra những giải pháp hay, chứ không chỉ “làm cho xong việc”.</p>
+        <p>Bot chạy ổn định, mọi thứ được tính đến từng chi tiết nhỏ, giao diện rõ ràng và dễ dùng ngay cả với người mới. Mình đặc biệt muốn nói đến tinh thần trách nhiệm, tốc độ làm việc và sự tận tâm của David – bạn ấy thật sự quan tâm đến kết quả và đưa ra những giải pháp hay, chứ không chỉ “làm cho xong việc”.</p>
       </blockquote>
       <figcaption class="review__who">
         <span><strong>Alina</strong>, chủ quán 100ловая, Nha Trang</span>
@@ -601,9 +601,9 @@
       </figcaption>
     </figure>
 
-    <!-- Окно кейса 100ловой. Тексты — documents/текст под кейсы.txt (16.09.2026),
-         цифры — экран «Статистика» 12.09.2026 (586 заказов) и база 23.08.
-         Подписи к скринам — по тому же правилу, что у FlyGuru.
+    <!-- Окно кейса 100ловой. Тексты – documents/текст под кейсы.txt (16.09.2026),
+         цифры – экран «Статистика» 12.09.2026 (586 заказов) и база 23.08.
+         Подписи к скринам – по тому же правилу, что у FlyGuru.
          data-start на «Панели владельца»: на ПК лента открывается с неё,
          чтобы слева от кадра стоял магазин, а не пустота. -->
     <template id="case-100lovaya" data-theme="100lovaya">
@@ -731,7 +731,7 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 06 — ДРУГИЕ ПРОЕКТЫ
+     BLOCK 06 – ДРУГИЕ ПРОЕКТЫ
      Намеренно мельче блоков 03 и 05: иерархия кейсов должна
      читаться с первого взгляда, а не из подписей.
      ============================================================ -->
@@ -752,8 +752,8 @@
         </div>
         <div class="work__body">
           <span class="work__kind mono">Khoá học online</span>
-          <h3 class="work__h">MoodBot — khoá học “Перезавантаження настрою”</h3>
-          <p>Thanh toán bằng thẻ ngay trong bot hoặc trên landing page. Quyền truy cập mở tự động sau khi thanh toán — hoàn toàn không cần tác giả can thiệp. Bài tiếp theo chỉ mở khi bài trước đã xong. Nếu học viên bỏ dở, bot tự nhắc.</p>
+          <h3 class="work__h">MoodBot – khoá học “Перезавантаження настрою”</h3>
+          <p>Thanh toán bằng thẻ ngay trong bot hoặc trên landing page. Quyền truy cập mở tự động sau khi thanh toán – hoàn toàn không cần tác giả can thiệp. Bài tiếp theo chỉ mở khi bài trước đã xong. Nếu học viên bỏ dở, bot tự nhắc.</p>
           <!-- демо-бот, а не рабочий: рабочий платный, в демо можно пройти курс самому -->
           <div class="work__acts">
             <button type="button" class="work__link work__case mono" data-case="mood">
@@ -782,7 +782,7 @@
         </div>
         <div class="work__body">
           <span class="work__kind mono">Âm nhạc</span>
-          <h3 class="work__h">AGENTBOY — press kit của một DJ</h3>
+          <h3 class="work__h">AGENTBOY – press kit của một DJ</h3>
           <p>Một trang duy nhất có mọi thứ cần thiết: lịch diễn, bản phát hành, link tới các set và các nền tảng nghe nhạc. Giống như portfolio, nhưng dành cho âm nhạc. Tiện để giới thiệu bản thân thật nhanh hoặc gửi cho đối tác tiềm năng.</p>
           <div class="work__acts">
             <button type="button" class="work__link work__case mono" data-case="agentboy">
@@ -804,8 +804,8 @@
 
     </div>
 
-    <!-- Отзыв артиста AGENTBOY — дословная выдержка из письменного отзыва
-         (исходник photo_video/agentboy_отзыв.png, целиком — по ссылке).
+    <!-- Отзыв артиста AGENTBOY – дословная выдержка из письменного отзыва
+         (исходник photo_video/agentboy_отзыв.png, целиком – по ссылке).
          Два абзаца = два куска оригинала, склеивать их в один нельзя. -->
     <figure class="review glass glass--plate reveal">
       <blockquote class="review__text">
@@ -818,7 +818,7 @@
       </figcaption>
     </figure>
 
-    <!-- Окно кейса MoodBot. Тексты — documents/текст под кейсы.txt (16.09.2026); продаж не называем: боевой базы нет.
+    <!-- Окно кейса MoodBot. Тексты – documents/текст под кейсы.txt (16.09.2026); продаж не называем: боевой базы нет.
          Ссылку на код не даём: репозиторий не для копирования (решение Давида 16.09). -->
     <template id="case-mood" data-theme="mood">
       <div class="cv__id">
@@ -897,7 +897,7 @@
         <a class="cv__golink cv__golink--main" href="https://t.me/demomoodbot" target="_blank" rel="noopener">Thử bot demo <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a class="cv__golink" href="https://t.me/coursemood_bot" target="_blank" rel="noopener">Bot đang chạy thật <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a class="cv__golink" href="https://5i80g.weblium.site/" target="_blank" rel="noopener">Landing page khoá học <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5m0 0H6m5 0v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <p class="cv__gonote">Bot thật là bản trả phí — ở bản demo bạn có thể tự đi hết khoá học</p>
+        <p class="cv__gonote">Bot thật là bản trả phí – ở bản demo bạn có thể tự đi hết khoá học</p>
       </nav>
 
       <section class="cv__info" aria-label="Về dự án">
@@ -917,7 +917,7 @@
           <div>
             <h3 class="cv__h mono">Đã làm những gì</h3>
             <ul class="cv__list" role="list">
-              <li>Thanh toán bằng thẻ ngay trong bot qua WayForPay — quyền truy cập tự mở</li>
+              <li>Thanh toán bằng thẻ ngay trong bot qua WayForPay – quyền truy cập tự mở</li>
               <li>Thanh toán trên landing page: email kèm nút riêng “Mở khoá học trong Telegram”</li>
               <li>Mã truy cập dành cho bạn bè, blogger và các trường hợp hoàn tiền</li>
               <li>Bảy bài học video ở bốn phiên bản: tiếng Ukraina và tiếng Nga, có nhạc nền và không nhạc nền</li>
@@ -957,13 +957,13 @@
       </div>
     </template>
 
-    <!-- Окно кейса AGENTBOY. Тексты — documents/текст под кейсы.txt (16.09.2026).
+    <!-- Окно кейса AGENTBOY. Тексты – documents/текст под кейсы.txt (16.09.2026).
          Ссылку на код не даём (решение Давида 16.09); сам репозиторий остаётся
          публичным, пока agentboy.org живёт на GitHub Pages. -->
     <template id="case-agentboy" data-theme="agentboy">
       <div class="cv__id">
         <h2 class="cv__title" id="cv-title-agentboy">AGENT<span>BOY</span></h2>
-        <p class="cv__sub">Press kit của DJ — portfolio online dành cho các nhà tổ chức</p>
+        <p class="cv__sub">Press kit của DJ – portfolio online dành cho các nhà tổ chức</p>
       </div>
 
       <section class="cv__gal" aria-label="Màn hình của dự án">
@@ -1011,14 +1011,14 @@
           <div>
             <h3 class="cv__h mono">Yêu cầu</h3>
             <p class="cv__lead">Nghệ sĩ cần một portfolio online để gửi cho nhà tổ chức, thay vì những tin nhắn rời rạc kèm ảnh, video và tiểu sử.</p>
-            <p>Trang web hai ngôn ngữ — và đã chừa sẵn chỗ cho tiếng Pháp, tiếng Đức, tiếng Tây Ban Nha và tiếng Hy Lạp.</p>
+            <p>Trang web hai ngôn ngữ – và đã chừa sẵn chỗ cho tiếng Pháp, tiếng Đức, tiếng Tây Ban Nha và tiếng Hy Lạp.</p>
           </div>
 
           <div>
             <h3 class="cv__h mono">Đã làm những gì</h3>
             <ul class="cv__list" role="list">
               <li>Thẻ mở đầu: ảnh, vai trò, dải BPM, nút Book now và Listen</li>
-              <li>Nút chuyển EN/RU: lựa chọn được ghi nhớ và nằm trong link — có thể gửi thẳng bản tiếng Nga</li>
+              <li>Nút chuyển EN/RU: lựa chọn được ghi nhớ và nằm trong link – có thể gửi thẳng bản tiếng Nga</li>
               <li>12 video trong trình phát dạng cửa sổ nổi</li>
               <li>Các hình thức biểu diễn và đặt lịch, tiểu sử ngắn kèm nút “Sao chép”</li>
               <li>Bộ press pack ZIP tải về: ảnh, logo và tiểu sử bằng hai ngôn ngữ</li>
@@ -1058,7 +1058,7 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 07 — PROCESS
+     BLOCK 07 – PROCESS
      ============================================================ -->
 <section class="process" id="process">
   <div class="wrap process__grid">
@@ -1069,7 +1069,7 @@
     </header>
 
     <div>
-    <!-- На телефоне шаги листаются вбок; номера над лентой — навигация. -->
+    <!-- На телефоне шаги листаются вбок; номера над лентой – навигация. -->
     <div class="swipe-tabs steps__nav" aria-label="Các bước làm việc" hidden>
       <button type="button" class="swipe-tabs__tab" aria-controls="step-1" aria-current="true" aria-label="Bước 1: trao đổi về công việc">01</button>
       <button type="button" class="swipe-tabs__tab" aria-controls="step-2" aria-current="false" aria-label="Bước 2: kế hoạch và chốt giá">02</button>
@@ -1085,7 +1085,7 @@
       <article class="step glass glass--plate reveal" id="step-2">
         <span class="step__n">02</span>
         <h3 class="step__h">Kế hoạch và chốt giá</h3>
-        <p>Chúng ta xác định khối lượng công việc và cách các tính năng hoạt động. Chốt chi phí và thời gian — sau đó mình bắt đầu làm.</p>
+        <p>Chúng ta xác định khối lượng công việc và cách các tính năng hoạt động. Chốt chi phí và thời gian – sau đó mình bắt đầu làm.</p>
       </article>
       <article class="step glass glass--plate step--on reveal" id="step-3">
         <span class="step__n">03</span>
@@ -1103,11 +1103,11 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 08 — ЦЕНЫ
+     BLOCK 08 – ЦЕНЫ
      ============================================================ -->
 <section class="pricing" id="pricing">
   <div class="wrap pricing__stack">
-    <!-- Плашка 1 — закрытая: стоимость разработки и три направления.
+    <!-- Плашка 1 – закрытая: стоимость разработки и три направления.
          Всё, что дальше, это отдельные предложения, и они стоят своими
          плашками: в одной коробке они читались бы четвёртым тарифом. -->
     <div class="pricing__panel">
@@ -1125,10 +1125,10 @@
       <button type="button" class="swipe-tabs__tab" aria-controls="plan-auto" aria-current="false">Tự động hoá</button>
     </div>
     <div class="plans">
-      <!-- Цена — барабан-счётчик (script.js, «барабан цен»): значения и названия
-           комплектаций берутся из кнопок .kit__chip, стартовое — у кнопки с
-           aria-pressed="true". Горячая цена: data-hot — на какой цене гореть,
-           data-old — зачёркнутая старая цена. Убрать скидку = удалить оба атрибута. -->
+      <!-- Цена – барабан-счётчик (script.js, «барабан цен»): значения и названия
+           комплектаций берутся из кнопок .kit__chip, стартовое – у кнопки с
+           aria-pressed="true". Горячая цена: data-hot – на какой цене гореть,
+           data-old – зачёркнутая старая цена. Убрать скидку = удалить оба атрибута. -->
       <article class="plan reveal" id="plan-bot">
         <p class="plan__kind mono">Hệ thống trong Telegram (và&nbsp;hơn&nbsp;thế)</p>
         <h3 class="plan__h">Bot hoặc Mini App</h3>
@@ -1169,7 +1169,7 @@
           </div>
         </div>
         <div class="plan__terms">
-          <p><strong>Thời gian</strong>Bot — khoảng 7&nbsp;ngày · Mini App — khoảng 14&nbsp;ngày</p>
+          <p><strong>Thời gian</strong>Bot – khoảng 7&nbsp;ngày · Mini App – khoảng 14&nbsp;ngày</p>
           <p class="plan__small">Thời gian tuỳ vào khối lượng công việc.</p>
         </div>
         <a href="https://t.me/davidnaumenko" class="btn btn--soft btn--block" target="_blank" rel="noopener">Trao đổi về công việc</a>
@@ -1208,7 +1208,7 @@
         </div>
         <p class="plan__alert"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.8v3.8M8 10.9v.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Cấu hình phức tạp sẽ được báo giá riêng</p>
         <div class="plan__terms">
-          <p><strong>Thời gian</strong>Từ 30 ngày — tuỳ theo công việc</p>
+          <p><strong>Thời gian</strong>Từ 30 ngày – tuỳ theo công việc</p>
         </div>
         <a href="https://t.me/davidnaumenko" class="btn btn--primary btn--block" target="_blank" rel="noopener">Trao đổi về công việc</a>
       </article>
@@ -1237,7 +1237,7 @@
 
     </div>
 
-    <!-- Плашка 2 — поддержка после запуска. Состав уровней — по тексту Давида
+    <!-- Плашка 2 – поддержка после запуска. Состав уровней – по тексту Давида
          от 15.09.2026, списки видны сразу, без раскрывашек. Уровни вкладываются
          друг в друга; правки, доработки и небольшие функции берутся из часов. -->
     <div class="addon reveal">
@@ -1263,7 +1263,7 @@
             <li>Giám sát: mình biết ngay khi hệ thống ngừng chạy</li>
             <li>Sao lưu cơ sở dữ liệu hằng ngày</li>
             <li>Mình theo dõi tên miền và SSL, cài các bản vá bảo mật khẩn cấp</li>
-            <li>Phản hồi khi có sự cố — trong vòng 24 giờ</li>
+            <li>Phản hồi khi có sự cố – trong vòng 24 giờ</li>
             <li>2 giờ cho chỉnh sửa và thay đổi nhỏ</li>
             <li>Báo cáo bằng văn bản mỗi tháng một lần</li>
           </ul>
@@ -1279,7 +1279,7 @@
             <li>Kiểm tra hoạt động 4 lần mỗi tháng</li>
             <li>Giám sát và sao lưu hằng ngày</li>
             <li>Tên miền, SSL và cập nhật thư viện theo lịch mỗi tháng một lần</li>
-            <li>Phản hồi khi có sự cố — trong vòng 6 giờ</li>
+            <li>Phản hồi khi có sự cố – trong vòng 6 giờ</li>
             <li>12 giờ cho chỉnh sửa, thay đổi và các tính năng nhỏ</li>
             <li>Gọi trao đổi hai tuần một lần</li>
           </ul>
@@ -1295,7 +1295,7 @@
             <li>Trông coi liên tục, giám sát và sao lưu hằng ngày</li>
             <li>Tên miền, SSL và cập nhật thư viện</li>
             <li>Mình quản lý gói hosting và mở rộng theo tải</li>
-            <li>Phản hồi khi có sự cố — trong vòng 3 giờ</li>
+            <li>Phản hồi khi có sự cố – trong vòng 3 giờ</li>
             <li>30 giờ cho thay đổi và tính năng mới</li>
             <li>Chỉnh sửa nhỏ không giới hạn, không tính vào số giờ</li>
             <li>Gọi trao đổi hằng tuần (nếu cần)</li>
@@ -1304,11 +1304,11 @@
       </div>
       <div class="tiers__terms">
         <p>Giờ làm việc: 8:00–22:00 (UTC+7). Số giờ chưa dùng không cộng dồn sang tháng sau. Tính năng lớn được báo giá riêng. Hosting và các dịch vụ bên ngoài do bạn trả.</p>
-        <p>Thời hạn tối thiểu là một tháng, sau đó bạn có thể dừng bất cứ lúc nào. Mình cũng nhận hỗ trợ dự án do người khác làm — nhưng chỉ sau khi xem qua mã nguồn.</p>
+        <p>Thời hạn tối thiểu là một tháng, sau đó bạn có thể dừng bất cứ lúc nào. Mình cũng nhận hỗ trợ dự án do người khác làm – nhưng chỉ sau khi xem qua mã nguồn.</p>
       </div>
     </div>
 
-    <!-- Отдельные предложения — две самостоятельные плашки, а не общая полоса
+    <!-- Отдельные предложения – две самостоятельные плашки, а не общая полоса
          условий: гарантия теперь сказана в поддержке и в FAQ. -->
     <div class="extras">
       <article class="extra reveal">
@@ -1330,9 +1330,9 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 09 — FAQ
-     «Что будет, если что-то пойдёт не так» и FAQ повторяли друг друга —
-     собраны в один блок (master-plan, 4.1). Вопросы и порядок — по тексту
+     BLOCK 09 – FAQ
+     «Что будет, если что-то пойдёт не так» и FAQ повторяли друг друга –
+     собраны в один блок (master-plan, 4.1). Вопросы и порядок – по тексту
      Давида от 15.09.2026. Нативный <details>: аккордеон работает и без JS.
      ============================================================ -->
 <section class="trust" id="faq">
@@ -1345,13 +1345,13 @@
     <div class="qa-list">
       <details class="qa reveal">
         <summary class="qa__q">Làm mất bao lâu?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <!-- сроки те же, что в карточках цен: поменялись там — поменять и здесь -->
-        <div class="qa__a"><p>Ước chừng: bot Telegram — khoảng 7&nbsp;ngày, Mini App — khoảng 14&nbsp;ngày, website kèm CRM — từ 30&nbsp;ngày.</p><p class="qa__note">Thời gian tuỳ vào khối lượng công việc.</p></div>
+        <!-- сроки те же, что в карточках цен: поменялись там – поменять и здесь -->
+        <div class="qa__a"><p>Ước chừng: bot Telegram – khoảng 7&nbsp;ngày, Mini App – khoảng 14&nbsp;ngày, website kèm CRM – từ 30&nbsp;ngày.</p><p class="qa__note">Thời gian tuỳ vào khối lượng công việc.</p></div>
       </details>
 
       <details class="qa reveal">
         <summary class="qa__q">Công việc bắt đầu từ đâu?<span class="qa__ico" aria-hidden="true"></span></summary>
-        <div class="qa__a"><p>Chúng ta trao đổi về công việc của bạn qua tin nhắn hoặc một cuộc gọi. Nhìn vấn đề từ nhiều phía — rồi mình đề xuất giải pháp, báo giá và thời gian. Mình cũng có thể xem sản phẩm bạn đã có: rất có thể chỉ cần cải tiến thêm là đủ.</p></div>
+        <div class="qa__a"><p>Chúng ta trao đổi về công việc của bạn qua tin nhắn hoặc một cuộc gọi. Nhìn vấn đề từ nhiều phía – rồi mình đề xuất giải pháp, báo giá và thời gian. Mình cũng có thể xem sản phẩm bạn đã có: rất có thể chỉ cần cải tiến thêm là đủ.</p></div>
       </details>
 
       <details class="qa reveal">
@@ -1378,7 +1378,7 @@
 </section>
 
 <!-- ============================================================
-     BLOCK 11 — FINAL CTA
+     BLOCK 11 – FINAL CTA
      ============================================================ -->
 <section class="final" id="contact">
   <div class="wrap">
@@ -1399,7 +1399,7 @@
       <!-- Форма: заявку принимает Cloudflare Worker (папка worker/) и шлёт
            в Telegram. Telegram-кнопка выше остаётся главным путём. -->
       <form class="request" action="https://form.davidnaumenko.com/" method="post" novalidate>
-        <p class="request__title">Chưa tiện nhắn ngay? Để lại yêu cầu — mình sẽ liên hệ với bạn.</p>
+        <p class="request__title">Chưa tiện nhắn ngay? Để lại yêu cầu – mình sẽ liên hệ với bạn.</p>
         <div class="request__grid">
           <label class="request__field">
             <span>Tên</span>
@@ -1427,7 +1427,7 @@
 
       <div class="request__done" tabindex="-1" hidden>
         <p class="request__title">Mình đã nhận được yêu cầu. Mình sẽ trả lời trong giờ làm việc, qua kênh bạn để lại.</p>
-        <p class="request__alt">Nếu gấp — <a href="https://t.me/davidnaumenko" target="_blank" rel="noopener">nhắn cho mình qua Telegram</a>.</p>
+        <p class="request__alt">Nếu gấp – <a href="https://t.me/davidnaumenko" target="_blank" rel="noopener">nhắn cho mình qua Telegram</a>.</p>
       </div>
     </div>
   </div>
@@ -1436,7 +1436,7 @@
 </main>
 
 <!-- ============================================================
-     BLOCK 12 — ФУТЕР
+     BLOCK 12 – ФУТЕР
      ============================================================ -->
 <footer class="footer">
   <div class="wrap footer__grid">
@@ -1447,7 +1447,7 @@
         <span class="brand__role">digital systems</span>
       </a>
       <p class="footer__tag">
-        Mình xây website, CRM, bot Telegram và hệ thống tự động hoá theo quy trình của bạn — từ lúc tìm hiểu công việc đến khi ra mắt và hỗ trợ.
+        Mình xây website, CRM, bot Telegram và hệ thống tự động hoá theo quy trình của bạn – từ lúc tìm hiểu công việc đến khi ra mắt và hỗ trợ.
       </p>
     </div>
 
@@ -1478,15 +1478,15 @@
       </span>
       <span class="footer__place">
         Nha Trang, Việt Nam
-        <span class="footer__clock" data-clock>—</span>
+        <span class="footer__clock" data-clock>–</span>
       </span>
     </div>
 
   </div>
 </footer>
 
-<!-- Окно кейса: одно на все проекты, наполнение — из <template id="case-…">
-     рядом с карточкой. Логика — script.js, «ОКНО КЕЙСА». -->
+<!-- Окно кейса: одно на все проекты, наполнение – из <template id="case-…">
+     рядом с карточкой. Логика – script.js, «ОКНО КЕЙСА». -->
 <dialog class="cv" id="case">
   <div class="cv__bar">
     <div class="cv__id" data-cv-id></div>
@@ -1514,7 +1514,7 @@
      показывается, и аналитика тоже не работает. -->
 <aside class="cc" id="cookies" aria-labelledby="cc-title" hidden>
   <p class="cc__title" id="cc-title">Cookie trên trang này</p>
-  <p class="cc__text">Mình dùng Google Analytics để xem mục nào hữu ích, mục nào không. Công cụ này đặt cookie — mình chỉ bật khi bạn đồng ý. <a href="/en/privacy.html#cookies">Tìm hiểu thêm</a></p>
+  <p class="cc__text">Mình dùng Google Analytics để xem mục nào hữu ích, mục nào không. Công cụ này đặt cookie – mình chỉ bật khi bạn đồng ý. <a href="/en/privacy.html#cookies">Tìm hiểu thêm</a></p>
   <div class="cc__prefs" id="cc-prefs" hidden>
     <div class="cc__opt">
       <span class="cc__opt-text"><b>Thiết yếu</b>Ghi nhớ lựa chọn của bạn trong cửa sổ này.</span>

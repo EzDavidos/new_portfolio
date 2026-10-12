@@ -1,10 +1,10 @@
 /* ============================================================
-   David Naumenko — personal landing
+   David Naumenko – personal landing
    Визуал по референсу ref_1: жидкое стекло, мятно-бирюзовая
    вода в фоне, изумрудный акцент, воздушная типографика.
    ============================================================ */
 
-/* Bebas Neue с кириллицей — в Google Fonts её нет (там только latin),
+/* Bebas Neue с кириллицей – в Google Fonts её нет (там только latin),
    поэтому шрифт лежит рядом. Нужен ровно для одного акцентного числа
    в блоке «доказательств», поэтому и подключён локально, одним файлом. */
 @font-face {
@@ -13,11 +13,11 @@
   font-weight: 400; font-style: normal; font-display: swap;
 }
 
-/* Заглушки под Inter и Inter Tight — Arial с подогнанным размером.
+/* Заглушки под Inter и Inter Tight – Arial с подогнанным размером.
    Пока Google Fonts грузится, текст стоит в заглушке; без подгонки при
    подмене строки переносились иначе и hero прыгал (CLS 0.14 на медленной
    сети). size-adjust снят замером ширины русского текста страницы
-   (Inter / Arial по каждому начертанию), вертикаль — метрики Inter. */
+   (Inter / Arial по каждому начертанию), вертикаль – метрики Inter. */
 @font-face {
   font-family: "Inter Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo"), local("Roboto");
   font-weight: 400 500; size-adjust: 106.3%;
@@ -45,7 +45,7 @@
 }
 
 :root {
-  /* поверхности — почти белая мятная бумага */
+  /* поверхности – почти белая мятная бумага */
   --paper:    #F4F8F6;
   --paper-2:  #EBF3F0;
   --card:     #FFFFFF;
@@ -66,7 +66,7 @@
   --green-dark: #12352C;   /* тёмный баннер */
   --green-soft: rgba(12,122,93,.09);
 
-  /* стекло — три уровня. Уровень задаёт не только альфу, но и блюр:
+  /* стекло – три уровня. Уровень задаёт не только альфу, но и блюр:
      чем прозрачнее плашка, тем сильнее она обязана размывать воду,
      иначе текст садится на рябь и блок перестаёт читаться. */
   --glass:     rgba(255,255,255,.30);   /* лежит на воде: pill, рейл, ghost */
@@ -75,7 +75,7 @@
   /* верхний блик: в референсе стекло светится в углу входа света */
   --sheen: linear-gradient(158deg, rgba(255,255,255,.30), rgba(255,255,255,0) 48%);
   /* зеркальная кромка: ярко в одном углу, гаснет, слабый возврат
-     в противоположном — этим Liquid Glass отличается от ровной обводки */
+     в противоположном – этим Liquid Glass отличается от ровной обводки */
   --rim: linear-gradient(148deg,
            rgba(255,255,255,.98) 0%,
            rgba(255,255,255,.34) 26%,
@@ -96,7 +96,7 @@
   --blur:    30px;
   --blur-sm: 18px;
 
-  /* тени — мягкие, предмет лежит на воде */
+  /* тени – мягкие, предмет лежит на воде */
   --sh-1: 0 1px 2px rgba(23,33,30,.03), 0 3px 10px rgba(23,33,30,.04);
   --sh-2: 0 2px 6px rgba(23,33,30,.04), 0 16px 38px rgba(23,33,30,.07);
   --sh-3: 0 6px 14px rgba(23,33,30,.05), 0 32px 74px rgba(23,33,30,.10);
@@ -120,7 +120,7 @@
   --sec-y: clamp(4rem, 9vw, 7.5rem);
   --wrap:  1280px;
   --measure: 54ch;
-  /* Воздух над и под секцией. Было clamp(3rem, 6vw, 5rem) — 160 px между
+  /* Воздух над и под секцией. Было clamp(3rem, 6vw, 5rem) – 160 px между
      блоками на десктопе читались пустотой (master-plan, 7.2): −25%. */
   --sec-pad: clamp(2.5rem, 4.5vw, 3.75rem);
 
@@ -189,7 +189,7 @@ ul { list-style: none; padding: 0; }
 }
 /* На телефоне высота волны считается от ШИРИНЫ, а не от vh.
    Причина: при скролле мобильный браузер прячет адресную строку,
-   vh пересчитывается, канвас меняет высоту — а форма волны в шейдере
+   vh пересчитывается, канвас меняет высоту – а форма волны в шейдере
    строится от соотношения сторон (asp = uRes.x / uRes.y). Смена высоты
    на сотню пикселей перестраивает композицию, и волна скачком съезжает.
    Ширина при вертикальном скролле не меняется никогда, поэтому
@@ -202,7 +202,7 @@ ul { list-style: none; padding: 0; }
 
 /* фолбэк без WebGL: не пустота, а мягкая мятная заливка.
    Пятна выставлены по той же диагонали, что и волна в шейдере:
-   низкий вход слева — центр — гребень в правой верхней трети. */
+   низкий вход слева – центр – гребень в правой верхней трети. */
 .no-webgl .water--hero {
   background:
     radial-gradient(85% 55% at 78% 26%, rgba(88,186,160,.34), transparent 62%),
@@ -256,7 +256,7 @@ ul { list-style: none; padding: 0; }
 }
 
 /* Grid- и flex-элементы по умолчанию имеют min-width:auto и не сжимаются
-   ниже ширины содержимого — из-за этого длинная строка рейла растягивала
+   ниже ширины содержимого – из-за этого длинная строка рейла растягивала
    всю колонку и ломала мобильную вёрстку. */
 .hero__grid > *, .fgh > *, .process__grid > *,
 .sol > *, .steps > *, .final__inner > *,
@@ -311,7 +311,7 @@ ul { list-style: none; padding: 0; }
 .btn--primary:hover svg { transform: translateX(3px); }
 
 /* Главный приём референса: кнопка почти пустая, вода видна насквозь.
-   Держит её не заливка, а блюр под ней и зеркальная кромка — ровная
+   Держит её не заливка, а блюр под ней и зеркальная кромка – ровная
    обводка тут читается наклейкой, поэтому кромка градиентная. */
 .btn--ghost {
   position: relative;
@@ -346,7 +346,7 @@ ul { list-style: none; padding: 0; }
                 rgba(255,255,255,.24) 46%,
                 rgba(255,255,255,.38) 100%);
 }
-/* треугольник «плей» у вторичной кнопки — как в референсе */
+/* треугольник «плей» у вторичной кнопки – как в референсе */
 .btn__play { width: 13px; height: 13px; flex: none; }
 .btn--ghost:hover svg { transform: translateX(3px); }
 .btn--ghost:hover .btn__play { transform: none; }
@@ -397,7 +397,7 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    HEADER
    ============================================================ */
-/* Шапка в референсе — не полоса во всю ширину, а плавающая стеклянная
+/* Шапка в референсе – не полоса во всю ширину, а плавающая стеклянная
    капсула с отступами от краёв: вода видна и над ней, и под ней. */
 .header {
   position: sticky;
@@ -429,7 +429,7 @@ ul { list-style: none; padding: 0; }
   mask-composite: exclude;
   pointer-events: none;
 }
-/* после скролла под капсулой уже не вода, а контент — плотнее вуаль */
+/* после скролла под капсулой уже не вода, а контент – плотнее вуаль */
 .header.is-stuck .header__inner {
   background: var(--sheen), rgba(255,255,255,.62);
   box-shadow: var(--sh-3);
@@ -453,7 +453,7 @@ ul { list-style: none; padding: 0; }
 .header__actions { display: flex; align-items: center; gap: .6rem; }
 .header__actions .btn--primary { display: none; }
 
-/* Переключатель темы: дорожка с бегунком, в бегунке — значок текущей
+/* Переключатель темы: дорожка с бегунком, в бегунке – значок текущей
    темы. Положение берётся с атрибута <html>, а не с aria-pressed: тему
    ставит скрипт в <head>, и до script.js бегунок уже стоит на месте. */
 .scheme {
@@ -479,8 +479,8 @@ ul { list-style: none; padding: 0; }
 [data-scheme="dark"] .scheme__sun { opacity: 0; transform: rotate(60deg) scale(.5); }
 [data-scheme="dark"] .scheme__moon { opacity: 1; transform: none; }
 
-/* Переключатель языка. Капсула ровно по высоте переключателя темы, внутри —
-   код текущего языка. Список — нативный <details>, поэтому раскрывается и
+/* Переключатель языка. Капсула ровно по высоте переключателя темы, внутри –
+   код текущего языка. Список – нативный <details>, поэтому раскрывается и
    без JS; script.js («язык») только закрывает его по Esc и клику мимо и
    доносит текущий якорь до соседней версии. */
 .lang { position: relative; flex: none; }
@@ -519,7 +519,7 @@ ul { list-style: none; padding: 0; }
 }
 .lang__item b { font-family: var(--f-mono); font-size: .68rem; font-weight: 500; letter-spacing: .08em; color: var(--ink-faint); }
 .lang__item:hover { background: var(--tint); color: var(--ink); }
-/* текущий язык — отмечен цветом, а не только галочкой */
+/* текущий язык – отмечен цветом, а не только галочкой */
 .lang__item[aria-current] { color: var(--green); }
 .lang__item[aria-current] b { color: var(--green); }
 
@@ -552,7 +552,7 @@ ul { list-style: none; padding: 0; }
 }
 
 /* ============================================================
-   BLOCK 01 — HERO
+   BLOCK 01 – HERO
    ============================================================ */
 .hero { padding-top: clamp(1.5rem, 4vw, 3rem); padding-bottom: clamp(1.25rem, 2.6vw, 1.9rem); }
 .hero__grid { display: grid; gap: clamp(2rem, 5vw, 3.5rem); align-items: start; }
@@ -582,7 +582,7 @@ ul { list-style: none; padding: 0; }
 }
 
 /* Свободные слоты: data-slots на .pill задаёт светофор.
-   3–2 — свободен, 1 — последний, 0 — занят. Цифра в подписи
+   3–2 – свободен, 1 – последний, 0 – занят. Цифра в подписи
    красится тем же токеном, чтобы взгляд цеплялся именно за неё. */
 .pill { --slot: var(--green); --slot-halo: rgba(12,122,93,.5); }
 .pill[data-slots="1"] { --slot: #D9741A; --slot-halo: rgba(217,116,26,.5); }
@@ -593,7 +593,7 @@ ul { list-style: none; padding: 0; }
   font-family: var(--f-display); font-size: var(--fs-display);
   font-weight: 600; line-height: 1.04; letter-spacing: -.014em;
   /* 13ch в Inter Tight 600. Не в ch: ch берётся по цифре «0», а латиница
-     и кириллица шрифта приходят разными файлами — пока нет кириллицы,
+     и кириллица шрифта приходят разными файлами – пока нет кириллицы,
      ширина уже считалась по Inter, строки переносились иначе и hero прыгал. */
   max-width: 8.19em;
   margin-bottom: clamp(1.35rem, 2.8vw, 2rem);
@@ -602,7 +602,7 @@ ul { list-style: none; padding: 0; }
 .hero__lead.measure { max-width: 34.06em; } /* 54ch в Inter 400, в em по той же причине, что у заголовка */
 .hero__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.6rem, 3.2vw, 2.25rem); }
 
-/* зелёная галочка в кружке — маркер списка в блоке «Кто делает» */
+/* зелёная галочка в кружке – маркер списка в блоке «Кто делает» */
 .tick {
   width: 21px; height: 21px; border-radius: 50%; flex: none;
   background: var(--green); color: #fff;
@@ -612,7 +612,7 @@ ul { list-style: none; padding: 0; }
 .tick svg { width: 11px; height: 11px; }
 
 /* ============================================================
-   СТАТУС-РЕЙЛ — живые значения
+   СТАТУС-РЕЙЛ – живые значения
    ============================================================ */
 .rail { margin-top: clamp(1.75rem, 4vw, 2.5rem); }
 .rail { position: relative; }
@@ -660,9 +660,9 @@ ul { list-style: none; padding: 0; }
 .rail__inner::-webkit-scrollbar { display: none; }
 
 /* ============================================================
-   BLOCK 02 — КТО ДЕЛАЕТ
+   BLOCK 02 – КТО ДЕЛАЕТ
    Стоит там, где раньше был стат-бар, и так же лежит на хвосте воды,
-   поэтому стекло того же уровня — .glass--solid. Фото сбоку от 600px,
+   поэтому стекло того же уровня – .glass--solid. Фото сбоку от 600px,
    кадр 4:3 без обрезки; на телефоне сверху и режется в 16:10, чтобы
    блок не занимал весь экран.
    ============================================================ */
@@ -702,8 +702,8 @@ ul { list-style: none; padding: 0; }
   font-size: .74rem; text-align: center;
 }
 .shot--video { display: block; width: 100%; height: auto; object-fit: cover; background: var(--paper-2); }
-/* Готовый кадр в слоте. Геометрию задаёт сам слот — у него фиксированная
-   пропорция, — а картинка или видео растягивается по нему целиком. Поэтому
+/* Готовый кадр в слоте. Геометрию задаёт сам слот – у него фиксированная
+   пропорция, – а картинка или видео растягивается по нему целиком. Поэтому
    лежит абсолютом: у .shot внутри grid с центрированием, и в потоке медиа
    встало бы по своему размеру, а не по слоту. */
 .shot__media {
@@ -713,14 +713,14 @@ ul { list-style: none; padding: 0; }
 }
 
 /* ============================================================
-   BLOCK 03 — FLAGSHIP
+   BLOCK 03 – FLAGSHIP
    Кейс FlyGuru одной карточкой-героем: фото воды клиента на фон,
    3D-мокап телефона справа, текст и цифры слева.
    ============================================================ */
 .flagship { padding-block: var(--sec-pad); }
 
-/* Цвета сняты с самого продукта: тил #0C8397 — шапка FlyGuru, оранжевый
-   #FC7918 — его кнопка записи. Акцентный тон осветлён до #45D6EE: сам
+/* Цвета сняты с самого продукта: тил #0C8397 – шапка FlyGuru, оранжевый
+   #FC7918 – его кнопка записи. Акцентный тон осветлён до #45D6EE: сам
    #0C8397 на тёмной воде даёт контраст около 1.9, читать его нельзя. */
 .case--flyguru {
   --case-ink:    #F2FAFC;
@@ -744,7 +744,7 @@ ul { list-style: none; padding: 0; }
 
 /* Кадрирование снято с макета по доске с мачтой: обычный cover по ширине,
    точка по вертикали 77%. При этих значениях доска встаёт в 161px от верха
-   карточки — в макете 162. Никакого дополнительного зума быть не должно:
+   карточки – в макете 162. Никакого дополнительного зума быть не должно:
    он сразу разъезжается с макетом на 17%. */
 .fgh__bg {
   position: absolute; inset: 0; z-index: -2;
@@ -754,11 +754,11 @@ ul { list-style: none; padding: 0; }
 
 /* Вуаль снята с макета, а не подобрана на глаз: по паре «макет / та же
    подложка без вуали» решается ref = a·C + (1−a)·bg, и на ровной воде,
-   где ошибка совмещения ничего не ломает, ответ везде один — C = (5,70,92),
+   где ошибка совмещения ничего не ломает, ответ везде один – C = (5,70,92),
    a = 0.44 ниже середины и 0 у верхнего края. Горизонтали в вуали нет:
    левый столбец гасит сама подложка, она уже затемнена под текст.
    (Оценки a у линии горизонта скачут до 0.7 и до −0.1, но там подложка
-   меняется на пиксель, и промах в 1px даёт любой ответ — не по ним.) */
+   меняется на пиксель, и промах в 1px даёт любой ответ – не по ним.) */
 .fgh__scrim {
   position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg,
@@ -793,13 +793,13 @@ ul { list-style: none; padding: 0; }
   color: var(--case-mute);
 }
 /* Ручные переносы в лиде и подзаголовке держат ритм макета, но на узком
-   экране они рвут строку не там — там текст переносится сам. Перед <br>
+   экране они рвут строку не там – там текст переносится сам. Перед <br>
    в разметке стоит пробел: без него скрытый перенос склеивает слова. */
 @media (max-width: 599px) {
   .fgh__lead br, .fgh__sub br { display: none; }
 }
 
-/* Вуаль выше снята с макета, а макет — широкая карточка. Когда карточка
+/* Вуаль выше снята с макета, а макет – широкая карточка. Когда карточка
    становится квадратнее, cover режет кадр по горизонтали и под текст
    уезжает светлая линия горизонта, по которой белый уже не читается.
    Ниже 1200px добавляется горизонтальный слой под текстовую колонку,
@@ -876,7 +876,7 @@ ul { list-style: none; padding: 0; }
   margin: clamp(1.6rem, 4vw, 2.6rem) auto 0;
 }
 .fgh__stage { position: relative; aspect-ratio: 1151 / 1366; }
-/* мокап открывает окно кейса — прозрачная кнопка поверх всей сцены */
+/* мокап открывает окно кейса – прозрачная кнопка поверх всей сцены */
 .fgh__open { position: absolute; inset: 0; z-index: 2; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 /* Свечение отдельно от растровой рамки: без обрывков исходного фона. */
 .fgh__stage::before {
@@ -926,7 +926,7 @@ ul { list-style: none; padding: 0; }
 }
 
 /* ============================================================
-   BLOCK 04 — SOLUTIONS
+   BLOCK 04 – SOLUTIONS
    ============================================================ */
 .solutions { padding-block: var(--sec-pad); }
 .solutions__panel {
@@ -935,14 +935,14 @@ ul { list-style: none; padding: 0; }
   background: var(--tint); box-shadow: var(--sh-2);
 }
 .water--accent {
-  /* Материал тот же, что на первом экране; гасить его вуалью незачем —
+  /* Материал тот же, что на первом экране; гасить его вуалью незачем –
      плотность задаёт сам шейдер маской, а не прозрачность канваса. */
   opacity: 1;
 }
 .no-webgl .solutions__water { background: linear-gradient(0deg, #69BBA7, #C2E9DE 60%, transparent 80%); }
 .no-webgl .pricing__water { background: linear-gradient(155deg, transparent 42%, #A9DCCD 62%, #73BEAA 85%, #C2E9DE); }
 /* Канвасы совпадают с границами плашек. Силуэт потока задаёт шейдер,
-   скругления и стенки — overflow родителя; радиальной растушёвки нет. */
+   скругления и стенки – overflow родителя; радиальной растушёвки нет. */
 .solutions__water { inset: auto 0 0; width: 100%; height: min(55%, 300px); }
 .solutions__head { position: relative; padding: clamp(1.5rem, 3.3vw, 2.7rem); }
 .solutions__head .h2 { max-width: 13ch; text-wrap: balance; }
@@ -968,7 +968,7 @@ ul { list-style: none; padding: 0; }
 }
 .sol__h { font-family: var(--f-display); color: var(--green-deep); font-size: clamp(1.35rem, 1.8vw, 1.6rem); font-weight: 600; line-height: 1.2; margin-bottom: 1rem; text-wrap: balance; }
 .sol__card p { color: var(--ink-soft); font-size: .92rem; line-height: 1.6; }
-/* «Чем реализовано» — форматы, а не стек: блок не должен читаться каталогом. */
+/* «Чем реализовано» – форматы, а не стек: блок не должен читаться каталогом. */
 .sol__card .sol__how { margin-top: 1rem; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .02em; line-height: 1.55; color: var(--green-deep); }
 .sol__note {
   position: relative; padding: 1.3rem clamp(1.5rem, 3.3vw, 2.7rem);
@@ -992,7 +992,7 @@ ul { list-style: none; padding: 0; }
 }
 
 /* ============================================================
-   BLOCK 07 — PROCESS
+   BLOCK 07 – PROCESS
    ============================================================ */
 .process { padding-block: var(--sec-pad); }
 .process__grid .lead { margin-top: 1rem; }
@@ -1017,7 +1017,7 @@ ul { list-style: none; padding: 0; }
 .step--on .step__n { color: var(--green); }
 
 /* ============================================================
-   BLOCK 11 — FINAL CTA
+   BLOCK 11 – FINAL CTA
    ============================================================ */
 .final { padding-bottom: var(--sec-y); }
 .final__inner {
@@ -1039,7 +1039,7 @@ ul { list-style: none; padding: 0; }
 .final__side { display: flex; flex-direction: column; gap: .7rem; align-items: flex-start; }
 .final__note { font-size: .88rem; color: rgba(234,243,239,.65); }
 
-/* Форма заявки — вторая строка тёмной плашки, под Telegram. Поля в той же
+/* Форма заявки – вторая строка тёмной плашки, под Telegram. Поля в той же
    светлой вуали, что .btn--on-dark: рядом с белой кнопкой Telegram форма
    читается вторым путём, а не главным. */
 .request, .request__done {
@@ -1076,7 +1076,7 @@ ul { list-style: none; padding: 0; }
   background: rgba(255,255,255,.11);
 }
 .request__field [aria-invalid="true"] { border-color: #F4A98F; }
-/* ловушка: не display:none — часть ботов такие поля пропускает */
+/* ловушка: не display:none – часть ботов такие поля пропускает */
 .request__trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .request__foot { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem 1.25rem; margin-top: 1.2rem; }
 .request[aria-busy="true"] .btn { opacity: .6; pointer-events: none; }
@@ -1096,8 +1096,8 @@ ul { list-style: none; padding: 0; }
 /* ============================================================
    COOKIE-БАННЕР
    Плашка на бумаге, но фон сплошной: баннер лежит поверх текста и
-   кнопок, и даже 3 % прозрачности давали читаемую кашу под ним. На телефоне — полоса по ширине
-   экрана, с 600 px — карточка в левом нижнем углу. Ниже мобильного
+   кнопок, и даже 3 % прозрачности давали читаемую кашу под ним. На телефоне – полоса по ширине
+   экрана, с 600 px – карточка в левом нижнем углу. Ниже мобильного
    меню (99), чтобы не лечь поверх него.
    ============================================================ */
 .cc {
@@ -1152,10 +1152,10 @@ label.cc__opt { cursor: pointer; }
 }
 
 /* ============================================================
-   СТРАНИЦА ДОКУМЕНТА — privacy.html
+   СТРАНИЦА ДОКУМЕНТА – privacy.html
    ============================================================ */
 .doc-top { padding-block: clamp(1rem, 2.5vw, 1.6rem); }
-/* страница — одна колонка по центру, верхняя строка по её ширине */
+/* страница – одна колонка по центру, верхняя строка по её ширине */
 .doc-top .wrap, .doc .wrap { max-width: calc(46rem + 2 * var(--pad-x)); }
 .doc-top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .doc-back { display: inline-flex; align-items: center; gap: .45rem; padding-block: .4rem; font-size: .95rem; font-weight: 500; color: var(--green); }
@@ -1185,7 +1185,7 @@ label.cc__opt { cursor: pointer; }
 .doc__cta { margin-top: 1.1rem; }
 
 /* ============================================================
-   BLOCK 05 — СОБСТВЕННЫЙ ПРОДУКТ «100ЛОВАЯ»
+   BLOCK 05 – СОБСТВЕННЫЙ ПРОДУКТ «100ЛОВАЯ»
    Карточка-герой по макету photo_video/100lovaya_card. Меряется он
    так же, как макет FlyGuru: это скриншот той же страницы, карточка
    внутри него 1488x806 px против реальных 1176 CSS-px, то есть всё
@@ -1193,7 +1193,7 @@ label.cc__opt { cursor: pointer; }
    ============================================================ */
 .product { padding-block: var(--sec-pad); }
 
-/* Отзыв клиента под карточкой кейса. Цитата — дословная выдержка,
+/* Отзыв клиента под карточкой кейса. Цитата – дословная выдержка,
    оригинал целиком открывается по ссылке «Весь отзыв». */
 .review {
   display: grid; gap: 1.1rem;
@@ -1209,7 +1209,7 @@ label.cc__opt { cursor: pointer; }
 /* Абзацы цитаты: глобальный reset снимает margin, а два куска отзыва
    должны читаться как два куска. */
 .review__text p + p { margin-top: .75em; }
-/* Кавычка — из антиквы: в гротеске заголовков она выглядит прямым штрихом. */
+/* Кавычка – из антиквы: в гротеске заголовков она выглядит прямым штрихом. */
 .review__text::before {
   content: "“"; position: absolute; left: 0; top: -.12em;
   font-family: Georgia, "Times New Roman", serif;
@@ -1231,7 +1231,7 @@ label.cc__opt { cursor: pointer; }
 }
 
 /* Цвета сняты пипеткой с макета: заливка кнопки (178,39,27), акцент
-   текста светлее её — на тёмном фото густой кирпичный читается плохо.
+   текста светлее её – на тёмном фото густой кирпичный читается плохо.
    Белый на #B2271B даёт контраст 6.6, так что подпись кнопки белая. */
 .p100 {
   --p100-ink:    #FDF4E8;
@@ -1254,7 +1254,7 @@ label.cc__opt { cursor: pointer; }
 
 /* Шаблон фона уже несёт градиент тёмное-слева / светлое-справа, поэтому
    никакой вуали сверху не нужно: контрольные точки макета и шаблона
-   сходятся при обычном cover без сдвига — (800,400) даёт (242,219,193)
+   сходятся при обычном cover без сдвига – (800,400) даёт (242,219,193)
    против (246,219,191). Свою вуаль добавляют только узкие ширины ниже. */
 .p100__bg {
   position: absolute; inset: 0; z-index: -2;
@@ -1264,7 +1264,7 @@ label.cc__opt { cursor: pointer; }
 .p100__scrim { position: absolute; inset: 0; z-index: -1; }
 
 /* Бледная плита под телефоном: в макете это волосок со скруглением ~90px,
-   уходящий за правый край карточки. Заливки у неё почти нет — разница с
+   уходящий за правый край карточки. Заливки у неё почти нет – разница с
    фоном меньше двух уровней яркости, держит форму именно кромка. */
 .p100__plate {
   position: absolute; z-index: -1;
@@ -1277,7 +1277,7 @@ label.cc__opt { cursor: pointer; }
 .p100__text { position: relative; z-index: 1; max-width: 34rem; }
 .p100 .label { color: var(--p100-accent); font-size: .83rem; margin-bottom: clamp(.7rem, 1.5vw, .85rem); }
 
-/* Заголовок блока — это логотип продукта плюс сама формулировка. Держим
+/* Заголовок блока – это логотип продукта плюс сама формулировка. Держим
    их одним h2: иначе имя продукта выпадает из структуры страницы. */
 .p100__h { margin: 0; }
 .p100__logo {
@@ -1366,7 +1366,7 @@ label.cc__opt { cursor: pointer; }
   display: flex; flex-wrap: wrap; gap: .6rem;
   margin-top: clamp(1.4rem, 3.1vw, 2.42rem);
 }
-/* высота кнопки в макете 52px — это базовый размер системы, но базовый
+/* высота кнопки в макете 52px – это базовый размер системы, но базовый
    вертикальный padding даёт 55, поэтому чуть поджат */
 .p100 .btn { padding: .8rem 1.5rem; }
 .p100 .btn--brand {
@@ -1394,20 +1394,20 @@ label.cc__opt { cursor: pointer; }
 .p100__phone { margin: clamp(1.8rem, 4vw, 2.6rem) auto 0; width: min(100%, 260px); }
 .p100 .mock { width: 100%; }
 
-/* мокап телефона: корпус — прозрачный PNG, запись лежит под ним и видна
-   только в вырезе экрана. Проценты сняты с альфы самого файла — вырез
-   355x771 с отступом 17/15 в кадре 388x800, — поэтому видео садится в
+/* мокап телефона: корпус – прозрачный PNG, запись лежит под ним и видна
+   только в вырезе экрана. Проценты сняты с альфы самого файла – вырез
+   355x771 с отступом 17/15 в кадре 388x800, – поэтому видео садится в
    экран без подгонки на глаз. Вырез скруглён (радиус ~50px в тех же 388),
    и корпус углы видео НЕ обрезает: квадратные углы вылезали за силуэт
    корпуса поверх скруглений. Поэтому радиус повторяем на самом видео,
-   в cqw — чтобы он тянулся вместе с шириной мокапа.
+   в cqw – чтобы он тянулся вместе с шириной мокапа.
    По вертикали видео заходит ПОД корпус на три пикселя кадра (12..789
    вместо 15..786): кромка выреза в PNG сглажена, крайние строки 14 и 786
    полупрозрачные (alpha 130 и 174), и сквозь них просвечивал фон полосой
-   в пиксель. Заводим видео за эту кромку — корпус лежит сверху и лишнее
+   в пиксель. Заводим видео за эту кромку – корпус лежит сверху и лишнее
    закрывает сам. */
 .mock { position: relative; margin: 0; width: min(284px, 78%); container-type: inline-size; }
-/* мокап открывает окно кейса — прозрачная кнопка поверх корпуса */
+/* мокап открывает окно кейса – прозрачная кнопка поверх корпуса */
 .mock__open { position: absolute; inset: 0; z-index: 3; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .mock__body {
   position: relative; z-index: 2;
@@ -1424,7 +1424,7 @@ label.cc__opt { cursor: pointer; }
 
 
 /* ============================================================
-   BLOCK 06 — ДРУГИЕ ПРОЕКТЫ
+   BLOCK 06 – ДРУГИЕ ПРОЕКТЫ
    ============================================================ */
 .works { padding-block: var(--sec-pad); }
 .works__grid { display: grid; gap: var(--gap); }
@@ -1462,7 +1462,7 @@ label.cc__opt { cursor: pointer; }
 .work__case:hover { color: var(--green); border-bottom-color: var(--green); }
 .work__case:hover svg { transform: translateX(3px); }
 .work__case svg { transition: transform .35s var(--ease); }
-/* обложка тоже открывает кейс; плашка на ней — из чего собран проект.
+/* обложка тоже открывает кейс; плашка на ней – из чего собран проект.
    Держать её в одну строку: на 600–700 px длинная плашка уже переносилась */
 .work__cover { position: absolute; inset: 0; z-index: 1; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .work__count {
@@ -1474,7 +1474,7 @@ label.cc__opt { cursor: pointer; }
   transition: transform .35s var(--ease);
 }
 .work__cover:hover .work__count { transform: translateY(-2px); }
-/* эти кнопки — дубль «Смотреть кейс» для пальца и мыши, с клавиатуры до них
+/* эти кнопки – дубль «Смотреть кейс» для пальца и мыши, с клавиатуры до них
    не дойти (tabindex=-1). После закрытия окна браузер возвращает на них
    фокус, и без этого правила вокруг мокапа мелькала зелёная рамка */
 .fgh__open:focus, .mock__open:focus, .work__cover:focus { outline: none; }
@@ -1484,19 +1484,19 @@ label.cc__opt { cursor: pointer; }
    Один <dialog> на все проекты: наполнение приходит из <template>
    рядом с карточкой кейса, поэтому ни одна картинка галереи не
    грузится, пока окно не открыли. Сверху лента экранов и ссылки на
-   живой продукт, ниже — подробности проекта.
+   живой продукт, ниже – подробности проекта.
    Окно одето в гамму самого продукта, чтобы человек как будто зашёл
-   в него: FlyGuru — светлый сайт с тиловой шапкой, 100ловая — кремовый
-   мини-апп с кирпичом, MoodBot — лендинг с синим и жёлтым, AGENTBOY —
-   чёрный с красным. Лист — жидкое стекло, как шапка сайта: страница
+   в него: FlyGuru – светлый сайт с тиловой шапкой, 100ловая – кремовый
+   мини-апп с кирпичом, MoodBot – лендинг с синим и жёлтым, AGENTBOY –
+   чёрный с красным. Лист – жидкое стекло, как шапка сайта: страница
    под ним не трогается, а сквозь лист видна размытой, и окно читается
    продолжением лендинга, а не новой страницей.
-   Сам <dialog> — прозрачный слой на весь экран, в нём шапка окна и лист.
-   Шапка окна — отдельная плашка ровно поверх шапки сайта, того же
+   Сам <dialog> – прозрачный слой на весь экран, в нём шапка окна и лист.
+   Шапка окна – отдельная плашка ровно поверх шапки сайта, того же
    размера и формы, а лист той же ширины начинается под ней.
    ============================================================ */
 .cv {
-  /* нейтральная тема — палитра сайта */
+  /* нейтральная тема – палитра сайта */
   --cv-bg:      #F4F8F6;
   --cv-ink:     #17211E;
   --cv-mute:    #5F6C67;
@@ -1514,7 +1514,7 @@ label.cc__opt { cursor: pointer; }
 
   --cv-gut:   clamp(1rem, 3.2vw, 2.25rem);
   --cv-gap:   clamp(14px, 1.8vw, 26px);
-  /* место окна — script.js снимает его с шапки сайта:
+  /* место окна – script.js снимает его с шапки сайта:
      --cv-x/--cv-w левый край и ширина, --cv-top верх, --cv-hh высота */
   --cv-w:     100vw;
   --cv-top:   14px;
@@ -1530,7 +1530,7 @@ label.cc__opt { cursor: pointer; }
   width: 100%; height: 100%; max-width: none; max-height: none;
   margin: 0; padding: 0; border: 0;
   /* clip, а не только hidden: слой с hidden всё равно прокручивается
-     скриптом — фокус на выезжающий лист сдвигал его вместе с шапкой */
+     скриптом – фокус на выезжающий лист сдвигал его вместе с шапкой */
   overflow: hidden; overflow: clip;
   background: transparent;
   color: var(--cv-ink);
@@ -1539,7 +1539,7 @@ label.cc__opt { cursor: pointer; }
 }
 /* страница вокруг листа остаётся как есть: без затемнения и размытия */
 .cv::backdrop { background: transparent; }
-/* лист шириной с шапку сайта — под ней с зазором и до низа экрана */
+/* лист шириной с шапку сайта – под ней с зазором и до низа экрана */
 .cv__sheet {
   position: absolute;
   inset: calc(var(--cv-top) + var(--cv-hh) + 12px) auto 0 var(--cv-x, 0px); width: var(--cv-w);
@@ -1588,7 +1588,7 @@ label.cc__opt { cursor: pointer; }
   --cv-bar-mute:rgba(255,255,255,.86);
 }
 /* 100ловая: кремовый фон мини-аппа, кирпич с кнопки «В корзину»,
-   тёмно-коричневый логотипа — на кнопке связи, чтобы не спорить с кирпичом */
+   тёмно-коричневый логотипа – на кнопке связи, чтобы не спорить с кирпичом */
 .cv[data-theme="100lovaya"] {
   --cv-bg:      #F7EEE6;
   --cv-ink:     #3A2218;
@@ -1609,8 +1609,8 @@ label.cc__opt { cursor: pointer; }
   --cv-bar-ink: #FFFFFF;
   --cv-bar-mute:rgba(255,255,255,.86);
 }
-/* AGENTBOY остаётся тёмным — это его настоящая гамма. Фирменный #FF1F3D
-   под белой подписью даёт 3.8, поэтому кнопка на тон глубже: #E0102E — 4.9 */
+/* AGENTBOY остаётся тёмным – это его настоящая гамма. Фирменный #FF1F3D
+   под белой подписью даёт 3.8, поэтому кнопка на тон глубже: #E0102E – 4.9 */
 .cv[data-theme="agentboy"] {
   --cv-bg:      #0C0809;
   --cv-ink:     #F4F1F1;
@@ -1628,7 +1628,7 @@ label.cc__opt { cursor: pointer; }
 .cv[data-theme="100lovaya"] .cv__bar .cv__title span,
 .cv[data-theme="agentboy"] .cv__bar .cv__title span { color: var(--cv-accent); }
 
-/* Шапка окна — плашка ровно поверх шапки сайта: та же форма, размер
+/* Шапка окна – плашка ровно поверх шапки сайта: та же форма, размер
    и тень. Она на пиксель больше со всех сторон и плотная, иначе по
    сглаженному краю и сквозь цвет проступает шапка сайта. Лежит вне
    листа и не прокручивается: название и кнопка связи всегда на месте */
@@ -1761,7 +1761,7 @@ label.cc__opt { cursor: pointer; }
 .cv__thumb:hover { opacity: .85; }
 .cv__thumb[aria-current="true"] { opacity: 1; box-shadow: 0 0 0 2px var(--cv-accent); }
 
-/* ссылки на живой продукт — сразу под экранами: посмотрел и тут же
+/* ссылки на живой продукт – сразу под экранами: посмотрел и тут же
    пошёл потрогать сам, не пролистывая описание */
 .cv__go {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .55rem .6rem;
@@ -1809,7 +1809,7 @@ label.cc__opt { cursor: pointer; }
   border-bottom: 1px solid var(--cv-hair);
 }
 .cv__nums li { display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
-/* нечётная последняя цифра (у MoodBot их три) — на всю строку, без дыры справа */
+/* нечётная последняя цифра (у MoodBot их три) – на всю строку, без дыры справа */
 .cv__nums li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .cv__nums b {
   font-family: var(--f-display); font-weight: 700;
@@ -1907,7 +1907,7 @@ label.cc__opt { cursor: pointer; }
   .cv__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.15fr) minmax(0, .9fr); }
   .cv__facts { grid-column: auto; grid-template-columns: none; gap: 1.8rem; }
 }
-/* низкий ноутбук: превью уступают высоту кадру — навигацию держат
+/* низкий ноутбук: превью уступают высоту кадру – навигацию держат
    стрелки, главы и соседние кадры */
 @media (min-width: 860px) and (max-height: 799px) {
   .cv { --cv-stage: clamp(300px, calc(100svh - var(--cv-top) - 19.75rem), 760px); }
@@ -1916,21 +1916,21 @@ label.cc__opt { cursor: pointer; }
 }
 
 /* ============================================================
-   BLOCK 08 — ЦЕНЫ
+   BLOCK 08 – ЦЕНЫ
    ============================================================ */
 .pricing { padding-block: var(--sec-pad); }
-/* Блоки цен стоят стопкой, каждый — самостоятельное предложение. */
+/* Блоки цен стоят стопкой, каждый – самостоятельное предложение. */
 .pricing__stack { display: grid; gap: clamp(1rem, 2.2vw, 1.6rem); }
 /* Контраст к бумаге держит не белый фон, а глубина градиента и тень:
    на #F4F8F6 почти белая плашка сливалась с фоном. Фон страницы при этом
-   не трогается — его значение лежит константой PAPER в шейдере воды. */
+   не трогается – его значение лежит константой PAPER в шейдере воды. */
 .pricing__panel {
   overflow: hidden; border-radius: var(--r-xl);
   border: 1px solid rgba(255,255,255,.92);
   background: linear-gradient(152deg, #FFFFFF 0%, #F1F8F5 40%, #DCEDE6 100%);
   box-shadow: var(--sh-3);
 }
-/* Заголовок по центру плашки, условия оплаты — строкой под ним. */
+/* Заголовок по центру плашки, условия оплаты – строкой под ним. */
 .pricing__head {
   position: relative; isolation: isolate; overflow: hidden;
   display: grid; gap: .9rem; justify-items: center; text-align: center;
@@ -1938,13 +1938,13 @@ label.cc__opt { cursor: pointer; }
   border-bottom: 1px solid var(--line-2);
 }
 .pricing__water { inset: 0; width: 100%; height: 100%; z-index: -1; }
-/* Заголовок секции — сам зелёный: отдельной подписи над ним больше нет. */
+/* Заголовок секции – сам зелёный: отдельной подписи над ним больше нет. */
 .pricing__title { color: var(--green); }
 .pricing__terms { color: var(--ink-soft); font-size: .8rem; }
 .pricing__terms strong { display: block; color: var(--green-deep); font-weight: 500; margin-bottom: .2rem; }
 .plans { display: grid; align-items: stretch; }
-/* До 1000 px тарифы листаются вбок, край следующего виден — стопка из трёх
-   карточек занимала на телефоне ~2400 px. Вкладки — общие .swipe-tabs. */
+/* До 1000 px тарифы листаются вбок, край следующего виден – стопка из трёх
+   карточек занимала на телефоне ~2400 px. Вкладки – общие .swipe-tabs. */
 .plans__nav { padding: 1rem clamp(1.4rem, 2.8vw, 2.2rem) 0; }
 @media (max-width: 999px) {
   .plans {
@@ -1966,7 +1966,7 @@ label.cc__opt { cursor: pointer; }
 }
 .plan + .plan { border-top: 1px solid var(--line-2); }
 .plan--on { background: linear-gradient(145deg, rgba(255,255,255,.35), #DCEFE7); }
-/* Подпись над тарифом называет ЗАДАЧУ клиента, а не продукт, — она важнее
+/* Подпись над тарифом называет ЗАДАЧУ клиента, а не продукт, – она важнее
    собственного кегля .64rem, на котором терялась. Штрих слева ставит её в
    один ряд с зелёными акцентами блока. */
 .plan__kind {
@@ -1979,11 +1979,11 @@ label.cc__opt { cursor: pointer; }
 .plan__for { color: var(--ink-soft); font-size: .9rem; line-height: 1.5; margin-top: .65rem; }
 .plan__price {
   display: flex; align-items: baseline; gap: .4rem;
-  margin-top: 2.7rem; font-family: var(--f-display);   /* над барабаном — строка горячей цены */
+  margin-top: 2.7rem; font-family: var(--f-display);   /* над барабаном – строка горячей цены */
   font-size: .95rem; color: var(--ink-mute);
 }
 .plan__price span { font-size: clamp(2.3rem, 3.4vw, 3rem); line-height: 1.1; font-weight: 600; color: var(--ink); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
-/* «обсуждается отдельно» — фраза, а не число: кегль ниже, чтобы строка
+/* «обсуждается отдельно» – фраза, а не число: кегль ниже, чтобы строка
    влезала в одну линию и держала высоту ряда цен соседних карточек */
 .plan__price--calc span { font-size: clamp(1.15rem, 1.6vw, 1.35rem); letter-spacing: -.015em; }
 .plan__scope { margin-top: 1.6rem; padding-top: 1.3rem; border-top: 1px solid var(--line-2); color: var(--ink-mute); font-size: .78rem; }
@@ -2006,7 +2006,7 @@ label.cc__opt { cursor: pointer; }
    раскрутиться). Ролики, «$», плашку горячей цены и искры строит script.js;
    без скрипта в окне остаётся простая цена из разметки. */
 .drum { position: relative; align-items: center; gap: .45rem; }
-/* общее .plan__price span — кегль цены тарифа; внутри барабана кегль
+/* общее .plan__price span – кегль цены тарифа; внутри барабана кегль
    задаёт само окно, а подпись и плашка живут своим */
 .drum span { font-size: inherit; line-height: inherit; font-weight: inherit; letter-spacing: inherit; color: inherit; }
 .drum .drum__label { flex: none; margin-right: .2rem; font-size: .95rem; color: var(--ink-mute); }
@@ -2068,7 +2068,7 @@ label.cc__opt { cursor: pointer; }
 .drum__embers i:nth-child(3) { left: 66%; animation-delay: 1.3s; }
 .drum__embers i:nth-child(4) { left: 84%; animation-delay: 1.8s; width: 3px; height: 3px; }
 @keyframes drum-rise { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(6px, -3rem); opacity: 0; } }
-/* старая цена и плашка — строкой над барабаном, справа */
+/* старая цена и плашка – строкой над барабаном, справа */
 .drum__hot {
   position: absolute; right: 0; bottom: calc(100% + .3rem);
   display: flex; align-items: center; gap: .5rem; pointer-events: none;
@@ -2087,10 +2087,10 @@ label.cc__opt { cursor: pointer; }
 .drum__badge svg { width: 12px; height: 12px; }
 
 /* комплектация меняется вместе с барабаном; списки лежат в одной клетке,
-   поэтому высота карточки — по самому длинному и ничего не прыгает */
+   поэтому высота карточки – по самому длинному и ничего не прыгает */
 .kit { margin-top: 1.6rem; padding-top: 1.3rem; border-top: 1px solid var(--line-2); }
 /* подпись всегда отдельной строкой: у CRM названия длиннее, и в строку
-   с подписью кнопки влезали только у бота — карточки выглядели по-разному */
+   с подписью кнопки влезали только у бота – карточки выглядели по-разному */
 .kit__top { display: grid; justify-items: start; gap: .5rem; }
 .kit__label { color: var(--ink-mute); font-size: .78rem; }
 .kit__chips { display: flex; flex-wrap: wrap; gap: .3rem; }
@@ -2126,7 +2126,7 @@ label.cc__opt { cursor: pointer; }
   .drum.is-hot .drum__win, .drum__flame i { animation: none; }
   .drum__embers { display: none; }
 }
-/* Поддержка — не тариф, а надстройка сверх запуска: своя плашка,
+/* Поддержка – не тариф, а надстройка сверх запуска: своя плашка,
    подсвеченная зелёным, чтобы блок не читался четвёртым тарифом. */
 .addon {
   border-radius: var(--r-xl);
@@ -2139,7 +2139,7 @@ label.cc__opt { cursor: pointer; }
 .care__h { font-family: var(--f-display); font-size: clamp(1.3rem, 2.1vw, 1.65rem); font-weight: 600; margin-top: .45rem; }
 .care__lead { color: var(--ink-soft); font-size: .95rem; line-height: 1.5; margin-top: .5rem; max-width: 60ch; text-wrap: pretty; }
 /* Уровни поддержки: цена мельче тарифной, состав виден сразу. Первый пункт
-   «Всё из …» выделен — с него понятно, что уровни вкладываются друг в друга. */
+   «Всё из …» выделен – с него понятно, что уровни вкладываются друг в друга. */
 .tiers { display: grid; margin-top: clamp(1.4rem, 3vw, 2rem); border-top: 1px solid rgba(12,122,93,.16); }
 .tier { display: flex; flex-direction: column; gap: .7rem; padding-block: 1.4rem; }
 .tier + .tier { border-top: 1px solid rgba(12,122,93,.16); }
@@ -2162,7 +2162,7 @@ label.cc__opt { cursor: pointer; }
   .tier:last-child { padding-right: 0; }
   .tier + .tier { border-top: 0; border-left: 1px solid rgba(12,122,93,.16); }
 }
-/* Лендинг и редизайн — отдельные предложения, две тёмные плашки в конце
+/* Лендинг и редизайн – отдельные предложения, две тёмные плашки в конце
    стопки: тёмный тон закрывает блок цен, как раньше полоса условий. */
 .extras { display: grid; gap: clamp(1rem, 2.2vw, 1.6rem); }
 .extra {
@@ -2183,14 +2183,14 @@ label.cc__opt { cursor: pointer; }
   .plan + .plan { border-top: 0; border-left: 1px solid var(--line-2); }
   .plan__for { min-height: 4.5em; }
   .plan__price { height: 3.4rem; align-items: center; }
-  /* у фразы «Цена: обсуждается отдельно» два кегля — держим общую базовую
+  /* у фразы «Цена: обсуждается отдельно» два кегля – держим общую базовую
      линию, а сама строка стоит по центру ряда, как барабаны соседей */
   .plan__price--calc { flex-wrap: wrap; align-items: baseline; align-content: center; }
 }
 
 /* ============================================================
-   BLOCK 09 — ВОПРОСЫ И РИСКИ
-   Слева — заголовок и главное обещание, справа — 7 вопросов аккордеоном.
+   BLOCK 09 – ВОПРОСЫ И РИСКИ
+   Слева – заголовок и главное обещание, справа – 7 вопросов аккордеоном.
    ============================================================ */
 .trust { padding-block: var(--sec-pad); }
 .trust__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
@@ -2228,7 +2228,7 @@ label.cc__opt { cursor: pointer; }
 .qa__a .qa__note { margin-top: .5rem; font-size: .86rem; color: var(--ink-mute); }
 
 /* ============================================================
-   BLOCK 12 — ФУТЕР
+   BLOCK 12 – ФУТЕР
    ============================================================ */
 .footer {
   position: relative; z-index: 2;
@@ -2287,7 +2287,7 @@ label.cc__opt { cursor: pointer; }
    Карточки, которые на телефоне стояли стопкой, листаются вбок со
    снапом, край следующей виден. Вкладки над лентой показывают, где вы,
    и перелистывают по нажатию; включает их script.js, а на каком
-   брейкпоинте прятать — решает каждый блок сам. */
+   брейкпоинте прятать – решает каждый блок сам. */
 .swipe-tabs { display: flex; gap: .3rem; overflow-x: auto; scrollbar-width: none; }
 .swipe-tabs::-webkit-scrollbar { display: none; }
 .swipe-tabs[hidden] { display: none; }
@@ -2303,7 +2303,7 @@ label.cc__opt { cursor: pointer; }
   .plans__nav { display: none; }
 }
 
-/* Поддержка: лента до 860 px, дальше — три колонки на subgrid. Под поля
+/* Поддержка: лента до 860 px, дальше – три колонки на subgrid. Под поля
    плашки лента не выходит: там из-под края торчали обрывки соседней
    карточки. */
 .tiers__nav { margin-top: 1.2rem; }
@@ -2321,7 +2321,7 @@ label.cc__opt { cursor: pointer; }
   .tiers__nav { display: none; }
 }
 
-/* Шаги: лента только на телефоне, с 600 px — сетка. Лента выходит
+/* Шаги: лента только на телефоне, с 600 px – сетка. Лента выходит
    к краям экрана; снизу запас, иначе overflow режет тень стекла. */
 .steps__nav { margin-bottom: 1rem; }
 @media (max-width: 599px) {
@@ -2343,7 +2343,7 @@ label.cc__opt { cursor: pointer; }
 /* ---------- Зоны нажатия и мелкий текст на телефоне ----------
    Мелкие текстовые ссылки остаются мелкими, но палец попадает в
    невидимую площадку вокруг них: было 20–24 px в высоту, минимум
-   по WCAG 2.5.8 — 24 px, удобно — от 36. */
+   по WCAG 2.5.8 – 24 px, удобно – от 36. */
 .work__link, .review__src, .sol__note a { position: relative; }
 .work__link::after, .review__src::after, .sol__note a::after {
   content: ""; position: absolute; inset: -.5rem -.35rem;
@@ -2390,7 +2390,7 @@ label.cc__opt { cursor: pointer; }
   .author__card { grid-template-columns: minmax(0, 23rem) minmax(0, 1fr); }
 
   /* Телефон кладём абсолютом, а не колонкой сетки. Так высоту карточки
-     задаёт один только текст — как в макете, где мокап выше карточки и
+     задаёт один только текст – как в макете, где мокап выше карточки и
      торчит за оба её края, а лишнее срезает overflow. В сетке пришлось бы
      либо растить карточку под мокап, либо мельчить мокап под карточку.
      Ширина и правый вылет сняты с макета: мокап 730 из 1494 ширины
@@ -2403,7 +2403,7 @@ label.cc__opt { cursor: pointer; }
   }
   /* Колонки цифр не равной ширины: в макете они по контенту, а между ними
      стоят волосяные разделители посреди отступа. Поэтому не сетка, а флекс
-     с симметричным padding-inline — граница тогда сама встаёт по центру. */
+     с симметричным padding-inline – граница тогда сама встаёт по центру. */
   .fgh__nums { display: flex; flex-wrap: nowrap; gap: 0; }
   /* padding ужат с 2.3vw/2.1rem: с подписями «дней до запуска» и «страниц + CRM»
      ряд с прежними отступами не влезал в колонку и цифры наезжали на разделители */
@@ -2414,7 +2414,7 @@ label.cc__opt { cursor: pointer; }
 
 
   .steps { grid-template-columns: repeat(4, 1fr); }
-  /* соединители между шагами — порядок здесь реально что-то значит.
+  /* соединители между шагами – порядок здесь реально что-то значит.
      Пунктир и кольцо на нём: связь читается как последовательность,
      а не как случайная точка между карточками. */
   .step + .step::before {
@@ -2433,10 +2433,10 @@ label.cc__opt { cursor: pointer; }
   .step--on::after { box-shadow: inset 0 0 0 1.5px var(--green); }
 
   /* Телефон кладём абсолютом, а не колонкой сетки: высоту карточки
-     задаёт текст, как в макете. Числа сняты с него — корпус занимает
+     задаёт текст, как в макете. Числа сняты с него – корпус занимает
      24% ширины карточки, правый край в 15.9% от её кромки. */
   .p100__text { max-width: 52%; }
-  /* Ширина корпуса — 24% карточки, правый край в 15.9% от её кромки; это
+  /* Ширина корпуса – 24% карточки, правый край в 15.9% от её кромки; это
      числа макета, снятые при карточке в 1176px. На более узком десктопе
      карточка становится выше, и в тех же 24% телефон теряется рядом с
      плитой, поэтому там он крупнее. */
@@ -2446,7 +2446,7 @@ label.cc__opt { cursor: pointer; }
     transform: translateY(-50%);
   }
   /* Колонки цифр по контенту, между ними волосяные разделители посреди
-     отступа; текст в колонке выключен по центру — так в макете. */
+     отступа; текст в колонке выключен по центру – так в макете. */
   .p100__nums { display: flex; flex-wrap: nowrap; gap: 0; }
   .p100__nums { width: fit-content; max-width: 100%; }
   .p100__stat { align-items: center; text-align: center; padding-inline: clamp(.7rem, 1.8vw, 1.64rem); }
@@ -2472,7 +2472,7 @@ label.cc__opt { cursor: pointer; }
 /* На узком десктопе колонка текста FlyGuru всего ~320px, и ряд из
    «140+ · 170+ · 18 · 8» с макетными отступами в неё не влезает:
    последняя подпись вылезала за линию над цифрами. */
-/* Заголовок «Как я работаю» сбоку от шагов — только с 1280 px. Уже этого
+/* Заголовок «Как я работаю» сбоку от шагов – только с 1280 px. Уже этого
    колонки шагов выходили по 130–170 px, и длинные слова вроде «промежуточным»
    вылезали из карточек; ниже 1280 заголовок стоит над шагами. */
 @media (min-width: 1280px) {
@@ -2506,12 +2506,12 @@ label.cc__opt { cursor: pointer; }
    Палитра снята замером с photo_video/ref_dark_theme.png: фон #1E2334,
    плашки #212537, кнопка #B49BFD, текст #A9AEC1. Включается атрибутом
    data-scheme="dark" на <html> (ставит скрипт в <head>, переключает
-   script.js). Всё светлое выше не тронуто — здесь только переопределения.
+   script.js). Всё светлое выше не тронуто – здесь только переопределения.
 
    Токены с именами «зелёного» в тёмной теме несут лавандовый акцент:
-   --green — сам акцент (кнопки, линии, значки), --green-deep — его
+   --green – сам акцент (кнопки, линии, значки), --green-deep – его
    текстовый вариант. «Глубже» в светлой теме значит контрастнее, а на
-   тёмном фоне контрастнее — светлее, поэтому --green-deep тут светлее.
+   тёмном фоне контрастнее – светлее, поэтому --green-deep тут светлее.
 
    Блоки продуктов (FlyGuru, 100ловая, обложки проектов, окна кейсов)
    одеты в цвета самих продуктов и тему не меняют.
@@ -2563,7 +2563,7 @@ label.cc__opt { cursor: pointer; }
   --on-accent: #1A1830;   /* текст на лавандовой заливке */
 }
 
-/* смена темы — плавным перетеканием снимков, где браузер это умеет */
+/* смена темы – плавным перетеканием снимков, где браузер это умеет */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .45s; }
 
 [data-scheme="dark"] body { background-image: url("assets/img/grid-relief-dark.svg"); }
@@ -2581,7 +2581,7 @@ label.cc__opt { cursor: pointer; }
   [data-scheme="dark"] .glass--solid { background: rgba(36,41,60,.96); }
 }
 
-/* Главная кнопка в рефе — лавандовая пилюля с тёмной подписью. */
+/* Главная кнопка в рефе – лавандовая пилюля с тёмной подписью. */
 [data-scheme="dark"] .btn--primary,
 [data-scheme="dark"] .btn--light {
   background: var(--green); color: var(--on-accent);
@@ -2619,13 +2619,13 @@ label.cc__opt { cursor: pointer; }
 }
 
 /* ---------- первый экран ---------- */
-/* точка свободных слотов в рефе остаётся зелёной — это светофор, а не акцент */
+/* точка свободных слотов в рефе остаётся зелёной – это светофор, а не акцент */
 [data-scheme="dark"] .pill { --slot: #13D085; --slot-halo: rgba(19,208,133,.5); }
 [data-scheme="dark"] .rail::after { background: linear-gradient(90deg, rgba(30,35,52,0), rgba(30,35,52,.8)); }
-/* светящаяся вода под рейлом ярче дневной — вуаль плотнее */
+/* светящаяся вода под рейлом ярче дневной – вуаль плотнее */
 [data-scheme="dark"] .rail__inner { background: var(--sheen), rgba(36,41,60,.82); }
 [data-scheme="dark"] .rail__dot { box-shadow: 0 0 0 0 rgba(180,155,253,.5); }
-/* галочки в рефе глуше кнопки — #8877C5, белый знак */
+/* галочки в рефе глуше кнопки – #8877C5, белый знак */
 [data-scheme="dark"] .tick { background: #8877C5; color: #fff; box-shadow: 0 2px 8px rgba(136,119,197,.35); }
 [data-scheme="dark"] .no-webgl .water--hero {
   background:
@@ -2695,7 +2695,7 @@ label.cc__opt { cursor: pointer; }
 [data-scheme="dark"] .tiers,
 [data-scheme="dark"] .tier + .tier,
 [data-scheme="dark"] .tiers__terms { border-color: var(--line-2); }
-/* Лендинг и редизайн закрывают блок цен тёмными плашками — на тёмной
+/* Лендинг и редизайн закрывают блок цен тёмными плашками – на тёмной
    странице они уходят в глубокий фиолетовый, иначе не отличались бы от фона */
 [data-scheme="dark"] .extra {
   background: linear-gradient(145deg, #2C2658, #221E45);

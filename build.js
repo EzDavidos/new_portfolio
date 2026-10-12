@@ -3,16 +3,16 @@
 
    Запуск:  node build.js
 
-   Русские страницы (index.html, privacy.html) правят руками — они и есть
+   Русские страницы (index.html, privacy.html) правят руками – они и есть
    источник вёрстки. Для каждого языка из i18n/config.js скрипт берёт их,
    подменяет тексты из i18n/<код>.json и кладёт результат в свою папку
    (/uk/index.html, /en/index.html, /en/privacy.html). Заодно правит то,
    что от языка зависит:
      · <html lang>, canonical, og:url, og:locale и hreflang;
-     · относительные ссылки на ассеты — на абсолютные от корня, иначе из
+     · относительные ссылки на ассеты – на абсолютные от корня, иначе из
        подпапки они ведут в никуда («./» не трогаем: он уже указывает
        в папку своего языка);
-     · ссылку на политику конфиденциальности — по config.js;
+     · ссылку на политику конфиденциальности – по config.js;
      · список языков в шапке и отметку текущего.
 
    Если на странице появился текст, которого нет в словаре, сборка ПАДАЕТ
@@ -50,7 +50,7 @@ function langsBlock(cur, page) {
   });
 }
 
-/* Блок hreflang плюс og:locale:alternate — остальные языки этой страницы.
+/* Блок hreflang плюс og:locale:alternate – остальные языки этой страницы.
    og:locale:alternate ставим только там, где есть сам og:locale: на
    странице политики Open Graph нет вовсе. */
 function altsBlock(cur, page, og) {
@@ -66,7 +66,7 @@ function altsBlock(cur, page, og) {
 }
 
 /* Замена между метками <!-- i18n:имя --> … <!-- /i18n:имя --> с сохранением
-   отступа открывающей метки. Меток нет — страница их и не просит. */
+   отступа открывающей метки. Меток нет – страница их и не просит. */
 function region(html, name, lines) {
   var re = new RegExp('([ \\t]*)(<!-- i18n:' + name + ' -->)[\\s\\S]*?(<!-- /i18n:' + name + ' -->)');
   if (!re.test(html)) return html;
@@ -75,7 +75,7 @@ function region(html, name, lines) {
   });
 }
 
-/* Подмена значения атрибута. required — падать, если такого тега нет. */
+/* Подмена значения атрибута. required – падать, если такого тега нет. */
 function attr(html, re, value, required) {
   if (!re.test(html)) {
     if (required) throw new Error('не найдено в исходнике: ' + re);
@@ -86,7 +86,7 @@ function attr(html, re, value, required) {
 
 /* 0. Строки, которые рисует сам script.js, живут в нём же (словарь STR).
    Забыть их для нового языка легко, а заметно это только на живой
-   странице — где-нибудь в подписи «Горячая цена». Поэтому проверяем
+   странице – где-нибудь в подписи «Горячая цена». Поэтому проверяем
    заранее и до сборки. */
 var scriptSrc = fs.readFileSync(path.join(root, 'script.js'), 'utf8');
 var noStrings = cfg.langs.filter(function (l) {
@@ -94,11 +94,11 @@ var noStrings = cfg.langs.filter(function (l) {
 }).map(function (l) { return l.code; });
 if (noStrings.length) {
   console.error('в script.js нет словаря STR для: ' + noStrings.join(', ') +
-                ' — страница соберётся, но кнопки и ошибки формы будут на русском');
+                ' – страница соберётся, но кнопки и ошибки формы будут на русском');
   process.exit(1);
 }
 
-/* 1. Русские страницы: обновляем только списки языков — тексты в них свои. */
+/* 1. Русские страницы: обновляем только списки языков – тексты в них свои. */
 source.pages.forEach(function (page) {
   var file = path.join(root, page);
   var was = fs.readFileSync(file, 'utf8');
@@ -124,7 +124,7 @@ cfg.langs.filter(function (l) { return !l.source; }).forEach(function (l) {
     return null;
   };
 
-  // из подпапки относительный путь ведёт в никуда — делаем его от корня;
+  // из подпапки относительный путь ведёт в никуда – делаем его от корня;
   // «./» и «../» оставляем: они и должны считаться от папки языка
   var rootAbs = function (v) {
     if (!v || /^([a-z]+:|\/\/|\/|#|\.{1,2}\/)/i.test(v)) return null;
@@ -155,7 +155,7 @@ cfg.langs.filter(function (l) { return !l.source; }).forEach(function (l) {
 
   if (missing.length) {
     failed = true;
-    console.error('\n' + l.code + ': нет перевода для ' + missing.length + ' строк — страницы не собраны:');
+    console.error('\n' + l.code + ': нет перевода для ' + missing.length + ' строк – страницы не собраны:');
     missing.forEach(function (k) { console.error('  · ' + k); });
     console.error('  Прогоните `node i18n/extract.js` и заполните пустые значения в i18n/' + l.code + '.json\n');
     return;
@@ -177,7 +177,7 @@ cfg.langs.filter(function (l) { return !l.source; }).forEach(function (l) {
     html = html.replace(/^<!doctype html>\n/i,
       '<!doctype html>\n<!-- Страница собрана автоматически: node build.js.\n' +
       '     Править надо ' + page + ' (вёрстка и русский текст) и i18n/' + l.code + '.json (перевод),\n' +
-      '     а не этот файл — следующая сборка перезапишет его. -->\n');
+      '     а не этот файл – следующая сборка перезапишет его. -->\n');
 
     fs.mkdirSync(path.join(root, l.dir), { recursive: true });
     fs.writeFileSync(path.join(root, l.dir, page), html);
