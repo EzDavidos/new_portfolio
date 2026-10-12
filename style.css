@@ -2619,8 +2619,9 @@ label.cc__opt { cursor: pointer; }
 }
 
 /* ---------- первый экран ---------- */
-/* точка свободных слотов в рефе остаётся зелёной – это светофор, а не акцент */
-[data-scheme="dark"] .pill { --slot: #13D085; --slot-halo: rgba(19,208,133,.5); }
+/* точка свободных слотов в рефе остаётся зелёной – это светофор, а не акцент.
+   Только для 3–2: оранжевый и красный ночью те же, что днём */
+[data-scheme="dark"] .pill:not([data-slots="1"]):not([data-slots="0"]) { --slot: #13D085; --slot-halo: rgba(19,208,133,.5); }
 [data-scheme="dark"] .rail::after { background: linear-gradient(90deg, rgba(30,35,52,0), rgba(30,35,52,.8)); }
 /* светящаяся вода под рейлом ярче дневной – вуаль плотнее */
 [data-scheme="dark"] .rail__inner { background: var(--sheen), rgba(36,41,60,.82); }
