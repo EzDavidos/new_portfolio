@@ -137,9 +137,9 @@
         <!-- Свободные слоты. Обновляйте data-slots (3/2/1/0) и текст подписи.
              Атрибут задаёт цвет цифры и точки:
              3–2 – зелёный, 1 – оранжевый, 0 – красный. -->
-        <span class="pill glass" data-slots="1">
+        <span class="pill glass" data-slots="2">
           <img class="pill__ava" src="assets/img/david-portrait.jpg" alt="David Naumenko" width="34" height="34" loading="eager">
-          <span>Свободен <b>1</b> слот из 3</span>
+          <span>Свободны <b>2</b> слота из 3</span>
           <span class="pill__dot" aria-hidden="true"></span>
         </span>
       </div>
@@ -292,7 +292,7 @@
              Подписи из двух слов переносятся вручную: иначе ширина колонки
              считается по всей строке и на 1024 цифры жмутся к разделителям -->
         <ul class="fgh__nums" role="list">
-          <li class="fgh__stat"><span class="fgh__num">140+</span><span class="fgh__cap">клиентов</span></li>
+          <li class="fgh__stat"><span class="fgh__num">200+</span><span class="fgh__cap">клиентов</span></li>
           <li class="fgh__stat"><span class="fgh__num">170+</span><span class="fgh__cap">занятий</span></li>
           <li class="fgh__stat"><span class="fgh__num">26</span><span class="fgh__cap">дней до <br>запуска</span></li>
           <li class="fgh__stat"><span class="fgh__num">8</span><span class="fgh__cap">страниц <br>+&nbsp;CRM</span></li>
@@ -339,8 +339,8 @@
       </figcaption>
     </figure>
 
-    <!-- Окно кейса FlyGuru. Тексты – documents/текст под кейсы.txt (16.09.2026), цифры
-         12.09.2026: около 174 занятий (со слов Давида) и 143 клиента на скрине CRM.
+    <!-- Окно кейса FlyGuru. Тексты – documents/текст под кейсы.txt (16.09.2026), цифры:
+         около 174 занятий на 12.09.2026 (со слов Давида), 200+ клиентов на 17.10.2026 (со слов Давида).
          Подписи к скринам: название экрана всегда, описание – только если оно
          про важную функцию, а не пересказ того, что и так видно на кадре. -->
     <template id="case-flyguru" data-theme="flyguru">
@@ -456,7 +456,7 @@
 
       <section class="cv__info" aria-label="О проекте">
         <ul class="cv__nums" role="list">
-          <li><b>140+</b><span>клиентов в базе школы</span></li>
+          <li><b>200+</b><span>клиентов в базе школы</span></li>
           <li><b>170+</b><span>занятий учтено в системе</span></li>
           <li><b>26</b><span>дней от первой строки кода до работы в бою</span></li>
           <li><b>4</b><span>кабинета: админ, инструктор, механик, СММ</span></li>
@@ -548,12 +548,12 @@
           Всё в одном приложении.
         </p>
 
-        <!-- цифры из боевой базы продукта; первый живой заказ – 25 апреля 2026.
+        <!-- цифры из боевой базы продукта на 29.10.2026; первый живой заказ – 25 апреля 2026.
              Счётчик дней в проде убран по просьбе Давида 15.09.2026 -->
         <ul class="p100__nums" role="list">
-          <li class="p100__stat"><span class="p100__num">580+</span><span class="p100__cap">заказов</span></li>
-          <li class="p100__stat"><span class="p100__num">150+</span><span class="p100__cap">клиентов</span></li>
-          <li class="p100__stat"><span class="p100__num">44%</span><span class="p100__cap">вернулись</span></li>
+          <li class="p100__stat"><span class="p100__num">690+</span><span class="p100__cap">заказов</span></li>
+          <li class="p100__stat"><span class="p100__num">170+</span><span class="p100__cap">клиентов</span></li>
+          <li class="p100__stat"><span class="p100__num">46%</span><span class="p100__cap">вернулись</span></li>
         </ul>
         <!-- перенесено из верхнего proof-бара (master-plan, 1.3) -->
         <p class="p100__more">90+ заказов у самого активного клиента <br>В среднем 4&nbsp;заказа в&nbsp;день <br>9 дней от утверждения до первого&nbsp;заказа</p>
@@ -600,7 +600,7 @@
     </figure>
 
     <!-- Окно кейса 100ловой. Тексты – documents/текст под кейсы.txt (16.09.2026),
-         цифры – экран «Статистика» 12.09.2026 (586 заказов) и база 23.08.
+         цифры: боевая база 29.10.2026 (заказы, клиенты, повторные). На скрине «Статистика» снимок от 12.09 (586 заказов).
          Подписи к скринам – по тому же правилу, что у FlyGuru.
          data-start на «Панели владельца»: на ПК лента открывается с неё,
          чтобы слева от кадра стоял магазин, а не пустота. -->
@@ -670,9 +670,9 @@
 
       <section class="cv__info" aria-label="О проекте">
         <ul class="cv__nums" role="list">
-          <li><b>580+</b><span>заказов через приложение</span></li>
-          <li><b>150+</b><span>клиентов</span></li>
-          <li><b>44%</b><span>вернулись за повторным заказом</span></li>
+          <li><b>690+</b><span>заказов через приложение</span></li>
+          <li><b>170+</b><span>клиентов</span></li>
+          <li><b>46%</b><span>вернулись за повторным заказом</span></li>
           <li><b>9</b><span>дней от первой строки кода до первого заказа</span></li>
         </ul>
 
