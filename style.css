@@ -1099,27 +1099,30 @@ ul { list-style: none; padding: 0; }
 
 /* ============================================================
    COOKIE-БАННЕР
-   Плашка на бумаге, но фон сплошной: баннер лежит поверх текста и
-   кнопок, и даже 3 % прозрачности давали читаемую кашу под ним. На телефоне – полоса по ширине
-   экрана, с 600 px – карточка в левом нижнем углу. Ниже мобильного
-   меню (99), чтобы не лечь поверх него.
+   Компактная полоска внизу экрана. Фон сплошной: баннер лежит поверх
+   текста и кнопок, и даже 3 % прозрачности давали читаемую кашу под ним.
+   Высота ограничена первым экраном: на 393×659 полоска не должна
+   закрывать кнопку «Написать в Telegram». С 720 px текст и кнопки идут
+   в одну строку. Ниже мобильного меню (99), чтобы не лечь поверх него.
    ============================================================ */
 .cc {
   position: fixed; z-index: 90;
-  left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-  display: grid; gap: .65rem;
-  padding: 1.1rem 1.15rem 1.15rem;
+  left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  display: grid; gap: .45rem;
+  max-height: calc(100dvh - 16px); overflow-y: auto;
+  padding: .6rem .8rem .65rem;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: var(--r-lg);
+  border-radius: var(--r);
   box-shadow: var(--sh-3);
   color: var(--ink);
   animation: cc-in .45s var(--ease) both;
 }
 .cc[hidden], .cc [hidden] { display: none; }
 .cc:focus { outline: none; }
-.cc__title { font-family: var(--f-display); font-weight: 600; font-size: 1.04rem; line-height: 1.3; }
-.cc__text { font-size: .92rem; line-height: 1.5; color: var(--ink-soft); }
+/* заголовок остаётся подписью окна для скринридера, на экране занял бы строку */
+.cc__title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.cc__text { font-size: .8rem; line-height: 1.4; color: var(--ink-soft); }
 .cc__text a, .cc__more { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
 .cc__prefs { display: grid; border-top: 1px solid var(--line); }
 .cc__opt { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .75rem; border-bottom: 1px solid var(--line); }
@@ -1140,19 +1143,23 @@ label.cc__opt { cursor: pointer; }
 }
 .cc__switch:checked { background: var(--green); }
 .cc__switch:checked::after { transform: translateX(18px); }
-.cc__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; margin-top: .15rem; }
-.cc__more { font-size: .92rem; padding: .45rem .35rem; }
+.cc__actions { display: flex; flex-wrap: nowrap; align-items: center; gap: .45rem; }
+.cc__actions .btn { padding-block: .45rem; font-size: .84rem; }
+.cc__more { flex: none; font-size: .84rem; padding: .35rem .25rem; }
 @keyframes cc-in { from { opacity: 0; transform: translateY(14px); } }
 @media (max-width: 599px) {
   /* «Принять» и «Отклонить» одной ширины: отказ не должен выглядеть мельче */
   .cc__actions .btn { flex: 1 1 0; }
 }
-@media (min-width: 600px) {
+@media (min-width: 720px) {
   .cc {
-    left: 20px; right: auto; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-    width: min(26rem, calc(100% - 40px));
-    padding: 1.3rem 1.4rem 1.35rem;
+    left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 1.25rem;
+    max-width: 62rem; margin-inline: auto;
+    padding: .6rem .7rem .6rem 1.1rem;
   }
+  .cc__prefs { grid-column: 1 / -1; }
+  .cc__actions { grid-column: 2; }
 }
 
 /* ============================================================
