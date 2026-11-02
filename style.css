@@ -602,6 +602,9 @@ ul { list-style: none; padding: 0; }
 .hero__lead { font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 .hero__lead.measure { max-width: 34.06em; } /* 54ch в Inter 400, в em по той же причине, что у заголовка */
 .hero__cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: clamp(1.6rem, 3.2vw, 2.25rem); }
+.hero__price { margin-top: .95rem; font-size: .9rem; color: var(--ink-soft); }
+.hero__price a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--line-2); transition: color .2s var(--ease); }
+.hero__price a:hover { color: var(--green); text-decoration-color: currentColor; }
 
 /* зелёная галочка в кружке – маркер списка в блоке «Кто делает» */
 .tick {
